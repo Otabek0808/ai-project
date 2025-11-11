@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid bg-light min-vh-100 py-5">
+    <div class="container">
+        <!-- Sarlavha va admin tugmasi -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="display-5 fw-bold text-dark mb-3">Fan Materiallari</h1>
+                        <p class="lead text-muted">Mutaxassislik fanlari bo'yicha PDF va o'quv hujjatlari</p>
+                    </div>
+                    {% if user.is_staff %}
+                    <div>
+                        <a href="{% url 'add_document' %}" class="btn btn-success">
+                            <i class="fas fa-plus-circle me-2"></i>Yangi Material Qo'shish
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Fanlar bo'yicha hujjatlar -->
+        {% for subject in subjects %}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">
+                    <i class="fas fa-book me-2"></i>{{ subject.name }}
+                </h4>
+                <span class="badge bg-light text-dark">
+                    {{ subject.document_set.count }} ta material
+                </span>
+            </div>
+            <div class="card-body">
+                {% if subject.description %}
+                <p class="text-muted mb-3">{{ subject.description }}</p>
+                {% endif %}
+
+                {% for document in subject.document_set.all %}
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h6 class="card-title text-dark mb-1">{{ document.title }}</h6>
+                                {% if document.description %}
+                                <p class="card-text text-muted small mb-2">{{ document.description }}</p>
+                                {% endif %}
+                                <small class="text-muted">
+                                    <i class="fas fa-calendar me-1"></i>{{ document.uploaded_at|date:"d.m.Y H:i" }}
+                                </small>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <a href="{{ document.file.url }}"
+                                   class="btn btn-primary btn-sm"
+                                   target="_blank"
+                                   download>
+                                    <i class="fas fa-download me-1"></i>Yuklab Olish
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-center py-3">
+                    <i class="fas fa-folder-open fa-2x text-muted mb-2"></i>
+                    <p class="text-muted mb-0">Ushbu fanda hozircha materiallar mavjud emas</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="text-center py-5">
+                <i class="fas fa-folder-open fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted mb-3">Hozircha fanlar mavjud emas</h4>
+                <p class="text-muted">Administrator tomonidan fanlar qo'shilmagani uchun materiallar mavjud emas.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

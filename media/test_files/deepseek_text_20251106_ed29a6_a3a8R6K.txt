@@ -1,0 +1,69 @@
+Q:Python qaysi yil yaratilgan?
+A:1991
+A:1995
+A:2000
+A:1989
+C:1
+
+Q:Quyidagilardan qaysi biri Python ning ma'lumot turlariga kirmaydi?
+A:int
+A:str
+A:float
+A:char
+C:4
+
+Q:List yaratish uchun qaysi belgilar ishlatiladi?
+A:()
+A:[]
+A:{}
+A:<>
+C:2
+
+Q:Python da funksiya yaratish uchun qaysi kalit so'z ishlatiladi?
+A:function
+A:def
+A:func
+A:define
+C:2
+
+Q:Quyidagilardan qaysi biri loop (sikl) emas?
+A:for
+A:while
+A:repeat
+A:do-while
+C:3
+
+Q:Python da qaysi modul matematik amallar uchun ishlatiladi?
+A:math
+A:calc
+A:calculate
+A:mathematics
+C:1
+
+Q:String ni kichik harflarga o'tkazish uchun qaysi metod ishlatiladi?
+A:lower()
+B:upper()
+C:capitalize()
+D:title()
+C:1
+
+Q:Listga yangi element qo'shish uchun qaysi metod ishlatiladi?
+A:add()
+B:append()
+C:insert()
+D:push()
+C:2
+
+Q:Python da fayl ochish uchun qaysi funksiya ishlatiladi?
+A:open_file()
+B:open()
+C:read_file()
+D:file_open()
+C:2
+
+Q:Quyidagilardan qaysi biri Python ning asosiy paket menejeri?
+A:pip
+B:npm
+C:composer
+D:gem
+C:1

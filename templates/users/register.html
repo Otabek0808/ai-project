@@ -1,0 +1,281 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid bg-light min-vh-100 py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow border-0">
+                    <div class="card-header bg-primary text-white text-center py-4">
+                        <h3 class="mb-0">
+                            <i class="fas fa-user-plus me-2"></i>Ro'yxatdan o'tish
+                        </h3>
+                        <p class="mb-0 mt-2">Yangi hisob yarating</p>
+                    </div>
+                    <div class="card-body p-4">
+                        <!-- Xabarlarni ko'rsatish -->
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        <form method="post" novalidate>
+                            {% csrf_token %}
+
+                            <!-- Xatoliklarni ko'rsatish -->
+                            {% if form.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>Xatolik!</strong> Iltimos, quyidagi xatoliklarni tuzating.
+                                    <ul class="mb-0 mt-2">
+                                        {% for field in form %}
+                                            {% for error in field.errors %}
+                                                <li>{{ field.label }}: {{ error }}</li>
+                                            {% endfor %}
+                                        {% endfor %}
+                                        {% for error in form.non_field_errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+
+                            <!-- Shaxsiy ma'lumotlar -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.first_name.id_for_label }}" class="form-label">
+                                        <i class="fas fa-user me-2"></i>Ism *
+                                    </label>
+                                    {{ form.first_name }}
+                                    {% if form.first_name.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {% for error in form.first_name.errors %}
+                                                <i class="fas fa-exclamation-circle me-1"></i>{{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.last_name.id_for_label }}" class="form-label">
+                                        Familiya *
+                                    </label>
+                                    {{ form.last_name }}
+                                    {% if form.last_name.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {% for error in form.last_name.errors %}
+                                                <i class="fas fa-exclamation-circle me-1"></i>{{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Guruh va Email -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.group.id_for_label }}" class="form-label">
+                                        <i class="fas fa-users me-2"></i>Guruh *
+                                    </label>
+                                    {{ form.group }}
+                                    {% if form.group.help_text %}
+                                        <div class="form-text">{{ form.group.help_text }}</div>
+                                    {% endif %}
+                                    {% if form.group.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {% for error in form.group.errors %}
+                                                <i class="fas fa-exclamation-circle me-1"></i>{{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.email.id_for_label }}" class="form-label">
+                                        <i class="fas fa-envelope me-2"></i>Email *
+                                    </label>
+                                    {{ form.email }}
+                                    {% if form.email.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {% for error in form.email.errors %}
+                                                <i class="fas fa-exclamation-circle me-1"></i>{{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Foydalanuvchi nomi -->
+                            <div class="mb-3">
+                                <label for="{{ form.username.id_for_label }}" class="form-label">
+                                    <i class="fas fa-at me-2"></i>Foydalanuvchi nomi *
+                                </label>
+                                {{ form.username }}
+                                {% if form.username.help_text %}
+                                    <div class="form-text">{{ form.username.help_text }}</div>
+                                {% endif %}
+                                {% if form.username.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {% for error in form.username.errors %}
+                                            <i class="fas fa-exclamation-circle me-1"></i>{{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Parollar -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.password1.id_for_label }}" class="form-label">
+                                        <i class="fas fa-lock me-2"></i>Parol *
+                                    </label>
+                                    {{ form.password1 }}
+                                    {% if form.password1.help_text %}
+                                        <div class="form-text">
+                                            {% if form.password1.help_text|length > 1 %}
+                                                <ul class="mb-0 ps-3">
+                                                    {% for help in form.password1.help_text %}
+                                                        <li>{{ help }}</li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% else %}
+                                                {{ form.password1.help_text }}
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                    {% if form.password1.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {% for error in form.password1.errors %}
+                                                <i class="fas fa-exclamation-circle me-1"></i>{{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.password2.id_for_label }}" class="form-label">
+                                        <i class="fas fa-lock me-2"></i>Parolni takrorlang *
+                                    </label>
+                                    {{ form.password2 }}
+                                    {% if form.password2.help_text %}
+                                        <div class="form-text">{{ form.password2.help_text }}</div>
+                                    {% endif %}
+                                    {% if form.password2.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {% for error in form.password2.errors %}
+                                                <i class="fas fa-exclamation-circle me-1"></i>{{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-success w-100 py-2 mt-3">
+                                <i class="fas fa-user-plus me-2"></i>Ro'yxatdan o'tish
+                            </button>
+                        </form>
+
+                        <div class="text-center mt-4">
+                            <p class="mb-0">Allaqachon hisobingiz bormi?
+                                <a href="{% url 'login' %}" class="text-decoration-none fw-bold">
+                                    Tizimga kirish
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Qo'shimcha ma'lumot -->
+                <div class="card mt-4 border-0 bg-info text-white">
+                    <div class="card-body text-center py-3">
+                        <h6 class="mb-2">Diqqat!</h6>
+                        <p class="mb-0 small">
+                            Har bir foydalanuvchi nomi va email takrorlanmas bo'lishi kerak.
+                            Agar xatolik bo'lsa, boshqa foydalanuvchi nomi yoki email kiriting.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<style>
+.form-control {
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 0.75rem;
+    font-size: 1rem;
+    transition: all 0.15s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    transform: translateY(-1px);
+}
+
+.form-control.is-invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.form-label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+.form-text {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+}
+
+.min-vh-100 {
+    min-height: 100vh;
+}
+
+.alert ul {
+    margin-bottom: 0;
+}
+
+.btn-success {
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+</style>
+
+<script>
+// Form validation enhancement
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const inputs = form.querySelectorAll('.form-control');
+
+    inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            if (this.value.trim() !== '') {
+                this.classList.add('filled');
+            } else {
+                this.classList.remove('filled');
+            }
+        });
+
+        // Real-time validation for username
+        if (input.name === 'username') {
+            input.addEventListener('input', function() {
+                if (this.value.length > 0) {
+                    this.classList.remove('is-invalid');
+                }
+            });
+        }
+    });
+});
+</script>
+{% endblock %}

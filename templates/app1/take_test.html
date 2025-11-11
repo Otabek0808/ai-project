@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h3 class="card-title mb-0">{{ test.title }}</h3>
+            <p class="mb-0">Vaqt chegarasi: {{ test.time_limit_minutes }} daqiqa | Savollar: {{ total_questions }} ta</p>
+        </div>
+        <div class="card-body">
+            <!-- Vaqt hisobi -->
+            <div class="alert alert-info text-center">
+                <h4 id="timer">Qolgan vaqt: {{ test.time_limit_minutes }}:00</h4>
+            </div>
+
+            <form method="post" id="testForm">
+                {% csrf_token %}
+                <input type="hidden" name="time_taken" id="timeTaken" value="0">
+
+                {% for question in questions %}
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="card-title mb-0">Savol {{ forloop.counter }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="lead">{{ question.text }}</p>
+
+                        <div class="form-group">
+                            {% for answer in question.answers.all %}
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio"
+                                       name="question_{{ question.id }}"
+                                       id="answer_{{ answer.id }}"
+                                       value="{{ answer.id }}" required>
+                                <label class="form-check-label" for="answer_{{ answer.id }}">
+                                    {{ answer.text }}
+                                </label>
+                            </div>
+                            {% empty %}
+                            <div class="alert alert-danger">
+                                Bu savol uchun javob variantlari mavjud emas!
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="alert alert-warning">
+                    Bu testda hozircha savollar mavjud emas.
+                </div>
+                {% endfor %}
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        Testni Yakunlash
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Vaqt tugashi modali -->
+<div class="modal fade" id="timeUpModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title">Vaqt tugadi</h5>
+            </div>
+            <div class="modal-body text-center">
+                <p class="lead">Test vaqti tugadi. Javoblaringiz avtomatik ravishda saqlanadi.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Global o'zgaruvchilar
+let timeRemaining = {{ time_limit_seconds }};
+let timerInterval;
+let startTime;
+
+// Dastlabki sozlash
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("Timer ishga tushdi!");
+    startTime = Date.now();
+    startTimer();
+
+    // Form yuborishni boshqarish
+    document.getElementById('testForm').addEventListener('submit', function(e) {
+        const currentTime = Date.now();
+        const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
+        const timeTaken = Math.min(elapsedSeconds, {{ time_limit_seconds }});
+
+        console.log("Sarflangan vaqt:", timeTaken, "soniya");
+        document.getElementById('timeTaken').value = timeTaken;
+    });
+});
+
+// Vaqt hisobi
+function startTimer() {
+    clearInterval(timerInterval);
+
+    timerInterval = setInterval(function() {
+        const currentTime = Date.now();
+        const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
+        timeRemaining = {{ time_limit_seconds }} - elapsedSeconds;
+
+        // Vaqt manfiy bo'lib qolmasligi
+        if (timeRemaining < 0) {
+            timeRemaining = 0;
+        }
+
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+
+        // Timer yangilash
+        const timerElement = document.getElementById('timer');
+        if (timerElement) {
+            timerElement.innerHTML = `Qolgan vaqt: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Vaqt tugashiga 1 daqiqa qolganda rang o'zgartirish
+        if (timeRemaining <= 60) {
+            timerElement.parentElement.className = 'alert alert-danger text-center';
+        }
+
+        // Vaqt tugasa
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            console.log("Vaqt tugadi!");
+
+            // Modal ko'rsatish
+            const modal = new bootstrap.Modal(document.getElementById('timeUpModal'));
+            modal.show();
+
+            // 3 soniyadan so'ng formani yuborish
+            setTimeout(() => {
+                const currentTime = Date.now();
+                const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
+                const timeTaken = Math.min(elapsedSeconds, {{ time_limit_seconds }});
+
+                document.getElementById('timeTaken').value = timeTaken;
+                document.getElementById('testForm').submit();
+            }, 3000);
+        }
+    }, 1000);
+}
+
+// Xatolikni tekshirish
+if (typeof bootstrap === 'undefined') {
+    console.error("Bootstrap JavaScript yuklanmagan!");
+}
+
+console.log("JavaScript kod ishga tushdi");
+console.log("Time limit seconds:", {{ time_limit_seconds }});
+</script>
+
+<style>
+.form-check-input {
+    transform: scale(1.1);
+    margin-right: 10px;
+}
+.card {
+    border-radius: 10px;
+}
+</style>
+{% endblock %}

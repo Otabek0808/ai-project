@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-user-chart"></i> {{ user.username }} - Test natijalari
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <!-- Grafik -->
+                    {% if graphic %}
+                    <div class="text-center mb-4">
+                        <h5>Test natijalari grafigi:</h5>
+                        <img src="data:image/png;base64,{{ graphic }}" alt="Test natijalari grafigi" class="img-fluid border rounded">
+                    </div>
+                    {% endif %}
+
+                    <!-- Jadval -->
+                    <h5 class="mb-3">Batafsil statistika:</h5>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Test nomi</th>
+                                    <th>Sana</th>
+                                    <th>Ball</th>
+                                    <th>Foiz</th>
+                                    <th>Holat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for result in test_results %}
+                                <tr>
+                                    <td>{{ result.test.title }}</td>
+                                    <td>{{ result.completed_at|date:"d.m.Y H:i" }}</td>
+                                    <td>{{ result.score }}/{{ result.total_questions }}</td>
+                                    <td>
+                                        <span class="badge {% if result.percentage >= 80 %}bg-success{% elif result.percentage >= 60 %}bg-warning{% else %}bg-danger{% endif %}">
+                                            {{ result.percentage|floatformat:1 }}%
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {% if result.percentage >= 80 %}
+                                            <i class="fas fa-check text-success"></i> A'lo
+                                        {% elif result.percentage >= 60 %}
+                                            <i class="fas fa-check text-warning"></i> Yaxshi
+                                        {% else %}
+                                            <i class="fas fa-times text-danger"></i> Qoniqarsiz
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted">
+                                        Hozircha test natijalari mavjud emas
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Umumiy statistika -->
+                    {% if test_results %}
+                    <div class="row mt-4">
+                        <div class="col-md-4">
+                            <div class="card text-center bg-light">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ test_results.count }}</h5>
+                                    <p class="card-text">Jami testlar</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center bg-info text-white">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        {{ best_percentage }}%
+                                    </h5>
+                                    <p class="card-text">Eng yaxshi natija</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center bg-success text-white">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        100%
+                                    </h5>
+                                    <p class="card-text">Testlarni yakunlash</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="text-center mt-4">
+                        <a href="{% url 'admin_stats' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left"></i> Orqaga
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

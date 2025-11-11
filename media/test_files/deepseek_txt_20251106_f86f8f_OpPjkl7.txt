@@ -1,0 +1,69 @@
+Savol: Kompyuterning asosiy xotirasi qaysi?
+A) ROM
+B) RAM
+C) CPU
+D) HDD
+Javob: B
+
+Savol: Python dasturlash tilini kim yaratgan?
+A) Guido van Rossum
+B) Bjarne Stroustrup
+C) James Gosling
+D) Dennis Ritchie
+Javob: A
+
+Savol: HTML nima uchun ishlatiladi?
+A) Dizayn qilish uchun
+B) Ma'lumotlarni saqlash uchun
+C) Veb-sahifalar strukturasini yaratish uchun
+D) Server ishlashini boshqarish uchun
+Javob: C
+
+Savol: CSS orqali nima boshqariladi?
+A) Foydalanuvchi kirishi
+B) Veb-sahifalarning ko'rinishi
+C) Ma'lumotlar bazasi
+D) Server logikasi
+Javob: B
+
+Savol: Java dasturlash tilining asosiy xususiyati nima?
+A) Faqat Windowsda ishlaydi
+B) Bir marta yoziladi, hamma joyda ishlaydi
+C) Veb-sahifalarni yaratadi
+D) Faol emas
+Javob: B
+
+Savol: Algoritm nima?
+A) Muammoni hal qilish uchun ketma-ket amallar to'plami
+B) Grafik dizayn elementi
+C) Foydalanuvchi interfeysi
+D) Server kodi
+Javob: A
+
+Savol: SQL nima vazifani bajaradi?
+A) Kod yozish
+B) Ma'lumotlar bazasini boshqarish
+C) Veb-sahifalarni dizayn qilish
+D) Matn tahrirlash
+Javob: B
+
+Savol: Django nimaga asoslangan?
+A) JavaScript
+B) Python
+C) Java
+D) C++
+Javob: B
+
+Savol: Git qaysi maqsadda ishlatiladi?
+A) Grafik yaratish
+B) Versiyalarni boshqarish
+C) Ma'lumotlarni saqlash
+D) Dasturlash
+Javob: B
+
+Savol: "Frontend" atamasi nima degani?
+A) Server qismi
+B) Foydalanuvchi ko'rgan qismi
+C) Ma'lumotlar bazasi
+D) Algoritm
+Javob: B

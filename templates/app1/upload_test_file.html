@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Test Faylini Yuklash</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <!-- Fan tanlash -->
+                        <div class="mb-3">
+                            <label for="{{ form.subject.id_for_label }}" class="form-label">Fan</label>
+                            {{ form.subject }}
+                            {% if form.subject.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.subject.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Test nomi -->
+                        <div class="mb-3">
+                            <label for="{{ form.title.id_for_label }}" class="form-label">Test Nomi</label>
+                            {{ form.title }}
+                            {% if form.title.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.title.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Tavsif -->
+                        <div class="mb-3">
+                            <label for="{{ form.description.id_for_label }}" class="form-label">Tavsif</label>
+                            {{ form.description }}
+                            {% if form.description.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.description.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Test fayli -->
+                        <div class="mb-3">
+                            <label for="{{ form.test_file.id_for_label }}" class="form-label">Test Fayli</label>
+                            {{ form.test_file }}
+                            {% if form.test_file.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.test_file.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">
+                                Faqat .txt fayllar qabul qilinadi. Format:
+                                <br>
+                                <strong>Savol: Savol matni?</strong><br>
+                                A) Birinchi variant<br>
+                                B) Ikkinchi variant<br>
+                                C) Uchinchi variant<br>
+                                D) To'rtinchi variant<br>
+                                Javob: B<br><br>
+                                Savollar orasida bo'sh qator qoldiring.
+                            </div>
+                        </div>
+
+                        <!-- Test vaqti -->
+                        <div class="mb-3">
+                            <label for="{{ form.time_limit_minutes.id_for_label }}" class="form-label">Test Vaqti (daqiqa)</label>
+                            {{ form.time_limit_minutes }}
+                            {% if form.time_limit_minutes.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.time_limit_minutes.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">
+                                Testni ishlash uchun berilgan maksimal vaqt.
+                                Foydalanuvchi testni boshlagandan so'ng shu vaqt hisoblanadi.
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-primary">Testni Yuklash</button>
+                            <a href="{% url 'tests' %}" class="btn btn-secondary">Bekor Qilish</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

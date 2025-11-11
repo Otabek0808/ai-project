@@ -1,0 +1,314 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="container">
+        <!-- Sarlavha -->
+        <div class="row mb-5" style="margin: 0.1px auto">
+           <div class="tech-title">
+                <h3 class="display-6 fw-bold">SUN'IY INTELLEKT VA MA'LUMOTLARNI QAYTA ISHLASH</h3>
+           </div>
+        </div>
+
+        <!-- Carousel va Feature Cards -->
+        <div class="row align-items-center">
+            <!-- Chap tomondagi 2 ta card -->
+            <div class="col-lg-3">
+                <div class="row g-4">
+                    <!-- Fan materiallari -->
+                    <div class="col-12">
+                        <a href="{% url 'documents' %}" class="text-decoration-none">
+                            <div class="card feature-card h-100 border-0 shadow">
+                                <div class="card-body text-center p-4">
+                                    <i class="fas fa-book fa-3x text-primary mb-3"></i>
+                                    <h5 class="card-title text-dark">Fan materiallari</h5>
+                                    <p class="card-text text-muted">Mutaxassislik fanlari bo'yicha PDF va hujjatlar</p>
+                                    <small class="text-primary">Ko'proq &rarr;</small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Video darslar -->
+                    <div class="col-12">
+                        <a href="{% url 'video_lessons' %}" class="text-decoration-none">
+                            <div class="card feature-card h-100 border-0 shadow">
+                                <div class="card-body text-center p-4">
+                                    <i class="fas fa-video fa-3x text-danger mb-3"></i>
+                                    <h5 class="card-title text-dark">Video darslar</h5>
+                                    <p class="card-text text-muted">YouTube platformasidagi tushunarli video darslar</p>
+                                    <small class="text-primary">Ko'proq &rarr;</small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Markazdagi Carousel -->
+            <div class="col-lg-6">
+                <div id="mainCarousel" class="carousel slide carousel-combined" data-bs-ride="carousel" data-bs-interval="4000">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active"></button>
+                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1"></button>
+                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2"></button>
+                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="3"></button>
+                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="4"></button>
+                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="5"></button>
+                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="6"></button>
+                    </div>
+                    <div class="carousel-inner rounded-3 shadow-lg">
+                        <div class="carousel-item active">
+                            <img src="https://pfst.cf2.poecdn.net/base/image/d8f5e7192409c675e08b81cf737b330ce99b85202735337e35d264b42b894e4d?w=1024&h=768&pmaid=505716827"
+                                 class="d-block w-100" alt="IT Learning" style="height: 400px; object-fit: cover;">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h3>IT Ta'lim Platformasi</h3>
+                                <p>Zamonaviy texnologiyalarni o'rganing</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://pfst.cf2.poecdn.net/base/image/86546924691a6def957644fa02c74b61951da63218e2947e03c67426c03fa07e?w=1024&h=768&pmaid=505717511"
+                                 class="d-block w-100" alt="Programming" style="height: 400px; object-fit: cover;">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h3>Dasturlash</h3>
+                                <p>Python, Django va boshqa texnologiyalar</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://pfst.cf2.poecdn.net/base/image/83a656165b691f72b18e81c8fee882f4030159d55c5721a5df2458737d638db0?w=1024&h=768&pmaid=505717764"
+                                 class="d-block w-100" alt="Technology" style="height: 400px; object-fit: cover;">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h3>Zamonaviy Texnologiyalar</h3>
+                                <p>Sun'iy intellekt va ma'lumotlar tahlili</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://pfst.cf2.poecdn.net/base/image/fe946b54f923016df61ffc37d68d1b22822b1b730273b87791b7aa1dc2bad2b6?w=1024&h=768&pmaid=505718646"
+                                 class="d-block w-100" alt="Teamwork" style="height: 400px; object-fit: cover;">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h3>Hamkorlik</h3>
+                                <p>Boshqa talabalar bilan bilim almashing</p>
+                            </div>
+                        </div>
+                        <!-- Yangi qo'shilgan rasm 1 -->
+                        <div class="carousel-item">
+                            <img src="https://copilot.microsoft.com/th/id/BCO.7fcf76d7-65ae-4f3b-afe1-2a6658292f75.png"
+                                 class="d-block w-100" alt="AI Assistant" style="height: 400px; object-fit: cover;">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h3>AI Yordamchi</h3>
+                                <p>Sun'iy intellekt bilan o'qish jarayonini yaxshilang</p>
+                            </div>
+                        </div>
+                        <!-- Yangi qo'shilgan rasm 2 - Sun'iy Intellekt -->
+                        <div class="carousel-item">
+                            <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                                 class="d-block w-100" alt="Artificial Intelligence" style="height: 400px; object-fit: cover;">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h3>Sun'iy Intellekt</h3>
+                                <p>Zamonaviy AI texnologiyalari bilan tanishish</p>
+                            </div>
+                        </div>
+                        <!-- Yangi qo'shilgan rasm 3 - Machine Learning -->
+                        <div class="carousel-item">
+                            <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                                 class="d-block w-100" alt="Machine Learning" style="height: 400px; object-fit: cover;">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h3>Machine Learning</h3>
+                                <p>Ma'lumotlardan o'rganish algoritmlari</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Oldingi</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Keyingi</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- O'ng tomondagi 2 ta card -->
+            <div class="col-lg-3">
+                <div class="row g-4">
+                    <!-- AI Chat -->
+                    <div class="col-12">
+                        <a href="{% url 'ai_chat' %}" class="text-decoration-none">
+                            <div class="card feature-card h-100 border-0 shadow">
+                                <div class="card-body text-center p-4">
+                                    <i class="fas fa-robot fa-3x text-success mb-3"></i>
+                                    <h5 class="card-title text-dark">AI Chat</h5>
+                                    <p class="card-text text-muted">Sun'iy intellekt yordamida savollarga javob oling</p>
+                                    <small class="text-primary">Ko'proq &rarr;</small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Testlar -->
+                    <div class="col-12">
+                        <a href="{% url 'tests' %}" class="text-decoration-none">
+                            <div class="card feature-card h-100 border-0 shadow">
+                                <div class="card-body text-center p-4">
+                                    <i class="fas fa-tasks fa-3x text-warning mb-3"></i>
+                                    <h5 class="card-title text-dark">Testlar</h5>
+                                    <p class="card-text text-muted">Bilimingizni test orqali sinab ko'ring</p>
+                                    <small class="text-primary">Ko'proq &rarr;</small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Carousel avtomatik aylanishini sozlash
+document.addEventListener('DOMContentLoaded', function() {
+    var myCarousel = document.getElementById('mainCarousel');
+    var carousel = new bootstrap.Carousel(myCarousel, {
+        interval: 4000,
+        wrap: true
+    });
+});
+
+// Feature card hover effekti
+document.querySelectorAll('.feature-card').forEach(card => {
+    card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-8px)';
+        this.style.boxShadow = '0 15px 30px rgba(0,0,0,0.15)';
+    });
+
+    card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+        this.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+    });
+});
+</script>
+
+<style>
+    /* Carousel animatsiyalari */
+    .carousel-combined .carousel-item {
+        transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+        transform: scale(0.9) translateY(20px);
+        opacity: 0;
+    }
+
+    .carousel-combined .carousel-item.active {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+
+    .carousel-combined .carousel-inner {
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .tech-title {
+        background: #1a1a2e;
+        color: #00fff5;
+        padding: 20px 30px;
+        border-radius: 10px;
+        text-align: center;
+        border: 1px solid #00fff5;
+        box-shadow:
+            0 0 15px rgba(0, 255, 245, 0.3),
+            inset 0 0 15px rgba(0, 255, 245, 0.05);
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 1rem;
+    }
+
+    .tech-title::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(0, 255, 245, 0.08), transparent);
+        animation: shine 5s infinite linear;
+    }
+
+    @keyframes shine {
+        0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    .tech-title h3 {
+        font-weight: 700;
+        margin: 0;
+        position: relative;
+        text-shadow:
+            0 0 8px rgba(0, 255, 245, 0.6),
+            0 0 15px rgba(0, 255, 245, 0.4);
+        letter-spacing: 0.5px;
+        font-size: 1.5rem;
+    }
+
+    .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 60px 0;
+    }
+
+    .feature-card {
+        transition: all 0.3s ease;
+        border: none !important;
+        background: white !important;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.15) !important;
+    }
+
+    .carousel-item img {
+        height: 400px;
+        object-fit: cover;
+    }
+
+    .carousel-caption {
+        background: rgba(0,0,0,0.6);
+        border-radius: 10px;
+        padding: 15px;
+    }
+
+    .card-title {
+        color: #333 !important;
+        font-weight: 600;
+    }
+
+    .card-text {
+        color: #666 !important;
+        font-size: 0.9rem;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .tech-title {
+            padding: 15px 20px;
+        }
+
+        .tech-title h3 {
+            font-size: 1.3rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .tech-title {
+            padding: 12px 15px;
+        }
+
+        .tech-title h3 {
+            font-size: 1.1rem;
+        }
+    }
+</style>
+{% endblock %}
