@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="hero-section" >
+<div class="hero-section" style="padding-top: 80px;">  <!-- Yangi qo'shildi -->
     <div class="container">
         <!-- Sarlavha - Kichiklashtirilgan -->
-        <div class="row mb-4" style="margin: 0.1px auto color: #6F63C4" >
+        <div class="row mb-4">
            <div class="tech-title">
                 <h3 class="fw-bold">SUN'IY INTELLEKT VA MA'LUMOTLARNI QAYTA ISHLASH</h3>
            </div>
@@ -165,7 +165,6 @@
     </div>
 </div>
 
-
 {% endblock %}
 
 {% block scripts %}
@@ -194,38 +193,34 @@ document.querySelectorAll('.feature-card').forEach(card => {
 </script>
 
 <style>
-    /* Carousel animatsiyalari */
-    .carousel-combined .carousel-item {
-        transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
-        transform: scale(0.9) translateY(20px);
-        opacity: 0;
+    /* Hero section yangi sozlamalari */
+    .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 80px 0 40px 0;  /* Yangilandi: tepa padding 80px */
+        min-height: 90vh;
+        display: flex;
+        align-items: center;
+        position: relative;
     }
 
-    .carousel-combined .carousel-item.active {
-        transform: scale(1) translateY(0);
-        opacity: 1;
-    }
-
-    .carousel-combined .carousel-inner {
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-
-    /* Tech title - Kichiklashtirilgan */
+    /* Tech title - Kichiklashtirilgan va joylashtirilgan */
     .tech-title {
         background: linear-gradient(135deg, #6F63C4 0%, #0984e3 100%);
         color: white;
-        padding: 15px 25px;
-        border-radius: 12px;
+        padding: 12px 20px;  /* Kichiklashtirildi */
+        border-radius: 10px;
         text-align: center;
         box-shadow:
-            0 5px 15px rgba(116, 185, 255, 0.3),
-            0 3px 8px rgba(116, 185, 255, 0.2);
+            0 4px 12px rgba(116, 185, 255, 0.3),
+            0 2px 6px rgba(116, 185, 255, 0.2);
         position: relative;
         overflow: hidden;
-        margin-bottom: 1.5rem;
+        margin-bottom: 2rem;
         border: 1px solid rgba(255,255,255,0.2);
+        max-width: 90%;  /* Yangi qo'shildi */
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .tech-title::before {
@@ -245,22 +240,31 @@ document.querySelectorAll('.feature-card').forEach(card => {
     }
 
     .tech-title h3 {
-        font-weight: 700;
+        font-weight: 600;  /* Kichiklashtirildi */
         margin: 0;
         position: relative;
-        text-shadow: 0 2px 8px rgba(0,0,0,0.3);
-        letter-spacing: 0.5px;
-        font-size: 1.4rem;
+        text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        letter-spacing: 0.3px;
+        font-size: 1.2rem;  /* Kichiklashtirildi */
         line-height: 1.3;
     }
 
-    .hero-section {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding:  0;
-        min-height: 90vh;
-        display: flex;
-        align-items: center;
+    /* Carousel animatsiyalari */
+    .carousel-combined .carousel-item {
+        transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+        transform: scale(0.9) translateY(20px);
+        opacity: 0;
+    }
+
+    .carousel-combined .carousel-item.active {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+
+    .carousel-combined .carousel-inner {
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
 
     .feature-card {
@@ -299,57 +303,63 @@ document.querySelectorAll('.feature-card').forEach(card => {
         line-height: 1.4;
     }
 
-    .stats-section {
-        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        color: white;
-        padding: 3rem 0;
-    }
-
-    .stats-section .display-4 {
-        text-shadow: 0 2px 8px rgba(0,0,0,0.3);
-        font-size: 2.5rem;
-    }
-
     /* Responsive adjustments */
     @media (max-width: 768px) {
+        .hero-section {
+            padding: 100px 0 30px 0;  /* Tepa padding oshirildi */
+            min-height: auto;
+        }
+
         .tech-title {
-            padding: 12px 20px;
+            padding: 10px 15px;
+            margin-bottom: 1.5rem;
         }
 
         .tech-title h3 {
-            font-size: 1.2rem;
-        }
-
-        .hero-section {
-            padding: 30px 0;
-            min-height: auto;
+            font-size: 1rem;  /* Kichiklashtirildi */
         }
 
         .carousel-item img {
             height: 300px;
         }
 
-        .stats-section .display-4 {
-            font-size: 2rem;
+        .row.align-items-center {
+            gap: 20px;  /* Elementlar orasiga bo'shliq */
         }
     }
 
     @media (max-width: 480px) {
+        .hero-section {
+            padding: 90px 0 20px 0;  /* Tepa padding oshirildi */
+        }
+
         .tech-title {
-            padding: 10px 15px;
+            padding: 8px 12px;
+            margin-bottom: 1rem;
         }
 
         .tech-title h3 {
-            font-size: 1rem;
-            letter-spacing: 0.3px;
+            font-size: 0.9rem;  /* Kichiklashtirildi */
+            letter-spacing: 0.2px;
         }
 
         .carousel-item img {
             height: 250px;
         }
 
-        .stats-section .display-4 {
-            font-size: 1.8rem;
+        .feature-card .card-body {
+            padding: 1.5rem !important;
+        }
+    }
+
+    /* Kichik ekranlar uchun maxsus sozlamalar */
+    @media (max-width: 360px) {
+        .tech-title h3 {
+            font-size: 0.8rem;
+        }
+
+        .hero-section {
+            padding: 85px 0 15px 0;
         }
     }
 </style>

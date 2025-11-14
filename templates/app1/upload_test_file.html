@@ -4,102 +4,160 @@
 <div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title mb-0">Test Faylini Yuklash</h4>
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-upload me-2"></i>Test Faylini Yuklash
+                    </h4>
                 </div>
                 <div class="card-body">
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
 
+                        {% if form.errors %}
+                        <div class="alert alert-danger">
+                            <strong>Xatolik!</strong> Iltimos, quyidagi xatoliklarni tuzating:
+                            <ul>
+                                {% for field in form %}
+                                    {% for error in field.errors %}
+                                        <li>{{ field.label }}: {{ error }}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                                {% for error in form.non_field_errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+
                         <!-- Fan tanlash -->
                         <div class="mb-3">
                             <label for="{{ form.subject.id_for_label }}" class="form-label">Fan</label>
                             {{ form.subject }}
-                            {% if form.subject.errors %}
-                                <div class="text-danger">
-                                    {% for error in form.subject.errors %}
-                                        {{ error }}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
                         </div>
 
                         <!-- Test nomi -->
                         <div class="mb-3">
                             <label for="{{ form.title.id_for_label }}" class="form-label">Test Nomi</label>
                             {{ form.title }}
-                            {% if form.title.errors %}
-                                <div class="text-danger">
-                                    {% for error in form.title.errors %}
-                                        {{ error }}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
                         </div>
 
                         <!-- Tavsif -->
                         <div class="mb-3">
                             <label for="{{ form.description.id_for_label }}" class="form-label">Tavsif</label>
                             {{ form.description }}
-                            {% if form.description.errors %}
-                                <div class="text-danger">
-                                    {% for error in form.description.errors %}
-                                        {{ error }}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
                         </div>
 
                         <!-- Test fayli -->
                         <div class="mb-3">
                             <label for="{{ form.test_file.id_for_label }}" class="form-label">Test Fayli</label>
                             {{ form.test_file }}
-                            {% if form.test_file.errors %}
-                                <div class="text-danger">
-                                    {% for error in form.test_file.errors %}
-                                        {{ error }}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
                             <div class="form-text">
-                                Faqat .txt fayllar qabul qilinadi. Format:
+                                Faqat .txt fayllar qabul qilinadi. Yangi format:
                                 <br>
-                                <strong>Savol: Savol matni?</strong><br>
+                                <strong>Savol: Savol matni? | Daraja: 2</strong><br>
                                 A) Birinchi variant<br>
                                 B) Ikkinchi variant<br>
                                 C) Uchinchi variant<br>
                                 D) To'rtinchi variant<br>
                                 Javob: B<br><br>
+                                <strong>Daraja:</strong> 1 (Oson), 2 (O'rtacha), 3 (Qiyin)<br>
                                 Savollar orasida bo'sh qator qoldiring.
                             </div>
                         </div>
 
-                        <!-- Test vaqti -->
-                        <div class="mb-3">
-                            <label for="{{ form.time_limit_minutes.id_for_label }}" class="form-label">Test Vaqti (daqiqa)</label>
-                            {{ form.time_limit_minutes }}
-                            {% if form.time_limit_minutes.errors %}
-                                <div class="text-danger">
-                                    {% for error in form.time_limit_minutes.errors %}
-                                        {{ error }}
-                                    {% endfor %}
+                        <div class="row">
+                            <!-- Test vaqti -->
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.time_limit_minutes.id_for_label }}" class="form-label">
+                                    Test Vaqti (daqiqa)
+                                </label>
+                                {{ form.time_limit_minutes }}
+                                <div class="form-text">
+                                    {{ form.time_limit_minutes.help_text }}
                                 </div>
-                            {% endif %}
-                            <div class="form-text">
-                                Testni ishlash uchun berilgan maksimal vaqt.
-                                Foydalanuvchi testni boshlagandan so'ng shu vaqt hisoblanadi.
+                            </div>
+
+                            <!-- Savollar soni -->
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.question_count.id_for_label }}" class="form-label">
+                                    Savollar Soni
+                                </label>
+                                {{ form.question_count }}
+                                <div class="form-text">
+                                    {{ form.question_count.help_text }}
+                                </div>
                             </div>
                         </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="submit" class="btn btn-primary">Testni Yuklash</button>
-                            <a href="{% url 'tests' %}" class="btn btn-secondary">Bekor Qilish</a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-upload me-2"></i>Testni Yuklash
+                            </button>
+                            <a href="{% url 'tests' %}" class="btn btn-secondary">
+                                <i class="fas fa-times me-2"></i>Bekor Qilish
+                            </a>
                         </div>
                     </form>
+                </div>
+            </div>
+
+            <!-- Format namunasi -->
+            <div class="card mt-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">
+                        <i class="fas fa-info-circle me-2"></i>Fayl Format Namunasi
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <pre class="bg-light p-3 border rounded">
+Savol: Python qaysi dasturlash tiliga tegishli? | Daraja: 1
+A) Kompilyatsiya qilinadigan tillar
+B) Interpretatsiya qilinadigan tillar
+C) Assembler tillar
+D) Mashina tillari
+Javob: B
+
+Savol: Django framework qaysi tilda yozilgan? | Daraja: 2
+A) Java
+B) Python
+C) JavaScript
+D) C++
+Javob: B
+
+Savol: Quyidagi kod qanday natija qaytaradi? print(2 ** 3 ** 2) | Daraja: 3
+A) 64
+B) 512
+C) 16
+D) 256
+Javob: B
+                    </pre>
+                    <p class="text-muted mb-0">
+                        <strong>Eslatma:</strong> Har bir savoldan keyin bo'sh qator qoldiring.
+                        Daraja ixtiyoriy (agar ko'rsatilmasa, o'rtacha hisoblanadi).
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+.card {
+    border-radius: 10px;
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+}
+
+.btn {
+    border-radius: 8px;
+}
+
+pre {
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+</style>
 {% endblock %}

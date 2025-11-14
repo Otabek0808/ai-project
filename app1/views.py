@@ -32,22 +32,45 @@ def documents(request):
     return render(request, 'app1/documents.html', {'subjects': subjects})
 
 
+# views.py ga qo'shamiz
+def subject_documents(request, subject_id):
+    """Fanga oid hujjatlar ro'yxati"""
+    subject = get_object_or_404(Subject, id=subject_id)
+    documents = Document.objects.filter(subject=subject).order_by('-uploaded_at')
+
+    return render(request, 'app1/subject_documents.html', {
+        'subject': subject,
+        'documents': documents
+    })
+
+
+# views.py dagi add_document funksiyasini yangilaymiz
 @login_required
 def add_document(request):
     """Hujjat qo'shish (faqat admin)"""
     if not request.user.is_staff:
         return redirect('home')
 
+    # URL dan fan ID sini olish
+    subject_id = request.GET.get('subject')
+
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Hujjat muvaffaqiyatli qo‘shildi!')
+            messages.success(request, 'Material muvaffaqiyatli qo‘shildi!')
             return redirect('documents')
     else:
-        form = DocumentForm()
-    return render(request, 'app1/add_document.html', {'form': form})
+        initial = {}
+        if subject_id:
+            try:
+                subject = Subject.objects.get(id=subject_id)
+                initial['subject'] = subject
+            except Subject.DoesNotExist:
+                pass
+        form = DocumentForm(initial=initial)
 
+    return render(request, 'app1/add_document.html', {'form': form})
 
 def video_lessons(request):
     """Video darslar ro'yxati"""
@@ -120,6 +143,7 @@ def tests(request):
     return render(request, 'app1/tests.html', {'subjects': subjects})
 
 
+# views.py dagi take_test funksiyasida
 @login_required
 def take_test(request, test_id):
     test = get_object_or_404(Test, id=test_id)
@@ -128,8 +152,9 @@ def take_test(request, test_id):
         messages.error(request, "Bu test hozir faol emas")
         return redirect('tests')
 
-    questions = test.questions.all().prefetch_related('answers')
-    total_questions = questions.count()  # ✅ Savollar sonini hisoblaymiz
+    # Foydalanuvchi uchun mos savollarni olish
+    questions = test.get_questions_for_user(request.user)
+    total_questions = len(questions)
 
     if request.method == 'POST':
         # JavaScript dan kelgan sarflangan vaqt
@@ -148,7 +173,7 @@ def take_test(request, test_id):
             time_taken_seconds = max_time_seconds
 
         score = 0
-        total_questions = questions.count()
+        total_questions = len(questions)
 
         # Javoblarni tekshirish
         for question in questions:
@@ -162,7 +187,7 @@ def take_test(request, test_id):
                     pass
 
         # Natijani saqlash
-        TestResult.objects.create(
+        test_result = TestResult.objects.create(
             user=request.user,
             test=test,
             score=score,
@@ -170,19 +195,27 @@ def take_test(request, test_id):
             time_taken_seconds=time_taken_seconds
         )
 
+        # O'rtacha qiyinlik darajasini hisoblash
+        test_result.calculate_average_difficulty(questions)
+
+        # Foydalanuvchi darajasini yangilash
+        from .utils import update_user_difficulty_level  # Bu yerda import qilamiz
+        update_user_difficulty_level(request.user, test.subject, test_result)
+
         return render(request, 'app1/test_result.html', {
             'test': test,
             'score': score,
             'total_questions': total_questions,
             'percentage': (score / total_questions) * 100 if total_questions > 0 else 0,
-            'time_taken_seconds': time_taken_seconds
+            'time_taken_seconds': time_taken_seconds,
+            'average_difficulty': test_result.average_difficulty
         })
 
     return render(request, 'app1/take_test.html', {
         'test': test,
         'questions': questions,
         'time_limit_seconds': test.time_limit_minutes * 60,
-        'total_questions': total_questions  # ✅ Contextga qo'shdik
+        'total_questions': total_questions
     })
 
 @login_required
@@ -235,6 +268,7 @@ def test_results(request):
         'results': results,
         'average_percentage': average_percentage
     })
+
 
 @login_required
 def test_detail(request, test_id):
@@ -313,7 +347,7 @@ def create_test(request):
             return redirect('tests')
     else:
         form = TestCreateForm()
-    return render(request, 'app1/create_test.html', {'form': form})
+    return render(request, 'app1/upload_test_file.html', {'form': form})
 
 
 @login_required
@@ -322,6 +356,7 @@ def admin_stats(request):
     """Admin statistikasi"""
     users = User.objects.all()
     return render(request, 'app1/admin_stats.html', {'users': users})
+
 
 @login_required
 @user_passes_test(is_admin)
@@ -386,6 +421,7 @@ def user_stats(request, user_id):
         'graphic': graphic,
         'best_percentage': round(best_percentage, 1)  # ✅ Yangi o'zgaruvchi
     })
+
 
 @login_required
 @user_passes_test(is_admin)

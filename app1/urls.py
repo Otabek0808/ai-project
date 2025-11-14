@@ -32,6 +32,7 @@ urlpatterns = [
     path('videos/', views.video_lessons, name='video_lessons'),
     path('add-video/', views.add_video, name='add_video'),
     path('ai-chat/', views.ai_chat, name='ai_chat'),
+    path('subject/<int:subject_id>/documents/', views.subject_documents, name='subject_documents'),
 
     # Test tizimi
     path('tests/', views.tests, name='tests'),

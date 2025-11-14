@@ -1,0 +1,171 @@
+# Django specific
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Environment variables
+.env
+.env.*
+!.env.example
+.env.local
+.env.production
+
+# Media files
+/media/
+!/media/.gitkeep
+
+# Static files (collected)
+/staticfiles/
+!/staticfiles/.gitkeep
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.nova/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Python
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Testing
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+htmlcov/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Database backups
+*.backup
+*.sql.backup
+backup/
+
+# Log files
+logs/
+*.log
+django.log
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+temp/
+
+# Project specific (o'z loyihangizga qo'shing)
+/test_files/
+!/test_files/.gitkeep
+/documents/
+!/documents/.gitkeep
+
+# PyCharm
+.idea/
+*.iws
+
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# macOS
+.AppleDouble
+.LSOverride
+
+# Windows
+$RECYCLE.BIN/
+Desktop.ini
+
+# Linux
+*~
+
+# Backup files
+*.bak
+*.backup
+*_backup
+
+# Session files
+*.session
+
+# Package files
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Database files (except SQLite agar boshqa DB ishlatmasangiz)
+*.mdb
+*.accdb
+
+# SSL certificates (agar local development uchun ishlatmasangiz)
+*.pem
+*.key
+*.crt
+
+# Agar PDF yoki boshqa yuklangan fayllar bo'lsa
+/uploads/
+/export/
+
+# Agar temporary test fayllar bo'lsa
+/temp/
+/test_uploads/
+
+# Agar docker ishlatayotgan bo'lsangiz
+docker-compose.override.yml
+
+# Agar celery ishlatayotgan bo'lsangiz
+celerybeat-schedule

@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 import os
+import random
 
 
 # -------------------- Subject va Document --------------------
@@ -54,6 +55,13 @@ class Test(models.Model):
         help_text="Test hozir ishlash uchun mavjudmi"
     )
 
+    # Yangi maydon: testdagi savollar soni
+    question_count = models.PositiveIntegerField(
+        default=25,
+        verbose_name="Savollar soni",
+        help_text="Testdagi umumiy savollar soni"
+    )
+
     def is_available(self):
         """Test hozir ishlash uchun mavjudmi"""
         return self.is_active
@@ -65,16 +73,66 @@ class Test(models.Model):
         else:
             return "faol"
 
+    def get_questions_for_user(self, user):
+        """Foydalanuvchi uchun mos savollarni qaytaradi"""
+        from .utils import get_user_difficulty_level  # Circular importni oldini olish
+
+        # Foydalanuvchining oxirgi natijasiga qarab qiyinlik darajasini olish
+        difficulty_level = get_user_difficulty_level(user, self.subject)
+
+        # Savollarni qiyinlik darajasi bo'yicha filtrlash
+        questions = self.questions.all()
+
+        if difficulty_level == 1:  # Oson
+            easy_questions = questions.filter(difficulty_level=1)
+            if easy_questions.count() >= 25:
+                return random.sample(list(easy_questions), 25)
+            else:
+                # Agar oson savollar yetmasa, barcha savollardan tanlaymiz
+                return random.sample(list(questions), min(25, questions.count()))
+
+        elif difficulty_level == 2:  # O'rtacha
+            medium_questions = questions.filter(difficulty_level=2)
+            if medium_questions.count() >= 25:
+                return random.sample(list(medium_questions), 25)
+            else:
+                # Agar o'rtacha savollar yetmasa, oson va qiyin savollarni qo'shamiz
+                all_questions = list(questions)
+                return random.sample(all_questions, min(25, len(all_questions)))
+
+        elif difficulty_level == 3:  # Qiyin
+            hard_questions = questions.filter(difficulty_level=3)
+            if hard_questions.count() >= 25:
+                return random.sample(list(hard_questions), 25)
+            else:
+                # Agar qiyin savollar yetmasa, barcha savollardan tanlaymiz
+                return random.sample(list(questions), min(25, questions.count()))
+
+        # Agar birinchi marta bo'lsa yoki difficulty_level aniqlanmagan bo'lsa
+        return random.sample(list(questions), min(25, questions.count()))
+
     def __str__(self):
         return f"{self.title} ({self.time_limit_minutes} daqiqa)"
 
 
 class Question(models.Model):
+    DIFFICULTY_LEVELS = (
+        (1, 'Oson'),
+        (2, 'O\'rtacha'),
+        (3, 'Qiyin'),
+    )
+
     test = models.ForeignKey(Test, on_delete=models.CASCADE, related_name='questions')
     text = models.TextField()
+    # Yangi maydon: savolning qiyinlik darajasi
+    difficulty_level = models.PositiveSmallIntegerField(
+        choices=DIFFICULTY_LEVELS,
+        default=2,
+        verbose_name="Qiyinlik darajasi"
+    )
 
     def __str__(self):
-        return self.text[:50]  # Birinchi 50 belgini ko'rsatish
+        return f"{self.text[:50]} (Daraja: {self.difficulty_level})"
 
 
 class Answer(models.Model):
@@ -99,6 +157,13 @@ class TestResult(models.Model):
         help_text="Foydalanuvchi testni ishlashga sarflagan vaqt"
     )
 
+    # Yangi maydon: o'rtacha qiyinlik darajasi
+    average_difficulty = models.FloatField(
+        default=0,
+        verbose_name="O'rtacha qiyinlik",
+        help_text="Testdagi savollarning o'rtacha qiyinlik darajasi"
+    )
+
     def percentage(self):
         if self.total_questions > 0:
             return (self.score / self.total_questions) * 100
@@ -110,8 +175,53 @@ class TestResult(models.Model):
         seconds = self.time_taken_seconds % 60
         return f"{minutes}:{seconds:02d}"
 
+    def calculate_average_difficulty(self, questions):
+        """Testdagi savollarning o'rtacha qiyinlik darajasini hisoblaydi"""
+        if questions:
+            total_difficulty = sum(question.difficulty_level for question in questions)
+            self.average_difficulty = total_difficulty / len(questions)
+            self.save()
+
     def __str__(self):
         return f"{self.user.username} - {self.test.title} - {self.score}/{self.total_questions}"
+
+
+# -------------------- Yangi model: UserSubjectLevel --------------------
+class UserSubjectLevel(models.Model):
+    """Foydalanuvchining har bir fan bo'yicha darajasini saqlaydi"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    difficulty_level = models.PositiveSmallIntegerField(
+        choices=Question.DIFFICULTY_LEVELS,
+        default=2,
+        verbose_name="Qiyinlik darajasi"
+    )
+    last_updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ['user', 'subject']
+        verbose_name = "Foydalanuvchi fan darajasi"
+        verbose_name_plural = "Foydalanuvchi fan darajalari"
+
+    def __str__(self):
+        return f"{self.user.username} - {self.subject.name} (Daraja: {self.difficulty_level})"
+
+    def update_level_based_on_result(self, test_result):
+        """Test natijasiga asosan foydalanuvchi darajasini yangilaydi"""
+        percentage = test_result.percentage()
+
+        if percentage >= 80:  # A'lo natija
+            self.difficulty_level = min(3, self.difficulty_level + 1)  # Qiyinroq
+        elif percentage >= 60:  # Yaxshi natija
+            # O'zgarishsiz qoladi yoki biroz oshadi
+            self.difficulty_level = min(3, self.difficulty_level)
+        elif percentage >= 40:  # Qoniqarli natija
+            self.difficulty_level = max(1, self.difficulty_level - 0.5)  # Biroz osonroq
+        else:  # Qoniqarsiz natija
+            self.difficulty_level = max(1, self.difficulty_level - 1)  # Osonroq
+
+        self.difficulty_level = round(self.difficulty_level)
+        self.save()
 
 
 class TestFile(models.Model):
@@ -127,6 +237,12 @@ class TestFile(models.Model):
         verbose_name="Test vaqti (daqiqa)"
     )
 
+    # Yangi maydon: testdagi savollar soni
+    question_count = models.PositiveIntegerField(
+        default=25,
+        verbose_name="Savollar soni"
+    )
+
     is_processed = models.BooleanField(default=False)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
@@ -136,6 +252,8 @@ class TestFile(models.Model):
     def process_test_file(self):
         """
         .txt fayl formatini qayta ishlaydi
+        Endi faylda savolning qiyinlik darajasi ham bo'ladi
+        Format: Savol: [savol matni] | Daraja: [1,2,3]
         """
         try:
             # Faylni o'qish
@@ -153,7 +271,8 @@ class TestFile(models.Model):
                 subject=self.subject,
                 title=test_title,
                 description=f"Fayldan yuklangan: {self.test_file.name}",
-                time_limit_minutes=self.time_limit_minutes
+                time_limit_minutes=self.time_limit_minutes,
+                question_count=self.question_count
             )
 
             # Savollarni ajratib olish
@@ -171,11 +290,28 @@ class TestFile(models.Model):
                 if not lines:
                     continue
 
-                # Birinchi qator savol matni
-                question_text = lines[0]
-                print(f"Savol: {question_text}")  # Debug
+                # Birinchi qator savol matni va qiyinlik darajasi
+                first_line = lines[0]
+                difficulty_level = 2  # Default o'rtacha
 
-                question = Question.objects.create(test=test, text=question_text)
+                # Qiyinlik darajasini ajratib olish
+                if '| Daraja:' in first_line:
+                    question_parts = first_line.split('| Daraja:')
+                    question_text = question_parts[0].strip()
+                    try:
+                        difficulty_level = int(question_parts[1].strip())
+                    except (ValueError, IndexError):
+                        difficulty_level = 2
+                else:
+                    question_text = first_line
+
+                print(f"Savol: {question_text}, Daraja: {difficulty_level}")  # Debug
+
+                question = Question.objects.create(
+                    test=test,
+                    text=question_text,
+                    difficulty_level=difficulty_level
+                )
                 question_count += 1
 
                 # Variantlarni qayta ishlash

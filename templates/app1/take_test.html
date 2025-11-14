@@ -5,12 +5,27 @@
     <div class="card">
         <div class="card-header bg-primary text-white">
             <h3 class="card-title mb-0">{{ test.title }}</h3>
-            <p class="mb-0">Vaqt chegarasi: {{ test.time_limit_minutes }} daqiqa | Savollar: {{ total_questions }} ta</p>
+            <p class="mb-0">
+                Vaqt chegarasi: {{ test.time_limit_minutes }} daqiqa |
+                Savollar: {{ total_questions }} ta |
+                {% if request.user.is_authenticated %}
+                <small>Savollar sizning darajangizga moslashtirildi</small>
+                {% endif %}
+            </p>
         </div>
         <div class="card-body">
             <!-- Vaqt hisobi -->
             <div class="alert alert-info text-center">
                 <h4 id="timer">Qolgan vaqt: {{ test.time_limit_minutes }}:00</h4>
+                {% if request.user.is_authenticated %}
+                <small class="text-muted">
+                    {% with user_level=request.user.usersubjectlevel_set.first %}
+                    {% if user_level %}
+                    Sizning darajangiz: {{ user_level.get_difficulty_level_display }}
+                    {% endif %}
+                    {% endwith %}
+                </small>
+                {% endif %}
             </div>
 
             <form method="post" id="testForm">
@@ -19,8 +34,18 @@
 
                 {% for question in questions %}
                 <div class="card mb-4">
-                    <div class="card-header bg-light">
+                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
                         <h5 class="card-title mb-0">Savol {{ forloop.counter }}</h5>
+                        <span class="badge
+                            {% if question.difficulty_level == 1 %}bg-success
+                            {% elif question.difficulty_level == 2 %}bg-warning
+                            {% else %}bg-danger
+                            {% endif %}">
+                            {% if question.difficulty_level == 1 %}Oson
+                            {% elif question.difficulty_level == 2 %}O'rtacha
+                            {% else %}Qiyin
+                            {% endif %}
+                        </span>
                     </div>
                     <div class="card-body">
                         <p class="lead">{{ question.text }}</p>
@@ -54,6 +79,9 @@
                     <button type="submit" class="btn btn-success btn-lg">
                         Testni Yakunlash
                     </button>
+                    <a href="{% url 'tests' %}" class="btn btn-secondary btn-lg ms-2">
+                        Orqaga
+                    </a>
                 </div>
             </form>
         </div>
@@ -74,17 +102,33 @@
     </div>
 </div>
 
+<!-- Progress bar -->
+<div class="fixed-bottom bg-light p-2 border-top">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <small>Savollar: <strong>{{ forloop.counter }}/{{ total_questions }}</strong></small>
+            <div class="progress" style="width: 200px; height: 10px;">
+                <div class="progress-bar" id="progressBar"
+                     style="width: 0%;"></div>
+            </div>
+            <small id="progressText">0%</small>
+        </div>
+    </div>
+</div>
+
 <script>
 // Global o'zgaruvchilar
 let timeRemaining = {{ time_limit_seconds }};
 let timerInterval;
 let startTime;
+let totalQuestions = {{ total_questions }};
 
 // Dastlabki sozlash
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Timer ishga tushdi!");
     startTime = Date.now();
     startTimer();
+    updateProgress();
 
     // Form yuborishni boshqarish
     document.getElementById('testForm').addEventListener('submit', function(e) {
@@ -94,6 +138,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         console.log("Sarflangan vaqt:", timeTaken, "soniya");
         document.getElementById('timeTaken').value = timeTaken;
+    });
+
+    // Har bir javob tanlanganda progress yangilash
+    const radioButtons = document.querySelectorAll('input[type="radio"]');
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', updateProgress);
     });
 });
 
@@ -147,6 +197,29 @@ function startTimer() {
     }, 1000);
 }
 
+// Progress boshqaruvi
+function updateProgress() {
+    const answeredQuestions = document.querySelectorAll('input[type="radio"]:checked').length;
+    const progressPercentage = totalQuestions > 0 ? (answeredQuestions / totalQuestions) * 100 : 0;
+
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+
+    if (progressBar && progressText) {
+        progressBar.style.width = progressPercentage + '%';
+        progressText.textContent = Math.round(progressPercentage) + '%';
+
+        // Rangni o'zgartirish
+        if (progressPercentage < 50) {
+            progressBar.className = 'progress-bar bg-warning';
+        } else if (progressPercentage < 80) {
+            progressBar.className = 'progress-bar bg-info';
+        } else {
+            progressBar.className = 'progress-bar bg-success';
+        }
+    }
+}
+
 // Xatolikni tekshirish
 if (typeof bootstrap === 'undefined') {
     console.error("Bootstrap JavaScript yuklanmagan!");
@@ -154,6 +227,7 @@ if (typeof bootstrap === 'undefined') {
 
 console.log("JavaScript kod ishga tushdi");
 console.log("Time limit seconds:", {{ time_limit_seconds }});
+console.log("Total questions:", totalQuestions);
 </script>
 
 <style>
@@ -163,6 +237,16 @@ console.log("Time limit seconds:", {{ time_limit_seconds }});
 }
 .card {
     border-radius: 10px;
+}
+.badge {
+    font-size: 0.8em;
+}
+.fixed-bottom {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(5px);
+}
+.progress {
+    background-color: #e9ecef;
 }
 </style>
 {% endblock %}

@@ -34,7 +34,7 @@ class TestFileUploadForm(forms.ModelForm):
         model = TestFile
         fields = [
             'subject', 'title', 'description', 'test_file',
-            'time_limit_minutes'  # Faqat vaqt chegarasi
+            'time_limit_minutes', 'question_count'  # Vaqt chegarasi va savollar soni
         ]
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
@@ -46,9 +46,16 @@ class TestFileUploadForm(forms.ModelForm):
                 'min': 1,
                 'placeholder': '30'
             }),
+            'question_count': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'min': 1,
+                'max': 200,
+                'placeholder': '25'
+            }),
         }
         help_texts = {
             'time_limit_minutes': 'Testni ishlash uchun berilgan maksimal vaqt (daqiqada)',
+            'question_count': 'Testdagi savollar soni (maksimum 200)',
         }
 
 
@@ -78,7 +85,7 @@ class TestCreateForm(forms.ModelForm):
         model = Test
         fields = [
             'subject', 'title', 'description',
-            'time_limit_minutes', 'is_active'
+            'time_limit_minutes', 'question_count', 'is_active'  # Savollar soni qo'shildi
         ]
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
@@ -88,7 +95,16 @@ class TestCreateForm(forms.ModelForm):
                 'class': 'form-control',
                 'min': 1
             }),
+            'question_count': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'min': 1,
+                'max': 200,
+                'placeholder': '25'
+            }),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+        help_texts = {
+            'question_count': 'Testdagi savollar soni (maksimum 200)',
         }
 
 
