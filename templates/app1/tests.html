@@ -176,25 +176,7 @@
                                 <small class="text-danger">Qiyin</small>
                             </div>
                         </div>
-
-                        <!-- Foydalanuvchi uchun maxsus ma'lumot -->
-{#                        {% if user.is_authenticated %}#}
-{#                        <div class="alert alert-light border small p-2 mb-2">#}
-{#                            <div class="d-flex justify-content-between align-items-center">#}
-{#                                <span>Siz uchun:</span>#}
-{#                                <strong>#}
-{#                                    {% for user_level in user.usersubjectlevel_set.all %}#}
-{#                                        {% if user_level.subject == subject %}#}
-{#                                            {{ user_level.get_difficulty_level_display }} darajali savollar#}
-{#                                        {% endif %}#}
-{#                                    {% empty %}#}
-{#                                        25 ta random savol#}
-{#                                    {% endfor %}#}
-{#                                </strong>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                        {% endif %}#}
-{#                    </div>#}
+                    </div>
 
                     <div class="card-footer bg-white border-top-0 pt-0">
                         <div class="d-grid">
@@ -221,17 +203,19 @@
                             </button>
                             {% endif %}
                         </div>
-                        {% if user.is_authenticated %}
-                        <div class="text-center mt-2">
-                            <small class="text-muted">
-                                {% for result in test.testresult_set.all %}
-                                    {% if result.user == user %}
-                                        Oxirgi natija: {{ result.score }}/{{ result.total_questions }} ({{ result.percentage|floatformat:1 }}%)
-                                    {% endif %}
-                                {% endfor %}
-                            </small>
-                        </div>
-                        {% endif %}
+                       {% if user.is_authenticated %}
+<div class="text-center mt-2">
+    <small class="text-muted">
+        {% for result in test.testresult_set.all %}
+            {% if result.user == user %}
+                {% if forloop.last %}
+                    Oxirgi natija: {{ result.score }}/{{ result.total_questions }} ({{ result.percentage|floatformat:1 }}%)
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </small>
+</div>
+{% endif %}
                     </div>
                 </div>
             </div>
