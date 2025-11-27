@@ -12,15 +12,66 @@ import base64
 import json
 import time
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 
 
 # -------------------- ASOSIY SAHIFALAR --------------------
-
 def home(request):
     """Bosh sahifa"""
-    return render(request, 'app1/home.html')
+    graphic = None
 
+    if request.user.is_authenticated:
+        # Foydalanuvchining test natijalarini olish
+        test_results = TestResult.objects.filter(user=request.user).order_by('completed_at')
 
+        if test_results:
+            # Grafik yaratish
+            import matplotlib
+            matplotlib.use('Agg')
+            import matplotlib.pyplot as plt
+            import io
+            import base64
+
+            plt.figure(figsize=(10, 5))
+
+            # Testlar va ballar
+            test_names = [f"Test {i + 1}" for i in range(len(test_results))]
+            percentages = [result.percentage() for result in test_results]
+
+            # Ranglar
+            colors = ['green' if p >= 80 else 'orange' if p >= 60 else 'red' for p in percentages]
+
+            # Ustunli diagramma
+            bars = plt.bar(test_names, percentages, color=colors, alpha=0.7, edgecolor='black')
+
+            # Har bir ustun ustiga foizlarni yozish
+            for bar, percentage in zip(bars, percentages):
+                plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 1,
+                         f'{percentage:.1f}%', ha='center', va='bottom', fontweight='bold')
+
+            # Formatlar
+            plt.title(f'Sizning Test Natijalaringiz', fontsize=14, fontweight='bold')
+            plt.xlabel('Testlar', fontsize=12)
+            plt.ylabel('Foiz (%)', fontsize=12)
+            plt.xticks(rotation=0)
+            plt.ylim(0, 100)
+            plt.grid(True, alpha=0.3, axis='y')
+
+            plt.tight_layout()
+
+            # Grafikni base64 ga o'tkazish
+            buffer = io.BytesIO()
+            plt.savefig(buffer, format='png', dpi=100, bbox_inches='tight')
+            buffer.seek(0)
+            image_png = buffer.getvalue()
+            buffer.close()
+            graphic = base64.b64encode(image_png).decode('utf-8')
+            plt.close()
+
+    return render(request, 'app1/home.html', {
+        'graphic': graphic  # ✅ Kontekstga qo'shildi
+    })
 def about(request):
     """Loyiha haqida sahifa"""
     return render(request, 'app1/about.html')
@@ -361,9 +412,9 @@ def admin_stats(request):
 @login_required
 @user_passes_test(is_admin)
 def user_stats(request, user_id):
-    """Foydalanuvchi statistikasi - Parabola grafigi bilan"""
+    """Foydalanuvchi statistikasi - Ustunli diagramma bilan"""
     user = get_object_or_404(User, id=user_id)
-    test_results = TestResult.objects.filter(user=user)
+    test_results = TestResult.objects.filter(user=user).order_by('completed_at')  # ✅ completed_at bo'yicha tartiblash
 
     # Eng yaxshi natijani hisoblaymiz
     best_percentage = 0
@@ -371,38 +422,42 @@ def user_stats(request, user_id):
         percentages = [result.percentage() for result in test_results]
         best_percentage = max(percentages)
 
-    # Parabola shaklidagi grafik
+    # Ustunli diagramma
     plt.figure(figsize=(12, 6))
 
     if test_results:
-        # Testlar va ballar
-        test_names = [result.test.title for result in test_results]
+        # Testlar va ballar (tugatilish vaqti tartibida)
+        test_names = [f"Test {i + 1}" for i in range(len(test_results))]  # ✅ Test 1, Test 2, ...
         percentages = [result.percentage() for result in test_results]
 
-        # Parabola chizish
-        x = np.arange(len(test_names))
-        y = percentages
+        # Ranglar - ballarga qarab
+        colors = ['green' if p >= 80 else 'orange' if p >= 60 else 'red' for p in percentages]
 
-        # Smooth parabola curve
-        # x_smooth = np.linspace(0, len(test_names) - 1, 100)
-        # if len(test_names) > 1:
-        #     z = np.polyfit(x, y, 2)
-        #     p = np.poly1d(z)
-        #     y_smooth = p(x_smooth)
-        #     plt.plot(x_smooth, y_smooth, 'b-', alpha=0.7, linewidth=2, label='Rivojlanish trendi')
+        # Ustunli diagramma
+        bars = plt.bar(test_names, percentages, color=colors, alpha=0.7, edgecolor='black')
 
-        # Asosiy nuqtalar
-        plt.scatter(x, y, color='red', s=100, zorder=5)
-        plt.plot(x, y, 'ro-', alpha=0.6, linewidth=1)
+        # Har bir ustun ustiga foizlarni yozish
+        for bar, percentage in zip(bars, percentages):
+            plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 1,
+                     f'{percentage:.1f}%', ha='center', va='bottom', fontweight='bold')
 
         # Formatlar
-        plt.title(f'{user.username} - Test Natijalari Trendi', fontsize=14, fontweight='bold')
-        plt.xlabel('Testlar', fontsize=12)
+        plt.title(f'{user.username} - Test Natijalari (Ketma-ketlik)', fontsize=14, fontweight='bold')
+        plt.xlabel('Testlar (tugatilish tartibida)', fontsize=12)
         plt.ylabel('Foiz (%)', fontsize=12)
-        plt.xticks(x, test_names, rotation=45, ha='right')
+        plt.xticks(rotation=0)  # ✅ Aylantirish yo'q
         plt.ylim(0, 100)
-        plt.grid(True, alpha=0.3)
-        plt.legend()
+        plt.grid(True, alpha=0.3, axis='y')
+
+        # Legend
+        from matplotlib.patches import Patch
+        legend_elements = [
+            Patch(facecolor='green', alpha=0.7, label='Yaxshi (80%+)'),
+            Patch(facecolor='orange', alpha=0.7, label='Qoniqarli (60-79%)'),
+            Patch(facecolor='red', alpha=0.7, label='Qoniqarsiz (<60%)')
+        ]
+        plt.legend(handles=legend_elements)
+
         plt.tight_layout()
 
         # Grafikni base64 ga o'tkazish
@@ -412,6 +467,7 @@ def user_stats(request, user_id):
         image_png = buffer.getvalue()
         buffer.close()
         graphic = base64.b64encode(image_png).decode('utf-8')
+        plt.close()
     else:
         graphic = None
 
@@ -419,9 +475,8 @@ def user_stats(request, user_id):
         'user': user,
         'test_results': test_results,
         'graphic': graphic,
-        'best_percentage': round(best_percentage, 1)  # ✅ Yangi o'zgaruvchi
+        'best_percentage': round(best_percentage, 1)
     })
-
 
 @login_required
 @user_passes_test(is_admin)
