@@ -1,366 +1,1060 @@
 {% extends 'base.html' %}
-
+{##}
 {% block content %}
-<div class="hero-section" style="padding-top: 80px;">  <!-- Yangi qo'shildi -->
-    <div class="container">
-        <!-- Sarlavha - Kichiklashtirilgan -->
-        <div class="row mb-4">
-           <div class="tech-title">
-                <h3 class="fw-bold">SUN'IY INTELLEKT VA MA'LUMOTLARNI QAYTA ISHLASH</h3>
-           </div>
+{#<div class="hero-section" style="padding-top: 80px;">  <!-- Yangi qo'shildi -->#}
+{#    <div class="container">#}
+{#        <!-- Sarlavha - Kichiklashtirilgan -->#}
+{#        <div class="row mb-4">#}
+{#           <div class="tech-title">#}
+{#                <h3 class="fw-bold">SUN'IY INTELLEKT VA MA'LUMOTLARNI QAYTA ISHLASH</h3>#}
+{#           </div>#}
+{#        </div>#}
+{##}
+{#        <!-- Carousel va Feature Cards -->#}
+{#        <div class="row align-items-center">#}
+{#            <!-- Chap tomondagi 2 ta card -->#}
+{#            <div class="col-lg-3">#}
+{#                <div class="row g-4">#}
+{#                    <!-- Fan materiallari -->#}
+{#                    <div class="col-12">#}
+{#                        <a href="{% url 'documents' %}" class="text-decoration-none">#}
+{#                            <div class="card feature-card h-100 border-0 shadow">#}
+{#                                <div class="card-body text-center p-4">#}
+{#                                    <i class="fas fa-book fa-3x text-primary mb-3"></i>#}
+{#                                    <h5 class="card-title text-dark">Fan materiallari</h5>#}
+{#                                    <p class="card-text text-muted">Mutaxassislik fanlari bo'yicha PDF va hujjatlar</p>#}
+{#                                    <small class="text-primary">Ko'proq &rarr;</small>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </a>#}
+{#                    </div>#}
+{##}
+{#                    <!-- Video darslar -->#}
+{#                    <div class="col-12">#}
+{#                        <a href="{% url 'video_lessons' %}" class="text-decoration-none">#}
+{#                            <div class="card feature-card h-100 border-0 shadow">#}
+{#                                <div class="card-body text-center p-4">#}
+{#                                    <i class="fas fa-video fa-3x text-danger mb-3"></i>#}
+{#                                    <h5 class="card-title text-dark">Video darslar</h5>#}
+{#                                    <p class="card-text text-muted">YouTube platformasidagi tushunarli video darslar</p>#}
+{#                                    <small class="text-primary">Ko'proq &rarr;</small>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <!-- Markazdagi Carousel -->#}
+{#            <div class="col-lg-6">#}
+{#                <div id="mainCarousel" class="carousel slide carousel-combined" data-bs-ride="carousel" data-bs-interval="4000">#}
+{#                    <div class="carousel-indicators">#}
+{#                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active"></button>#}
+{#                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1"></button>#}
+{#                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2"></button>#}
+{#                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="3"></button>#}
+{#                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="4"></button>#}
+{#                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="5"></button>#}
+{#                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="6"></button>#}
+{#                    </div>#}
+{#                    <div class="carousel-inner rounded-3 shadow-lg">#}
+{#                        <div class="carousel-item active">#}
+{#                            <img src="https://pfst.cf2.poecdn.net/base/image/d8f5e7192409c675e08b81cf737b330ce99b85202735337e35d264b42b894e4d?w=1024&h=768&pmaid=505716827"#}
+{#                                 class="d-block w-100" alt="IT Learning" style="height: 400px; object-fit: cover;">#}
+{#                            <div class="carousel-caption d-none d-md-block">#}
+{#                                <h3>IT Ta'lim Platformasi</h3>#}
+{#                                <p>Zamonaviy texnologiyalarni o'rganing</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="carousel-item">#}
+{#                            <img src="https://pfst.cf2.poecdn.net/base/image/86546924691a6def957644fa02c74b61951da63218e2947e03c67426c03fa07e?w=1024&h=768&pmaid=505717511"#}
+{#                                 class="d-block w-100" alt="Programming" style="height: 400px; object-fit: cover;">#}
+{#                            <div class="carousel-caption d-none d-md-block">#}
+{#                                <h3>Dasturlash</h3>#}
+{#                                <p>Python, Django va boshqa texnologiyalar</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="carousel-item">#}
+{#                            <img src="https://pfst.cf2.poecdn.net/base/image/83a656165b691f72b18e81c8fee882f4030159d55c5721a5df2458737d638db0?w=1024&h=768&pmaid=505717764"#}
+{#                                 class="d-block w-100" alt="Technology" style="height: 400px; object-fit: cover;">#}
+{#                            <div class="carousel-caption d-none d-md-block">#}
+{#                                <h3>Zamonaviy Texnologiyalar</h3>#}
+{#                                <p>Sun'iy intellekt va ma'lumotlar tahlili</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="carousel-item">#}
+{#                            <img src="https://pfst.cf2.poecdn.net/base/image/fe946b54f923016df61ffc37d68d1b22822b1b730273b87791b7aa1dc2bad2b6?w=1024&h=768&pmaid=505718646"#}
+{#                                 class="d-block w-100" alt="Teamwork" style="height: 400px; object-fit: cover;">#}
+{#                            <div class="carousel-caption d-none d-md-block">#}
+{#                                <h3>Hamkorlik</h3>#}
+{#                                <p>Boshqa talabalar bilan bilim almashing</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <!-- Yangi qo'shilgan rasm 1 -->#}
+{#                        <div class="carousel-item">#}
+{#                            <img src="https://copilot.microsoft.com/th/id/BCO.7fcf76d7-65ae-4f3b-afe1-2a6658292f75.png"#}
+{#                                 class="d-block w-100" alt="AI Assistant" style="height: 400px; object-fit: cover;">#}
+{#                            <div class="carousel-caption d-none d-md-block">#}
+{#                                <h3>AI Yordamchi</h3>#}
+{#                                <p>Sun'iy intellekt bilan o'qish jarayonini yaxshilang</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <!-- Yangi qo'shilgan rasm 2 - Sun'iy Intellekt -->#}
+{#                        <div class="carousel-item">#}
+{#                            <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"#}
+{#                                 class="d-block w-100" alt="Artificial Intelligence" style="height: 400px; object-fit: cover;">#}
+{#                            <div class="carousel-caption d-none d-md-block">#}
+{#                                <h3>Sun'iy Intellekt</h3>#}
+{#                                <p>Zamonaviy AI texnologiyalari bilan tanishish</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <!-- Yangi qo'shilgan rasm 3 - Machine Learning -->#}
+{#                        <div class="carousel-item">#}
+{#                            <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"#}
+{#                                 class="d-block w-100" alt="Machine Learning" style="height: 400px; object-fit: cover;">#}
+{#                            <div class="carousel-caption d-none d-md-block">#}
+{#                                <h3>Machine Learning</h3>#}
+{#                                <p>Ma'lumotlardan o'rganish algoritmlari</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">#}
+{#                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>#}
+{#                        <span class="visually-hidden">Oldingi</span>#}
+{#                    </button>#}
+{#                    <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">#}
+{#                        <span class="carousel-control-next-icon" aria-hidden="true"></span>#}
+{#                        <span class="visually-hidden">Keyingi</span>#}
+{#                    </button>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <!-- O'ng tomondagi 2 ta card -->#}
+{#            <div class="col-lg-3">#}
+{#                <div class="row g-4">#}
+{#                    <!-- AI Chat -->#}
+{#                    <div class="col-12">#}
+{#                        <a href="{% url 'ai_chat' %}" class="text-decoration-none">#}
+{#                            <div class="card feature-card h-100 border-0 shadow">#}
+{#                                <div class="card-body text-center p-4">#}
+{#                                    <i class="fas fa-robot fa-3x text-success mb-3"></i>#}
+{#                                    <h5 class="card-title text-dark">AI Chat</h5>#}
+{#                                    <p class="card-text text-muted">Sun'iy intellekt yordamida savollarga javob oling</p>#}
+{#                                    <small class="text-primary">Ko'proq &rarr;</small>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </a>#}
+{#                    </div>#}
+{##}
+{#                    <!-- Testlar -->#}
+{#                    <div class="col-12">#}
+{#                        <a href="{% url 'tests' %}" class="text-decoration-none">#}
+{#                            <div class="card feature-card h-100 border-0 shadow">#}
+{#                                <div class="card-body text-center p-4">#}
+{#                                    <i class="fas fa-tasks fa-3x text-warning mb-3"></i>#}
+{#                                    <h5 class="card-title text-dark">Testlar</h5>#}
+{#                                    <p class="card-text text-muted">Bilimingizni test orqali sinab ko'ring</p>#}
+{#                                    <small class="text-primary">Ko'proq &rarr;</small>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#{% endblock %}#}
+{##}
+{#{% block scripts %}#}
+{#<script>#}
+{#// Carousel avtomatik aylanishini sozlash#}
+{#document.addEventListener('DOMContentLoaded', function() {#}
+{#    var myCarousel = document.getElementById('mainCarousel');#}
+{#    var carousel = new bootstrap.Carousel(myCarousel, {#}
+{#        interval: 4000,#}
+{#        wrap: true#}
+{#    });#}
+{#});#}
+{##}
+{#// Feature card hover effekti#}
+{#document.querySelectorAll('.feature-card').forEach(card => {#}
+{#    card.addEventListener('mouseenter', function() {#}
+{#        this.style.transform = 'translateY(-8px)';#}
+{#        this.style.boxShadow = '0 15px 30px rgba(0,0,0,0.15)';#}
+{#    });#}
+{##}
+{#    card.addEventListener('mouseleave', function() {#}
+{#        this.style.transform = 'translateY(0)';#}
+{#        this.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';#}
+{#    });#}
+{#});#}
+{#</script>#}
+{##}
+{#<style>#}
+{#    /* Hero section yangi sozlamalari */#}
+{#    .hero-section {#}
+{#        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);#}
+{#        color: white;#}
+{#        padding: 80px 0 40px 0;  /* Yangilandi: tepa padding 80px */#}
+{#        min-height: 90vh;#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        position: relative;#}
+{#    }#}
+{##}
+{#    /* Tech title - Kichiklashtirilgan va joylashtirilgan */#}
+{#    .tech-title {#}
+{#        background: linear-gradient(135deg, #6F63C4 0%, #0984e3 100%);#}
+{#        color: white;#}
+{#        padding: 12px 20px;  /* Kichiklashtirildi */#}
+{#        border-radius: 10px;#}
+{#        text-align: center;#}
+{#        box-shadow:#}
+{#            0 4px 12px rgba(116, 185, 255, 0.3),#}
+{#            0 2px 6px rgba(116, 185, 255, 0.2);#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#        margin-bottom: 2rem;#}
+{#        border: 1px solid rgba(255,255,255,0.2);#}
+{#        max-width: 90%;  /* Yangi qo'shildi */#}
+{#        margin-left: auto;#}
+{#        margin-right: auto;#}
+{#    }#}
+{##}
+{#    .tech-title::before {#}
+{#        content: "";#}
+{#        position: absolute;#}
+{#        top: -50%;#}
+{#        left: -50%;#}
+{#        width: 200%;#}
+{#        height: 200%;#}
+{#        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);#}
+{#        animation: shine 6s infinite linear;#}
+{#    }#}
+{##}
+{#    @keyframes shine {#}
+{#        0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }#}
+{#        100% { transform: translateX(100%) translateY(100%) rotate(45deg); }#}
+{#    }#}
+{##}
+{#    .tech-title h3 {#}
+{#        font-weight: 600;  /* Kichiklashtirildi */#}
+{#        margin: 0;#}
+{#        position: relative;#}
+{#        text-shadow: 0 2px 6px rgba(0,0,0,0.3);#}
+{#        letter-spacing: 0.3px;#}
+{#        font-size: 1.2rem;  /* Kichiklashtirildi */#}
+{#        line-height: 1.3;#}
+{#    }#}
+{##}
+{#    /* Carousel animatsiyalari */#}
+{#    .carousel-combined .carousel-item {#}
+{#        transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;#}
+{#        transform: scale(0.9) translateY(20px);#}
+{#        opacity: 0;#}
+{#    }#}
+{##}
+{#    .carousel-combined .carousel-item.active {#}
+{#        transform: scale(1) translateY(0);#}
+{#        opacity: 1;#}
+{#    }#}
+{##}
+{#    .carousel-combined .carousel-inner {#}
+{#        border-radius: 15px;#}
+{#        overflow: hidden;#}
+{#        box-shadow: 0 10px 30px rgba(0,0,0,0.3);#}
+{#    }#}
+{##}
+{#    .feature-card {#}
+{#        transition: all 0.3s ease;#}
+{#        border: none !important;#}
+{#        background: white !important;#}
+{#        border-radius: 12px !important;#}
+{#    }#}
+{##}
+{#    .feature-card:hover {#}
+{#        transform: translateY(-6px);#}
+{#        box-shadow: 0 12px 25px rgba(0,0,0,0.15) !important;#}
+{#    }#}
+{##}
+{#    .carousel-item img {#}
+{#        height: 380px;#}
+{#        object-fit: cover;#}
+{#    }#}
+{##}
+{#    .carousel-caption {#}
+{#        background: rgba(0,0,0,0.7);#}
+{#        border-radius: 8px;#}
+{#        padding: 15px;#}
+{#        backdrop-filter: blur(8px);#}
+{#    }#}
+{##}
+{#    .card-title {#}
+{#        color: #2c3e50 !important;#}
+{#        font-weight: 600;#}
+{#        font-size: 1.1rem;#}
+{#    }#}
+{##}
+{#    .card-text {#}
+{#        color: #7f8c8d !important;#}
+{#        font-size: 0.9rem;#}
+{#        line-height: 1.4;#}
+{#    }#}
+{##}
+{#    /* Responsive adjustments */#}
+{#    @media (max-width: 768px) {#}
+{#        .hero-section {#}
+{#            padding: 100px 0 30px 0;  /* Tepa padding oshirildi */#}
+{#            min-height: auto;#}
+{#        }#}
+{##}
+{#        .tech-title {#}
+{#            padding: 10px 15px;#}
+{#            margin-bottom: 1.5rem;#}
+{#        }#}
+{##}
+{#        .tech-title h3 {#}
+{#            font-size: 1rem;  /* Kichiklashtirildi */#}
+{#        }#}
+{##}
+{#        .carousel-item img {#}
+{#            height: 300px;#}
+{#        }#}
+{##}
+{#        .row.align-items-center {#}
+{#            gap: 20px;  /* Elementlar orasiga bo'shliq */#}
+{#        }#}
+{#    }#}
+{##}
+{#    @media (max-width: 480px) {#}
+{#        .hero-section {#}
+{#            padding: 90px 0 20px 0;  /* Tepa padding oshirildi */#}
+{#        }#}
+{##}
+{#        .tech-title {#}
+{#            padding: 8px 12px;#}
+{#            margin-bottom: 1rem;#}
+{#        }#}
+{##}
+{#        .tech-title h3 {#}
+{#            font-size: 0.9rem;  /* Kichiklashtirildi */#}
+{#            letter-spacing: 0.2px;#}
+{#        }#}
+{##}
+{#        .carousel-item img {#}
+{#            height: 250px;#}
+{#        }#}
+{##}
+{#        .feature-card .card-body {#}
+{#            padding: 1.5rem !important;#}
+{#        }#}
+{#    }#}
+{##}
+{#    /* Kichik ekranlar uchun maxsus sozlamalar */#}
+{#    @media (max-width: 360px) {#}
+{#        .tech-title h3 {#}
+{#            font-size: 0.8rem;#}
+{#        }#}
+{##}
+{#        .hero-section {#}
+{#            padding: 85px 0 15px 0;#}
+{#        }#}
+{#    }#}
+{#</style>#}
+{#{% endblock %}#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boshqaruv Paneli</title>
+    <style>
+        /* header.css */
+        header {
+          width: auto;
+          height: auto;
+        }
+        .section_header {
+          display: flex;
+          justify-content: space-between;
+          margin: 0 auto;
+          width: auto;
+          height: auto;
+        }
+        .logo {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .logo h1 {
+          margin-left: 70px;
+        }
+        .logo svg {
+          width: 30px;
+          height: auto;
+          cursor: pointer;
+          backdrop-filter: blur(100px);
+          background-color: rgba(255, 255, 255, 0.511);
+          border-radius: 10px;
+          padding: 10px;
+          transition: 0.5s ease;
+          position: absolute;
+          left: 35px;
+          top: 45px;
+          z-index: 30;
+        }
+        .logo svg:hover {
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .profil_img {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+        .profil_img img {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          border: 3px solid white;
+          cursor: pointer;
+        }
+        .list_btn {
+          display: flex;
+          gap: 80px;
+          display: none;
+          transition: width 0.5s ease, display 0s 0.5s;
+          width: 0;
+        }
+        .list_btn svg {
+          width: 30px;
+          height: 30px;
+          cursor: pointer;
+          backdrop-filter: blur(100px);
+          background-color: rgba(255, 255, 255, 0.511);
+          padding: 7px;
+          border-radius: 10px;
+          transition: 0.3s ease;
+          color: rgb(20, 33, 119);
+          display: inline;
+        }
+        .list_btn svg:hover {
+          transform: scale(1.05);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .list_btn.expanded {
+          display: inline;
+          width: 120px;
+          transition: width 0.5s ease;
+        }
+        #listBtn.visible #loGin,
+        #listBtn.visible #sogin {
+          opacity: 1;
+          transition-delay: 0.5s;
+        }
+        .hidden {
+          display: none;
+        }
+        .visible {
+          display: block;
+          width: 100px;
+        }
+        #loGin,
+        #sogin {
+          opacity: 0;
+          transition: opacity 0.5s ease;
+        }
+
+        /* main.css */
+        * {
+          padding: 0;
+          margin: 0;
+          font-family: "Arial", sans-serif;
+        }
+        body {
+          padding: 5px;
+          background: linear-gradient(to right, #a3c1e0, #b7c9e2, #d2c7e5);
+        }
+        .section_container {
+          background: linear-gradient(to right, #a3c1e0, #f2c5ec        , #f2c5d6);
+          background-repeat: no-repeat;
+          border-radius: 30px;
+          border: 3px solid #ffffff;
+          padding: 20px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+          margin: 0 auto;
+          width: auto;
+          min-width: 280px;
+          height: auto;
+        }
+        .contaner_box {
+          border-radius: 20px;
+          border: 2px solid #ffffff;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+          backdrop-filter: blur(10px);
+          background-color: rgba(22, 188, 171, 0.1);
+          display: flex;
+          gap: 10px;
+        }
+        .hed_main {
+          padding: 35px;
+          width: 100%;
+        }
+        main {
+          padding-top: 20px;
+        }
+
+        /* home.css */
+        .static_contaner_section {
+          width: auto;
+          max-width: 100%;
+          height: auto;
+          display: flex;
+          gap: 10px;
+          justify-content: space-between;
+        }
+        .contaner_info {
+          min-width: 10px;
+          width: 100%;
+          height: auto;
+          backdrop-filter: blur(10px);
+          background-color: rgba(255, 255, 255, 0.511);
+          border-radius: 10px;
+          padding: 25px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .log_num {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+        }
+        .log_num svg {
+          width: 30px;
+          height: 30px;
+          backdrop-filter: blur(10px);
+          background-color: rgba(255, 255, 255, 0.511);
+          padding: 10px;
+          border-radius: 10px;
+        }
+        .log_num h2 {
+          font-size: 36px;
+        }
+        .contaner_info p {
+          font-size: 18px;
+          margin-top: 20px;
+        }
+        .section_statistik {
+          padding-top: 20px;
+          width: auto;
+          height: auto;
+          display: flex;
+          max-width: 100%;
+          gap: 15px;
+        }
+        .statistik_box {
+          width: 100%;
+          height: auto;
+        }
+        .progres {
+          display: flex;
+          justify-content: space-between;
+          width: auto;
+          gap: 15px;
+        }
+        .progress_box {
+          width: 100%;
+          height: auto;
+          backdrop-filter: blur(10px);
+          background-color: rgba(255, 255, 255, 0.511);
+          border-radius: 10px;
+          padding: 10px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .attent_box {
+          padding-top: 20px;
+          display: flex;
+          justify-content: space-between;
+          width: auto;
+          gap: 15px;
+        }
+        .attent {
+          width: 40%;
+          height: auto;
+          backdrop-filter: blur(10px);
+          background-color: rgba(255, 255, 255, 0.511);
+          border-radius: 10px;
+          padding: 10px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .grade {
+          width: 60%;
+          height: auto;
+          backdrop-filter: blur(10px);
+          background-color: rgba(255, 255, 255, 0.511);
+          border-radius: 10px;
+          padding: 10px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .announcements {
+          margin-top: 20px;
+          width: auto;
+          height: auto;
+          backdrop-filter: blur(10px);
+          background-color: rgba(255, 255, 255, 0.511);
+          border-radius: 10px;
+          padding: 10px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .time_box {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          width: 60%;
+          height: auto;
+        }
+        .tasks {
+          width: auto;
+          height: auto;
+          backdrop-filter: blur(10px);
+          background-color: rgba(255, 255, 255, 0.511);
+          border-radius: 10px;
+          padding: 10px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .tasks_box {
+          width: auto;
+          height: auto;
+          backdrop-filter: blur(10px);
+          background-color: rgba(255, 255, 255, 0.511);
+          border-radius: 10px;
+          padding: 10px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* menu.css */
+        .menu {
+          height: auto;
+          backdrop-filter: blur(10px);
+          background-color: rgba(226, 237, 236, 0.664);
+          border-radius: 20px;
+          transition: width 0.5s ease;
+          display: none;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+          border: 1px solid #ffffff;
+        }
+        .menu.show {
+          display: block;
+          transform: translateX(0);
+        }
+        .menu article {
+          margin-top: 110px;
+          margin-bottom: 60px;
+          padding: 0 30px 0 40px;
+          transition: 0.3s ease;
+        }
+        .menu article a {
+          text-decoration: none;
+        }
+        .menu article a button {
+          width: 220px;
+          cursor: pointer;
+          border: none;
+          border-radius: 10px;
+          margin-top: 5px;
+          background: none;
+          font-size: 18px;
+          transition: 0.3s ease;
+          display: flex;
+          gap: 20px;
+          align-items: center;
+          padding: 20px;
+        }
+        .menu article a button:hover {
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .menu article a button.show {
+          display: block;
+          opacity: 0;
+        }
+        .menu article a button svg {
+          width: 20px;
+          height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <section class="section_container">
+      <section class="contaner_box">
+        <div class="menu" id="menu_box">
+          <article id="menuBtn">
+            <a href="">
+              <button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-file"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1"
+                  />
+                </svg>
+                Boshqaruv paneli
+              </button>
+            </a>
+            <a href="">
+              <button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-card-checklist"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"
+                  />
+                  <path
+                    d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"
+                  />
+                </svg>
+                Kurslar
+              </button>
+            </a>
+            <a href="">
+              <button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-clipboard2"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M3.5 2a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-12a.5.5 0 0 0-.5-.5H12a.5.5 0 0 1 0-1h.5A1.5 1.5 0 0 1 14 2.5v12a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-12A1.5 1.5 0 0 1 3.5 1H4a.5.5 0 0 1 0 1z"
+                  />
+                  <path
+                    d="M10 .5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5.5.5 0 0 1-.5.5.5.5 0 0 0-.5.5V2a.5.5 0 0 0 .5.5h5A.5.5 0 0 0 11 2v-.5a.5.5 0 0 0-.5-.5.5.5 0 0 1-.5-.5"
+                  />
+                </svg>
+                Jadval
+              </button>
+            </a>
+            <a href="">
+              <button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-person-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"
+                  />
+                </svg>
+                Talablar
+              </button>
+            </a>
+            <a href="">
+              <button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-chat-square-text-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z"
+                  />
+                </svg>
+                Messages
+              </button>
+            </a>
+            <a href="">
+              <button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-gear"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"
+                  />
+                  <path
+                    d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"
+                  />
+                </svg>
+                Sozlamalar
+              </button>
+            </a>
+          </article>
         </div>
-
-        <!-- Carousel va Feature Cards -->
-        <div class="row align-items-center">
-            <!-- Chap tomondagi 2 ta card -->
-            <div class="col-lg-3">
-                <div class="row g-4">
-                    <!-- Fan materiallari -->
-                    <div class="col-12">
-                        <a href="{% url 'documents' %}" class="text-decoration-none">
-                            <div class="card feature-card h-100 border-0 shadow">
-                                <div class="card-body text-center p-4">
-                                    <i class="fas fa-book fa-3x text-primary mb-3"></i>
-                                    <h5 class="card-title text-dark">Fan materiallari</h5>
-                                    <p class="card-text text-muted">Mutaxassislik fanlari bo'yicha PDF va hujjatlar</p>
-                                    <small class="text-primary">Ko'proq &rarr;</small>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <!-- Video darslar -->
-                    <div class="col-12">
-                        <a href="{% url 'video_lessons' %}" class="text-decoration-none">
-                            <div class="card feature-card h-100 border-0 shadow">
-                                <div class="card-body text-center p-4">
-                                    <i class="fas fa-video fa-3x text-danger mb-3"></i>
-                                    <h5 class="card-title text-dark">Video darslar</h5>
-                                    <p class="card-text text-muted">YouTube platformasidagi tushunarli video darslar</p>
-                                    <small class="text-primary">Ko'proq &rarr;</small>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+        <section class="hed_main" id="hedMain">
+          <header>
+            <section class="section_header">
+              <div class="logo">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-list"
+                  viewBox="0 0 16 16"
+                  id="menu"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
+                  />
+                </svg>
+                <h1 id="dashboart">Boshqaruv paneli</h1>
+              </div>
+              <div class="profil_img" id="contanerList">
+                <div class="list_btn" id="listBtn">
+                  <a href="" id="loGin">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-box-arrow-in-right"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"
+                      />
+                    </svg>
+                  </a>
+                  <a href="" id="sogin">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-person-fill-add"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"
+                      />
+                      <path
+                        d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"
+                      />
+                    </svg>
+                  </a>
                 </div>
-            </div>
-
-            <!-- Markazdagi Carousel -->
-            <div class="col-lg-6">
-                <div id="mainCarousel" class="carousel slide carousel-combined" data-bs-ride="carousel" data-bs-interval="4000">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active"></button>
-                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1"></button>
-                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2"></button>
-                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="3"></button>
-                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="4"></button>
-                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="5"></button>
-                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="6"></button>
-                    </div>
-                    <div class="carousel-inner rounded-3 shadow-lg">
-                        <div class="carousel-item active">
-                            <img src="https://pfst.cf2.poecdn.net/base/image/d8f5e7192409c675e08b81cf737b330ce99b85202735337e35d264b42b894e4d?w=1024&h=768&pmaid=505716827"
-                                 class="d-block w-100" alt="IT Learning" style="height: 400px; object-fit: cover;">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h3>IT Ta'lim Platformasi</h3>
-                                <p>Zamonaviy texnologiyalarni o'rganing</p>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img src="https://pfst.cf2.poecdn.net/base/image/86546924691a6def957644fa02c74b61951da63218e2947e03c67426c03fa07e?w=1024&h=768&pmaid=505717511"
-                                 class="d-block w-100" alt="Programming" style="height: 400px; object-fit: cover;">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h3>Dasturlash</h3>
-                                <p>Python, Django va boshqa texnologiyalar</p>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img src="https://pfst.cf2.poecdn.net/base/image/83a656165b691f72b18e81c8fee882f4030159d55c5721a5df2458737d638db0?w=1024&h=768&pmaid=505717764"
-                                 class="d-block w-100" alt="Technology" style="height: 400px; object-fit: cover;">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h3>Zamonaviy Texnologiyalar</h3>
-                                <p>Sun'iy intellekt va ma'lumotlar tahlili</p>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img src="https://pfst.cf2.poecdn.net/base/image/fe946b54f923016df61ffc37d68d1b22822b1b730273b87791b7aa1dc2bad2b6?w=1024&h=768&pmaid=505718646"
-                                 class="d-block w-100" alt="Teamwork" style="height: 400px; object-fit: cover;">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h3>Hamkorlik</h3>
-                                <p>Boshqa talabalar bilan bilim almashing</p>
-                            </div>
-                        </div>
-                        <!-- Yangi qo'shilgan rasm 1 -->
-                        <div class="carousel-item">
-                            <img src="https://copilot.microsoft.com/th/id/BCO.7fcf76d7-65ae-4f3b-afe1-2a6658292f75.png"
-                                 class="d-block w-100" alt="AI Assistant" style="height: 400px; object-fit: cover;">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h3>AI Yordamchi</h3>
-                                <p>Sun'iy intellekt bilan o'qish jarayonini yaxshilang</p>
-                            </div>
-                        </div>
-                        <!-- Yangi qo'shilgan rasm 2 - Sun'iy Intellekt -->
-                        <div class="carousel-item">
-                            <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                                 class="d-block w-100" alt="Artificial Intelligence" style="height: 400px; object-fit: cover;">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h3>Sun'iy Intellekt</h3>
-                                <p>Zamonaviy AI texnologiyalari bilan tanishish</p>
-                            </div>
-                        </div>
-                        <!-- Yangi qo'shilgan rasm 3 - Machine Learning -->
-                        <div class="carousel-item">
-                            <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                                 class="d-block w-100" alt="Machine Learning" style="height: 400px; object-fit: cover;">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h3>Machine Learning</h3>
-                                <p>Ma'lumotlardan o'rganish algoritmlari</p>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Oldingi</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Keyingi</span>
-                    </button>
+                <img
+                  src="https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg?semt=ais_hybrid&w=740&q=80"
+                  alt="no photo"
+                  id="loginBtn"
+                />
+              </div>
+            </section>
+          </header>
+          <main>
+            <section class="static_contaner_section">
+              <!-- Enrolled Courses -->
+              <div class="contaner_info">
+                <div class="log_num">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-file"
+                    viewBox="0 0 16 16"
+                    style="color: rgb(52, 52, 148)"
+                  >
+                    <path
+                      d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1"
+                    />
+                  </svg>
+                  <h2>12</h2>
                 </div>
-            </div>
-
-            <!-- O'ng tomondagi 2 ta card -->
-            <div class="col-lg-3">
-                <div class="row g-4">
-                    <!-- AI Chat -->
-                    <div class="col-12">
-                        <a href="{% url 'ai_chat' %}" class="text-decoration-none">
-                            <div class="card feature-card h-100 border-0 shadow">
-                                <div class="card-body text-center p-4">
-                                    <i class="fas fa-robot fa-3x text-success mb-3"></i>
-                                    <h5 class="card-title text-dark">AI Chat</h5>
-                                    <p class="card-text text-muted">Sun'iy intellekt yordamida savollarga javob oling</p>
-                                    <small class="text-primary">Ko'proq &rarr;</small>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <!-- Testlar -->
-                    <div class="col-12">
-                        <a href="{% url 'tests' %}" class="text-decoration-none">
-                            <div class="card feature-card h-100 border-0 shadow">
-                                <div class="card-body text-center p-4">
-                                    <i class="fas fa-tasks fa-3x text-warning mb-3"></i>
-                                    <h5 class="card-title text-dark">Testlar</h5>
-                                    <p class="card-text text-muted">Bilimingizni test orqali sinab ko'ring</p>
-                                    <small class="text-primary">Ko'proq &rarr;</small>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                <p>Enrolled Courses</p>
+              </div>
+              <!-- courses completed -->
+              <div class="contaner_info">
+                <div class="log_num">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    class="bi bi-check"
+                    viewBox="0 0 16 16"
+                    style="color: green"
+                  >
+                    <path
+                      d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"
+                    />
+                  </svg>
+                  <h2>12</h2>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
+                <p>Enrolled Courses</p>
+              </div>
+              <!-- in progress -->
+              <div class="contaner_info">
+                <div class="log_num">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-arrow-90deg-right"
+                    viewBox="0 0 16 16"
+                    style="color: blueviolet"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708z"
+                    />
+                  </svg>
+                  <h2>12</h2>
+                </div>
+                <p>Enrolled Courses</p>
+              </div>
+              <!-- grade -->
+              <div class="contaner_info">
+                <div class="log_num">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-percent"
+                    viewBox="0 0 16 16"
+                    style="color: orange"
+                  >
+                    <path
+                      d="M13.442 2.558a.625.625 0 0 1 0 .884l-10 10a.625.625 0 1 1-.884-.884l10-10a.625.625 0 0 1 .884 0M4.5 6a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5m7 6a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"
+                    />
+                  </svg>
+                  <h2>12</h2>
+                </div>
+                <p>Enrolled Courses</p>
+              </div>
+            </section>
+            <section class="section_statistik">
+              <article class="statistik_box">
+                <div class="progres">
+                  <!-- course progress -->
+                  <div class="progress_box"></div>
+                  <!-- upcoming classes -->
+                  <div class="progress_box">
+                      {% if graphic %}
+                    <div class="text-center mb-4">
+                        <h5>Test natijalari grafigi:</h5>
+                        <img src="data:image/png;base64,{{ graphic }}" alt="Test natijalari grafigi" class="img-fluid border rounded">
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="attent_box">
+                  <!-- attendance -->
+                  <div class="attent"></div>
+                  <!-- grade distrubution -->
+                  <div class="grade"></div>
+                </div>
+                <!-- announcements -->
+                <div class="announcements"></div>
+              </article>
+              <article class="time_box">
+                <!-- tasks -->
+                <div class="tasks"></div>
+                <!-- kalindar -->
+                <div class="tasks"></div>
+                <!-- announcements -->
+                <div class="tasks_box"></div>
+              </article>
+            </section>
+          </main>
+        </section>
+      </section>
+    </section>
 
-{% endblock %}
+    <script>
+        // index.js
+        const menu = document.getElementById("menu");
+        const menuBox = document.getElementById("menu_box");
+        const dashboard = document.getElementById("dashboard");
+        const hedMain = document.getElementById("hedMain");
+        const menuBtn = document.getElementById("menuBtn");
+        let isVisible = false;
 
-{% block scripts %}
-<script>
-// Carousel avtomatik aylanishini sozlash
-document.addEventListener('DOMContentLoaded', function() {
-    var myCarousel = document.getElementById('mainCarousel');
-    var carousel = new bootstrap.Carousel(myCarousel, {
-        interval: 4000,
-        wrap: true
-    });
-});
+        menu.addEventListener("click", () => {
+          if (isVisible) {
+            menuBox.style.width = "0";
+            menuBtn.style.opacity = "0";
+            setTimeout(() => {
+              menuBox.classList.remove("show");
+              menuBox.style.display = "none";
+              dashboard.style.margin = "-35px auto";
+              hedMain.style.width = "100%";
+              menuBtn.style.display = "none";
+              menuBtn.classList.remove("show");
+            }, 500);
+          } else {
+            menuBox.style.display = "block";
 
-// Feature card hover effekti
-document.querySelectorAll('.feature-card').forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-8px)';
-        this.style.boxShadow = '0 15px 30px rgba(0,0,0,0.15)';
-    });
+            setTimeout(() => {
+              menuBox.classList.add("show");
+              menuBox.style.width = "25%";
+              dashboard.style.transform = "translateX(320px)";
+              hedMain.style.width = "60%";
+            }, 10);
 
-    card.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0)';
-        this.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
-    });
-});
-</script>
+            setTimeout(() => {
+              menuBtn.style.display = "block";
+              menuBtn.style.width = "20%";
+              menuBtn.style.opacity = "1";
+            }, 500);
+          }
 
-<style>
-    /* Hero section yangi sozlamalari */
-    .hero-section {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 80px 0 40px 0;  /* Yangilandi: tepa padding 80px */
-        min-height: 90vh;
-        display: flex;
-        align-items: center;
-        position: relative;
-    }
+          isVisible = !isVisible;
+        });
 
-    /* Tech title - Kichiklashtirilgan va joylashtirilgan */
-    .tech-title {
-        background: linear-gradient(135deg, #6F63C4 0%, #0984e3 100%);
-        color: white;
-        padding: 12px 20px;  /* Kichiklashtirildi */
-        border-radius: 10px;
-        text-align: center;
-        box-shadow:
-            0 4px 12px rgba(116, 185, 255, 0.3),
-            0 2px 6px rgba(116, 185, 255, 0.2);
-        position: relative;
-        overflow: hidden;
-        margin-bottom: 2rem;
-        border: 1px solid rgba(255,255,255,0.2);
-        max-width: 90%;  /* Yangi qo'shildi */
-        margin-left: auto;
-        margin-right: auto;
-    }
+        // profil img
+        const listBtn = document.getElementById("listBtn");
+        const loginBtn = document.getElementById("loginBtn");
 
-    .tech-title::before {
-        content: "";
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-        animation: shine 6s infinite linear;
-    }
+        const contanerList = document.getElementById("contanerList");
 
-    @keyframes shine {
-        0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-        100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-    }
+        const loGin = document.getElementById("loGin");
 
-    .tech-title h3 {
-        font-weight: 600;  /* Kichiklashtirildi */
-        margin: 0;
-        position: relative;
-        text-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        letter-spacing: 0.3px;
-        font-size: 1.2rem;  /* Kichiklashtirildi */
-        line-height: 1.3;
-    }
+        const sogin = document.getElementById("sogin");
 
-    /* Carousel animatsiyalari */
-    .carousel-combined .carousel-item {
-        transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
-        transform: scale(0.9) translateY(20px);
-        opacity: 0;
-    }
-
-    .carousel-combined .carousel-item.active {
-        transform: scale(1) translateY(0);
-        opacity: 1;
-    }
-
-    .carousel-combined .carousel-inner {
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-
-    .feature-card {
-        transition: all 0.3s ease;
-        border: none !important;
-        background: white !important;
-        border-radius: 12px !important;
-    }
-
-    .feature-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 12px 25px rgba(0,0,0,0.15) !important;
-    }
-
-    .carousel-item img {
-        height: 380px;
-        object-fit: cover;
-    }
-
-    .carousel-caption {
-        background: rgba(0,0,0,0.7);
-        border-radius: 8px;
-        padding: 15px;
-        backdrop-filter: blur(8px);
-    }
-
-    .card-title {
-        color: #2c3e50 !important;
-        font-weight: 600;
-        font-size: 1.1rem;
-    }
-
-    .card-text {
-        color: #7f8c8d !important;
-        font-size: 0.9rem;
-        line-height: 1.4;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-        .hero-section {
-            padding: 100px 0 30px 0;  /* Tepa padding oshirildi */
-            min-height: auto;
-        }
-
-        .tech-title {
-            padding: 10px 15px;
-            margin-bottom: 1.5rem;
-        }
-
-        .tech-title h3 {
-            font-size: 1rem;  /* Kichiklashtirildi */
-        }
-
-        .carousel-item img {
-            height: 300px;
-        }
-
-        .row.align-items-center {
-            gap: 20px;  /* Elementlar orasiga bo'shliq */
-        }
-    }
-
-    @media (max-width: 480px) {
-        .hero-section {
-            padding: 90px 0 20px 0;  /* Tepa padding oshirildi */
-        }
-
-        .tech-title {
-            padding: 8px 12px;
-            margin-bottom: 1rem;
-        }
-
-        .tech-title h3 {
-            font-size: 0.9rem;  /* Kichiklashtirildi */
-            letter-spacing: 0.2px;
-        }
-
-        .carousel-item img {
-            height: 250px;
-        }
-
-        .feature-card .card-body {
-            padding: 1.5rem !important;
-        }
-    }
-
-    /* Kichik ekranlar uchun maxsus sozlamalar */
-    @media (max-width: 360px) {
-        .tech-title h3 {
-            font-size: 0.8rem;
-        }
-
-        .hero-section {
-            padding: 85px 0 15px 0;
-        }
-    }
-</style>
+        loginBtn.addEventListener("click", () => {
+          if (listBtn.classList.contains("visible")) {
+            listBtn.classList.remove("visible");
+            setTimeout(() => {
+              listBtn.classList.add("hidden");
+            }, 500);
+          } else {
+            listBtn.classList.remove("hidden");
+            setTimeout(() => {
+              listBtn.classList.add("visible");
+            }, 0);
+          }
+        });
+    </script>
+</body>
+</html
 {% endblock %}
