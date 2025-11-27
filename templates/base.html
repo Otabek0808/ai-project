@@ -22,224 +22,378 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./static/css/style.css" />
     <style>
-      /* Asosiy body sozlamalari */
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
+      /* header.css */
+      header {
+        width: auto;
+        height: auto;
+        margin-bottom: 20px;
       }
-
-      body {
+      .section_header {
         display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        background-color: #ffffff;
-        color: #212529;
+        justify-content: space-between;
+        margin: 0 auto;
+        width: auto;
+        height: auto;
       }
-
-      main {
-        flex: 1;
-        padding-top: 0 !important; /* Navbar bilan oralig'ni olib tashlaymiz */
-      }
-
-      /* Footer sozlamalari */
-      footer {
-        margin-top: auto;
-        background: linear-gradient(
-          135deg,
-          #a8c0ff 0%,
-          #3f2b96 100%
-        ) !important;
-        color: white;
-      }
-
-      .navbar-nav .btn-link {
-        border: none;
-        background: none;
-        color: #5a6268 !important;
-        padding: 0.5rem 0;
-        margin: 0;
-        text-decoration: none;
-      }
-      .navbar-nav .btn-link:hover {
-        color: #495057 !important;
-      }
-      .logout-form {
-        display: inline;
-      }
-
-      /* Yangi ochiq rang navbar */
-      .navbar {
-        background: linear-gradient(
-          135deg,
-          #74b9ff 0%,
-          #0984e3 100%
-        ) !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
-
-      .navbar-brand {
-        color: white !important;
-        font-weight: 600;
-      }
-
-      .navbar-nav .nav-link {
-        color: rgba(255, 255, 255, 0.9) !important;
-      }
-
-      .navbar-nav .nav-link:hover {
-        color: white !important;
-      }
-
-      .navbar-toggler {
-        border-color: rgba(255, 255, 255, 0.5);
-      }
-
-      .navbar-toggler-icon {
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-      }
-
-      .card {
-        background-color: #ffffff;
-        border-color: #dee2e6;
-        color: #212529;
-      }
-
-      .text-light {
-        color: #212529 !important;
-      }
-
-      .text-muted {
-        color: #6c757d !important;
-      }
-
-      .bg-light {
-        background-color: #f8f9fa !important;
-      }
-
-      .list-unstyled a {
-        color: white !important;
-        text-decoration: none;
-      }
-
-      .list-unstyled a:hover {
-        color: rgba(255, 255, 255, 0.8) !important;
-      }
-
-      footer h5 {
-        color: white !important;
-      }
-
-      footer p,
-      footer li {
-        color: rgba(255, 255, 255, 0.9) !important;
-      }
-
-      /* Courses section background */
-      .courses-bg {
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      }
-
-      /* Stats section */
-      .stats-section {
-        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        color: white;
-      }
-
-      /* Features icons */
-      .feature-icon {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      /* Sarlavha uchun yangi stil */
-      .tech-title {
-        background: linear-gradient(135deg, #6f63c4 0%, #0984e3 100%);
-        color: white;
-        padding: 8px 20px;
-        border-radius: 8px;
-        text-align: center;
-        box-shadow: 0 4px 12px rgba(116, 185, 255, 0.3);
-        margin: -30px auto 1rem auto;
-        max-width: 90%;
-        position: relative;
-        z-index: 100;
-      }
-
-      .tech-title h3 {
-        font-weight: 700;
-        margin: 0;
-        font-size: 1.2rem;
-        line-height: 1.3;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      }
-
-      /* Hero section yangilangan */
-      .hero-section {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 20px 0;
-        min-height: 100vh;
+      .logo {
         display: flex;
         align-items: center;
-        margin-top: 0;
+        justify-content: space-between;
+      }
+      .logo h1 {
+        margin-left: 70px;
+      }
+      .logo svg {
+        width: 30px;
+        height: auto;
+        cursor: pointer;
+        backdrop-filter: blur(100px);
+        background-color: rgba(255, 255, 255, 0.511);
+        border-radius: 10px;
+        padding: 10px;
+        transition: 0.5s ease;
+        position: absolute;
+        left: 35px;
+        top: 45px;
+        z-index: 30;
+      }
+      .logo svg:hover {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        transform: scale(1.05);
+      }
+      .profil_img {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .profil_img {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+      }
+      .profil_img img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 3px solid white;
+        cursor: pointer;
+        transition: 0.3s ease;
+      }
+      .profil_img img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+      .list_btn_box {
+        display: none;
+      }
+      .list_btn {
+        display: flex;
+        gap: 20px;
+        width: 400px;
+      }
+      .list_btn a {
+        align-items: center;
+        display: flex;
+        gap: 10px;
+        text-decoration: none;
+        width: 100%;
+        height: auto;
+        cursor: pointer;
+        backdrop-filter: blur(100px);
+        background-color: rgba(255, 255, 255, 0.511);
+        padding: 7px;
+        border-radius: 10px;
+        transition: 0.3s ease;
+        color: rgb(20, 33, 119);
+      }
+      .list_btn a:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+      .list_btn a p {
+        color: rgb(32, 25, 96);
+        font-size: 16px;
+      }
+      .list_btn svg {
+        width: 30px;
+        height: auto;
+      }
+      .list_btn form button {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        text-decoration: none;
+        width: 100%;
+        height: auto;
+        cursor: pointer;
+        backdrop-filter: blur(100px);
+        background-color: rgba(255, 255, 255, 0.511);
+        padding: 7px;
+        border-radius: 10px;
+        transition: 0.3s ease;
+        color: rgb(20, 33, 119);
+        border: none;
+      }
+      .list_btn form button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+      .list_btn form button i {
+        width: 30px;
+        height: auto;
+      }
+      .list_btn span {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        text-decoration: none;
+        width: 100%;
+        height: auto;
+        padding-top: 10px;
+        border-radius: 10px;
+        transition: 0.3s ease;
+        color: rgb(20, 33, 119);
+      }
+      .hidden {
+        display: none;
       }
 
-      /* Carousel yangilangan */
-      .carousel-combined .carousel-item {
-        transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+      .visible {
+        display: block;
+        width: 150px;
       }
 
-      .carousel-combined .carousel-inner {
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      #loGin,
+      #sogin {
+        opacity: 0;
+        transition: opacity 0.5s ease;
       }
 
-      .feature-card {
-        transition: all 0.3s ease;
-        border: none !important;
-        background: white !important;
-        border-radius: 12px !important;
+      #listBtn.visible #loGin,
+      #listBtn.visible #sogin {
+        opacity: 1;
+        transition-delay: 0.5s;
       }
 
-      .feature-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15) !important;
+      /* main.css */
+      * {
+        padding: 0;
+        margin: 0;
+        font-family: "Arial", sans-serif;
+      }
+      body {
+        padding: 5px;
+        background: linear-gradient(to right, #a3c1e0, #b7c9e2, #d2c7e5);
+      }
+      .section_container {
+        background: linear-gradient(to right, #a3c1e0, #b7c9e2, #f2c5d6);
+        background-repeat: no-repeat;
+        border-radius: 30px;
+        border: 3px solid #ffffff;
+        padding: 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        margin: 0 auto;
+        width: 100%;
+        min-width: 280px;
+        height: auto;
+      }
+      .contaner_box {
+        border-radius: 20px;
+        border: 2px solid #ffffff;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        background-color: rgba(22, 188, 171, 0.1);
+        display: flex;
+        gap: 10px;
+      }
+      .hed_main {
+        padding: 35px;
+        width: 100%;
+      }
+      main {
+        padding-top: 20px;
       }
 
-      /* Responsive adjustments */
-      @media (max-width: 768px) {
-        .tech-title {
-          margin: -20px auto 1rem auto;
-          padding: 6px 15px;
-        }
-
-        .tech-title h3 {
-          font-size: 1rem;
-        }
-
-        .hero-section {
-          padding: 15px 0;
-          min-height: auto;
-        }
+      /* home.css */
+      .static_contaner_section {
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        display: flex;
+        gap: 10px;
+        justify-content: space-between;
+      }
+      .contaner_info {
+        min-width: 10px;
+        width: 100%;
+        height: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.511);
+        border-radius: 10px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+      .log_num {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .log_num svg {
+        width: 30px;
+        height: 30px;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.511);
+        padding: 10px;
+        border-radius: 10px;
+      }
+      .log_num h2 {
+        font-size: 36px;
+      }
+      .contaner_info p {
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .section_statistik {
+        padding-top: 20px;
+        width: auto;
+        height: auto;
+        display: flex;
+        max-width: 100%;
+        gap: 15px;
+      }
+      .statistik_box {
+        width: 100%;
+        height: auto;
+      }
+      .progres {
+        display: flex;
+        justify-content: space-between;
+        width: auto;
+        gap: 15px;
+      }
+      .progress_box {
+        width: 100%;
+        height: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.511);
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+      .attent_box {
+        padding-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        width: auto;
+        gap: 15px;
+      }
+      .attent {
+        width: 40%;
+        height: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.511);
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+      .grade {
+        width: 60%;
+        height: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.511);
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+      .announcements {
+        margin-top: 20px;
+        width: auto;
+        height: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.511);
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+      .time_box {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 60%;
+        height: auto;
+      }
+      .tasks {
+        width: auto;
+        height: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.511);
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+      .tasks_box {
+        width: auto;
+        height: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.511);
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
       }
 
-      @media (max-width: 480px) {
-        .tech-title {
-          margin: -15px auto 1rem auto;
-          padding: 5px 12px;
-        }
-
-        .tech-title h3 {
-          font-size: 0.9rem;
-        }
+      /* menu.css */
+      .menu {
+        height: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(226, 237, 236, 0.664);
+        border-radius: 20px;
+        transition: width 0.5s ease;
+        display: none;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        border: 1px solid #ffffff;
+      }
+      .menu.show {
+        display: block;
+        transform: translateX(0);
+      }
+      .menu article {
+        margin-top: 110px;
+        margin-bottom: 60px;
+        padding: 0 30px 0 40px;
+        transition: 0.3s ease;
+      }
+      .menu article a {
+        text-decoration: none;
+      }
+      .menu article a button {
+        width: 220px;
+        cursor: pointer;
+        border: none;
+        border-radius: 10px;
+        margin-top: 5px;
+        background: none;
+        font-size: 18px;
+        transition: 0.3s ease;
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        padding: 20px;
+      }
+      .menu article a button:hover {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+      .menu article a button.show {
+        display: block;
+        opacity: 0;
+      }
+      .menu article a button svg {
+        width: 20px;
+        height: 20px;
+      }
+      .menu article a button i {
+        width: 20px;
+        height: 20px;
       }
     </style>
   </head>
@@ -248,7 +402,7 @@
       <section class="contaner_box">
         <div class="menu" id="menu_box">
           <article id="menuBtn">
-            <a href="">
+            <a href="{% url 'home' %}">
               <button>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -363,6 +517,11 @@
                 Testlar
               </button>
             </a>
+            {% if user.is_staff %}
+            <a href="{% url 'admin_stats' %}">
+              <button><i class="fas fa-chart-bar"></i> Statistika</button>
+            </a>
+            {% endif %}
           </article>
         </div>
         <section class="hed_main" id="hedMain">
@@ -388,7 +547,50 @@
               <div class="profil_img" id="contanerList">
                 <div class="list_btn_box" id="listBtn">
                   <div class="list_btn">
-                    <a href="" id="loGin">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-person-lines-fill"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1z"
+                        />
+                      </svg>
+                      <p>Profil</p>
+                    </a>
+                    <form method="post" action="{% url 'logout' %}">
+                      {% csrf_token %}
+                      <button>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          class="bi bi-box-arrow-right"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"
+                          />
+                          <path
+                            fill-rule="evenodd"
+                            d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"
+                          />
+                        </svg>
+                        <p>Chiqish</p>
+                      </button>
+                    </form>
+                    <span>
+                      <i class="fas fa-user"></i> {{ user.username }}
+                    </span>
+                    {% else %}
+                    <a href="{% url 'login' %}" id="loGin">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
@@ -408,7 +610,7 @@
                       </svg>
                       <p>Kirish</p>
                     </a>
-                    <a href="" id="sogin">
+                    <a href="{% url 'register' %}" id="sogin">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
@@ -426,6 +628,7 @@
                       </svg>
                       <p>Ro'yxatdan o'tish</p>
                     </a>
+                    {% endif %}
                   </div>
                 </div>
                 <img
@@ -558,7 +761,66 @@
     </footer> -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="./static/js/index.js"></script>
+    <script>
+      // index.js
+      const menu = document.getElementById("menu");
+      const menuBox = document.getElementById("menu_box");
+      const dashboard = document.getElementById("dashboard");
+      const hedMain = document.getElementById("hedMain");
+      const menuBtn = document.getElementById("menuBtn");
+      let isVisible = false;
+
+      menu.addEventListener("click", () => {
+        if (isVisible) {
+          menuBox.style.width = "0"; // Kenglikni 0 ga o'zgartiramiz
+          menuBtn.style.opacity = "0";
+          setTimeout(() => {
+            menuBox.classList.remove("show"); // Ko'rinmas qiladi
+            menuBox.style.display = "none"; // Tugal yashirish
+            dashboard.style.margin = "-35px auto"; // Dashboard ni asl holatiga qaytaramiz
+            hedMain.style.width = "100%";
+            menuBtn.style.display = "none";
+            menuBtn.classList.remove("show");
+          }, 500); // Animatsiya davomiyligi
+        } else {
+          menuBox.style.display = "block"; // Ko'rsatamiz
+
+          setTimeout(() => {
+            menuBox.classList.add("show"); // Ko'rinadigan holatga o'tamiz
+            menuBox.style.width = "25%"; // Kenglikni o'zgartiramiz
+            dashboard.style.transform = "translateX(320px)"; // Dashboardni chapga suramiz
+            hedMain.style.width = "60%";
+          }, 10); // Bir oz kutish
+
+          setTimeout(() => {
+            menuBtn.style.display = "block"; // `menuBtn` ni ko'rsatamiz
+            menuBtn.style.width = "20%"; // Kengligini o'zgartirish
+            menuBtn.style.opacity = "1";
+          }, 500); // 3 soniya o'tgach
+        }
+
+        isVisible = !isVisible; // Mavjudligini o'zgartirish
+      });
+
+      // profil img
+      const listBtn = document.getElementById("listBtn");
+      const loginBtn = document.getElementById("loginBtn");
+
+      loginBtn.addEventListener("click", () => {
+        if (listBtn.classList.contains("visible")) {
+          listBtn.classList.remove("visible");
+          setTimeout(() => {
+            listBtn.classList.add("hidden");
+          }, 500); // Kengayish tugagach, yashiradi
+        } else {
+          listBtn.classList.remove("hidden");
+          listBtn.style.transform = "translateX(-250px)";
+          setTimeout(() => {
+            listBtn.classList.add("visible");
+          }, 0); // Darhol ko'rsatadi
+        }
+      });
+    </script>
     {% block scripts %}{% endblock %}
   </body>
 </html>
