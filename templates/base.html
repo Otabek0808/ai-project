@@ -27,7 +27,6 @@
       header {
         width: auto;
         height: auto;
-        margin-bottom: 20px;
       }
       .section_header {
         display: flex;
@@ -41,15 +40,13 @@
         align-items: center;
         justify-content: space-between;
       }
-      .logo h1 {
-        margin-left: 70px;
-      }
+
       .logo svg {
-        width: 30px;
+        width: 50px;
         height: auto;
         cursor: pointer;
         backdrop-filter: blur(100px);
-        background-color: rgba(255, 255, 255, 0.511);
+        background-color: rgba(255, 255, 255, 0.782);
         border-radius: 10px;
         padding: 10px;
         transition: 0.5s ease;
@@ -70,42 +67,36 @@
       .profil_img {
         display: flex;
         align-items: center;
-        gap: 40px;
+        gap: 10px;
       }
       .profil_img img {
         width: 60px;
         height: 60px;
         border-radius: 50%;
         border: 3px solid white;
-        cursor: pointer;
         transition: 0.3s ease;
       }
-      .profil_img img:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      }
-      .list_btn_box {
-        display: none;
-      }
+
       .list_btn {
         display: flex;
         gap: 20px;
         width: 400px;
+        align-items: center;
       }
       .list_btn a {
-        align-items: center;
         display: flex;
         gap: 10px;
+        text-align: center;
         text-decoration: none;
         width: 100%;
         height: auto;
         cursor: pointer;
         backdrop-filter: blur(100px);
         background-color: rgba(255, 255, 255, 0.511);
-        padding: 7px;
         border-radius: 10px;
         transition: 0.3s ease;
         color: rgb(20, 33, 119);
+        padding-left: 14px;
       }
       .list_btn a:hover {
         transform: scale(1.05);
@@ -114,6 +105,7 @@
       .list_btn a p {
         color: rgb(32, 25, 96);
         font-size: 16px;
+        margin-top: 12px;
       }
       .list_btn svg {
         width: 30px;
@@ -122,26 +114,25 @@
       .list_btn form button {
         display: flex;
         gap: 10px;
-        align-items: center;
         text-decoration: none;
-        width: 100%;
+        max-width: 100%;
+        text-align: center;
         height: auto;
         cursor: pointer;
         backdrop-filter: blur(100px);
         background-color: rgba(255, 255, 255, 0.511);
-        padding: 7px;
         border-radius: 10px;
         transition: 0.3s ease;
         color: rgb(20, 33, 119);
         border: none;
+        padding: 0 12px 0 10px;
       }
       .list_btn form button:hover {
         transform: scale(1.05);
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
       }
-      .list_btn form button i {
-        width: 30px;
-        height: auto;
+      .list_btn form button p {
+        margin-top: 9px;
       }
       .list_btn span {
         display: flex;
@@ -155,26 +146,6 @@
         transition: 0.3s ease;
         color: rgb(20, 33, 119);
       }
-      .hidden {
-        display: none;
-      }
-
-      .visible {
-        display: block;
-        width: 150px;
-      }
-
-      #loGin,
-      #sogin {
-        opacity: 0;
-        transition: opacity 0.5s ease;
-      }
-
-      #listBtn.visible #loGin,
-      #listBtn.visible #sogin {
-        opacity: 1;
-        transition-delay: 0.5s;
-      }
 
       /* main.css */
       * {
@@ -185,9 +156,10 @@
       body {
         padding: 5px;
         background: linear-gradient(to right, #a3c1e0, #b7c9e2, #d2c7e5);
+        min-height: 100vh;
       }
       .section_container {
-        background: linear-gradient(to right, #a3c1e0, #b7c9e2, #f2c5d6);
+        background: linear-gradient(to right, #87ceeb, #d2c7e5, #f2c5d6);
         background-repeat: no-repeat;
         border-radius: 30px;
         border: 3px solid #ffffff;
@@ -196,7 +168,8 @@
         margin: 0 auto;
         width: 100%;
         min-width: 280px;
-        height: auto;
+        height: 100%;
+        min-height: 100vh;
       }
       .contaner_box {
         border-radius: 20px;
@@ -206,6 +179,8 @@
         background-color: rgba(22, 188, 171, 0.1);
         display: flex;
         gap: 10px;
+        height: 100%;
+        min-height: 95vh;
       }
       .hed_main {
         padding: 35px;
@@ -240,8 +215,8 @@
         gap: 15px;
       }
       .log_num svg {
-        width: 30px;
-        height: 30px;
+        width: 50px;
+        height: 50px;
         backdrop-filter: blur(10px);
         background-color: rgba(255, 255, 255, 0.511);
         padding: 10px;
@@ -349,7 +324,6 @@
         background-color: rgba(226, 237, 236, 0.664);
         border-radius: 20px;
         transition: width 0.5s ease;
-        display: none;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         border: 1px solid #ffffff;
       }
@@ -533,7 +507,6 @@
                   width="16"
                   height="16"
                   fill="currentColor"
-                  class="bi bi-list"
                   viewBox="0 0 16 16"
                   id="menu"
                 >
@@ -542,7 +515,6 @@
                     d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
                   />
                 </svg>
-                <h1 id="dashboart">Boshqaruv paneli</h1>
               </div>
               <div class="profil_img" id="contanerList">
                 <div class="list_btn_box" id="listBtn">
@@ -800,25 +772,6 @@
         }
 
         isVisible = !isVisible; // Mavjudligini o'zgartirish
-      });
-
-      // profil img
-      const listBtn = document.getElementById("listBtn");
-      const loginBtn = document.getElementById("loginBtn");
-
-      loginBtn.addEventListener("click", () => {
-        if (listBtn.classList.contains("visible")) {
-          listBtn.classList.remove("visible");
-          setTimeout(() => {
-            listBtn.classList.add("hidden");
-          }, 500); // Kengayish tugagach, yashiradi
-        } else {
-          listBtn.classList.remove("hidden");
-          listBtn.style.transform = "translateX(-250px)";
-          setTimeout(() => {
-            listBtn.classList.add("visible");
-          }, 0); // Darhol ko'rsatadi
-        }
       });
     </script>
     {% block scripts %}{% endblock %}
