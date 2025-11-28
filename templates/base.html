@@ -735,44 +735,53 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       // index.js
+
       const menu = document.getElementById("menu");
       const menuBox = document.getElementById("menu_box");
       const dashboard = document.getElementById("dashboard");
       const hedMain = document.getElementById("hedMain");
       const menuBtn = document.getElementById("menuBtn");
-      let isVisible = false;
+      let isVisible = true;
 
       menu.addEventListener("click", () => {
-        if (isVisible) {
-          menuBox.style.width = "0"; // Kenglikni 0 ga o'zgartiramiz
-          menuBtn.style.opacity = "0";
-          setTimeout(() => {
-            menuBox.classList.remove("show"); // Ko'rinmas qiladi
-            menuBox.style.display = "none"; // Tugal yashirish
-            dashboard.style.margin = "-35px auto"; // Dashboard ni asl holatiga qaytaramiz
-            hedMain.style.width = "100%";
-            menuBtn.style.display = "none";
-            menuBtn.classList.remove("show");
-          }, 500); // Animatsiya davomiyligi
-        } else {
-          menuBox.style.display = "block"; // Ko'rsatamiz
+        if (!isVisible) {
+          // Menyu ko'rinmasa
+          menuBox.style.display = "block"; // Menyu qutisini ko'rsatish
 
           setTimeout(() => {
-            menuBox.classList.add("show"); // Ko'rinadigan holatga o'tamiz
-            menuBox.style.width = "25%"; // Kenglikni o'zgartiramiz
-            dashboard.style.transform = "translateX(320px)"; // Dashboardni chapga suramiz
-            hedMain.style.width = "60%";
-          }, 10); // Bir oz kutish
+            menuBox.classList.add("show"); // Ko'rinadigan holatga o'tish
+            menuBox.style.width = "25%"; // Kengligini o'zgartirish
+            dashboard.style.transform = "translateX(320px)"; // Dashboardni chapga siljitish
+            hedMain.style.width = "60%"; // HedMain kengligini o'zgartirish
+          }, 10); // Tez kutish
 
           setTimeout(() => {
-            menuBtn.style.display = "block"; // `menuBtn` ni ko'rsatamiz
+            menuBtn.style.display = "block"; // Menu tugmasini ko'rsatish
             menuBtn.style.width = "20%"; // Kengligini o'zgartirish
-            menuBtn.style.opacity = "1";
-          }, 500); // 3 soniya o'tgach
+            menuBtn.style.opacity = "1"; // Oqibatni o'zgartirish
+          }, 500); // 500ms dan so'ng
+        } else {
+          // Agar menyu ko'rinayotgan bo'lsa
+          menuBox.style.width = "0"; // Kenglikni 0 ga o'zgartirish
+          menuBtn.style.opacity = "0"; // Oqibatni 0 ga o'zgartirish
+
+          setTimeout(() => {
+            menuBox.classList.remove("show"); // Ko'rinmas holatga o'tish
+            menuBox.style.display = "none"; // To'liq yashirish
+            dashboard.style.margin = "-35px auto"; // Dashboard pozitsiyasini tiklash
+            hedMain.style.width = "100%"; // HedMain kengligini tiklash
+            menuBtn.style.display = "none"; // Menu tugmasini yashirish
+          }, 500); // Animatsiya davomiyligi
         }
 
-        isVisible = !isVisible; // Mavjudligini o'zgartirish
+        isVisible = !isVisible; // Ko'rinish holatini o'zgartirish
       });
+      window.addEventListener("beforeunload", function (event) {
+        // Foydalanuvchiga ogohlantirish yozuvi ko'rsatadi
+        // Boshqa brauzerlarda ko'rsatadi
+      });
+
+      // Sahifa ichidagi operatsiya, yangilanishni ta'sir etmaydi
     </script>
     {% block scripts %}{% endblock %}
   </body>
