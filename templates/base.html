@@ -1,192 +1,179 @@
-<!DOCTYPE html>
-<html lang="uz">
-  <head>
-    <meta charset="UTF-8" />
-    <meta property="og:title" content="AI Project" />
-    <meta
-      property="og:description"
-      content="AI Project haqida qisqacha ma'lumot"
-    />
-    <meta
-      property="og:image"
-      content="https://ai-project-1fhu.onrender.com/static/img/preview.png"
-    />
-    <meta property="og:url" content="https://ai-project-1fhu.onrender.com/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IT Ta'lim Portali</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-      rel="stylesheet"
-    />
-    <style>
-      /* header.css */
-      header {
+    <!DOCTYPE html>
+    <html lang="uz" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+      <head>
+        <meta charset="UTF-8" />
+        <meta property="og:title" content="AI Project" />
+        <meta
+          property="og:description"
+          content="AI Project haqida qisqacha ma'lumot"
+        />
+        <meta
+          property="og:image"
+          content="https://ai-project-1fhu.onrender.com/static/img/preview.png"
+        />
+        <meta property="og:url" content="https://ai-project-1fhu.onrender.com/" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>IT Ta'lim Portali</title>
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+        />
+        <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          rel="stylesheet"
+        />
+ <style>
+    /* header.css */
+    header {
         width: auto;
         height: auto;
         margin-bottom: 20px;
-      }
-      .section_header {
+    }
+    .section_header {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         margin: 0 auto;
         width: auto;
         height: auto;
-      }
-      .logo {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .logo h1 {
-        margin-left: 70px;
-      }
-      .logo svg {
-        width: 30px;
-        height: auto;
-        cursor: pointer;
-        backdrop-filter: blur(100px);
-        background-color: rgba(255, 255, 255, 0.511);
-        border-radius: 10px;
-        padding: 10px;
-        transition: 0.5s ease;
-        position: absolute;
-        left: 35px;
-        top: 45px;
-        z-index: 30;
-      }
-      .logo svg:hover {
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        transform: scale(1.05);
-      }
-      .profil_img {
+        position: relative;
+    }
+    .logo {
         display: flex;
         align-items: center;
         gap: 20px;
-      }
-      .profil_img {
+    }
+    .logo h1 {
+        margin-left: 0;
+    }
+    .logo svg {
+        width: 45px;
+        height: 45px;
+        cursor: pointer;
+        backdrop-filter: blur(100px);
+        background-color: rgba(255, 255, 255, 0.511);
+        border-radius: 12px;
+        padding: 12px;
+        transition: 0.5s ease;
+        position: static;
+        z-index: 30;
+    }
+    .logo svg:hover {
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        transform: scale(1.1);
+    }
+    .profil_img {
         display: flex;
         align-items: center;
-        gap: 40px;
-      }
-      .profil_img img {
+        gap: 10px;
+        position: relative;
+    }
+    .profil_img img {
         width: 60px;
         height: 60px;
         border-radius: 50%;
         border: 3px solid white;
         cursor: pointer;
         transition: 0.3s ease;
-      }
-      .profil_img img:hover {
+    }
+    .profil_img img:hover {
         transform: scale(1.05);
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      }
-      .list_btn_box {
+    }
+
+    /* Profil menyu - BIR QATORDA */
+    .list_btn_box {
         display: none;
-      }
-      .list_btn {
+        position: static;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        background: transparent;
+        box-shadow: none;
+        backdrop-filter: none;
+        padding: 0;
+        margin: 0;
+        min-width: auto;
+    }
+
+    .list_btn_box.visible {
+        display: flex !important;
+        animation: smoothFadeIn 0.4s ease-out;
+    }
+
+    .list_btn_box.hidden {
+        animation: smoothFadeOut 0.4s ease-in;
+    }
+
+    .list_btn {
         display: flex;
-        gap: 20px;
-        width: 400px;
-      }
-      .list_btn a {
+        flex-direction: row;
+        gap: 8px;
+        width: auto;
+        flex-wrap: nowrap;
+    }
+
+    .list_btn a,
+    .list_btn form button {
         align-items: center;
         display: flex;
-        gap: 10px;
+        gap: 6px;
         text-decoration: none;
-        width: 100%;
+        width: auto;
         height: auto;
         cursor: pointer;
         backdrop-filter: blur(100px);
         background-color: rgba(255, 255, 255, 0.511);
-        padding: 7px;
-        border-radius: 10px;
+        padding: 8px 12px;
+        border-radius: 8px;
         transition: 0.3s ease;
         color: rgb(20, 33, 119);
-      }
-      .list_btn a:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      }
-      .list_btn a p {
-        color: rgb(32, 25, 96);
-        font-size: 16px;
-      }
-      .list_btn svg {
-        width: 30px;
-        height: auto;
-      }
-      .list_btn form button {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        text-decoration: none;
-        width: 100%;
-        height: auto;
-        cursor: pointer;
-        backdrop-filter: blur(100px);
-        background-color: rgba(255, 255, 255, 0.511);
-        padding: 7px;
-        border-radius: 10px;
-        transition: 0.3s ease;
-        color: rgb(20, 33, 119);
+        white-space: nowrap;
+        font-size: 13px;
         border: none;
-      }
-      .list_btn form button:hover {
+    }
+
+    .list_btn a:hover,
+    .list_btn form button:hover {
         transform: scale(1.05);
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      }
-      .list_btn form button i {
-        width: 30px;
-        height: auto;
-      }
-      .list_btn span {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        text-decoration: none;
-        width: 100%;
-        height: auto;
-        padding-top: 10px;
-        border-radius: 10px;
-        transition: 0.3s ease;
-        color: rgb(20, 33, 119);
-      }
-      .hidden {
-        display: none;
-      }
+    }
 
-      .visible {
-        display: block;
-        width: 150px;
-      }
+    .list_btn a p {
+        color: rgb(32, 25, 96);
+        font-size: 13px;
+        margin: 0;
+    }
 
-      #loGin,
-      #sogin {
-        opacity: 0;
-        transition: opacity 0.5s ease;
-      }
+    .list_btn svg {
+        width: 16px;
+        height: 16px;
+    }
 
-      #listBtn.visible #loGin,
-      #listBtn.visible #sogin {
-        opacity: 1;
-        transition-delay: 0.5s;
-      }
+    .list_btn form button i {
+        width: 16px;
+        height: 16px;
+    }
 
-      /* main.css */
-      * {
+    .hidden {
+        display: none !important;
+    }
+
+    .visible {
+        display: flex !important;
+    }
+
+    /* main.css */
+    * {
         padding: 0;
         margin: 0;
         font-family: "Arial", sans-serif;
-      }
-      body {
+    }
+    body {
         padding: 5px;
         background: linear-gradient(to right, #a3c1e0, #b7c9e2, #d2c7e5);
-      }
-      .section_container {
+    }
+    .section_container {
         background: linear-gradient(to right, #a3c1e0, #b7c9e2, #f2c5d6);
         background-repeat: no-repeat;
         border-radius: 30px;
@@ -197,8 +184,8 @@
         width: 100%;
         min-width: 280px;
         height: auto;
-      }
-      .contaner_box {
+    }
+    .contaner_box {
         border-radius: 20px;
         border: 2px solid #ffffff;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -206,25 +193,27 @@
         background-color: rgba(22, 188, 171, 0.1);
         display: flex;
         gap: 10px;
-      }
-      .hed_main {
+        overflow: hidden;
+    }
+    .hed_main {
         padding: 35px;
-        width: 100%;
-      }
-      main {
+        width: 75%;
+        transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    main {
         padding-top: 20px;
-      }
+    }
 
-      /* home.css */
-      .static_contaner_section {
+    /* home.css */
+    .static_contaner_section {
         width: auto;
         max-width: 100%;
         height: auto;
         display: flex;
         gap: 10px;
         justify-content: space-between;
-      }
-      .contaner_info {
+    }
+    .contaner_info {
         min-width: 10px;
         width: 100%;
         height: auto;
@@ -233,46 +222,46 @@
         border-radius: 10px;
         padding: 25px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      }
-      .log_num {
+    }
+    .log_num {
         display: flex;
         align-items: center;
         gap: 15px;
-      }
-      .log_num svg {
+    }
+    .log_num svg {
         width: 30px;
         height: 30px;
         backdrop-filter: blur(10px);
         background-color: rgba(255, 255, 255, 0.511);
         padding: 10px;
         border-radius: 10px;
-      }
-      .log_num h2 {
+    }
+    .log_num h2 {
         font-size: 36px;
-      }
-      .contaner_info p {
+    }
+    .contaner_info p {
         font-size: 18px;
         margin-top: 20px;
-      }
-      .section_statistik {
+    }
+    .section_statistik {
         padding-top: 20px;
         width: auto;
         height: auto;
         display: flex;
         max-width: 100%;
         gap: 15px;
-      }
-      .statistik_box {
+    }
+    .statistik_box {
         width: 100%;
         height: auto;
-      }
-      .progres {
+    }
+    .progres {
         display: flex;
         justify-content: space-between;
         width: auto;
         gap: 15px;
-      }
-      .progress_box {
+    }
+    .progress_box {
         width: 100%;
         height: auto;
         backdrop-filter: blur(10px);
@@ -280,15 +269,15 @@
         border-radius: 10px;
         padding: 10px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      }
-      .attent_box {
+    }
+    .attent_box {
         padding-top: 20px;
         display: flex;
         justify-content: space-between;
         width: auto;
         gap: 15px;
-      }
-      .attent {
+    }
+    .attent {
         width: 40%;
         height: auto;
         backdrop-filter: blur(10px);
@@ -296,8 +285,8 @@
         border-radius: 10px;
         padding: 10px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      }
-      .grade {
+    }
+    .grade {
         width: 60%;
         height: auto;
         backdrop-filter: blur(10px);
@@ -305,8 +294,8 @@
         border-radius: 10px;
         padding: 10px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      }
-      .announcements {
+    }
+    .announcements {
         margin-top: 20px;
         width: auto;
         height: auto;
@@ -315,15 +304,15 @@
         border-radius: 10px;
         padding: 10px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      }
-      .time_box {
+    }
+    .time_box {
         display: flex;
         flex-direction: column;
         gap: 20px;
         width: 60%;
         height: auto;
-      }
-      .tasks {
+    }
+    .tasks {
         width: auto;
         height: auto;
         backdrop-filter: blur(10px);
@@ -331,8 +320,8 @@
         border-radius: 10px;
         padding: 10px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      }
-      .tasks_box {
+    }
+    .tasks_box {
         width: auto;
         height: auto;
         backdrop-filter: blur(10px);
@@ -340,33 +329,63 @@
         border-radius: 10px;
         padding: 10px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      }
+    }
 
-      /* menu.css */
-      .menu {
+    /* menu.css - YANGI SMOOTH ANIMATSIYA */
+    .menu {
         height: auto;
         backdrop-filter: blur(10px);
         background-color: rgba(226, 237, 236, 0.664);
         border-radius: 20px;
-        transition: width 0.5s ease;
-        display: none;
+        transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        display: block;
+        width: 25%;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         border: 1px solid #ffffff;
-      }
-      .menu.show {
-        display: block;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .menu.closing {
+        animation: slideOutLeft 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    .menu.opening {
+        animation: slideInLeft 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    .menu.hidden {
+        width: 0;
+        min-width: 0;
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+
+    .menu.show {
+        width: 25%;
+        opacity: 1;
         transform: translateX(0);
-      }
-      .menu article {
+    }
+
+    .menu article {
         margin-top: 110px;
         margin-bottom: 60px;
         padding: 0 30px 0 40px;
-        transition: 0.3s ease;
-      }
-      .menu article a {
+        transition: all 0.4s ease;
+        display: block;
+        opacity: 1;
+    }
+
+    .menu.hidden article {
+        opacity: 0;
+        display: none;
+    }
+
+    .menu article a {
         text-decoration: none;
-      }
-      .menu article a button {
+    }
+
+    .menu article a button {
         width: 220px;
         cursor: pointer;
         border: none;
@@ -379,448 +398,456 @@
         gap: 20px;
         align-items: center;
         padding: 20px;
-      }
-      .menu article a button:hover {
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      }
-      .menu article a button.show {
-        display: block;
-        opacity: 0;
-      }
-      .menu article a button svg {
-        width: 20px;
-        height: 20px;
-      }
-      .menu article a button i {
-        width: 20px;
-        height: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <section class="section_container">
-      <section class="contaner_box">
-        <div class="menu" id="menu_box">
-          <article id="menuBtn">
-            <a href="{% url 'home' %}">
-              <button>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-person-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"
-                  />
-                </svg>
-                Boshqaruv paneli
-              </button>
-            </a>
-            <a href="{% url 'about' %}">
-              <button>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-info-circle"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
-                  />
-                  <path
-                    d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"
-                  />
-                </svg>
-                Biz haqimizda
-              </button>
-            </a>
-            <a href="{% url 'documents' %}">
-              <button>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-file-earmark-pdf"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"
-                  />
-                  <path
-                    d="M4.603 14.087a.8.8 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.7 7.7 0 0 1 1.482-.645 20 20 0 0 0 1.062-2.227 7.3 7.3 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538.007.188-.012.396-.047.614-.084.51-.27 1.134-.52 1.794a11 11 0 0 0 .98 1.686 5.8 5.8 0 0 1 1.334.05c.364.066.734.195.96.465.12.144.193.32.2.518.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416.86.86 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.7 5.7 0 0 1-.911-.95 11.7 11.7 0 0 0-1.997.406 11.3 11.3 0 0 1-1.02 1.51c-.292.35-.609.656-.927.787a.8.8 0 0 1-.58.029m1.379-1.901q-.25.115-.459.238c-.328.194-.541.383-.647.547-.094.145-.096.25-.04.361q.016.032.026.044l.035-.012c.137-.056.355-.235.635-.572a8 8 0 0 0 .45-.606m1.64-1.33a13 13 0 0 1 1.01-.193 12 12 0 0 1-.51-.858 21 21 0 0 1-.5 1.05zm2.446.45q.226.245.435.41c.24.19.407.253.498.256a.1.1 0 0 0 .07-.015.3.3 0 0 0 .094-.125.44.44 0 0 0 .059-.2.1.1 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a4 4 0 0 0-.612-.053zM8.078 7.8a7 7 0 0 0 .2-.828q.046-.282.038-.465a.6.6 0 0 0-.032-.198.5.5 0 0 0-.145.04c-.087.035-.158.106-.196.283-.04.192-.03.469.046.822q.036.167.09.346z"
-                  />
-                </svg>
-                Fan materiallari
-              </button>
-            </a>
-            <a href="{% url 'video_lessons' %}">
-              <button>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-camera-video"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1z"
-                  />
-                </svg>
-                Video darslar
-              </button>
-            </a>
-            <a href="{% url 'ai_chat' %}">
-              <button>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-robot"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5M3 8.062C3 6.76 4.235 5.765 5.53 5.886a26.6 26.6 0 0 0 4.94 0C11.765 5.765 13 6.76 13 8.062v1.157a.93.93 0 0 1-.765.935c-.845.147-2.34.346-4.235.346s-3.39-.2-4.235-.346A.93.93 0 0 1 3 9.219zm4.542-.827a.25.25 0 0 0-.217.068l-.92.9a25 25 0 0 1-1.871-.183.25.25 0 0 0-.068.495c.55.076 1.232.149 2.02.193a.25.25 0 0 0 .189-.071l.754-.736.847 1.71a.25.25 0 0 0 .404.062l.932-.97a25 25 0 0 0 1.922-.188.25.25 0 0 0-.068-.495c-.538.074-1.207.145-1.98.189a.25.25 0 0 0-.166.076l-.754.785-.842-1.7a.25.25 0 0 0-.182-.135"
-                  />
-                  <path
-                    d="M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2zM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5"
-                  />
-                </svg>
-                AI chat
-              </button>
-            </a>
-            <a href="{% url 'tests' %}">
-              <button>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-card-checklist"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"
-                  />
-                  <path
-                    d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"
-                  />
-                </svg>
-                Testlar
-              </button>
-            </a>
-            {% if user.is_staff %}
-            <a href="{% url 'admin_stats' %}">
-              <button><i class="fas fa-chart-bar"></i> Statistika</button>
-            </a>
-            {% endif %}
-          </article>
-        </div>
-        <section class="hed_main" id="hedMain">
-          <header>
-            <section class="section_header">
-              <div class="logo">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-list"
-                  viewBox="0 0 16 16"
-                  id="menu"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
-                  />
-                </svg>
-                <h1 id="dashboart">Boshqaruv paneli</h1>
-              </div>
-              <div class="profil_img" id="contanerList">
-                <div class="list_btn_box" id="listBtn">
-                  <div class="list_btn">
-                    {% if user.is_authenticated %}
-                    <a href="{% url 'profile' %}">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        class="bi bi-person-lines-fill"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1z"
-                        />
-                      </svg>
-                      <p>Profil</p>
-                    </a>
-                    <form method="post" action="{% url 'logout' %}">
-                      {% csrf_token %}
-                      <button>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          class="bi bi-box-arrow-right"
-                          viewBox="0 0 16 16"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"
-                          />
-                          <path
-                            fill-rule="evenodd"
-                            d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"
-                          />
-                        </svg>
-                        <p>Chiqish</p>
-                      </button>
-                    </form>
-                    <span>
-                      <i class="fas fa-user"></i> {{ user.username }}
-                    </span>
-                    {% else %}
-                    <a href="{% url 'login' %}" id="loGin">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        class="bi bi-box-arrow-in-right"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"
-                        />
-                        <path
-                          fill-rule="evenodd"
-                          d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"
-                        />
-                      </svg>
-                      <p>Kirish</p>
-                    </a>
-                    <a href="{% url 'register' %}" id="sogin">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        class="bi bi-person-fill-add"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"
-                        />
-                        <path
-                          d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"
-                        />
-                      </svg>
-                      <p>Ro'yxatdan o'tish</p>
-                    </a>
-                    {% endif %}
-                  </div>
-                </div>
-                <img
-                  src="https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg?semt=ais_hybrid&w=740&q=80"
-                  alt="no photo"
-                  id="loginBtn"
-                />
-              </div>
-            </section>
-          </header>
-          <main>
-            {% block content %}
-            <!-- CONTENT BLOCK - Bu yerda sizning yangi dizayningiz bo'ladi -->
-            {% endblock %}
-          </main>
-        </section>
-      </section>
-    </section>
+    }
 
-    <!-- Ochiq rang navbar - ko'k gradient -->
-    <!-- <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">
-                <i class="fas fa-laptop-code"></i> IT Ta'lim
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'about' %}">
-                            <i class="fas fa-info-circle"></i> Biz haqimizda
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'documents' %}">
-                            <i class="fas fa-file-pdf"></i> Fan materiallari
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'video_lessons' %}">
-                            <i class="fas fa-video"></i> Video darslar
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'ai_chat' %}">
-                            <i class="fas fa-robot"></i> AI Chat
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'tests' %}">
-                            <i class="fas fa-tasks"></i> Testlar
-                        </a>
-                    </li>
-                    {% if user.is_staff %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'admin_stats' %}">
-                            <i class="fas fa-chart-bar"></i> Statistika
-                        </a>
-                    </li>
-                    {% endif %}
-                </ul>
-                <ul class="navbar-nav">
-                    {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <span class="nav-link">
-                                <i class="fas fa-user"></i> {{ user.username }}
-                            </span>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'profile' %}">
-                                <i class="fas fa-id-card"></i> Profil
+    .menu article a button:hover {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .menu article a button svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .menu article a button i {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Sidebar yopilganda asosiy kontent kengayadi */
+    .hed_main.expanded {
+        width: 100%;
+        transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .hed_main:not(.expanded) {
+        width: 75%;
+        transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* Foydalanuvchi ismi */
+    .user-name {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 18px;
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: rgb(20, 33, 119);
+        font-weight: bold;
+        font-size: 16px;
+        border: 2px solid transparent;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        white-space: nowrap;
+    }
+
+    .user-name:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        background-color: rgba(255, 255, 255, 0.9);
+        border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* YANGI SMOOTH ANIMATSIYALAR */
+    @keyframes slideInLeft {
+        0% {
+            transform: translateX(-100%);
+            opacity: 0;
+            width: 0;
+        }
+        60% {
+            transform: translateX(-30%);
+            opacity: 0.7;
+        }
+        100% {
+            transform: translateX(0);
+            opacity: 1;
+            width: 25%;
+        }
+    }
+
+    @keyframes slideOutLeft {
+        0% {
+            transform: translateX(0);
+            opacity: 1;
+            width: 25%;
+        }
+        40% {
+            transform: translateX(-30%);
+            opacity: 0.7;
+        }
+        100% {
+            transform: translateX(-100%);
+            opacity: 0;
+            width: 0;
+        }
+    }
+
+    @keyframes smoothFadeIn {
+        0% {
+            opacity: 0;
+            transform: translateY(-10px) scale(0.95);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    @keyframes smoothFadeOut {
+        0% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: translateY(-10px) scale(0.95);
+        }
+    }
+
+    /* Menu article elementlari uchun alohida animatsiya */
+    .menu-item {
+        animation: fadeInUp 0.5s ease-out;
+    }
+
+    @keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+      </head>
+      <body>
+        <section class="section_container">
+          <section class="contaner_box">
+            <div class="menu show" id="menu_box">
+              <article id="menuBtn">
+                <a href="{% url 'home' %}">
+                  <button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-person-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"
+                      />
+                    </svg>
+                    Boshqaruv paneli
+                  </button>
+                </a>
+                <a href="{% url 'about' %}">
+                  <button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-info-circle"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
+                      />
+                      <path
+                        d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"
+                      />
+                    </svg>
+                    Biz haqimizda
+                  </button>
+                </a>
+                <a href="{% url 'documents' %}">
+                  <button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-file-earmark-pdf"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"
+                      />
+                      <path
+                        d="M4.603 14.087a.8.8 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.7 7.7 0 0 1 1.482-.645 20 20 0 0 0 1.062-2.227 7.3 7.3 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538.007.188-.012.396-.047.614-.084.51-.27 1.134-.52 1.794a11 11 0 0 0 .98 1.686 5.8 5.8 0 0 1 1.334.05c.364.066.734.195.96.465.12.144.193.32.2.518.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416.86.86 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.7 5.7 0 0 1-.911-.95 11.7 11.7 0 0 0-1.997.406 11.3 11.3 0 0 1-1.02 1.51c-.292.35-.609.656-.927.787a.8.8 0 0 1-.58.029m1.379-1.901q-.25.115-.459.238c-.328.194-.541.383-.647.547-.094.145-.096.25-.04.361q.016.032.026.044l.035-.012c.137-.056.355-.235.635-.572a8 8 0 0 0 .45-.606m1.64-1.33a13 13 0 0 1 1.01-.193 12 12 0 0 1-.51-.858 21 21 0 0 1-.5 1.05zm2.446.45q.226.245.435.41c.24.19.407.253.498.256a.1.1 0 0 0 .07-.015.3.3 0 0 0 .094-.125.44.44 0 0 0 .059-.2.1.1 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a4 4 0 0 0-.612-.053zM8.078 7.8a7 7 0 0 0 .2-.828q.046-.282.038-.465a.6.6 0 0 0-.032-.198.5.5 0 0 0-.145.04c-.087.035-.158.106-.196.283-.04.192-.03.469.046.822q.036.167.09.346z"
+                      />
+                    </svg>
+                    Fan materiallari
+                  </button>
+                </a>
+                <a href="{% url 'video_lessons' %}">
+                  <button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-camera-video"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1z"
+                      />
+                    </svg>
+                    Video darslar
+                  </button>
+                </a>
+                <a href="{% url 'ai_chat' %}">
+                  <button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-robot"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5M3 8.062C3 6.76 4.235 5.765 5.53 5.886a26.6 26.6 0 0 0 4.94 0C11.765 5.765 13 6.76 13 8.062v1.157a.93.93 0 0 1-.765.935c-.845.147-2.34.346-4.235.346s-3.39-.2-4.235-.346A.93.93 0 0 1 3 9.219zm4.542-.827a.25.25 0 0 0-.217.068l-.92.9a25 25 0 0 1-1.871-.183.25.25 0 0 0-.068.495c.55.076 1.232.149 2.02.193a.25.25 0 0 0 .189-.071l.754-.736.847 1.71a.25.25 0 0 0 .404.062l.932-.97a25 25 0 0 0 1.922-.188.25.25 0 0 0-.068-.495c-.538.074-1.207.145-1.98.189a.25.25 0 0 0-.166.076l-.754.785-.842-1.7a.25.25 0 0 0-.182-.135"
+                      />
+                      <path
+                        d="M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2zM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5"
+                      />
+                    </svg>
+                    AI chat
+                  </button>
+                </a>
+                <a href="{% url 'tests' %}">
+                  <button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-card-checklist"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"
+                      />
+                      <path
+                        d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"
+                      />
+                    </svg>
+                    Testlar
+                  </button>
+                </a>
+                {% if user.is_staff %}
+                <a href="{% url 'admin_stats' %}">
+                  <button><i class="fas fa-chart-bar"></i> Statistika</button>
+                </a>
+                {% endif %}
+              </article>
+            </div>
+            <section class="hed_main" id="hedMain">
+              <header>
+                <section class="section_header">
+                  <div class="logo">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-list"
+                      viewBox="0 0 16 16"
+                      id="menu"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
+                      />
+                    </svg>
+                    <h1 id="dashboart">Boshqaruv paneli</h1>
+                  </div>
+                  <div class="profil_img" id="contanerList">
+                    <!-- Foydalanuvchi ismi -->
+                    <div class="user-name" id="userName">
+                        <i class="fas fa-user"></i>
+                        {% if user.is_authenticated %}
+                            {{ user.username }}
+                        {% else %}
+                            Mehmon
+                        {% endif %}
+                    </div>
+
+                    <!-- Profil rasmi -->
+                    <img src="https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg?semt=ais_hybrid&w=740&q=80" alt="no photo" id="loginBtn" />
+
+                    <!-- Profil menyusi - username va rasm orasida chiqadi -->
+                    <div class="list_btn_box hidden" id="listBtn">
+                        <div class="list_btn">
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'profile' %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                                  <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1z"/>
+                                </svg>
+                                <p>Profil</p>
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <form method="post" action="{% url 'logout' %}" class="logout-form">
+                            <form method="post" action="{% url 'logout' %}">
                                 {% csrf_token %}
-                                <button type="submit" class="nav-link btn btn-link">
-                                    <i class="fas fa-sign-out-alt"></i> Chiqish
+                                <button type="submit">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
+                                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                                  </svg>
+                                  <p>Chiqish</p>
                                 </button>
                             </form>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login' %}">
-                                <i class="fas fa-sign-in-alt"></i> Kirish
+                            {% else %}
+                            <a href="{% url 'login' %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                                  <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
+                                  <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                                </svg>
+                                <p>Kirish</p>
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'register' %}">
-                                <i class="fas fa-user-plus"></i> Ro'yxatdan o'tish
+                            <a href="{% url 'register' %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-add" viewBox="0 0 16 16">
+                                  <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                  <path d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
+                                </svg>
+                                <p>Ro'yxatdan o'tish</p>
                             </a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-    </nav> -->
-
-    <!-- Footer - Binafsha gradient -->
-    <!-- <footer>
-        <div class="container py-4">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5><i class="fas fa-laptop-code"></i> IT Ta'lim Portali</h5>
-                    <p>Texnika ixtisosligi talabalari uchun zamonaviy o'quv platformasi</p>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    <h5>Tez havolalar</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'home' %}">Bosh sahifa</a></li>
-                        <li><a href="{% url 'about' %}">Biz haqimizda</a></li>
-                        <li><a href="{% url 'tests' %}">Testlar</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3">
-                    <h5>Aloqa</h5>
-                    <ul class="list-unstyled">
-                        <li><i class="fas fa-envelope"></i> info@itedu.uz</li>
-                        <li><i class="fas fa-phone"></i> +998 90 123 45 67</li>
-                    </ul>
-                </div>
-            </div>
-            <hr style="background-color: rgba(255,255,255,0.3);">
-            <div class="text-center">
-                <p>&copy; 2025 IT Ta'lim Portali. Barcha huquqlar himoyalangan.</p>
-            </div>
-        </div>
-    </footer> -->
+                </section>
+              </header>
+              <main>
+                {% block content %}
+                <!-- CONTENT BLOCK - Bu yerda sizning yangi dizayningiz bo'ladi -->
+                {% endblock %}
+              </main>
+            </section>
+          </section>
+        </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-      // index.js
-      const menu = document.getElementById("menu");
-      const menuBox = document.getElementById("menu_box");
-      const dashboard = document.getElementById("dashboard");
-      const hedMain = document.getElementById("hedMain");
-      const menuBtn = document.getElementById("menuBtn");
-      let isVisible = false;
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+ <script>
+    // index.js - YANGI SMOOTH ANIMATSIYA
+    const menu = document.getElementById("menu");
+    const menuBox = document.getElementById("menu_box");
+    const hedMain = document.getElementById("hedMain");
+    const listBtn = document.getElementById("listBtn");
+    const loginBtn = document.getElementById("loginBtn");
+    const userName = document.getElementById("userName");
+    const contanerList = document.getElementById("contanerList");
 
-      menu.addEventListener("click", () => {
+    let isVisible = true; // Boshlang'ich holatda sidebar ochiq
+
+    menu.addEventListener("click", () => {
         if (isVisible) {
-          menuBox.style.width = "0"; // Kenglikni 0 ga o'zgartiramiz
-          menuBtn.style.opacity = "0";
-          setTimeout(() => {
-            menuBox.classList.remove("show"); // Ko'rinmas qiladi
-            menuBox.style.display = "none"; // Tugal yashirish
-            dashboard.style.margin = "-35px auto"; // Dashboard ni asl holatiga qaytaramiz
-            hedMain.style.width = "100%";
-            menuBtn.style.display = "none";
-            menuBtn.classList.remove("show");
-          }, 500); // Animatsiya davomiyligi
+            // Sidebar yopish - SMOOTH animatsiya
+            menuBox.classList.remove("show", "opening");
+            menuBox.classList.add("closing");
+
+            setTimeout(() => {
+                menuBox.classList.add("hidden");
+                menuBox.classList.remove("closing");
+                hedMain.classList.add("expanded");
+            }, 600); // Animatsiya davomiyligiga mos
+
         } else {
-          menuBox.style.display = "block"; // Ko'rsatamiz
+            // Sidebar ochish - SMOOTH animatsiya
+            menuBox.classList.remove("hidden", "closing");
+            menuBox.classList.add("opening");
+            hedMain.classList.remove("expanded");
 
-          setTimeout(() => {
-            menuBox.classList.add("show"); // Ko'rinadigan holatga o'tamiz
-            menuBox.style.width = "25%"; // Kenglikni o'zgartiramiz
-            dashboard.style.transform = "translateX(320px)"; // Dashboardni chapga suramiz
-            hedMain.style.width = "60%";
-          }, 10); // Bir oz kutish
+            setTimeout(() => {
+                menuBox.classList.add("show");
+                menuBox.classList.remove("opening");
+            }, 600); // Animatsiya davomiyligiga mos
+        }
+        isVisible = !isVisible;
+    });
 
-          setTimeout(() => {
-            menuBtn.style.display = "block"; // `menuBtn` ni ko'rsatamiz
-            menuBtn.style.width = "20%"; // Kengligini o'zgartirish
-            menuBtn.style.opacity = "1";
-          }, 500); // 3 soniya o'tgach
+    // Foydalanuvchi menyusi
+    function toggleUserMenu() {
+        if (listBtn.classList.contains("hidden")) {
+            // Menuni ko'rsatish - SMOOTH
+            listBtn.classList.remove("hidden");
+            setTimeout(() => {
+                listBtn.classList.add("visible");
+            }, 10);
+        } else {
+            // Menuni yashirish - SMOOTH
+            listBtn.classList.remove("visible");
+            setTimeout(() => {
+                listBtn.classList.add("hidden");
+            }, 400);
+        }
+    }
+
+    // Foydalanuvchi ismi yoki rasm bosilganda
+    if (userName) {
+        userName.addEventListener("click", toggleUserMenu);
+    }
+    if (loginBtn) {
+        loginBtn.addEventListener("click", toggleUserMenu);
+    }
+
+    // Ekrannin boshqa joyi bosilganda menuni yopish
+    document.addEventListener("click", function(event) {
+        if (contanerList && listBtn) {
+            const isClickInside = contanerList.contains(event.target);
+            if (!isClickInside && !listBtn.classList.contains("hidden")) {
+                listBtn.classList.remove("visible");
+                setTimeout(() => {
+                    listBtn.classList.add("hidden");
+                }, 400);
+            }
+        }
+    });
+
+    // Menudan tashqariga chiqishda yopish
+    if (listBtn) {
+        listBtn.addEventListener("click", function(event) {
+            event.stopPropagation();
+        });
+    }
+
+    // Sayt yuklanganda sidebar ochiq bo'ladi
+    document.addEventListener('DOMContentLoaded', function() {
+        if (menuBox) {
+            menuBox.classList.add('show');
+            menuBox.classList.remove('hidden');
+        }
+        if (hedMain) {
+            hedMain.classList.remove('expanded');
         }
 
-        isVisible = !isVisible; // Mavjudligini o'zgartirish
-      });
+        // Menu article elementlariga animatsiya qo'shish
+        const menuButtons = document.querySelectorAll('.menu article a button');
+        menuButtons.forEach((button, index) => {
+            button.style.animationDelay = `${index * 0.1}s`;
+            button.classList.add('menu-item');
+        });
+    });
 
-      // profil img
-      const listBtn = document.getElementById("listBtn");
-      const loginBtn = document.getElementById("loginBtn");
-
-      loginBtn.addEventListener("click", () => {
-        if (listBtn.classList.contains("visible")) {
-          listBtn.classList.remove("visible");
-          setTimeout(() => {
-            listBtn.classList.add("hidden");
-          }, 500); // Kengayish tugagach, yashiradi
-        } else {
-          listBtn.classList.remove("hidden");
-          listBtn.style.transform = "translateX(-250px)";
-          setTimeout(() => {
-            listBtn.classList.add("visible");
-          }, 0); // Darhol ko'rsatadi
+    // Resize event - animatsiyani qayta tiklash
+    window.addEventListener('resize', function() {
+        // Kichik ekranda sidebar holatini tekshirish
+        if (window.innerWidth < 768) {
+            menuBox.style.transition = 'none';
+            setTimeout(() => {
+                menuBox.style.transition = '';
+            }, 50);
         }
-      });
-    </script>
-    {% block scripts %}{% endblock %}
-  </body>
-</html>
+    });
+</script>
+        {% block scripts %}{% endblock %}
+      </body>
+    </html>

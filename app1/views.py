@@ -14,12 +14,18 @@ import time
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
+from users.models import UserProfile
 
-
-# -------------------- ASOSIY SAHIFALAR --------------------
 def home(request):
     """Bosh sahifa"""
     graphic = None
+
+    # BARCHA foydalanuvchilar uchun videolar
+    videos = VideoLesson.objects.all()
+    documents = Document.objects.all()
+    tests = Test.objects.all()
+    users = UserProfile.objects.all()
+
 
     if request.user.is_authenticated:
         # Foydalanuvchining test natijalarini olish
@@ -40,8 +46,7 @@ def home(request):
             percentages = [result.percentage() for result in test_results]
 
             # Ranglar
-            colors = ['green' if p >= 80 else 'orange' if p >= 60 else 'red' for p in percentages]
-
+            colors = ['blue' for p in percentages]
             # Ustunli diagramma
             bars = plt.bar(test_names, percentages, color=colors, alpha=0.7, edgecolor='black')
 
@@ -52,7 +57,7 @@ def home(request):
 
             # Formatlar
             plt.title(f'Sizning Test Natijalaringiz', fontsize=14, fontweight='bold')
-            plt.xlabel('Testlar', fontsize=12)
+            plt.xlabel('Jami testlar', fontsize=12)
             plt.ylabel('Foiz (%)', fontsize=12)
             plt.xticks(rotation=0)
             plt.ylim(0, 100)
@@ -70,7 +75,13 @@ def home(request):
             plt.close()
 
     return render(request, 'app1/home.html', {
-        'graphic': graphic  # ✅ Kontekstga qo'shildi
+        'graphic': graphic,
+        'videos': videos,
+        'videos_count': videos.count(),
+        'documents': documents,  # Documentlar ro'yxati
+        'documents_count': documents.count(),  # Documentlar soni
+        'test_count': tests.count(),
+        'user_count': users.count(),
     })
 def about(request):
     """Loyiha haqida sahifa"""
@@ -126,6 +137,8 @@ def add_document(request):
 def video_lessons(request):
     """Video darslar ro'yxati"""
     videos = VideoLesson.objects.all()
+    videos_count = videos.count()  # Sonini hisoblash
+
     return render(request, 'app1/video_lessons.html', {'videos': videos})
 
 

@@ -5,6 +5,7 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import logout
 from .forms import CustomUserCreationForm, UserProfileForm
+from app1.models import TestResult
 
 
 def register(request):
@@ -45,6 +46,14 @@ def register(request):
 def profile(request):
     user_profile = request.user.userprofile
 
+    # Test natijalarini olish
+    test_results = TestResult.objects.filter(user=request.user)
+
+    # Eng yaxshi natijani hisoblash
+    best_percentage = 0
+    if test_results:
+        best_percentage = max([result.percentage() for result in test_results])
+
     if request.method == 'POST':
         form = UserProfileForm(request.POST, instance=user_profile)
         if form.is_valid():
@@ -56,9 +65,10 @@ def profile(request):
 
     return render(request, 'users/profile.html', {
         'user_profile': user_profile,
-        'form': form
+        'form': form,
+        'test_results': test_results,
+        'best_percentage': best_percentage  # Eng yaxshi natija
     })
-
 
 @require_POST
 @csrf_protect
