@@ -75,13 +75,19 @@
         border-radius: 50%;
         border: 3px solid white;
         transition: 0.3s ease;
+        cursor: pointer;
       }
-
+      .profil_img img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
       .list_btn_box {
         display: flex;
-        gap: 20px;
+        gap: 15px;
         width: 400px;
         align-items: center;
+        border-radius: 10px;
+        justify-content: space-between;
       }
       .list_btn_box a {
         display: flex;
@@ -89,7 +95,7 @@
         text-align: center;
         text-decoration: none;
         width: 100%;
-        height: auto;
+        height: 45px;
         cursor: pointer;
         backdrop-filter: blur(100px);
         background-color: rgba(255, 255, 255, 0.511);
@@ -114,9 +120,9 @@
       .list_btn_box form button {
         display: flex;
         gap: 10px;
-        text-decoration: none;
-        max-width: 100%;
         text-align: center;
+        text-decoration: none;
+        width: 100%;
         height: auto;
         cursor: pointer;
         backdrop-filter: blur(100px);
@@ -124,8 +130,9 @@
         border-radius: 10px;
         transition: 0.3s ease;
         color: rgb(20, 33, 119);
+        padding-left: 14px;
+        padding-right: 14px;
         border: none;
-        padding: 0 12px 0 10px;
       }
       .list_btn_box form button:hover {
         transform: scale(1.05);
@@ -146,7 +153,18 @@
         transition: 0.3s ease;
         color: rgb(20, 33, 119);
       }
+      #listBtn {
+        display: none; /* Boshlanish holati */
+        width: 200px; /* Kengligi */
+        transition: width 0.5s ease; /* Jilokorlik effekti */
+        overflow: hidden;
+      }
 
+      #listBtn.active {
+        display: block; /* Boshqa holat */
+        width: 200px; /* Kengligi */
+        transition: width 0.5s ease; /* Jilokorlik effekti */
+      }
       /* main.css */
       * {
         padding: 0;
@@ -369,6 +387,8 @@
         width: 20px;
         height: 20px;
       }
+      @media (max-width: 1205px) {
+      }
     </style>
   </head>
   <body>
@@ -533,7 +553,7 @@
                         d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1z"
                       />
                     </svg>
-                    <p>Profil</p>
+                    <p id="imgBtn">Profil</p>
                   </a>
                   <form method="post" action="{% url 'logout' %}">
                     {% csrf_token %}
@@ -555,12 +575,31 @@
                           d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"
                         />
                       </svg>
-                      <p>Chiqish</p>
+                      <p id="imgBtn">Chiqish</p>
                     </button>
                   </form>
+                  <span><i class="fas fa-user"></i> {{ user.username }} </span>
                   {% else %}
                   <!-- kirish -->
-                  <a href="{% url 'login' %}" id="loGin">
+                  <a href="{% url 'register' %}">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-person-fill-add"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"
+                      />
+                      <path
+                        d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"
+                      />
+                    </svg>
+                    <p id="imgBtn">Ro'yxatdan o'tish</p>
+                  </a>
+                  <a href="{% url 'login' %}">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -578,25 +617,7 @@
                         d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"
                       />
                     </svg>
-                    <p>Kirish</p>
-                  </a>
-                  <a href="{% url 'register' %}" id="sogin">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      class="bi bi-person-fill-add"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"
-                      />
-                      <path
-                        d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"
-                      />
-                    </svg>
-                    <p>Ro'yxatdan o'tish</p>
+                    <p id="imgBtn">Kirish</p>
                   </a>
                   {% endif %}
                 </div>
@@ -605,7 +626,6 @@
                   alt="no photo"
                   id="loginBtn"
                 />
-                <span><i class="fas fa-user"></i> {{ user.username }} </span>
               </div>
             </section>
           </header>
@@ -617,118 +637,6 @@
         </section>
       </section>
     </section>
-
-    <!-- Ochiq rang navbar - ko'k gradient -->
-    <!-- <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">
-                <i class="fas fa-laptop-code"></i> IT Ta'lim
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'about' %}">
-                            <i class="fas fa-info-circle"></i> Biz haqimizda
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'documents' %}">
-                            <i class="fas fa-file-pdf"></i> Fan materiallari
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'video_lessons' %}">
-                            <i class="fas fa-video"></i> Video darslar
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'ai_chat' %}">
-                            <i class="fas fa-robot"></i> AI Chat
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'tests' %}">
-                            <i class="fas fa-tasks"></i> Testlar
-                        </a>
-                    </li>
-                    {% if user.is_staff %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'admin_stats' %}">
-                            <i class="fas fa-chart-bar"></i> Statistika
-                        </a>
-                    </li>
-                    {% endif %}
-                </ul>
-                <ul class="navbar-nav">
-                    {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <span class="nav-link">
-                                <i class="fas fa-user"></i> {{ user.username }}
-                            </span>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'profile' %}">
-                                <i class="fas fa-id-card"></i> Profil
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <form method="post" action="{% url 'logout' %}" class="logout-form">
-                                {% csrf_token %}
-                                <button type="submit" class="nav-link btn btn-link">
-                                    <i class="fas fa-sign-out-alt"></i> Chiqish
-                                </button>
-                            </form>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login' %}">
-                                <i class="fas fa-sign-in-alt"></i> Kirish
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'register' %}">
-                                <i class="fas fa-user-plus"></i> Ro'yxatdan o'tish
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-    </nav> -->
-
-    <!-- Footer - Binafsha gradient -->
-    <!-- <footer>
-        <div class="container py-4">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5><i class="fas fa-laptop-code"></i> IT Ta'lim Portali</h5>
-                    <p>Texnika ixtisosligi talabalari uchun zamonaviy o'quv platformasi</p>
-                </div>
-                <div class="col-md-3">
-                    <h5>Tez havolalar</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'home' %}">Bosh sahifa</a></li>
-                        <li><a href="{% url 'about' %}">Biz haqimizda</a></li>
-                        <li><a href="{% url 'tests' %}">Testlar</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3">
-                    <h5>Aloqa</h5>
-                    <ul class="list-unstyled">
-                        <li><i class="fas fa-envelope"></i> info@itedu.uz</li>
-                        <li><i class="fas fa-phone"></i> +998 90 123 45 67</li>
-                    </ul>
-                </div>
-            </div>
-            <hr style="background-color: rgba(255,255,255,0.3);">
-            <div class="text-center">
-                <p>&copy; 2025 IT Ta'lim Portali. Barcha huquqlar himoyalangan.</p>
-            </div>
-        </div>
-    </footer> -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -791,6 +699,63 @@
       }
 
       // Sahifa ichidagi operatsiya, yangilanishni ta'sir etmaydi
+      const loginBtn = document.getElementById("loginBtn");
+      const imgBtn = document.getElementById("imgBtn");
+      const listBtn = document.getElementById("listBtn");
+
+      // Sahifa yuklanganda holatni tiklash
+      window.addEventListener("load", () => {
+        const imgBtnDisplay = localStorage.getItem("imgBtnDisplay");
+        const listBtnDisplay = localStorage.getItem("listBtnDisplay");
+
+        if (imgBtnDisplay === "flex") {
+          imgBtn.style.display = "flex";
+          imgBtn.style.opacity = "1";
+        } else {
+          imgBtn.style.display = "none";
+          imgBtn.style.opacity = "0";
+        }
+
+        if (listBtnDisplay === "flex") {
+          listBtn.style.display = "flex";
+          listBtn.style.width = "400px";
+        } else {
+          listBtn.style.display = "none";
+          listBtn.style.width = "0";
+        }
+      });
+
+      loginBtn.addEventListener("click", () => {
+        if (imgBtn.style.display === "flex") {
+          // Agar imgBtn ko'rsatilsa
+          imgBtn.style.opacity = "0"; // Opasiti 0 ga qisqartirish
+          setTimeout(() => {
+            imgBtn.style.display = "none"; // 0 holatda mustahkamlash
+            localStorage.setItem("imgBtnDisplay", "none"); // Holatni saqlash
+          }, 500); // 0 ga o'zgarishi uchun vaqt (aniqlik)
+
+          // listBtn ni yashirish
+          listBtn.style.width = "0"; // Kenglikni 0 ga qisqartirish
+          setTimeout(() => {
+            listBtn.style.display = "none"; // 0 holatda mustahkamlash
+            localStorage.setItem("listBtnDisplay", "none"); // Holatni saqlash
+          }, 500); // 0 ga o'zgarishi uchun vaqt (aniqlik)
+        } else {
+          // Agar imgBtn yashirilsa
+          imgBtn.style.display = "flex"; // Ko'rsatish
+          setTimeout(() => {
+            imgBtn.style.opacity = "1"; // Opasiti 1 ga o'zgartirish
+            localStorage.setItem("imgBtnDisplay", "flex"); // Holatni saqlash
+          }, 500); // Tez vaqt oraliq
+
+          // listBtn ni ko'rsatish
+          listBtn.style.display = "flex"; // Ko'rsatish
+          setTimeout(() => {
+            listBtn.style.width = "400px"; // Kenglikni asl holatiga qaytarish
+            localStorage.setItem("listBtnDisplay", "flex"); // Holatni saqlash
+          }, 10); // Tez vaqt oraliq
+        }
+      });
     </script>
     {% block scripts %}{% endblock %}
   </body>
