@@ -62,11 +62,6 @@
       .profil_img {
         display: flex;
         align-items: center;
-        gap: 20px;
-      }
-      .profil_img {
-        display: flex;
-        align-items: center;
         gap: 10px;
       }
       .profil_img img {
@@ -83,38 +78,39 @@
       }
       .list_btn_box {
         display: flex;
-        gap: 15px;
-        width: 400px;
         align-items: center;
-        border-radius: 10px;
-        justify-content: space-between;
+        gap: 15px;
+        height: 50px;
+        padding: 25px;
       }
       .list_btn_box a {
-        display: flex;
-        gap: 10px;
-        text-align: center;
         text-decoration: none;
-        width: 100%;
-        height: 45px;
+      }
+      .list_btn_box a button {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 180px;
+        height: 40px;
         cursor: pointer;
         backdrop-filter: blur(100px);
         background-color: rgba(255, 255, 255, 0.511);
         border-radius: 10px;
         transition: 0.3s ease;
         color: rgb(20, 33, 119);
-        padding-left: 14px;
+        border: none;
+        padding: 3px;
       }
-      .list_btn_box a:hover {
+      .list_btn_box button:hover {
         transform: scale(1.05);
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
       }
-      .list_btn_box a p {
+      .list_btn_box a button p {
         color: rgb(32, 25, 96);
-        font-size: 16px;
-        margin-top: 12px;
+        font-size: 14px;
       }
       .list_btn_box svg {
-        width: 30px;
+        width: 18px;
         height: auto;
       }
       .list_btn_box form button {
@@ -122,8 +118,8 @@
         gap: 10px;
         text-align: center;
         text-decoration: none;
-        width: 100%;
-        height: auto;
+        width: 120px;
+        height: 40px;
         cursor: pointer;
         backdrop-filter: blur(100px);
         background-color: rgba(255, 255, 255, 0.511);
@@ -218,7 +214,6 @@
         justify-content: space-between;
       }
       .contaner_info {
-        min-width: 10px;
         width: 100%;
         height: auto;
         backdrop-filter: blur(10px);
@@ -387,7 +382,23 @@
         width: 20px;
         height: 20px;
       }
-      @media (max-width: 1205px) {
+      @media (max-width: 1225px) {
+        .profil_img img {
+          width: 50px;
+          height: 50px;
+        }
+        .list_btn_box {
+          gap: 12px;
+          width: 370px;
+        }
+        .list_btn_box a {
+          width: 80%;
+          height: 40px;
+        }
+        .list_btn_box p {
+          margin-top: 9px;
+          font-size: 14px;
+        }
       }
     </style>
   </head>
@@ -541,19 +552,21 @@
                   {% if user.is_authenticated %}
                   <!-- Chiqish -->
                   <a href="{% url 'profile' %}">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      class="bi bi-person-lines-fill"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1z"
-                      />
-                    </svg>
-                    <p id="imgBtn">Profil</p>
+                    <button>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-person-lines-fill"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1z"
+                        />
+                      </svg>
+                      <p id="imgBtn">Profil</p>
+                    </button>
                   </a>
                   <form method="post" action="{% url 'logout' %}">
                     {% csrf_token %}
@@ -582,42 +595,46 @@
                   {% else %}
                   <!-- kirish -->
                   <a href="{% url 'register' %}">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      class="bi bi-person-fill-add"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"
-                      />
-                      <path
-                        d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"
-                      />
-                    </svg>
-                    <p id="imgBtn">Ro'yxatdan o'tish</p>
+                    <button>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-person-fill-add"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"
+                        />
+                        <path
+                          d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"
+                        />
+                      </svg>
+                      <p id="imgBtn">Ro'yxatdan o'tish</p>
+                    </button>
                   </a>
                   <a href="{% url 'login' %}">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      class="bi bi-box-arrow-in-right"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"
-                      />
-                      <path
-                        fill-rule="evenodd"
-                        d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"
-                      />
-                    </svg>
-                    <p id="imgBtn">Kirish</p>
+                    <button>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-box-arrow-in-right"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"
+                        />
+                      </svg>
+                      <p id="imgBtn">Kirish</p>
+                    </button>
                   </a>
                   {% endif %}
                 </div>
@@ -699,6 +716,7 @@
       }
 
       // Sahifa ichidagi operatsiya, yangilanishni ta'sir etmaydi
+
       const loginBtn = document.getElementById("loginBtn");
       const imgBtn = document.getElementById("imgBtn");
       const listBtn = document.getElementById("listBtn");
@@ -708,8 +726,8 @@
         const imgBtnDisplay = localStorage.getItem("imgBtnDisplay");
         const listBtnDisplay = localStorage.getItem("listBtnDisplay");
 
-        if (imgBtnDisplay === "flex") {
-          imgBtn.style.display = "flex";
+        if (imgBtnDisplay === "block") {
+          imgBtn.style.display = "block";
           imgBtn.style.opacity = "1";
         } else {
           imgBtn.style.display = "none";
@@ -718,7 +736,7 @@
 
         if (listBtnDisplay === "flex") {
           listBtn.style.display = "flex";
-          listBtn.style.width = "400px";
+          listBtn.style.width = "500px";
         } else {
           listBtn.style.display = "none";
           listBtn.style.width = "0";
@@ -751,7 +769,7 @@
           // listBtn ni ko'rsatish
           listBtn.style.display = "flex"; // Ko'rsatish
           setTimeout(() => {
-            listBtn.style.width = "400px"; // Kenglikni asl holatiga qaytarish
+            listBtn.style.width = "500px"; // Kenglikni asl holatiga qaytarish
             localStorage.setItem("listBtnDisplay", "flex"); // Holatni saqlash
           }, 10); // Tez vaqt oraliq
         }
