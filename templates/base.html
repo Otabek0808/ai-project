@@ -742,58 +742,80 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       // index.js
+      const menu = document.getElementById("menu");
       const menuBox = document.getElementById("menu_box");
       const dashboard = document.getElementById("dashboard");
       const hedMain = document.getElementById("hedMain");
       const menuBtn = document.getElementById("menuBtn");
-      let isVisible = localStorage.getItem("menuVisible") === "true"; // Brauzer yangilanganida holatni oling
 
-      // Menyu boshlang'ich holatini o'rnatamiz
+      let isVisible = localStorage.getItem("menuVisible") === "true"; // Get the state when the browser is refreshed
+
+      // Set the initial menu state
       if (isVisible) {
         showMenu();
       } else {
         hideMenu();
       }
 
+      // Click event for the menu
       menu.addEventListener("click", () => {
-        if (isVisible) {
-          hideMenu();
+        if (window.innerWidth > 740) {
+          // If screen width is greater than 740px
+          if (isVisible) {
+            hideMenu();
+          } else {
+            showMenu();
+          }
         } else {
-          showMenu();
+          // If screen width is 740px or less, reverse the functionality
+          if (isVisible) {
+            showMenu(); // Show menu
+          } else {
+            hideMenu(); // Hide menu
+          }
         }
 
-        isVisible = !isVisible; // Mavjudligini o'zgartirish
-        localStorage.setItem("menuVisible", isVisible); // Holatni saqlash
+        isVisible = !isVisible; // Toggle visibility
+        localStorage.setItem("menuVisible", isVisible); // Save state
+      });
+
+      // Resize event to handle screen size changes
+      window.addEventListener("resize", () => {
+        if (window.innerWidth <= 740 && isVisible) {
+          hideMenu(); // Hide menu if screen size is less than or equal to 740px
+          isVisible = false; // Update visibility state
+          localStorage.setItem("menuVisible", isVisible); // Save state
+        }
       });
 
       function hideMenu() {
-        menuBox.style.width = "0"; // Kenglikni 0 ga o'zgartiramiz
+        menuBox.style.width = "0"; // Change width to 0
         menuBtn.style.opacity = "0";
         setTimeout(() => {
-          menuBox.classList.remove("show"); // Ko'rinmas qiladi
-          menuBox.style.display = "none"; // Tugal yashirish
-          dashboard.style.margin = "-35px auto"; // Dashboard ni asl holatiga qaytaramiz
+          menuBox.classList.remove("show"); // Make it hidden
+          menuBox.style.display = "none"; // Fully hide
+          dashboard.style.margin = "-35px auto"; // Reset dashboard
           hedMain.style.width = "100%";
-          menuBtn.style.display = "none"; // Tugmani yashirish
+          menuBtn.style.display = "none"; // Hide button
           menuBtn.classList.remove("show");
-        }, 500); // Animatsiya davomiyligi
+        }, 500); // Animation duration
       }
 
       function showMenu() {
-        menuBox.style.display = "block"; // Ko'rsatamiz
+        menuBox.style.display = "block"; // Show the menu
 
         setTimeout(() => {
-          menuBox.classList.add("show"); // Ko'rinadigan holatga o'tamiz
-          menuBox.style.width = "25%"; // Kenglikni o'zgartiramiz
-          dashboard.style.transform = "translateX(320px)"; // Dashboardni chapga suramiz
+          menuBox.classList.add("show"); // Transition to visible state
+          menuBox.style.width = "25%"; // Change width
+          dashboard.style.transform = "translateX(320px)"; // Move dashboard left
           hedMain.style.width = "60%";
-        }, 10); // Bir oz kutish
+        }, 10); // Short delay
 
         setTimeout(() => {
-          menuBtn.style.display = "block"; // `menuBtn` ni ko'rsatamiz
-          menuBtn.style.width = "20%"; // Kengligini o'zgartirish
+          menuBtn.style.display = "block"; // Show menuBtn
+          menuBtn.style.width = "20%"; // Change width
           menuBtn.style.opacity = "1";
-        }, 500); // 3 soniya o'tgach
+        }, 500); // Delay for button display
       }
 
       // Sahifa ichidagi operatsiya, yangilanishni ta'sir etmaydi
@@ -807,6 +829,7 @@
         const imgBtnDisplay = localStorage.getItem("imgBtnDisplay");
         const listBtnDisplay = localStorage.getItem("listBtnDisplay");
 
+        // `imgBtn` holatini tiklash
         if (imgBtnDisplay === "flex") {
           imgBtn.style.display = "flex";
           imgBtn.style.opacity = "1";
@@ -815,6 +838,7 @@
           imgBtn.style.opacity = "0";
         }
 
+        // `listBtn` holatini tiklash
         if (listBtnDisplay === "flex") {
           listBtn.style.display = "flex";
           listBtn.style.width = "420px";
@@ -824,6 +848,7 @@
         }
       });
 
+      // Login tugmasini bosilganda
       loginBtn.addEventListener("click", () => {
         if (imgBtn.style.display === "flex") {
           // Agar imgBtn ko'rsatilsa
@@ -845,7 +870,7 @@
           setTimeout(() => {
             imgBtn.style.opacity = "1"; // Opasiti 1 ga o'zgartirish
             localStorage.setItem("imgBtnDisplay", "flex"); // Holatni saqlash
-          }, 500); // Tez vaqt oraliq
+          }, 10); // Tez vaqt oraliq
 
           // listBtn ni ko'rsatish
           listBtn.style.display = "flex"; // Ko'rsatish
@@ -866,12 +891,6 @@
           listBtn.style.display = ""; // Asl holatiga qaytaring
         }
       }
-
-      // Ekran o'lchami o'zgarganda funksiyani chaqiring
-      window.addEventListener("resize", adjustListBtnWidth);
-
-      // Sahifa yuklanganda funksiyani chaqiring
-      window.addEventListener("load", adjustListBtnWidth);
     </script>
     {% block scripts %}{% endblock %}
   </body>
