@@ -499,7 +499,7 @@
           </article>
         </div>
         <section class="hed_main" id="hedMain">
-          <header>
+          <header id="heaDer">
             <section class="section_header">
               <div class="logo">
                 <svg
@@ -741,45 +741,56 @@
       const dashboard = document.getElementById("dashboard");
       const hedMain = document.getElementById("hedMain");
       const menuBtn = document.getElementById("menuBtn");
-      let isVisible = true;
+
+      let isVisible = localStorage.getItem("menuVisible") === "true"; // Brauzer yangilanganida holatni oling
+
+      // Menyu boshlang'ich holatini o'rnatamiz
+      if (isVisible) {
+        showMenu();
+      } else {
+        hideMenu();
+      }
 
       menu.addEventListener("click", () => {
-        if (!isVisible) {
-          // Menyu ko'rinmasa
-          menuBox.style.display = "block"; // Menyu qutisini ko'rsatish
-
-          setTimeout(() => {
-            menuBox.classList.add("show"); // Ko'rinadigan holatga o'tish
-            menuBox.style.width = "25%"; // Kengligini o'zgartirish
-            dashboard.style.transform = "translateX(320px)"; // Dashboardni chapga siljitish
-            hedMain.style.width = "60%"; // HedMain kengligini o'zgartirish
-          }, 10); // Tez kutish
-
-          setTimeout(() => {
-            menuBtn.style.display = "block"; // Menu tugmasini ko'rsatish
-            menuBtn.style.width = "20%"; // Kengligini o'zgartirish
-            menuBtn.style.opacity = "1"; // Oqibatni o'zgartirish
-          }, 500); // 500ms dan so'ng
+        if (isVisible) {
+          hideMenu();
         } else {
-          // Agar menyu ko'rinayotgan bo'lsa
-          menuBox.style.width = "0"; // Kenglikni 0 ga o'zgartirish
-          menuBtn.style.opacity = "0"; // Oqibatni 0 ga o'zgartirish
-
-          setTimeout(() => {
-            menuBox.classList.remove("show"); // Ko'rinmas holatga o'tish
-            menuBox.style.display = "none"; // To'liq yashirish
-            dashboard.style.margin = "-35px auto"; // Dashboard pozitsiyasini tiklash
-            hedMain.style.width = "100%"; // HedMain kengligini tiklash
-            menuBtn.style.display = "none"; // Menu tugmasini yashirish
-          }, 500); // Animatsiya davomiyligi
+          showMenu();
         }
 
-        isVisible = !isVisible; // Ko'rinish holatini o'zgartirish
+        isVisible = !isVisible; // Mavjudligini o'zgartirish
+        localStorage.setItem("menuVisible", isVisible); // Holatni saqlash
       });
-      window.addEventListener("beforeunload", function (event) {
-        // Foydalanuvchiga ogohlantirish yozuvi ko'rsatadi
-        // Boshqa brauzerlarda ko'rsatadi
-      });
+
+      function hideMenu() {
+        menuBox.style.width = "0"; // Kenglikni 0 ga o'zgartiramiz
+        menuBtn.style.opacity = "0";
+        setTimeout(() => {
+          menuBox.classList.remove("show"); // Ko'rinmas qiladi
+          menuBox.style.display = "none"; // Tugal yashirish
+          dashboard.style.margin = "-35px auto"; // Dashboard ni asl holatiga qaytaramiz
+          hedMain.style.width = "100%";
+          menuBtn.style.display = "none"; // Tugmani yashirish
+          menuBtn.classList.remove("show");
+        }, 500); // Animatsiya davomiyligi
+      }
+
+      function showMenu() {
+        menuBox.style.display = "block"; // Ko'rsatamiz
+
+        setTimeout(() => {
+          menuBox.classList.add("show"); // Ko'rinadigan holatga o'tamiz
+          menuBox.style.width = "25%"; // Kenglikni o'zgartiramiz
+          dashboard.style.transform = "translateX(320px)"; // Dashboardni chapga suramiz
+          hedMain.style.width = "60%";
+        }, 10); // Bir oz kutish
+
+        setTimeout(() => {
+          menuBtn.style.display = "block"; // `menuBtn` ni ko'rsatamiz
+          menuBtn.style.width = "20%"; // Kengligini o'zgartirish
+          menuBtn.style.opacity = "1";
+        }, 500); // 3 soniya o'tgach
+      }
 
       // Sahifa ichidagi operatsiya, yangilanishni ta'sir etmaydi
     </script>
