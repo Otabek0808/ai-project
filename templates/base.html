@@ -471,10 +471,8 @@
         .menu {
           position: absolute;
           z-index: 20;
-          display: none;
           backdrop-filter: blur(100px);
           background-color: rgba(220, 232, 232, 0.884);
-          width: 220px;
           height: 100%;
         }
       }
@@ -770,10 +768,10 @@
       adjustMenuDisplay(); // Sahifa yuklanganda initializatsiya
 
       function adjustMenuDisplay() {
-        if (window.innerWidth < 725) {
-          menuBtn.style.display = isVisible ? "none" : "flex"; // menuBtn faqat menu ko'rsatilgani vaqtda ko'rsatiladi
+        if (window.innerWidth < 1001) {
+          menu_box.style.display = isVisible ? "none" : "flex"; // menuBtn faqat menu ko'rsatilgani vaqtda ko'rsatiladi
         } else {
-          menuBtn.style.display = "block"; // Katta ekranlarga hovering
+          menu_box.style.display = "block"; // Katta ekranlarga hovering
         }
       }
 
