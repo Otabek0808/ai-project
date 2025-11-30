@@ -141,6 +141,7 @@
         margin-top: 9px;
         font-size: 14px;
       }
+
       .list_btn_box span {
         display: flex;
         gap: 10px;
@@ -151,6 +152,7 @@
         border-radius: 10px;
         transition: 0.3s ease;
         color: rgb(20, 33, 119);
+        font-size: 14px;
       }
       #listBtn {
         display: none; /* Boshlanish holati */
@@ -198,6 +200,7 @@
         gap: 10px;
         height: 100%;
         min-height: 95vh;
+        justify-content: space-between;
       }
       .hed_main {
         padding: 35px;
@@ -426,30 +429,53 @@
         }
       }
       @media (max-width: 1001px) {
-        .logo svg {
-          width: 31px;
-          height: 31px;
+        .profil_img {
+          gap: 8.2px;
         }
-        .menu article {
-          margin-top: 84px;
-          margin-bottom: 39px;
+        .profil_img img {
+          width: 41.3px;
+          height: 41.3px;
         }
-        .menu article a button {
-          font-size: 13.7px;
-          gap: 13.9px;
-          padding: 12px 5px 12px 3px;
+        .list_btn_box {
+          gap: 7px;
+          height: 39px;
+          pad: 13.7px;
         }
-        .menu article a button svg {
-          width: 15.1px;
-          height: 15.1px;
+        .list_btn_box a button {
+          width: 125px;
+          height: 29.2px;
+          padding: 2px;
         }
-        .menu article a button svg {
-          width: 15.1px;
-          height: 15.1px;
+        .list_btn_box a button p {
+          margin-top: 7.81px;
+          height: 10.49px;
         }
-        .menu article a button i {
-          width: 15.1px;
-          height: 15.1px;
+        .list_btn_box form button {
+          gap: 7.9px;
+          width: 96.7px;
+          height: 29.2px;
+          border-radius: 8.4px;
+          padding-left: 10px;
+          padding-right: 8px;
+        }
+        .list_btn_box form button p {
+          margin-top: 7.3px;
+          font-size: 10.2px;
+        }
+        .list_btn_box span {
+          gap: 7.1px;
+          width: 79px;
+          height: 29.7px;
+          font-size: 11.2px;
+        }
+        .menu {
+          position: absolute;
+          z-index: 20;
+          display: none;
+          backdrop-filter: blur(100px);
+          background-color: rgba(220, 232, 232, 0.884);
+          width: 220px;
+          height: 100%;
         }
       }
       @media (max-width: 830px) {
@@ -458,54 +484,12 @@
           height: 31px;
           border-radius: 7px;
         }
-        .menu article {
-          margin-top: 84px;
-          margin-bottom: 39px;
-        }
-        .menu article a button {
-          font-size: 11.2px;
-          gap: 10.8px;
-          padding: 10.1px 3.6px 10.1px 2.5px;
-        }
-        .menu article a button svg {
-          width: 15.1px;
-          height: 15.1px;
-        }
-        .menu article a button svg {
-          width: 15.1px;
-          height: 15.1px;
-        }
-        .menu article a button i {
-          width: 15.1px;
-          height: 15.1px;
-        }
       }
       @media (max-width: 710px) {
         .logo svg {
           width: 24px;
           height: 24px;
           border-radius: 5px;
-        }
-        .menu article {
-          margin-top: 73px;
-          margin-bottom: 31px;
-        }
-        .menu article a button {
-          font-size: 8.1px;
-          gap: 8.4px;
-          padding: 10.1px 3.6px 10.1px 2.5px;
-        }
-        .menu article a button svg {
-          width: 15.1px;
-          height: 15.1px;
-        }
-        .menu article a button svg {
-          width: 15.1px;
-          height: 15.1px;
-        }
-        .menu article a button i {
-          width: 15.1px;
-          height: 15.1px;
         }
       }
     </style>
@@ -772,76 +756,66 @@
       const hedMain = document.getElementById("hedMain");
       const menuBtn = document.getElementById("menuBtn");
 
-      let isVisible = localStorage.getItem("menuVisible") === "true"; // Get the state when the browser is refreshed
+      let isVisible = localStorage.getItem("menuVisible") === "true"; // Brauzer yangilanganida holatni oling
 
-      // Set the initial menu state
+      // Menyu boshlang'ich holatini o'rnatamiz
       if (isVisible) {
         showMenu();
       } else {
         hideMenu();
       }
 
-      // Click event for the menu
-      menu.addEventListener("click", () => {
-        if (window.innerWidth > 740) {
-          // If screen width is greater than 740px
-          if (isVisible) {
-            hideMenu();
-          } else {
-            showMenu();
-          }
+      // Ekran o'lchami o'zgarganda menuni boshqarish
+      window.addEventListener("resize", adjustMenuDisplay);
+      adjustMenuDisplay(); // Sahifa yuklanganda initializatsiya
+
+      function adjustMenuDisplay() {
+        if (window.innerWidth < 725) {
+          menuBtn.style.display = isVisible ? "none" : "flex"; // menuBtn faqat menu ko'rsatilgani vaqtda ko'rsatiladi
         } else {
-          // If screen width is 740px or less, reverse the functionality
-          if (isVisible) {
-            showMenu(); // Show menu
-          } else {
-            hideMenu(); // Hide menu
-          }
+          menuBtn.style.display = "block"; // Katta ekranlarga hovering
+        }
+      }
+
+      menu.addEventListener("click", () => {
+        if (isVisible) {
+          hideMenu();
+        } else {
+          showMenu();
         }
 
-        isVisible = !isVisible; // Toggle visibility
-        localStorage.setItem("menuVisible", isVisible); // Save state
-      });
-
-      // Resize event to handle screen size changes
-      window.addEventListener("resize", () => {
-        if (window.innerWidth <= 740 && isVisible) {
-          hideMenu(); // Hide menu if screen size is less than or equal to 740px
-          isVisible = false; // Update visibility state
-          localStorage.setItem("menuVisible", isVisible); // Save state
-        }
+        isVisible = !isVisible; // Mavjudligini o'zgartirish
+        localStorage.setItem("menuVisible", isVisible); // Holatni saqlash
+        adjustMenuDisplay(); // Ikki holatni ham yangilash
       });
 
       function hideMenu() {
-        menuBox.style.width = "0"; // Change width to 0
+        menuBox.style.width = "0"; // Kenglikni 0 ga o'zgartiramiz
         menuBtn.style.opacity = "0";
         setTimeout(() => {
-          menuBox.classList.remove("show"); // Make it hidden
-          menuBox.style.display = "none"; // Fully hide
-          dashboard.style.margin = "-35px auto"; // Reset dashboard
+          menuBox.classList.remove("show"); // Ko'rinmas qiladi
+          menuBox.style.display = "none"; // Tugal yashirish
+          dashboard.style.margin = "-35px auto"; // Dashboard ni asl holatiga qaytaramiz
           hedMain.style.width = "100%";
-          menuBtn.style.display = "none"; // Hide button
-          menuBtn.classList.remove("show");
-        }, 500); // Animation duration
+        }, 500); // Animatsiya davomiyligi
+        adjustMenuDisplay(); // Menyu yashirilgandan so'ng tugmani boshqarish
       }
 
       function showMenu() {
-        menuBox.style.display = "block"; // Show the menu
-
+        menuBox.style.display = "block"; // Ko'rsatamiz
         setTimeout(() => {
-          menuBox.classList.add("show"); // Transition to visible state
-          menuBox.style.width = "25%"; // Change width
-          dashboard.style.transform = "translateX(320px)"; // Move dashboard left
+          menuBox.classList.add("show"); // Ko'rinadigan holatga o'tamiz
+          menuBox.style.width = "25%"; // Kenglikni o'zgartiramiz
+          dashboard.style.transform = "translateX(320px)"; // Dashboardni chapga suramiz
           hedMain.style.width = "60%";
-        }, 10); // Short delay
+        }, 10); // Bir oz kutish
 
         setTimeout(() => {
-          menuBtn.style.display = "block"; // Show menuBtn
-          menuBtn.style.width = "20%"; // Change width
+          menuBtn.style.display = "block"; // `menuBtn` ni ko'rsatamiz
+          menuBtn.style.width = "20%"; // Kengligini o'zgartirish
           menuBtn.style.opacity = "1";
-        }, 500); // Delay for button display
+        }, 500); // 3 soniya o'tgach
       }
-
       // Sahifa ichidagi operatsiya, yangilanishni ta'sir etmaydi
 
       const loginBtn = document.getElementById("loginBtn");
@@ -905,16 +879,23 @@
         }
       });
 
-      <!-- ekran uchun -->
+      // Ekran o'lchamini boshqarish
       function adjustListBtnWidth() {
-        if (window.innerWidth < 1225) {
-          listBtn.style.width = "390px"; // Kenglikni 390px qilib o'rnating
-          listBtn.style.display = "flex"; // Agar ko'rsatmoqchi bo'lsangiz
+        if (window.innerWidth < 1115) {
+          listBtn.style.width = "320px"; // Kenglikni 320px qilib o'rnating
         } else {
-          listBtn.style.width = ""; // Asl holatiga qaytaring
-          listBtn.style.display = ""; // Asl holatiga qaytaring
+          // Default width; no need to set it, it'll take the previous width
+          listBtn.style.width = "420px"; // Optional: set default if needed
         }
       }
+
+      // Oynani o'zgartirganda kenglikni moslash
+      window.addEventListener("resize", adjustListBtnWidth);
+
+      // Sahifa yuklanganda kenglikni moslash
+      window.addEventListener("load", adjustListBtnWidth);
+
+      <!-- ekran uchun -->
     </script>
     {% block scripts %}{% endblock %}
   </body>
