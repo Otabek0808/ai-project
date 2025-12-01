@@ -517,7 +517,13 @@
         }
       }
       @media (max-width: 699px) {
+        .logo svg {
+          top: 25px;
+          left: 22px;
+        }
+
         .list_btn_box {
+          display: none;
           gap: 5px;
         }
         .list_btn_box a button {
@@ -533,6 +539,10 @@
         }
         .list_btn_box form button p {
           font-size: 8px;
+        }
+        .menu {
+          border-radius: 10px;
+          border: 1.9px solid #ffffff;
         }
       }
       @media (max-width: 830px) {
@@ -814,56 +824,70 @@
       const dashboard = document.getElementById("dashboard");
       const hedMain = document.getElementById("hedMain");
       const menuBtn = document.getElementById("menuBtn");
-      let isVisible = localStorage.getItem("menuVisible") === "true"; // Brauzer yangilanganida holatni oling
+      let isVisible = localStorage.getItem("menuVisible") === "true"; // Get the state when the browser reloads
 
-      // Menyu boshlang'ich holatini o'rnatamiz
+      // Set initial state of the menu
       if (isVisible) {
         showMenu();
       } else {
         hideMenu();
       }
 
-      menu.addEventListener("click", () => {
-        if (isVisible) {
-          hideMenu();
+      // Event listener for resizing the window
+      window.addEventListener("resize", () => {
+        if (window.innerWidth < 1001) {
+          menuBtn.style.display = "none"; // Hide button when the width is less than 1001px
         } else {
+          menuBtn.style.display = "block"; // Show button if width is equal or greater than 1001px
+        }
+      });
+
+      // Initial display state of menu button based on current window width
+      if (window.innerWidth < 1001) {
+        menuBtn.style.display = "none";
+      }
+
+      menu.addEventListener("click", () => {
+        if (!isVisible) {
           showMenu();
+        } else {
+          hideMenu();
         }
 
-        isVisible = !isVisible; // Mavjudligini o'zgartirish
-        localStorage.setItem("menuVisible", isVisible); // Holatni saqlash
+        isVisible = !isVisible; // Toggle visibility
+        localStorage.setItem("menuVisible", isVisible); // Save the state
       });
 
       function hideMenu() {
-        menuBox.style.width = "0"; // Kenglikni 0 ga o'zgartiramiz
+        menuBox.style.width = "0"; // Change width to 0
         menuBtn.style.opacity = "0";
+
         setTimeout(() => {
-          menuBox.classList.remove("show"); // Ko'rinmas qiladi
-          menuBox.style.display = "none"; // Tugal yashirish
-          dashboard.style.margin = "-35px auto"; // Dashboard ni asl holatiga qaytaramiz
+          menuBox.classList.remove("show"); // Make it invisible
+          menuBox.style.display = "none"; // Completely hide it
+          dashboard.style.margin = "-35px auto"; // Reset dashboard position
           hedMain.style.width = "100%";
-          menuBtn.style.display = "none"; // Tugmani yashirish
+          menuBtn.style.display = "none"; // Hide button
           menuBtn.classList.remove("show");
-        }, 500); // Animatsiya davomiyligi
+        }, 500); // Duration of animation
       }
 
       function showMenu() {
-        menuBox.style.display = "block"; // Ko'rsatamiz
+        menuBox.style.display = "block"; // Show menu
 
         setTimeout(() => {
-          menuBox.classList.add("show"); // Ko'rinadigan holatga o'tamiz
-          menuBox.style.width = "25%"; // Kenglikni o'zgartiramiz
-          dashboard.style.transform = "translateX(320px)"; // Dashboardni chapga suramiz
+          menuBox.classList.add("show"); // Transition to visible state
+          menuBox.style.width = "25%"; // Change width
+          dashboard.style.transform = "translateX(320px)"; // Slide dashboard to the left
           hedMain.style.width = "60%";
-        }, 10); // Bir oz kutish
+        }, 10); // Slight delay
 
         setTimeout(() => {
-          menuBtn.style.display = "block"; // `menuBtn` ni ko'rsatamiz
-          menuBtn.style.width = "20%"; // Kengligini o'zgartirish
-          menuBtn.style.opacity = "1";
-        }, 500); // 3 soniya o'tgach
+          menuBtn.style.display = "block"; // Show `menuBtn`
+          menuBtn.style.width = "300px"; // Set width to 300px
+          menuBtn.style.opacity = "1"; // Set opacity to 1
+        }, 500); // After animation duration
       }
-      // Sahifa ichidagi operatsiya, yangilanishni ta'sir etmaydi
 
       const loginBtn = document.getElementById("loginBtn");
       const imgBtn = document.getElementById("imgBtn");
