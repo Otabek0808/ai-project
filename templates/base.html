@@ -803,25 +803,6 @@
           menuBtn.style.opacity = "1";
         }, 500); // 3 soniya o'tgach
       }
-      menu.addEventListener("click", () => {
-        // Ekran 1001px dan kichik bo'lsa
-        if (window.innerWidth < 1001) {
-          // Agar menuBox ko'rinmasa, ko'rsatamiz, aks holda yashiramiz
-          if (
-            menuBox.style.display === "none" ||
-            menuBox.style.display === ""
-          ) {
-            menuBox.style.width = "25%"; // Kenglikni o'zgartirish
-            menuBox.style.display = "block"; // Ko'rsatamiz
-          } else {
-            menuBox.style.width = "0"; // Kenglikni 0 ga o'zgartiramiz
-            menuBox.style.display = "none"; // Yashiramiz
-          }
-        }
-      });
-
-      // Dastlabki holatini o'rnatamiz
-      menuBox.style.display = "none";
       // Sahifa ichidagi operatsiya, yangilanishni ta'sir etmaydi
 
       const loginBtn = document.getElementById("loginBtn");
@@ -886,6 +867,14 @@
       });
 
       // Ekran o'lchamini boshqarish
+      function adjustListBtnWidth() {
+        if (window.innerWidth < 1115) {
+          listBtn.style.width = "320px"; // Kenglikni 320px qilib o'rnating
+        } else {
+          // Default width; no need to set it, it'll take the previous width
+          listBtn.style.width = "420px"; // Optional: set default if needed
+        }
+      }
       function adjustListBtnWidth() {
         if (window.innerWidth < 1115) {
           listBtn.style.width = "320px"; // Kenglikni 320px qilib o'rnating
