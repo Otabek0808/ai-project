@@ -1,134 +1,189 @@
 <!-- templates/app1/documents.html -->
-{% extends 'base.html' %}
-
-{% block content %}
-<div class="container-fluid bg-light min-vh-100 py-5">
-    <div class="container">
-        <!-- Sarlavha va admin tugmasi -->
-        <div class="row mb-5">
-            <div class="col-12">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h1 class="display-5 fw-bold text-dark mb-3">O'quv Materiallari</h1>
-                        <p class="lead text-muted">Mutaxassislik fanlari bo'yicha o'quv qo'llanmalar va hujjatlar</p>
-                    </div>
-                    {% if user.is_staff %}
-                    <div>
-                        <a href="{% url 'add_document' %}" class="btn btn-success">
-                            <i class="fas fa-plus-circle me-2"></i>Yangi Material
-                        </a>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-
-        <!-- Fanlar kartalari -->
-        <div class="row">
-            {% for subject in subjects %}
-            <div class="col-xl-4 col-lg-6 mb-4">
-                <div class="card h-100 shadow-sm border-0">
-                    <div class="card-header bg-primary text-white text-center py-4">
-                        <i class="fas fa-book fa-3x mb-3"></i>
-                        <h4 class="card-title mb-2">{{ subject.name }}</h4>
-                        {% if subject.description %}
-                        <p class="card-text opacity-75 mb-0">{{ subject.description|truncatewords:15 }}</p>
-                        {% endif %}
-                    </div>
-
-                    <div class="card-body text-center">
-                        <div class="row mb-3">
-                            <div class="col-6">
-                                <div class="border-end">
-                                    <h5 class="text-primary mb-1">{{ subject.document_set.count }}</h5>
-                                    <small class="text-muted">Material</small>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <h5 class="text-success mb-1">{{ subject.test_set.count }}</h5>
-                                <small class="text-muted">Test</small>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-footer bg-white border-top-0 text-center">
-                        <a href="{% url 'subject_documents' subject.id %}"
-                           class="btn btn-primary w-100">
-                            <i class="fas fa-folder-open me-2"></i>Materiallarni Ko'rish
-                        </a>
-                        {% if subject.test_set.exists %}
-                        <a href="{% url 'tests' %}" class="btn btn-outline-primary w-100 mt-2">
-                            <i class="fas fa-play-circle me-2"></i>Testlarni Ko'rish
-                        </a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            {% empty %}
-            <div class="col-12">
-                <div class="card text-center py-5">
-                    <div class="card-body">
-                        <i class="fas fa-folder-open fa-3x text-muted mb-3"></i>
-                        <h4 class="text-muted mb-3">Hozircha fanlar mavjud emas</h4>
-                        <p class="text-muted">Administrator tomonidan fanlar qo'shilmagani uchun materiallar mavjud emas.</p>
-                        {% if user.is_staff %}
-                        <a href="/admin/app1/subject/add/" class="btn btn-primary">
-                            <i class="fas fa-plus me-2"></i>Birinchi Fanni Yaratish
-                        </a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</div>
-
+{% extends 'base.html' %} {% block content %}
 <style>
-.card {
+  .documents_box {
+    margin-bottom: 76px;
+    margin-top: 30px;
+  }
+  #new_mat a button {
+    width: auto;
+    height: auto;
+    border-radius: 10px;
+    padding: 10px;
+    border: none;
+    font-size: 14px;
+    color: rgb(60, 72, 105);
+    transition: 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.939);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+  #new_mat a button:hover {
+    background-color: rgba(255, 255, 255, 0.433);
+    box-shadow: none;
+    color: rgb(7, 50, 121);
+  }
+  #row {
+    margin-top: -40px;
+  }
+  .cont_fan {
+    width: 100%;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.511);
+    border-radius: 10px 10px 0 0;
+    padding: 25px;
+  }
+  .card {
     border-radius: 15px;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.511);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    margin-top: 30px;
+  }
 
-.card:hover {
+  .card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 12px 35px rgba(0,0,0,0.15) !important;
-}
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15) !important;
+  }
 
-.btn {
+  .btn {
     border-radius: 10px;
     font-weight: 500;
-}
+  }
 
-.card-header {
+  .card-header {
     border-radius: 15px 15px 0 0 !important;
-}
+  }
 
-/* Responsive dizayn */
-@media (max-width: 768px) {
+  /* Responsive dizayn */
+  @media (max-width: 768px) {
     .display-5 {
-        font-size: 2rem;
+      font-size: 2rem;
     }
 
     .card {
-        margin-bottom: 1.5rem;
+      margin-bottom: 1.5rem;
     }
-}
+  }
 
-/* Animatsiya */
-.card {
+  /* Animatsiya */
+  .card {
     animation: fadeInUp 0.6s ease-out;
-}
+  }
 
-@keyframes fadeInUp {
+  @keyframes fadeInUp {
     from {
-        opacity: 0;
-        transform: translateY(30px);
+      opacity: 0;
+      transform: translateY(30px);
     }
     to {
-        opacity: 1;
-        transform: translateY(0);
+      opacity: 1;
+      transform: translateY(0);
     }
-}
+  }
 </style>
+<div class="documents_box">
+  <!-- Sarlavha va admin tugmasi -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <div
+        class="d-flex justify-content-between align-items-center"
+        id="new_mat"
+      >
+        <div>
+          <h1>O'quv Materiallari</h1>
+          <p class="lead text-muted">
+            Mutaxassislik fanlari bo'yicha o'quv qo'llanmalar va hujjatlar
+          </p>
+        </div>
+        {% if user.is_staff %}
+        <div>
+          <a href="{% url 'add_document' %}">
+            <button>
+              <i class="fas fa-plus-circle me-2"></i>
+              Yangi Material
+            </button>
+          </a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Fanlar kartalari -->
+  <div class="row" id="row">
+    {% for subject in subjects %}
+    <div class="col-xl-4 col-lg-6 mb-4">
+      <div class="card" id="big_cont_fan">
+        <div class="cont_fan">
+          <i class="fas fa-book fa-3x mb-3"></i>
+          <h4 class="card-title mb-2">{{ subject.name }}</h4>
+          {% if subject.description %}
+          <p class="card-text opacity-75 mb-0">
+            {{ subject.description|truncatewords:15 }}
+          </p>
+          {% endif %}
+        </div>
+
+        <div class="card-body text-center">
+          <div class="row mb-3">
+            <div class="col-6">
+              <div class="border-end">
+                <h5 class="text-primary mb-1">
+                  {{ subject.document_set.count }}
+                </h5>
+                <small class="text-muted">Material</small>
+              </div>
+            </div>
+            <div class="col-6">
+              <h5 class="text-success mb-1">{{ subject.test_set.count }}</h5>
+              <small class="text-muted">Test</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer bg-white border-top-0 text-center">
+          <a
+            href="{% url 'subject_documents' subject.id %}"
+            class="btn btn-primary w-100"
+          >
+            <i class="fas fa-folder-open me-2"></i>Materiallarni Ko'rish
+          </a>
+          {% if subject.test_set.exists %}
+          <a
+            href="{% url 'tests' %}"
+            class="btn btn-outline-primary w-100 mt-2"
+          >
+            <i class="fas fa-play-circle me-2"></i>Testlarni Ko'rish
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+      <div class="card text-center py-5">
+        <div class="card-body">
+          <i class="fas fa-folder-open fa-3x text-muted mb-3"></i>
+          <h4 class="text-muted mb-3">Hozircha fanlar mavjud emas</h4>
+          <p class="text-muted">
+            Administrator tomonidan fanlar qo'shilmagani uchun materiallar
+            mavjud emas.
+          </p>
+          {% if user.is_staff %}
+          <a href="/admin/app1/subject/add/" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i>Birinchi Fanni Yaratish
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
 {% endblock %}
