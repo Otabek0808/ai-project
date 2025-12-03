@@ -25,44 +25,56 @@
   #row {
     margin-top: -40px;
   }
-  .cont_fan {
-    width: 100%;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.219);
-    border-radius: 10px 10px 0 0;
-    padding: 25px;
-
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
+  #row_contaner {
+    background: none;
   }
   .card {
     border-radius: 15px;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     width: 100%;
     height: 100%;
-    backdrop-filter: blur(10px);
-    background: linear-gradient(to right, #d2c7e5);
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     margin-top: 30px;
+    border: 1px solid #ffffff;
+    background: none;
+    background-color: none;
   }
+  .cont_fan {
+    width: 100%;
+    text-align: center;
+    border-radius: 10px 10px 0 0;
+    padding: 25px;
+    backdrop-filter: blur(10px);
+    background: rgba(48, 159, 203, 0.712);
+    color: #ffffff;
+  }
+
   .card_info {
     display: flex;
-    padding: 60px 0 60px 0;
     justify-content: space-around;
     align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 30px 0 30px 0;
+    backdrop-filter: blur(1000000px);
+
+    background-color: rgba(255, 255, 255, 0.363);
   }
   .mat_button {
+    text-align: center;
+    padding: 10px;
+    border-radius: 0 0 10px 10px;
+    backdrop-filter: blur(10px);
+    background: rgba(48, 159, 203, 0.712);
   }
   .mat_button a {
     display: block;
     text-decoration: none;
-    width: 100%;
     padding: 10px;
     border-radius: 8px;
     margin-top: 10px;
-    backdrop-filter: blur(10px);
-    background-color: rgba(19, 40, 202, 0.219);
+    color: black;
+    background-color: rgba(0, 0, 0, 0.393);
   }
   .card:hover {
     transform: translateY(-8px);
@@ -80,14 +92,7 @@
   .card-header {
     border-radius: 15px 15px 0 0 !important;
   }
-  .mat_button {
-    text-align: center;
-    padding: 10px;
-    border-radius: 0 0 10px 10px;
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.252);
-    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3);
-  }
+
   /* Responsive dizayn */
   @media (max-width: 768px) {
     .display-5 {
@@ -146,8 +151,8 @@
   <!-- Fanlar kartalari -->
   <div class="row" id="row">
     {% for subject in subjects %}
-    <div class="col-xl-4 col-lg-6 mb-4">
-      <div class="card" id="big_cont_fan">
+    <div class="col-xl-4 col-lg-6 mb-4" id="row_contaner">
+      <div class="card">
         <div class="cont_fan">
           <i class="fas fa-book fa-3x mb-3"></i>
           <h4 class="card-title mb-2">{{ subject.name }}</h4>
@@ -159,13 +164,13 @@
         </div>
 
         <div class="card_info">
-          <div class="border-end">
-            <h5 class="text-primary mb-1">{{ subject.document_set.count }}</h5>
-            <small class="text-muted">Material</small>
+          <div>
+            <h5>{{ subject.document_set.count }}</h5>
+            <small>Material</small>
           </div>
-          <div class="col-6">
-            <h5 class="text-success mb-1">{{ subject.test_set.count }}</h5>
-            <small class="text-muted">Test</small>
+          <div>
+            <h5>{{ subject.test_set.count }}</h5>
+            <small>Test</small>
           </div>
         </div>
 
