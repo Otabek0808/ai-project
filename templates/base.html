@@ -116,6 +116,9 @@
             flex-shrink: 0;
         }
 
+
+
+
         /* Asosiy content */
         .hed_main {
             flex: 1;
@@ -520,7 +523,7 @@
       <div class="menu" id="menu_box">
         <article id="menuBtn">
           <a href="{% url 'home' %}">
-            <button>
+            <button id="menu_button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -537,7 +540,7 @@
             </button>
           </a>
           <a href="{% url 'about' %}">
-            <button>
+            <button id="menu_button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -557,7 +560,7 @@
             </button>
           </a>
           <a href="{% url 'documents' %}">
-            <button>
+            <button id="menu_button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -577,7 +580,7 @@
             </button>
           </a>
           <a href="{% url 'video_lessons' %}">
-            <button>
+            <button id="menu_button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -937,6 +940,17 @@
                 return new bootstrap.Tooltip(tooltipTriggerEl);
             });
         });
+
+      const buttons = document.querySelectorAll('.menu_button');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Har bir tugma uchun "active" sinfini olib tashlash
+            buttons.forEach(btn => btn.classList.remove('active'));
+            // Faqat bosilgan tugmaga "active" sinfini qo'shish
+            button.classList.add('active');
+        });
+    });
     </script>
 
     {% block scripts %}{% endblock %}

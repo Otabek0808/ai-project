@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tugma Rangi O'zgarishi</title>
+    <style>
+      .menu_button {
+        padding: 10px 20px;
+        background-color: gray;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        margin: 5px; /* Tugmalar orasida biroz bo'sh joy */
+      }
+      .active {
+        background-color: blue; /* Ko'k rang */
+      }
+    </style>
+  </head>
+  <body>
+    <button class="menu_button">Tugma 1</button>
+    <button class="menu_button">Tugma 2</button>
+    <button class="menu_button">Tugma 3</button>
+
+    <script>
+      const buttons = document.querySelectorAll(".menu_button");
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", function () {
+          // Har bir tugma uchun "active" sinfini olib tashlash
+          buttons.forEach((btn) => btn.classList.remove("active"));
+          // Faqat bosilgan tugmaga "active" sinfini qo'shish
+          button.classList.add("active");
+        });
+      });
+    </script>
+  </body>
+</html>
