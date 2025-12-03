@@ -40,10 +40,10 @@ def home(request):
             percentages = [result.percentage() for result in test_results]
 
             # Ranglar
-            colors = ['green' if p >= 80 else 'orange' if p >= 60 else 'red' for p in percentages]
+            colors = ['lightblue']
 
             # Ustunli diagramma
-            bars = plt.bar(test_names, percentages, color=colors, alpha=0.7, edgecolor='black')
+            bars = plt.bar(test_names, percentages, color=colors, alpha=0.7, edgecolor='blue')
 
             # Har bir ustun ustiga foizlarni yozish
             for bar, percentage in zip(bars, percentages):

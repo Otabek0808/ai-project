@@ -74,7 +74,15 @@
     border-radius: 8px;
     margin-top: 10px;
     color: black;
-    background-color: rgba(0, 0, 0, 0.393);
+    backdrop-filter: blur(100px);
+    background-color: rgba(255, 255, 255, 0.511);
+    transition: 0.3s ease;
+  }
+
+  .mat_button a:hover {
+    transform: scale(0.97);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    opacity: 0.7;
   }
   .card:hover {
     transform: translateY(-8px);
