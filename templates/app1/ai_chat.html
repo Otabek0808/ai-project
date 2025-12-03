@@ -1,97 +1,123 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
+<style>
+  .card_box {
+    width: 100%;
+    height: auto;
+  }
+  .card_header {
+    background: none;
+  }
+  .card_body {
+    padding: 20px 0;
 
-{% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card">
-                <div class="card-header bg-success text-white">
-                    <h4 class="mb-0"><i class="fas fa-robot"></i> AI Chat Bot</h4>
-                </div>
-                <div class="card-body">
-                    <div id="chat-container" style="height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px;">
-                        <div class="alert alert-info text-center">
-                            <i class="fas fa-info-circle"></i> Savolingizni bering, men sizga yordam berishga harakat qilaman!
-                        </div>
-                    </div>
-                    
-                    <form id="chat-form">
-                        {% csrf_token %}
-                        <div class="input-group">
-                            <input type="text" id="user-input" class="form-control" placeholder="Savolingizni yozing..." required>
-                            <button type="submit" class="btn btn-success">
-                                <i class="fas fa-paper-plane"></i> Yuborish
-                            </button>
-                        </div>
-                    </form>
-                    
-                    <div class="mt-3">
-                        <small class="text-muted">
-                            <i class="fas fa-lightbulb"></i> Maslahat: Dasturlash, Python, Django, HTML, CSS, JavaScript haqida savol bering.
-                        </small>
-                    </div>
-                </div>
-            </div>
-        </div>
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.511);
+  }
+</style>
+<div class="card_box">
+  <div class="card_header">
+    <h4 class="mb-0"><i class="fas fa-robot"></i> AI Chat Bot</h4>
+  </div>
+  <div class="card_body">
+    <div
+      id="chat-container"
+      style="
+        height: 400px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+      "
+    >
+      <div class="alert alert-info text-center">
+        <i class="fas fa-info-circle"></i> Savolingizni bering, men sizga yordam
+        berishga harakat qilaman!
+      </div>
     </div>
+
+    <form id="chat-form">
+      {% csrf_token %}
+      <div class="input-group">
+        <input
+          type="text"
+          id="user-input"
+          class="form-control"
+          placeholder="Savolingizni yozing..."
+          required
+        />
+        <button type="submit" class="btn btn-success">
+          <i class="fas fa-paper-plane"></i> Yuborish
+        </button>
+      </div>
+    </form>
+
+    <div class="mt-3">
+      <small class="text-muted">
+        <i class="fas fa-lightbulb"></i> Maslahat: Dasturlash, Python, Django,
+        HTML, CSS, JavaScript haqida savol bering.
+      </small>
+    </div>
+  </div>
 </div>
-{% endblock %}
-
-{% block scripts %}
+{% endblock %} {% block scripts %}
 <script>
-document.getElementById('chat-form').addEventListener('submit', function(e) {
+  document.getElementById("chat-form").addEventListener("submit", function (e) {
     e.preventDefault();
-    
-    const userInput = document.getElementById('user-input');
-    const message = userInput.value.trim();
-    
-    if (!message) return;
-    
-    // Foydalanuvchi xabarini ko'rsatish
-    addMessage(message, 'user');
-    userInput.value = '';
-    
-    // AI javobini so'rash
-    fetch('/ai-chat/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-        },
-        body: JSON.stringify({ message: message })
-    })
-    .then(response => response.json())
-    .then(data => {
-        addMessage(data.response, 'bot');
-    })
-    .catch(error => {
-        addMessage('Xatolik yuz berdi. Iltimos, qayta urinib ko\'ring.', 'bot');
-    });
-});
 
-function addMessage(text, sender) {
-    const chatContainer = document.getElementById('chat-container');
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `mb-3 ${sender === 'user' ? 'text-end' : ''}`;
-    
-    const bubble = document.createElement('div');
+    const userInput = document.getElementById("user-input");
+    const message = userInput.value.trim();
+
+    if (!message) return;
+
+    // Foydalanuvchi xabarini ko'rsatish
+    addMessage(message, "user");
+    userInput.value = "";
+
+    // AI javobini so'rash
+    fetch("/ai-chat/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]")
+          .value,
+      },
+      body: JSON.stringify({ message: message }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        addMessage(data.response, "bot");
+      })
+      .catch((error) => {
+        addMessage("Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.", "bot");
+      });
+  });
+
+  function addMessage(text, sender) {
+    const chatContainer = document.getElementById("chat-container");
+    const messageDiv = document.createElement("div");
+    messageDiv.className = `mb-3 ${sender === "user" ? "text-end" : ""}`;
+
+    const bubble = document.createElement("div");
     bubble.className = `d-inline-block p-3 rounded ${
-        sender === 'user' ? 'bg-primary text-white' : 'bg-light border'
+      sender === "user" ? "bg-primary text-white" : "bg-light border"
     }`;
-    bubble.style.maxWidth = '70%';
+    bubble.style.maxWidth = "70%";
     bubble.textContent = text;
-    
+
     messageDiv.appendChild(bubble);
     chatContainer.appendChild(messageDiv);
     chatContainer.scrollTop = chatContainer.scrollHeight;
-}
+  }
 
-// Enter tugmasi bilan yuborish
-document.getElementById('user-input').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
+  // Enter tugmasi bilan yuborish
+  document
+    .getElementById("user-input")
+    .addEventListener("keypress", function (e) {
+      if (e.key === "Enter") {
         e.preventDefault();
-        document.getElementById('chat-form').dispatchEvent(new Event('submit'));
-    }
-});
+        document.getElementById("chat-form").dispatchEvent(new Event("submit"));
+      }
+    });
 </script>
 {% endblock %}

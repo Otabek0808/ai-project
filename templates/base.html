@@ -38,6 +38,13 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
+        h4{
+          font-size: 32px;
+          font-weight: bold;
+        }
+         h6 {
+          font-weight: bold;
+        }
 
         /* Container box */
         .contaner_box {
@@ -45,6 +52,10 @@
             min-height: 100vh;
             width: 100%;
             position: relative;
+            background: linear-gradient(to right, #87ceeb, #87ceeb, #f2d8e2);
+        }
+        body h1{
+          font-weight: 1000;
         }
 
         /* Menu qismi */
@@ -148,8 +159,6 @@
             border-radius: 10px;
             padding: 10px;
             transition: all 0.5s ease;
-            position: relative;
-            z-index: 100;
         }
 
         .logo svg:hover {
@@ -279,50 +288,7 @@
         }
 
         /* Content styles */
-        main {
-            padding-top: 20px;
-        }
 
-        .static_contaner_section {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .contaner_info {
-            width: 100%;
-            height: auto;
-            backdrop-filter: blur(10px);
-            background-color: rgba(255, 255, 255, 0.511);
-            border-radius: 10px;
-            padding: 25px;
-            border: 0.1px solid white;
-        }
-
-        .log_num {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .log_num svg {
-            width: 50px;
-            height: 50px;
-            backdrop-filter: blur(10px);
-            background-color: rgba(255, 255, 255, 0.511);
-            padding: 10px;
-            border-radius: 10px;
-        }
-
-        .log_num h2 {
-            font-size: 36px;
-        }
-
-        .contaner_info p {
-            font-size: 18px;
-            margin-top: 20px;
-        }
 
         /* MEDIA QUERIES */
 
@@ -430,13 +396,6 @@
                 padding: 15px;
             }
 
-            .contaner_info,
-            .progress_box,
-            .attent,
-            .grade,
-            .announcements {
-                padding: 20px;
-            }
 
             .log_num h2 {
                 font-size: 28px;
@@ -497,18 +456,12 @@
                 padding: 8px;
             }
 
-            .contaner_info {
-                padding: 15px;
-            }
 
             .log_num h2 {
                 font-size: 24px;
             }
 
-            .contaner_info p {
-                font-size: 16px;
-                margin-top: 15px;
-            }
+
 
             #listBtn {
                 top: 40px;
@@ -544,9 +497,6 @@
                 padding: 5px;
             }
 
-            .contaner_info {
-                padding: 12px;
-            }
 
             .log_num {
                 flex-direction: column;
@@ -558,9 +508,6 @@
                 font-size: 20px;
             }
 
-            .contaner_info p {
-                font-size: 14px;
-            }
 
             #listBtn {
                 top: 35px;
