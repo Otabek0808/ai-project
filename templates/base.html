@@ -1,6 +1,4 @@
-
-  <body>
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uz">
   <head>
     <meta charset="UTF-8" />
@@ -24,501 +22,458 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       rel="stylesheet"
     />
-     <style>
-        /* Umumiy stillar */
-        * {
-            padding: 0;
-            margin: 0;
-            font-family: "Times New Roman", Times, serif;
-            box-sizing: border-box;
-        }
+    <style>
+      /* Umumiy stillar */
+      * {
+        padding: 0;
+        margin: 0;
+        font-family: "Times New Roman", Times, serif;
+        box-sizing: border-box;
+      }
 
-        body {
-            background: linear-gradient(to right, #a3c1e0, #b7c9e2, #d2c7e5);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        h4{
-          font-size: 32px;
-          font-weight: bold;
-        }
-         h6 {
-          font-weight: bold;
-        }
+      body {
+        background: linear-gradient(to right, #a3c1e0, #b7c9e2, #d2c7e5);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+      h4 {
+        font-size: 32px;
+        font-weight: bold;
+      }
+      h6 {
+        font-weight: bold;
+      }
 
-        /* Container box */
-        .contaner_box {
-            display: flex;
-            min-height: 100vh;
-            width: 100%;
-            position: relative;
-            background: linear-gradient(to right, #87ceeb, #87ceeb, #f2d8e2);
-        }
-        body h1{
-          font-weight: 1000;
-        }
+      /* Container box */
+      .contaner_box {
+        display: flex;
+        min-height: 100vh;
+        width: 100%;
+        position: relative;
+        background: linear-gradient(to right, #87ceeb, #87ceeb, #f2d8e2);
+      }
+      body h1 {
+        font-weight: 1000;
+      }
 
-        /* Menu qismi */
-        .menu {
-            width: 220px;
-            height: 100vh;
-            backdrop-filter: blur(10px);
-            background-color: rgba(226, 237, 236, 0.664);
-            border-right: 1px solid #ffffff;
-            position: fixed;
-            left: 0;
-            top: 0;
-            z-index: 90;
-            overflow-y: auto;
-            transition: transform 0.5s ease;
-            transform: translateX(-100%);
-        }
+      /* Menu qismi */
+      .menu {
+        width: 220px;
+        height: 100vh;
+        backdrop-filter: blur(10px);
+        background-color: rgba(226, 237, 236, 0.664);
+        border-right: 1px solid #ffffff;
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 90;
+        overflow-y: auto;
+        transition: transform 0.5s ease;
+        transform: translateX(-100%);
+      }
 
-        .menu.show {
-            transform: translateX(0);
-        }
+      .menu.show {
+        transform: translateX(0);
+      }
 
-        .menu article {
-            margin-top: 100px;
-            margin-bottom: 60px;
-            padding: 0 20px;
-        }
+      .menu article {
+        margin-top: 100px;
+        margin-bottom: 60px;
+        padding: 0 20px;
+      }
 
-        .menu article a {
-            text-decoration: none;
-        }
+      .menu article a {
+        text-decoration: none;
+      }
 
-        .menu article a button {
-            width: 100%;
-            cursor: pointer;
-            border: none;
-            border-radius: 10px;
-            margin-top: 5px;
-            background: none;
-            font-size: 16px;
-            transition: 0.3s ease;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            padding: 12px 15px;
-            text-align: left;
-        }
+      .menu article a button {
+        width: 100%;
+        cursor: pointer;
+        border: none;
+        border-radius: 10px;
+        margin-top: 5px;
+        background: none;
+        font-size: 16px;
+        transition: 0.3s ease;
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        padding: 12px 15px;
+        text-align: left;
+      }
 
-        .menu article a button:hover {
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            background: rgba(255, 255, 255, 0.3);
-        }
+      .menu article a button:hover {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        background: rgba(255, 255, 255, 0.3);
+      }
 
-        .menu article a button svg,
-        .menu article a button i {
-            width: 20px;
-            height: 20px;
-            flex-shrink: 0;
-        }
+      .menu article a button svg,
+      .menu article a button i {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+      }
 
+      /* Asosiy content */
+      .hed_main {
+        flex: 1;
+        padding: 20px;
+        transition: margin-left 0.5s ease;
+        width: 100%;
+        min-height: 100vh;
+      }
 
+      .hed_main.menu-open {
+        margin-left: 220px;
+      }
 
+      /* Header qismi */
+      header {
+        width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+      }
 
-        /* Asosiy content */
-        .hed_main {
-            flex: 1;
-            padding: 20px;
-            transition: margin-left 0.5s ease;
-            width: 100%;
-            min-height: 100vh;
-        }
+      .section_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        padding: 10px 0;
+      }
 
-        .hed_main.menu-open {
-            margin-left: 220px;
-        }
+      .logo {
+        display: flex;
+        align-items: center;
+      }
 
-        /* Header qismi */
-        header {
-            width: 100%;
-            height: auto;
-            margin-bottom: 20px;
-        }
+      .logo svg {
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        backdrop-filter: blur(100px);
+        background-color: rgba(255, 255, 255, 0.782);
+        border-radius: 10px;
+        padding: 10px;
+        transition: all 0.5s ease;
+      }
 
-        .section_header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            height: auto;
-            padding: 10px 0;
-        }
+      .logo svg:hover {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        transform: scale(1.05);
+      }
 
-        .logo {
-            display: flex;
-            align-items: center;
-        }
+      .profil_img {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+        z-index: 100;
+      }
 
-        .logo svg {
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
-            backdrop-filter: blur(100px);
-            background-color: rgba(255, 255, 255, 0.782);
-            border-radius: 10px;
-            padding: 10px;
-            transition: all 0.5s ease;
-        }
+      .profil_img img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 3px solid white;
+        transition: 0.3s ease;
+        cursor: pointer;
+        object-fit: cover;
+      }
 
-        .logo svg:hover {
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            transform: scale(1.05);
-        }
+      .profil_img img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
 
-        .profil_img {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            position: relative;
-            z-index: 100;
-        }
+      .profil_img span {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        text-decoration: none;
+        border-radius: 10px;
+        transition: 0.3s ease;
+        color: rgb(20, 33, 119);
+        font-size: 16px;
+        font-weight: 500;
+      }
 
-        .profil_img img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 3px solid white;
-            transition: 0.3s ease;
-            cursor: pointer;
-            object-fit: cover;
-        }
+      .list_btn_box {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: 50px;
+        padding: 0 15px;
+      }
 
-        .profil_img img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
+      .list_btn_box a {
+        text-decoration: none;
+      }
 
-        .profil_img span {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            text-decoration: none;
-            border-radius: 10px;
-            transition: 0.3s ease;
-            color: rgb(20, 33, 119);
-            font-size: 16px;
-            font-weight: 500;
-        }
+      .list_btn_box a button {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: auto;
+        min-width: 120px;
+        height: 40px;
+        cursor: pointer;
+        backdrop-filter: blur(100px);
+        background-color: rgba(5, 130, 171, 0.511);
+        border-radius: 10px;
+        transition: 0.3s ease;
+        color: rgb(0, 0, 0);
+        border: none;
+        padding: 0 15px;
+      }
 
-        .list_btn_box {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            height: 50px;
-            padding: 0 15px;
-        }
+      .list_btn_box form button {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: auto;
+        min-width: 100px;
+        height: 40px;
+        cursor: pointer;
+        backdrop-filter: blur(100px);
+        background-color: rgba(5, 130, 171, 0.511);
+        border-radius: 10px;
+        transition: 0.3s ease;
+        color: rgb(20, 33, 119);
+        border: none;
+        padding: 0 15px;
+      }
 
-        .list_btn_box a {
-            text-decoration: none;
-        }
+      .list_btn_box button:hover {
+        transform: scale(0.97);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        opacity: 0.7;
+      }
 
+      .list_btn_box a button p,
+      .list_btn_box form button p {
+        color: rgb(0, 0, 0);
+        font-size: 14px;
+        margin-top: 0;
+        white-space: nowrap;
+      }
+
+      .list_btn_box svg {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+      }
+
+      /* Content styles */
+
+      /* MEDIA QUERIES */
+
+      /* 1225px */
+      @media (max-width: 1225px) {
         .list_btn_box a button {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: auto;
-            min-width: 120px;
-            height: 40px;
-            cursor: pointer;
-            backdrop-filter: blur(100px);
-            background-color: rgba(255, 255, 255, 0.511);
-            border-radius: 10px;
-            transition: 0.3s ease;
-            color: rgb(0, 0, 0);
-            border: none;
-            padding: 0 15px;
+          width: 140px;
+          height: 38px;
+          padding: 0 10px;
         }
 
         .list_btn_box form button {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: auto;
-            min-width: 100px;
-            height: 40px;
-            cursor: pointer;
-            backdrop-filter: blur(100px);
-            background-color: rgba(255, 255, 255, 0.511);
-            border-radius: 10px;
-            transition: 0.3s ease;
-            color: rgb(20, 33, 119);
-            border: none;
-            padding: 0 15px;
-        }
-
-        .list_btn_box button:hover {
-            transform: scale(0.97);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            opacity: 0.7;
+          width: 110px;
+          height: 38px;
+          padding: 0 10px;
         }
 
         .list_btn_box a button p,
         .list_btn_box form button p {
-            color: rgb(0, 0, 0);
-            font-size: 14px;
-            margin-top: 0;
-            white-space: nowrap;
+          font-size: 12px;
+        }
+      }
+
+      /* 1115px */
+      @media (max-width: 1115px) {
+        .logo svg {
+          width: 38px;
+          height: 38px;
+          padding: 8px;
         }
 
-        .list_btn_box svg {
-            width: 18px;
-            height: 18px;
-            flex-shrink: 0;
+        .menu article {
+          margin-top: 95px;
+          margin-bottom: 48px;
+          padding: 0 15px;
+        }
+
+        .menu article a button {
+          font-size: 15px;
+          padding: 10px 12px;
+          gap: 12px;
+        }
+
+        .profil_img span {
+          font-size: 15px;
+        }
+      }
+
+      /* 1001px - Tablet view */
+      @media (max-width: 1001px) {
+        .menu {
+          width: 220px;
+          z-index: 100;
+          backdrop-filter: blur(100px);
+          background-color: rgba(220, 232, 232, 0.884);
+        }
+
+        .hed_main.menu-open {
+          margin-left: 0;
+        }
+
+        .list_btn_box {
+          display: none;
+          backdrop-filter: blur(100px);
+          background-color: rgba(0, 0, 0, 0.221);
+          width: 80px;
+          height: auto;
+        }
+
+        .profil_img span {
+          display: none;
         }
 
         #listBtn {
-            display: none;
-            position: absolute;
-            top: 70px;
-            right: 0;
-            z-index: 100;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 10px;
-            padding: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
-            flex-direction: column;
-            gap: 8px;
-            min-width: 180px;
+          position: absolute;
+          z-index: 100;
+          border-radius: 10px;
+          padding: 10px;
+          flex-direction: column;
+          gap: 8px;
+          min-width: 180px;
+          top: 60px;
+          right: -10px;
         }
 
         #listBtn.active {
-            display: flex;
+          display: flex;
+        }
+        .logo svg {
+          position: fixed;
+          top: 15px;
+          left: 15px;
+          z-index: 101;
+          background-color: rgba(255, 255, 255, 0.9);
+        }
+      }
+
+      /* 830px */
+      @media (max-width: 830px) {
+        .logo svg {
+          width: 35px;
+          height: 35px;
+          padding: 6px;
+          top: 12px;
+          left: 12px;
         }
 
-        /* Content styles */
+        .hed_main {
+          padding: 15px;
+        }
+      }
 
-
-        /* MEDIA QUERIES */
-
-        /* 1225px */
-        @media (max-width: 1225px) {
-            .profil_img img {
-                width: 50px;
-                height: 50px;
-            }
-
-            .list_btn_box a button {
-                width: 140px;
-                height: 38px;
-                padding: 0 10px;
-            }
-
-            .list_btn_box form button {
-                width: 110px;
-                height: 38px;
-                padding: 0 10px;
-            }
-
-            .list_btn_box a button p,
-            .list_btn_box form button p {
-                font-size: 12px;
-            }
+      /* 710px */
+      @media (max-width: 710px) {
+        .logo svg {
+          width: 30px;
+          height: 30px;
+          padding: 5px;
+          top: 10px;
+          left: 10px;
         }
 
-        /* 1115px */
-        @media (max-width: 1115px) {
-            .logo svg {
-                width: 38px;
-                height: 38px;
-                padding: 8px;
-            }
-
-            .menu article {
-                margin-top: 95px;
-                margin-bottom: 48px;
-                padding: 0 15px;
-            }
-
-            .menu article a button {
-                font-size: 15px;
-                padding: 10px 12px;
-                gap: 12px;
-            }
-
-            .profil_img span {
-                font-size: 15px;
-            }
+        .profil_img img {
+          width: 40px;
+          height: 40px;
         }
 
-        /* 1001px - Tablet view */
-        @media (max-width: 1001px) {
-            .menu {
-                width: 220px;
-                z-index: 100;
-                backdrop-filter: blur(100px);
-                background-color: rgba(220, 232, 232, 0.884);
-            }
-
-            .hed_main.menu-open {
-                margin-left: 0;
-            }
-
-            .list_btn_box {
-                display: none !important;
-            }
-
-            .profil_img span {
-                display: none;
-            }
-
-            #listBtn {
-                top: 50px;
-                right: 10px;
-            }
-
-            .logo svg {
-                position: fixed;
-                top: 15px;
-                left: 15px;
-                z-index: 101;
-                background-color: rgba(255, 255, 255, 0.9);
-            }
+        .hed_main {
+          padding: 10px;
         }
 
-        /* 830px */
-        @media (max-width: 830px) {
-            .logo svg {
-                width: 35px;
-                height: 35px;
-                padding: 6px;
-                top: 12px;
-                left: 12px;
-            }
-
-            .profil_img img {
-                width: 45px;
-                height: 45px;
-            }
-
-            .hed_main {
-                padding: 15px;
-            }
-
-
-            .log_num h2 {
-                font-size: 28px;
-            }
+        .menu article {
+          margin-top: 70px;
+          padding: 0 10px;
         }
 
-        /* 710px */
-        @media (max-width: 710px) {
-            .logo svg {
-                width: 30px;
-                height: 30px;
-                padding: 5px;
-                top: 10px;
-                left: 10px;
-            }
-
-            .profil_img img {
-                width: 40px;
-                height: 40px;
-            }
-
-            .hed_main {
-                padding: 10px;
-            }
-
-            .menu article {
-                margin-top: 70px;
-                padding: 0 10px;
-            }
-
-            .menu article a button {
-                font-size: 14px;
-                padding: 8px 10px;
-                gap: 10px;
-            }
-
-            #listBtn {
-                top: 45px;
-                right: 5px;
-                min-width: 160px;
-            }
+        .menu article a button {
+          font-size: 14px;
+          padding: 8px 10px;
+          gap: 10px;
         }
 
-        /* 620px */
-        @media (max-width: 620px) {
-            .logo svg {
-                width: 25px;
-                height: 25px;
-                padding: 4px;
-            }
+        #listBtn {
+          top: 45px;
+          right: 5px;
+          min-width: 160px;
+        }
+      }
 
-            .profil_img img {
-                width: 35px;
-                height: 35px;
-            }
-
-            .hed_main {
-                padding: 8px;
-            }
-
-
-            .log_num h2 {
-                font-size: 24px;
-            }
-
-
-
-            #listBtn {
-                top: 40px;
-                min-width: 140px;
-            }
-
-            #listBtn button {
-                height: 35px;
-                font-size: 12px;
-                padding: 0 10px;
-            }
+      /* 620px */
+      @media (max-width: 620px) {
+        .logo svg {
+          width: 25px;
+          height: 25px;
+          padding: 4px;
         }
 
-        /* 480px - Mobile */
-        @media (max-width: 480px) {
-            .logo svg {
-                width: 22px;
-                height: 22px;
-                padding: 3px;
-            }
-
-            .profil_img img {
-                width: 30px;
-                height: 30px;
-                border-width: 2px;
-            }
-
-            .menu {
-                width: 200px;
-            }
-
-            .hed_main {
-                padding: 5px;
-            }
-
-
-            .log_num {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-
-            .log_num h2 {
-                font-size: 20px;
-            }
-
-
-            #listBtn {
-                top: 35px;
-                min-width: 120px;
-            }
+        .profil_img img {
+          width: 35px;
+          height: 35px;
         }
+
+        .hed_main {
+          padding: 8px;
+        }
+
+        #listBtn {
+          top: 40px;
+          min-width: 140px;
+        }
+
+        #listBtn button {
+          height: 35px;
+          font-size: 12px;
+          padding: 0 10px;
+        }
+      }
+
+      /* 480px - Mobile */
+      @media (max-width: 480px) {
+        .logo svg {
+          width: 22px;
+          height: 22px;
+          padding: 3px;
+        }
+
+        .profil_img img {
+          width: 30px;
+          height: 30px;
+          border-width: 2px;
+        }
+
+        .menu {
+          width: 200px;
+        }
+
+        .hed_main {
+          padding: 5px;
+        }
+
+        #listBtn {
+          top: 35px;
+          min-width: 120px;
+        }
+      }
     </style>
   </head>
+  <body>
     <section class="contaner_box">
       <div class="menu" id="menu_box">
         <article id="menuBtn">
@@ -771,186 +726,336 @@
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
- <script>
-        // DOM elementlarini tanlab olamiz
-        const menuIcon = document.getElementById("menu");
-        const menuBox = document.getElementById("menu_box");
-        const hedMain = document.getElementById("hedMain");
-        const loginBtn = document.getElementById("loginBtn");
-        const listBtn = document.getElementById("listBtn");
-        const userSpan = document.querySelector(".profil_img span");
-        const listBtnBox = document.querySelector('.list_btn_box');
+    <script>
+      // DOM elementlarini tanlab olamiz
+      const menuIcon = document.getElementById("menu");
+      const menuBox = document.getElementById("menu_box");
+      const hedMain = document.getElementById("hedMain");
+      const loginBtn = document.getElementById("loginBtn");
+      const listBtn = document.getElementById("listBtn");
+      const userSpan = document.querySelector(".profil_img span");
+      const listBtnBox = document.querySelector(".list_btn_box");
 
-        // Menuni ochish/yopish holati
-        let isMenuOpen = localStorage.getItem("menuOpen") === "true";
+      // Menuni ochish/yopish holati
+      let isMenuOpen = localStorage.getItem("menuOpen") === "true";
 
-        // Dastlabki holatni sozlash
+      // ListBtn ochilish holati
+      let isListBtnOpen = false;
+
+      // Dastlabki holatni sozlash
+      updateMenuState();
+      updateElementsForScreenSize();
+
+      // Menu ikonkasi bosilganda
+      menuIcon.addEventListener("click", (e) => {
+        e.stopPropagation();
+        isMenuOpen = !isMenuOpen;
         updateMenuState();
+        localStorage.setItem("menuOpen", isMenuOpen);
+      });
+
+      // Menu holatini yangilash funksiyasi
+      function updateMenuState() {
+        if (isMenuOpen) {
+          menuBox.classList.add("show");
+          hedMain.classList.add("menu-open");
+        } else {
+          menuBox.classList.remove("show");
+          hedMain.classList.remove("menu-open");
+        }
+      }
+
+      // Profil rasmi bosilganda - gorizontal qisqarish/kengayish
+      loginBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (!isListBtnOpen) {
+          // ListBtn ni gorizontal yo'nalishda ochish (qisqarish/kengayish animatsiyasi)
+          openListBtnHorizontally();
+        } else {
+          // ListBtn ni gorizontal yo'nalishda yopish
+          closeListBtnHorizontally();
+        }
+
+        isListBtnOpen = !isListBtnOpen;
+      });
+
+      // Gorizontal yo'nalishda ListBtn ni ochish
+      function openListBtnHorizontally() {
+        // Avval elementni ko'rsatamiz
+        listBtn.style.display = "flex";
+        listBtn.classList.add("active");
+
+        // Kenglikni 0 dan boshlab animatsiya
+        listBtn.style.width = "0";
+        listBtn.style.overflow = "hidden";
+        listBtn.style.transition = "width 0.3s ease, opacity 0.3s ease";
+        listBtn.style.opacity = "0";
+
+        // 10ms dan keyin kenglikni o'zgartiramiz
+        setTimeout(() => {
+          const targetWidth = getListBtnWidth();
+          listBtn.style.width = targetWidth + "px";
+          listBtn.style.opacity = "1";
+
+          // Animatsiya tugagach overflow ni tiklash
+          setTimeout(() => {
+            listBtn.style.overflow = "visible";
+          }, 300);
+        }, 10);
+      }
+
+      // Gorizontal yo'nalishda ListBtn ni yopish
+      function closeListBtnHorizontally() {
+        // Kenglikni 0 ga qisqartirish animatsiyasi
+        listBtn.style.width = "0";
+        listBtn.style.opacity = "0";
+        listBtn.style.overflow = "hidden";
+
+        // Animatsiya tugagach elementni yashirish
+        setTimeout(() => {
+          listBtn.style.display = "none";
+          listBtn.classList.remove("active");
+        }, 300);
+      }
+
+      // Ekran o'lchamiga qarab ListBtn kengligini hisoblash
+      function getListBtnWidth() {
+        const width = window.innerWidth;
+
+        if (width < 480) {
+          return 140; // Kichik mobil
+        } else if (width < 620) {
+          return 160; // Mobil
+        } else if (width < 699) {
+          return 180; // Katta mobil
+        } else if (width < 1001) {
+          return 200; // Tablet
+        } else if (width < 1115) {
+          return 220; // Kichik noutbuk
+        } else {
+          return 240; // Katta ekran
+        }
+      }
+
+      // ListBtn joylashuvini sozlash
+      function adjustListBtnPosition() {
+        const width = window.innerWidth;
+
+        // Gorizontal joylashuv
+        listBtn.style.flexDirection = "row";
+        listBtn.style.alignItems = "center";
+        listBtn.style.justifyContent = "center";
+
+        if (width < 620) {
+          // Kichik ekranlarda pastga joylash
+          listBtn.style.top = "50px";
+          listBtn.style.right = "10px";
+          listBtn.style.flexWrap = "nowrap";
+        } else if (width < 699) {
+          listBtn.style.top = "55px";
+          listBtn.style.right = "15px";
+          listBtn.style.flexWrap = "nowrap";
+        } else if (width < 1001) {
+          listBtn.style.top = "60px";
+          listBtn.style.right = "20px";
+          listBtn.style.flexWrap = "wrap"; // Agar joy yetmasa qatorga tushadi
+        } else {
+          // Katta ekranlarda proflaga yaqin
+          listBtn.style.top = "65px";
+          listBtn.style.right = "0";
+          listBtn.style.flexWrap = "nowrap";
+        }
+      }
+
+      // Sahifaning boshqa joyiga bosilganda ListBtn yopilishi
+      document.addEventListener("click", (e) => {
+        // Agar profil rasmi yoki listBtn ichiga bosilmasa
+        if (!e.target.closest(".profil_img") && !e.target.closest("#listBtn")) {
+          if (isListBtnOpen) {
+            closeListBtnHorizontally();
+            isListBtnOpen = false;
+          }
+        }
+
+        // 1001px dan kichik ekranlarda menyuni yopish
+        if (
+          window.innerWidth < 1001 &&
+          !e.target.closest(".menu") &&
+          e.target !== menuIcon
+        ) {
+          if (isMenuOpen) {
+            isMenuOpen = false;
+            updateMenuState();
+            localStorage.setItem("menuOpen", "false");
+          }
+        }
+      });
+
+      // Ekran o'lchamiga mos elementlarni sozlash
+      function updateElementsForScreenSize() {
+        const width = window.innerWidth;
+
+        // list_btn_box ni ko'rsatish/yashirish (navbatdagi tugmalar)
+        if (listBtnBox) {
+          if (width < 1001) {
+            listBtnBox.style.display = "none";
+          } else {
+            listBtnBox.style.display = "flex";
+          }
+        }
+
+        // Foydalanuvchi ismini ko'rsatish/yashirish
+        if (userSpan) {
+          if (width < 1001) {
+            userSpan.style.display = "none";
+          } else {
+            userSpan.style.display = "flex";
+          }
+        }
+
+        // Menu ikonkasi joylashuvi
+        if (menuIcon) {
+          if (width < 1001) {
+            // Kichik ekranlarda fixed position
+            menuIcon.style.position = "fixed";
+            menuIcon.style.zIndex = "101";
+
+            // Ekran o'lchamiga qarab top va left qiymatlari
+            if (width < 480) {
+              menuIcon.style.top = "10px";
+              menuIcon.style.left = "10px";
+              menuIcon.style.width = "25px";
+              menuIcon.style.height = "25px";
+            } else if (width < 620) {
+              menuIcon.style.top = "12px";
+              menuIcon.style.left = "12px";
+              menuIcon.style.width = "28px";
+              menuIcon.style.height = "28px";
+            } else if (width < 710) {
+              menuIcon.style.top = "15px";
+              menuIcon.style.left = "15px";
+              menuIcon.style.width = "30px";
+              menuIcon.style.height = "30px";
+            } else {
+              menuIcon.style.top = "15px";
+              menuIcon.style.left = "15px";
+              menuIcon.style.width = "35px";
+              menuIcon.style.height = "35px";
+            }
+          } else {
+            // Katta ekranlarda relative position
+            menuIcon.style.position = "relative";
+            menuIcon.style.top = "auto";
+            menuIcon.style.left = "auto";
+            menuIcon.style.width = "50px";
+            menuIcon.style.height = "50px";
+            menuIcon.style.zIndex = "100";
+          }
+        }
+
+        // 1001px dan katta ekranlarda menyu holatini tiklash
+        if (width >= 1001) {
+          isMenuOpen = localStorage.getItem("menuOpen") === "true";
+          updateMenuState();
+        } else {
+          // Kichik ekranlarda menyu yopiq bo'ladi
+          if (isMenuOpen) {
+            isMenuOpen = false;
+            updateMenuState();
+            localStorage.setItem("menuOpen", "false");
+          }
+        }
+
+        // ListBtn holatini yangilash
+        if (isListBtnOpen) {
+          adjustListBtnPosition();
+          const currentWidth = parseInt(listBtn.style.width) || 0;
+          const targetWidth = getListBtnWidth();
+
+          if (currentWidth !== targetWidth) {
+            listBtn.style.width = targetWidth + "px";
+          }
+        }
+      }
+
+      // Ekran o'lchami o'zgarganda
+      function handleResize() {
         updateElementsForScreenSize();
 
-        // Menu ikonkasi bosilganda
-        menuIcon.addEventListener("click", (e) => {
-            e.stopPropagation();
-            isMenuOpen = !isMenuOpen;
+        // Agar listBtn ochiq bo'lsa, uni yangilash
+        if (isListBtnOpen) {
+          adjustListBtnPosition();
+          const targetWidth = getListBtnWidth();
+          listBtn.style.width = targetWidth + "px";
+        }
+      }
+
+      // Dastlabki yuklanishda va ekran o'lchami o'zgarganda
+      window.addEventListener("load", function () {
+        handleResize();
+
+        // ListBtn ni dastlab yashirilgan holatda boshlash
+        listBtn.style.display = "none";
+        listBtn.classList.remove("active");
+        isListBtnOpen = false;
+
+        // CSS transition sozlamalari
+        listBtn.style.transition = "width 0.3s ease, opacity 0.3s ease";
+      });
+
+      window.addEventListener("resize", handleResize);
+
+      // Escape tugmasi bilan menyuni yopish
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          if (isListBtnOpen) {
+            closeListBtnHorizontally();
+            isListBtnOpen = false;
+          }
+          if (window.innerWidth < 1001 && isMenuOpen) {
+            isMenuOpen = false;
             updateMenuState();
-            localStorage.setItem("menuOpen", isMenuOpen);
+            localStorage.setItem("menuOpen", "false");
+          }
+        }
+      });
+
+      // JavaScript xatoliklarini oldini olish
+      if (menuIcon) {
+        menuIcon.style.cursor = "pointer";
+      }
+
+      if (loginBtn) {
+        loginBtn.style.cursor = "pointer";
+      }
+
+      // Bootstrap tooltip uchun
+      document.addEventListener("DOMContentLoaded", function () {
+        var tooltipTriggerList = [].slice.call(
+          document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        );
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl);
         });
+      });
 
-        // Menu holatini yangilash funksiyasi
-        function updateMenuState() {
-            if (isMenuOpen) {
-                menuBox.classList.add("show");
-                hedMain.classList.add("menu-open");
-            } else {
-                menuBox.classList.remove("show");
-                hedMain.classList.remove("menu-open");
-            }
-        }
+      // Menu tugmalari uchun active klass boshqaruvi
+      document.addEventListener("DOMContentLoaded", function () {
+        const menuButtons = document.querySelectorAll(".menu article a button");
 
-        // Profil rasmi bosilganda
-        loginBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            listBtn.classList.toggle("active");
-        });
-
-        // Sahifaning boshqa joyiga bosilganda menyu yopilishi
-        document.addEventListener("click", (e) => {
-            // ListBtn yopilishi
-            if (!e.target.closest(".profil_img") && !e.target.closest("#listBtn")) {
-                listBtn.classList.remove("active");
-            }
-
-            // 1001px dan kichik ekranlarda menyuni yopish
-            if (window.innerWidth < 1001 && !e.target.closest('.menu') && e.target !== menuIcon) {
-                if (isMenuOpen) {
-                    isMenuOpen = false;
-                    updateMenuState();
-                    localStorage.setItem("menuOpen", "false");
-                }
-            }
-        });
-
-        // Ekran o'lchamiga mos elementlarni sozlash
-        function updateElementsForScreenSize() {
-            const width = window.innerWidth;
-
-            // list_btn_box ni ko'rsatish/yashirish
-            if (listBtnBox) {
-                if (width < 1001) {
-                    listBtnBox.style.display = "none";
-                } else {
-                    listBtnBox.style.display = "flex";
-                }
-            }
-
-            // Foydalanuvchi ismini ko'rsatish/yashirish
-            if (userSpan) {
-                if (width < 1001) {
-                    userSpan.style.display = "none";
-                } else {
-                    userSpan.style.display = "flex";
-                }
-            }
-
-            // Menu ikonkasi joylashuvi
-            if (menuIcon) {
-                if (width < 1001) {
-                    // Kichik ekranlarda fixed position
-                    menuIcon.style.position = "fixed";
-                    menuIcon.style.zIndex = "101";
-
-                    // Ekran o'lchamiga qarab top va left qiymatlari
-                    if (width < 480) {
-                        menuIcon.style.top = "10px";
-                        menuIcon.style.left = "10px";
-                    } else if (width < 620) {
-                        menuIcon.style.top = "12px";
-                        menuIcon.style.left = "12px";
-                    } else if (width < 710) {
-                        menuIcon.style.top = "15px";
-                        menuIcon.style.left = "15px";
-                    } else {
-                        menuIcon.style.top = "15px";
-                        menuIcon.style.left = "15px";
-                    }
-                } else {
-                    // Katta ekranlarda relative position
-                    menuIcon.style.position = "relative";
-                    menuIcon.style.top = "auto";
-                    menuIcon.style.left = "auto";
-                    menuIcon.style.zIndex = "100";
-                }
-            }
-
-            // 1001px dan katta ekranlarda menyu holatini tiklash
-            if (width >= 1001) {
-                isMenuOpen = localStorage.getItem("menuOpen") === "true";
-                updateMenuState();
-            } else {
-                // Kichik ekranlarda menyu yopiq bo'ladi
-                if (isMenuOpen) {
-                    isMenuOpen = false;
-                    updateMenuState();
-                    localStorage.setItem("menuOpen", "false");
-                }
-            }
-        }
-
-        // Ekran o'lchami o'zgarganda
-        function handleResize() {
-            updateElementsForScreenSize();
-
-            // Agar listBtn ochiq bo'lsa, uni yopish
-            if (listBtn.classList.contains("active")) {
-                listBtn.classList.remove("active");
-            }
-        }
-
-        // Dastlabki yuklanishda va ekran o'lchami o'zgarganda
-        window.addEventListener("load", handleResize);
-        window.addEventListener("resize", handleResize);
-
-        // Escape tugmasi bilan menyuni yopish
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") {
-                listBtn.classList.remove("active");
-                if (window.innerWidth < 1001 && isMenuOpen) {
-                    isMenuOpen = false;
-                    updateMenuState();
-                    localStorage.setItem("menuOpen", "false");
-                }
-            }
-        });
-
-        // JavaScript xatoliklarini oldini olish
-        if (menuIcon) {
-            menuIcon.style.cursor = "pointer";
-        }
-
-        if (loginBtn) {
-            loginBtn.style.cursor = "pointer";
-        }
-
-        // Bootstrap tooltip uchun
-        document.addEventListener("DOMContentLoaded", function () {
-            var tooltipTriggerList = [].slice.call(
-                document.querySelectorAll('[data-bs-toggle="tooltip"]')
-            );
-            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl);
+        if (menuButtons.length > 0) {
+          menuButtons.forEach((button) => {
+            button.addEventListener("click", function () {
+              // Barcha tugmalardan active klassini olib tashlash
+              menuButtons.forEach((btn) => btn.classList.remove("active"));
+              // Bosilgan tugmaga active klassini qo'shish
+              this.classList.add("active");
             });
-        });
-
-      const buttons = document.querySelectorAll('.menu_button');
-
-    buttons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Har bir tugma uchun "active" sinfini olib tashlash
-            buttons.forEach(btn => btn.classList.remove('active'));
-            // Faqat bosilgan tugmaga "active" sinfini qo'shish
-            button.classList.add('active');
-        });
-    });
+          });
+        }
+      });
     </script>
 
     {% block scripts %}{% endblock %}
