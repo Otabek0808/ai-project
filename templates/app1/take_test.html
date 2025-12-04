@@ -1,252 +1,260 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <div class="container mt-4">
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h3 class="card-title mb-0">{{ test.title }}</h3>
-            <p class="mb-0">
-                Vaqt chegarasi: {{ test.time_limit_minutes }} daqiqa |
-                Savollar: {{ total_questions }} ta |
-                {% if request.user.is_authenticated %}
-                <small>Savollar sizning darajangizga moslashtirildi</small>
-                {% endif %}
-            </p>
-        </div>
-        <div class="card-body">
-            <!-- Vaqt hisobi -->
-            <div class="alert alert-info text-center">
-                <h4 id="timer">Qolgan vaqt: {{ test.time_limit_minutes }}:00</h4>
-                {% if request.user.is_authenticated %}
-                <small class="text-muted">
-                    {% with user_level=request.user.usersubjectlevel_set.first %}
-                    {% if user_level %}
-                    Sizning darajangiz: {{ user_level.get_difficulty_level_display }}
-                    {% endif %}
-                    {% endwith %}
-                </small>
-                {% endif %}
-            </div>
-
-            <form method="post" id="testForm">
-                {% csrf_token %}
-                <input type="hidden" name="time_taken" id="timeTaken" value="0">
-
-                {% for question in questions %}
-                <div class="card mb-4">
-                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                        <h5 class="card-title mb-0">Savol {{ forloop.counter }}</h5>
-                        <span class="badge
-                            {% if question.difficulty_level == 1 %}bg-success
-                            {% elif question.difficulty_level == 2 %}bg-warning
-                            {% else %}bg-danger
-                            {% endif %}">
-                            {% if question.difficulty_level == 1 %}Oson
-                            {% elif question.difficulty_level == 2 %}O'rtacha
-                            {% else %}Qiyin
-                            {% endif %}
-                        </span>
-                    </div>
-                    <div class="card-body">
-                        <p class="lead">{{ question.text }}</p>
-
-                        <div class="form-group">
-                            {% for answer in question.answers.all %}
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="radio"
-                                       name="question_{{ question.id }}"
-                                       id="answer_{{ answer.id }}"
-                                       value="{{ answer.id }}" required>
-                                <label class="form-check-label" for="answer_{{ answer.id }}">
-                                    {{ answer.text }}
-                                </label>
-                            </div>
-                            {% empty %}
-                            <div class="alert alert-danger">
-                                Bu savol uchun javob variantlari mavjud emas!
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-                {% empty %}
-                <div class="alert alert-warning">
-                    Bu testda hozircha savollar mavjud emas.
-                </div>
-                {% endfor %}
-
-                <div class="text-center mt-4">
-                    <button type="submit" class="btn btn-success btn-lg">
-                        Testni Yakunlash
-                    </button>
-                    <a href="{% url 'tests' %}" class="btn btn-secondary btn-lg ms-2">
-                        Orqaga
-                    </a>
-                </div>
-            </form>
-        </div>
+  <div class="card">
+    <div class="card-header bg-primary text-white">
+      <h3 class="card-title mb-0">{{ test.title }}</h3>
+      <p class="mb-0">
+        Vaqt chegarasi: {{ test.time_limit_minutes }} daqiqa | Savollar: {{
+        total_questions }} ta | {% if request.user.is_authenticated %}
+        <small>Savollar sizning darajangizga moslashtirildi</small>
+        {% endif %}
+      </p>
     </div>
+    <div class="card-body">
+      <!-- Vaqt hisobi -->
+      <div class="alert alert-info text-center">
+        <h4 id="timer">Qolgan vaqt: {{ test.time_limit_minutes }}:00</h4>
+        {% if request.user.is_authenticated %}
+        <small class="text-muted">
+          {% with user_level=request.user.usersubjectlevel_set.first %} {% if
+          user_level %} Sizning darajangiz: {{
+          user_level.get_difficulty_level_display }} {% endif %} {% endwith %}
+        </small>
+        {% endif %}
+      </div>
+
+      <form method="post" id="testForm">
+        {% csrf_token %}
+        <input type="hidden" name="time_taken" id="timeTaken" value="0" />
+
+        {% for question in questions %}
+        <div class="card mb-4">
+          <div
+            class="card-header bg-light d-flex justify-content-between align-items-center"
+          >
+            <h5 class="card-title mb-0">Savol {{ forloop.counter }}</h5>
+            <span
+              class="badge {% if question.difficulty_level == 1 %}bg-success {% elif question.difficulty_level == 2 %}bg-warning {% else %}bg-danger {% endif %}"
+            >
+              {% if question.difficulty_level == 1 %}Oson {% elif
+              question.difficulty_level == 2 %}O'rtacha {% else %}Qiyin {% endif
+              %}
+            </span>
+          </div>
+          <div class="card-body">
+            <p class="lead">{{ question.text }}</p>
+
+            <div class="form-group">
+              {% for answer in question.answers.all %}
+              <div class="form-check mb-2">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="question_{{ question.id }}"
+                  id="answer_{{ answer.id }}"
+                  value="{{ answer.id }}"
+                  required
+                />
+                <label class="form-check-label" for="answer_{{ answer.id }}">
+                  {{ answer.text }}
+                </label>
+              </div>
+              {% empty %}
+              <div class="alert alert-danger">
+                Bu savol uchun javob variantlari mavjud emas!
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="alert alert-warning">
+          Bu testda hozircha savollar mavjud emas.
+        </div>
+        {% endfor %}
+
+        <div class="text-center mt-4">
+          <button type="submit" class="btn btn-success btn-lg">
+            Testni Yakunlash
+          </button>
+          <a href="{% url 'tests' %}" class="btn btn-secondary btn-lg ms-2">
+            Orqaga
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
 <!-- Vaqt tugashi modali -->
-<div class="modal fade" id="timeUpModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-warning">
-                <h5 class="modal-title">Vaqt tugadi</h5>
-            </div>
-            <div class="modal-body text-center">
-                <p class="lead">Test vaqti tugadi. Javoblaringiz avtomatik ravishda saqlanadi.</p>
-            </div>
-        </div>
+<div
+  class="modal fade"
+  id="timeUpModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-warning">
+        <h5 class="modal-title">Vaqt tugadi</h5>
+      </div>
+      <div class="modal-body text-center">
+        <p class="lead">
+          Test vaqti tugadi. Javoblaringiz avtomatik ravishda saqlanadi.
+        </p>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- Progress bar -->
 <div class="fixed-bottom bg-light p-2 border-top">
-    <div class="container">
-        <div class="d-flex justify-content-between align-items-center">
-            <small>Savollar: <strong>{{ forloop.counter }}/{{ total_questions }}</strong></small>
-            <div class="progress" style="width: 200px; height: 10px;">
-                <div class="progress-bar" id="progressBar"
-                     style="width: 0%;"></div>
-            </div>
-            <small id="progressText">0%</small>
-        </div>
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center">
+      <small
+        >Savollar:
+        <strong>{{ forloop.counter }}/{{ total_questions }}</strong></small
+      >
+      <div class="progress" style="width: 200px; height: 10px">
+        <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+      </div>
+      <small id="progressText">0%</small>
     </div>
+  </div>
 </div>
 
 <script>
-// Global o'zgaruvchilar
-let timeRemaining = {{ time_limit_seconds }};
-let timerInterval;
-let startTime;
-let totalQuestions = {{ total_questions }};
+  // Global o'zgaruvchilar
+  let timeRemaining = {{ time_limit_seconds }};
+  let timerInterval;
+  let startTime;
+  let totalQuestions = {{ total_questions }};
 
-// Dastlabki sozlash
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("Timer ishga tushdi!");
-    startTime = Date.now();
-    startTimer();
-    updateProgress();
+  // Dastlabki sozlash
+  document.addEventListener('DOMContentLoaded', function() {
+      console.log("Timer ishga tushdi!");
+      startTime = Date.now();
+      startTimer();
+      updateProgress();
 
-    // Form yuborishni boshqarish
-    document.getElementById('testForm').addEventListener('submit', function(e) {
-        const currentTime = Date.now();
-        const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
-        const timeTaken = Math.min(elapsedSeconds, {{ time_limit_seconds }});
+      // Form yuborishni boshqarish
+      document.getElementById('testForm').addEventListener('submit', function(e) {
+          const currentTime = Date.now();
+          const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
+          const timeTaken = Math.min(elapsedSeconds, {{ time_limit_seconds }});
 
-        console.log("Sarflangan vaqt:", timeTaken, "soniya");
-        document.getElementById('timeTaken').value = timeTaken;
-    });
+          console.log("Sarflangan vaqt:", timeTaken, "soniya");
+          document.getElementById('timeTaken').value = timeTaken;
+      });
 
-    // Har bir javob tanlanganda progress yangilash
-    const radioButtons = document.querySelectorAll('input[type="radio"]');
-    radioButtons.forEach(radio => {
-        radio.addEventListener('change', updateProgress);
-    });
-});
+      // Har bir javob tanlanganda progress yangilash
+      const radioButtons = document.querySelectorAll('input[type="radio"]');
+      radioButtons.forEach(radio => {
+          radio.addEventListener('change', updateProgress);
+      });
+  });
 
-// Vaqt hisobi
-function startTimer() {
-    clearInterval(timerInterval);
+  // Vaqt hisobi
+  function startTimer() {
+      clearInterval(timerInterval);
 
-    timerInterval = setInterval(function() {
-        const currentTime = Date.now();
-        const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
-        timeRemaining = {{ time_limit_seconds }} - elapsedSeconds;
+      timerInterval = setInterval(function() {
+          const currentTime = Date.now();
+          const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
+          timeRemaining = {{ time_limit_seconds }} - elapsedSeconds;
 
-        // Vaqt manfiy bo'lib qolmasligi
-        if (timeRemaining < 0) {
-            timeRemaining = 0;
-        }
+          // Vaqt manfiy bo'lib qolmasligi
+          if (timeRemaining < 0) {
+              timeRemaining = 0;
+          }
 
-        const minutes = Math.floor(timeRemaining / 60);
-        const seconds = timeRemaining % 60;
+          const minutes = Math.floor(timeRemaining / 60);
+          const seconds = timeRemaining % 60;
 
-        // Timer yangilash
-        const timerElement = document.getElementById('timer');
-        if (timerElement) {
-            timerElement.innerHTML = `Qolgan vaqt: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        }
+          // Timer yangilash
+          const timerElement = document.getElementById('timer');
+          if (timerElement) {
+              timerElement.innerHTML = `Qolgan vaqt: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+          }
 
-        // Vaqt tugashiga 1 daqiqa qolganda rang o'zgartirish
-        if (timeRemaining <= 60) {
-            timerElement.parentElement.className = 'alert alert-danger text-center';
-        }
+          // Vaqt tugashiga 1 daqiqa qolganda rang o'zgartirish
+          if (timeRemaining <= 60) {
+              timerElement.parentElement.className = 'alert alert-danger text-center';
+          }
 
-        // Vaqt tugasa
-        if (timeRemaining <= 0) {
-            clearInterval(timerInterval);
-            console.log("Vaqt tugadi!");
+          // Vaqt tugasa
+          if (timeRemaining <= 0) {
+              clearInterval(timerInterval);
+              console.log("Vaqt tugadi!");
 
-            // Modal ko'rsatish
-            const modal = new bootstrap.Modal(document.getElementById('timeUpModal'));
-            modal.show();
+              // Modal ko'rsatish
+              const modal = new bootstrap.Modal(document.getElementById('timeUpModal'));
+              modal.show();
 
-            // 3 soniyadan so'ng formani yuborish
-            setTimeout(() => {
-                const currentTime = Date.now();
-                const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
-                const timeTaken = Math.min(elapsedSeconds, {{ time_limit_seconds }});
+              // 3 soniyadan so'ng formani yuborish
+              setTimeout(() => {
+                  const currentTime = Date.now();
+                  const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
+                  const timeTaken = Math.min(elapsedSeconds, {{ time_limit_seconds }});
 
-                document.getElementById('timeTaken').value = timeTaken;
-                document.getElementById('testForm').submit();
-            }, 3000);
-        }
-    }, 1000);
-}
+                  document.getElementById('timeTaken').value = timeTaken;
+                  document.getElementById('testForm').submit();
+              }, 3000);
+          }
+      }, 1000);
+  }
 
-// Progress boshqaruvi
-function updateProgress() {
-    const answeredQuestions = document.querySelectorAll('input[type="radio"]:checked').length;
-    const progressPercentage = totalQuestions > 0 ? (answeredQuestions / totalQuestions) * 100 : 0;
+  // Progress boshqaruvi
+  function updateProgress() {
+      const answeredQuestions = document.querySelectorAll('input[type="radio"]:checked').length;
+      const progressPercentage = totalQuestions > 0 ? (answeredQuestions / totalQuestions) * 100 : 0;
 
-    const progressBar = document.getElementById('progressBar');
-    const progressText = document.getElementById('progressText');
+      const progressBar = document.getElementById('progressBar');
+      const progressText = document.getElementById('progressText');
 
-    if (progressBar && progressText) {
-        progressBar.style.width = progressPercentage + '%';
-        progressText.textContent = Math.round(progressPercentage) + '%';
+      if (progressBar && progressText) {
+          progressBar.style.width = progressPercentage + '%';
+          progressText.textContent = Math.round(progressPercentage) + '%';
 
-        // Rangni o'zgartirish
-        if (progressPercentage < 50) {
-            progressBar.className = 'progress-bar bg-warning';
-        } else if (progressPercentage < 80) {
-            progressBar.className = 'progress-bar bg-info';
-        } else {
-            progressBar.className = 'progress-bar bg-success';
-        }
-    }
-}
+          // Rangni o'zgartirish
+          if (progressPercentage < 50) {
+              progressBar.className = 'progress-bar bg-warning';
+          } else if (progressPercentage < 80) {
+              progressBar.className = 'progress-bar bg-info';
+          } else {
+              progressBar.className = 'progress-bar bg-success';
+          }
+      }
+  }
 
-// Xatolikni tekshirish
-if (typeof bootstrap === 'undefined') {
-    console.error("Bootstrap JavaScript yuklanmagan!");
-}
+  // Xatolikni tekshirish
+  if (typeof bootstrap === 'undefined') {
+      console.error("Bootstrap JavaScript yuklanmagan!");
+  }
 
-console.log("JavaScript kod ishga tushdi");
-console.log("Time limit seconds:", {{ time_limit_seconds }});
-console.log("Total questions:", totalQuestions);
+  console.log("JavaScript kod ishga tushdi");
+  console.log("Time limit seconds:", {{ time_limit_seconds }});
+  console.log("Total questions:", totalQuestions);
 </script>
 
 <style>
-.form-check-input {
+  .form-check-input {
     transform: scale(1.1);
     margin-right: 10px;
-}
-.card {
+  }
+  .card {
     border-radius: 10px;
-}
-.badge {
+  }
+  .badge {
     font-size: 0.8em;
-}
-.fixed-bottom {
+  }
+  .fixed-bottom {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(5px);
-}
-.progress {
+  }
+  .progress {
     background-color: #e9ecef;
-}
+  }
 </style>
 {% endblock %}

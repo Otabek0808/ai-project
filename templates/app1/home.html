@@ -7,9 +7,174 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boshqaruv Paneli</title>
+  <style>
+.static_contaner_section {
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        display: flex;
+        gap: 10px;
+        justify-content: space-between;
+      }
+      .contaner_info {
+        width: 100%;
+        height: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.511);
+        border-radius: 10px;
+        padding: 25px;
+        border: 0.1px solid white;
+      }
+      .log_num {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .log_num svg {
+        width: 50px;
+        height: 50px;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.511);
+        padding: 10px;
+        border-radius: 10px;
+      }
+      .log_num h2 {
+        font-size: 36px;
+      }
+      .contaner_info p {
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .section_statistik {
+        padding-top: 20px;
+        width: auto;
+        height: auto;
+        display: flex;
+        max-width: 100%;
+        gap: 15px;
+      }
+      .statistik_box {
+        width: 100%;
+        height: auto;
+      }
+      .progres {
+        display: flex;
+        justify-content: space-between;
+        width: auto;
+        gap: 15px;
+      }
+      .progress_box {
+        width: 100%;
+        height: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.511);
+        border-radius: 10px;
+        padding: 20px;
+        border: 0.1px solid white;
+      }
+      .attent_box {
+        padding-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        width: auto;
+        gap: 15px;
+      }
+      .attent {
+        width: 40%;
+        height: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.511);
+        border-radius: 10px;
+        padding: 25px;
+        border: 0.1px solid white;
+      }
+      .grade {
+        width: 60%;
+        height: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.511);
+        border-radius: 10px;
+        padding: 25px;
+        border: 0.1px solid white;
+      }
+      .announcements {
+        margin-top: 20px;
+        width: auto;
+        height: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.511);
+        border-radius: 10px;
+        padding: 25px;
+        border: 0.1px solid white;
+      }
+      .time_box {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 60%;
+        height: auto;
+      }
+      .tasks {
+        width: auto;
+        height: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.511);
+        border-radius: 10px;
+        padding: 10px;
+      }
+      .tasks_box {
+        width: auto;
+        height: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.511);
+        border-radius: 10px;
+        padding: 10px;
+      }
 
+    @media (max-width:1225px) {
+      .contaner_info {
+        padding: 20px;
+      }
+      .log_num{
+        gap: 12px;
+      }
+      .log_num svg{
+        width: 40px;
+        height: 40px;
+      }
+      .log_num h2{
+        font-size: 24px;
+      }
+      .contaner_info p{
+        font-size: 14px;
+        margin-top: 10px;
+      }
+      .section_statistik{
+        gap: 12px;
+      }
+      .progres{
+        flex-wrap: wrap;
+      }
+    }
+    @media (max-width:1030px) {
+    .static_contaner_section{
+      flex-wrap: wrap;
+    }
+    .contaner_info{
+      flex: 0 0 49%;
+      padding: 15px;
+
+    }
+    }
+    @media (max-width:840px) {
+.contaner_info{
+  flex: 35%;
+}
+    }
+  </style>
 </head>
 <body>
+
     <main>
             <section class="static_contaner_section">
               <!-- Enrolled Courses -->
@@ -118,7 +283,7 @@
                 <!-- announcements -->
                 <div class="announcements">
                 </div>
-<!--              </article>-->
+             <!-- </article>-->
 <!--              <article class="time_box">-->
 <!--                &lt;!&ndash; tasks &ndash;&gt;-->
 <!--                <div class="tasks">-->
@@ -126,13 +291,9 @@
 <!--                <div class="tasks"></div>-->
 <!--                &lt;!&ndash; announcements &ndash;&gt;-->
 <!--                <div class="tasks_box"></div>-->
-<!--              </article>-->
+             </article>
             </section>
-          </main>
-
-
-
-
+    </main>
 </body>
 </html
 {% endblock %}
