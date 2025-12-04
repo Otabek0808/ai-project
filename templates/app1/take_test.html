@@ -1,24 +1,505 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+/* Asosiy konteynerlar uchun */
+
+.container.mt-4 {
+    width: 100%;
+    margin: 2rem auto;
+    padding: 0 15px;
+}
+
+.card {
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0.215);
+    border-radius: 15px;
+    padding: 0;
+    overflow: hidden;
+    border: 0.1px solid white;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+}
+
+/* Card sarlavhasi */
+.card-header.bg-primary.text-white {
+    backdrop-filter: blur(10px);
+    background-color: rgba(5, 130, 171, 0.8) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 20px 30px;
+    margin: 0;
+}
+
+.card-title.mb-0 {
+    color: white;
+    font-size: 1.6rem;
+    margin: 0;
+}
+
+.card-header p.mb-0 {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    margin-top: 5px;
+}
+
+.card-header p.mb-0 small {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+}
+
+/* Card body */
+.card-body {
+    background-color: rgba(255, 255, 255, 0.215);
+    padding: 25px 30px;
+}
+
+/* Alert xabarlari */
+.alert {
+    backdrop-filter: blur(15px);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.215);
+    margin-bottom: 1.5rem;
+}
+
+.alert-info {
+    color: #0c5460;
+    border-color: rgba(23, 162, 184, 0.3);
+}
+
+.alert-danger {
+    color: #721c24;
+    border-color: rgba(220, 53, 69, 0.3);
+}
+
+.alert-warning {
+    color: #856404;
+    border-color: rgba(255, 193, 7, 0.3);
+}
+
+/* Timer uchun */
+#timer {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #0c5460;
+}
+
+.text-muted {
+    color: rgba(12, 84, 96, 0.8) !important;
+    font-size: 0.9rem;
+}
+
+/* Savol kartalari */
+.card.mb-4 {
+    backdrop-filter: blur(15px);
+    background-color: rgba(255, 255, 255, 0.215);
+    border-radius: 12px;
+    border: 0.1px solid white;
+    margin-bottom: 1.5rem !important;
+}
+
+.card-header.bg-light {
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 15px 20px;
+}
+
+.card-header.bg-light h5 {
+    color: #2c3e50;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.badge {
+    font-size: 0.8em;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+}
+
+.bg-success {
+    background-color: rgba(40, 167, 69, 0.8) !important;
+    color: white !important;
+}
+
+.bg-warning {
+    background-color: rgba(255, 193, 7, 0.8) !important;
+    color: #212529 !important;
+}
+
+.bg-danger {
+    background-color: rgba(220, 53, 69, 0.8) !important;
+    color: white !important;
+}
+
+/* Savol matni */
+.lead {
+    color: #2c3e50;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+/* Radio buttonlar */
+.form-check-input {
+    transform: scale(1.1);
+    margin-right: 10px;
+    background-color: rgba(255, 255, 255, 0.511) !important;
+    border: 1px solid rgba(5, 130, 171, 0.5) !important;
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: rgba(5, 130, 171, 0.8) !important;
+    border-color: rgba(5, 130, 171, 1) !important;
+}
+
+.form-check-label {
+    color: #2c3e50;
+    font-size: 1rem;
+    padding-left: 5px;
+    cursor: pointer;
+}
+
+.form-check {
+    margin-bottom: 0.8rem;
+}
+
+.form-check.mb-2:last-child {
+    margin-bottom: 0;
+}
+
+/* Tugmalar */
+.btn {
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-success {
+    background: linear-gradient(45deg, #28a745, #20c997);
+    color: white;
+}
+
+.btn-success:hover {
+    background: linear-gradient(45deg, #218838, #1aa179);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+
+.btn-secondary {
+    background: linear-gradient(45deg, #6c757d, #5a6268);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(45deg, #5a6268, #4a5056);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+}
+
+.btn-lg {
+    padding: 0.85rem 2.5rem;
+    font-size: 1.2rem;
+}
+
+/* Modal */
+.modal-content {
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0.215);
+    border-radius: 15px;
+    border: 0.1px solid white;
+}
+
+.modal-header.bg-warning {
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 193, 7, 0.8) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.modal-title {
+    color: #212529;
+    font-weight: 600;
+    font-size: 1.3rem;
+}
+
+.modal-body p.lead {
+    color: #2c3e50;
+    font-size: 1.1rem;
+    margin-bottom: 0;
+}
+
+/* Fixed bottom progress bar */
+.fixed-bottom {
+    background: rgba(255, 255, 255, 0.515) !important;
+    backdrop-filter: blur(15px);
+    border-top: 1px solid rgba(255, 255, 255, 0.3) !important;
+    padding: 15px 0;
+}
+
+.fixed-bottom .container {
+    max-width: 1000px;
+}
+
+.progress {
+    background-color: rgba(255, 255, 255, 0.3);
+    height: 10px;
+    border-radius: 10px;
+    border: 2px solid gray;
+}
+
+.progress-bar {
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+.progress-bar.bg-warning {
+    background-color: rgba(255, 193, 7, 0.8) !important;
+}
+
+.progress-bar.bg-info {
+    background-color: rgba(23, 162, 184, 0.8) !important;
+}
+
+.progress-bar.bg-success {
+    background-color: rgba(40, 167, 69, 0.8) !important;
+}
+
+.fixed-bottom small {
+    color: #2c3e50;
+    font-size: 1.8rem;
+    font-weight: 500;
+}
+
+.fixed-bottom strong {
+    color: rgba(5, 130, 171, 0.9);
+}
+
+/* Text center uchun */
+.text-center {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Form group */
+.form-group {
+    margin-bottom: 0;
+}
+
+/* Responsive design */
+@media (max-width: 1225px) {
+    .container.mt-4 {
+        width: 90%;
+    }
+}
+
+@media (max-width: 1030px) {
+    .container.mt-4 {
+        width: 95%;
+        margin: 1.5rem auto;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-header.bg-primary.text-white {
+        padding: 15px 25px;
+    }
+
+    .card-title.mb-0 {
+        font-size: 1.4rem;
+    }
+
+    #timer {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container.mt-4 {
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .card-header.bg-primary.text-white {
+        padding: 12px 20px;
+    }
+
+    .card-title.mb-0 {
+        font-size: 1.2rem;
+    }
+
+    .card-header p.mb-0 {
+        font-size: 0.85rem;
+    }
+
+    .btn-lg {
+        padding: 0.75rem 2rem;
+        font-size: 1.1rem;
+    }
+
+    #timer {
+        font-size: 1.4rem;
+    }
+
+    .lead {
+        font-size: 1rem;
+    }
+
+    .fixed-bottom .container {
+        padding: 0 15px;
+    }
+
+    .fixed-bottom small {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .container.mt-4 {
+        margin: 1rem auto;
+    }
+
+    .card-header.bg-primary.text-white {
+        padding: 10px 15px;
+    }
+
+    .card-title.mb-0 {
+        font-size: 1.1rem;
+    }
+
+    .card-header.bg-light {
+        padding: 12px 15px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .card-header.bg-light h5 {
+        font-size: 1rem;
+    }
+
+    .badge {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .btn + .btn {
+        margin-left: 0;
+    }
+
+    .text-center {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .fixed-bottom {
+        padding: 10px 0;
+    }
+
+    .fixed-bottom .d-flex {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .fixed-bottom .progress {
+        width: 100% !important;
+    }
+
+    .modal-dialog {
+        margin: 1rem;
+    }
+
+    .modal-title {
+        font-size: 1.1rem;
+    }
+
+    .modal-body p.lead {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .card-body {
+        padding: 12px;
+    }
+
+    .card-header.bg-primary.text-white {
+        padding: 8px 12px;
+    }
+
+    .card-title.mb-0 {
+        font-size: 1rem;
+    }
+
+    .lead {
+        font-size: 0.95rem;
+    }
+
+    .form-check-label {
+        font-size: 0.9rem;
+    }
+
+    .btn-lg {
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    .fixed-bottom small {
+        font-size: 0.7rem;
+    }
+
+    #timer {
+        font-size: 1.2rem;
+    }
+}
+</style>
+
 <div class="container mt-4">
+    <h3 style="font-size: 38px; font-weight: 600;">{{ test.title }}</h3>
+
   <div class="card">
-    <div class="card-header bg-primary text-white">
-      <h3 class="card-title mb-0">{{ test.title }}</h3>
-      <p class="mb-0">
+
+    <div class="card-body">
+        <p class="mb-0">
         Vaqt chegarasi: {{ test.time_limit_minutes }} daqiqa | Savollar: {{
         total_questions }} ta | {% if request.user.is_authenticated %}
         <small>Savollar sizning darajangizga moslashtirildi</small>
         {% endif %}
       </p>
-    </div>
-    <div class="card-body">
       <!-- Vaqt hisobi -->
       <div class="alert alert-info text-center">
         <h4 id="timer">Qolgan vaqt: {{ test.time_limit_minutes }}:00</h4>
         {% if request.user.is_authenticated %}
         <small class="text-muted">
-          {% with user_level=request.user.usersubjectlevel_set.first %} {% if
-          user_level %} Sizning darajangiz: {{
-          user_level.get_difficulty_level_display }} {% endif %} {% endwith %}
+          {% with user_level=request.user.usersubjectlevel_set.first %}
+            {% if user_level %}
+              Sizning darajangiz: {{ user_level.get_difficulty_level_display }}
+            {% endif %}
+          {% endwith %}
         </small>
         {% endif %}
       </div>
@@ -27,51 +508,56 @@
         {% csrf_token %}
         <input type="hidden" name="time_taken" id="timeTaken" value="0" />
 
-        {% for question in questions %}
-        <div class="card mb-4">
-          <div
-            class="card-header bg-light d-flex justify-content-between align-items-center"
-          >
-            <h5 class="card-title mb-0">Savol {{ forloop.counter }}</h5>
-            <span
-              class="badge {% if question.difficulty_level == 1 %}bg-success {% elif question.difficulty_level == 2 %}bg-warning {% else %}bg-danger {% endif %}"
+        {% if questions %}
+          {% for question in questions %}
+          <div class="card mb-4">
+            <div
+              class="card-header bg-light d-flex justify-content-between align-items-center"
             >
-              {% if question.difficulty_level == 1 %}Oson {% elif
-              question.difficulty_level == 2 %}O'rtacha {% else %}Qiyin {% endif
-              %}
-            </span>
-          </div>
-          <div class="card-body">
-            <p class="lead">{{ question.text }}</p>
+              <h5 class="card-title mb-0">Savol {{ forloop.counter }}</h5>
+              <span
+                class="badge {% if question.difficulty_level == 1 %}bg-success{% elif question.difficulty_level == 2 %}bg-warning{% else %}bg-danger{% endif %}"
+              >
+                {% if question.difficulty_level == 1 %}Oson
+                {% elif question.difficulty_level == 2 %}O'rtacha
+                {% else %}Qiyin
+                {% endif %}
+              </span>
+            </div>
+            <div class="card-body">
+              <p class="lead">{{ question.text }}</p>
 
-            <div class="form-group">
-              {% for answer in question.answers.all %}
-              <div class="form-check mb-2">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="question_{{ question.id }}"
-                  id="answer_{{ answer.id }}"
-                  value="{{ answer.id }}"
-                  required
-                />
-                <label class="form-check-label" for="answer_{{ answer.id }}">
-                  {{ answer.text }}
-                </label>
+              <div class="form-group">
+                {% if question.answers.all %}
+                  {% for answer in question.answers.all %}
+                  <div class="form-check mb-2">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="question_{{ question.id }}"
+                      id="answer_{{ answer.id }}"
+                      value="{{ answer.id }}"
+                      required
+                    />
+                    <label class="form-check-label" for="answer_{{ answer.id }}">
+                      {{ answer.text }}
+                    </label>
+                  </div>
+                  {% endfor %}
+                {% else %}
+                  <div class="alert alert-danger">
+                    Bu savol uchun javob variantlari mavjud emas!
+                  </div>
+                {% endif %}
               </div>
-              {% empty %}
-              <div class="alert alert-danger">
-                Bu savol uchun javob variantlari mavjud emas!
-              </div>
-              {% endfor %}
             </div>
           </div>
-        </div>
-        {% empty %}
+          {% endfor %}
+        {% else %}
         <div class="alert alert-warning">
           Bu testda hozircha savollar mavjud emas.
         </div>
-        {% endfor %}
+        {% endif %}
 
         <div class="text-center mt-4">
           <button type="submit" class="btn btn-success btn-lg">
@@ -93,6 +579,7 @@
   data-bs-backdrop="static"
   data-bs-keyboard="false"
   tabindex="-1"
+  aria-hidden="true"
 >
   <div class="modal-dialog">
     <div class="modal-content">
@@ -112,10 +599,11 @@
 <div class="fixed-bottom bg-light p-2 border-top">
   <div class="container">
     <div class="d-flex justify-content-between align-items-center">
-      <small
-        >Savollar:
-        <strong>{{ forloop.counter }}/{{ total_questions }}</strong></small
-      >
+      {% if questions %}
+        <small>Savollar: <strong><span id="currentQuestion">0</span>/{{ total_questions }}</strong></small>
+      {% else %}
+        <small>Savollar: <strong>0/0</strong></small>
+      {% endif %}
       <div class="progress" style="width: 200px; height: 10px">
         <div class="progress-bar" id="progressBar" style="width: 0%"></div>
       </div>
@@ -189,8 +677,11 @@
               console.log("Vaqt tugadi!");
 
               // Modal ko'rsatish
-              const modal = new bootstrap.Modal(document.getElementById('timeUpModal'));
-              modal.show();
+              const modalElement = document.getElementById('timeUpModal');
+              if (modalElement) {
+                  const modal = new bootstrap.Modal(modalElement);
+                  modal.show();
+              }
 
               // 3 soniyadan so'ng formani yuborish
               setTimeout(() => {
@@ -212,10 +703,16 @@
 
       const progressBar = document.getElementById('progressBar');
       const progressText = document.getElementById('progressText');
+      const currentQuestionElement = document.getElementById('currentQuestion');
 
       if (progressBar && progressText) {
           progressBar.style.width = progressPercentage + '%';
           progressText.textContent = Math.round(progressPercentage) + '%';
+
+          // Javob berilgan savollar sonini yangilash
+          if (currentQuestionElement) {
+              currentQuestionElement.textContent = answeredQuestions;
+          }
 
           // Rangni o'zgartirish
           if (progressPercentage < 50) {
@@ -228,9 +725,9 @@
       }
   }
 
-  // Xatolikni tekshirish
+  // Bootstrap yuklanganligini tekshirish
   if (typeof bootstrap === 'undefined') {
-      console.error("Bootstrap JavaScript yuklanmagan!");
+      console.warn("Bootstrap JavaScript yuklanmagan!");
   }
 
   console.log("JavaScript kod ishga tushdi");
@@ -238,23 +735,4 @@
   console.log("Total questions:", totalQuestions);
 </script>
 
-<style>
-  .form-check-input {
-    transform: scale(1.1);
-    margin-right: 10px;
-  }
-  .card {
-    border-radius: 10px;
-  }
-  .badge {
-    font-size: 0.8em;
-  }
-  .fixed-bottom {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(5px);
-  }
-  .progress {
-    background-color: #e9ecef;
-  }
-</style>
 {% endblock %}
