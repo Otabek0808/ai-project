@@ -1,544 +1,492 @@
-{% extends 'base.html' %} {% block content %} {% block extra_css %}
+{% extends 'base.html' %}
+
+{% block content %}
+{% block extra_css %}
 <style>
-  /* ===== UMUMIY STILLAR ===== */
-  * {
-    padding: 0;
-    margin: 0;
-    font-family: "Times New Roman", Times, serif;
-    box-sizing: border-box;
-  }
+    /* Admin stats sahifasi uchun maxsus stillar */
 
-  body {
-    background: linear-gradient(to right, #a3c1e0, #b7c9e2, #d2c7e5);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* ===== KONTEYNER VA LAYOUT ===== */
-  .container-fluid.bg-light {
-    background: linear-gradient(to right, #87ceeb, #87ceeb, #f2d8e2) !important;
-    min-height: 100vh;
-    padding: 0 !important;
-  }
-
-  .container {
-    background-color: rgba(255, 255, 255, 0.95);
-    border-radius: 15px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding: 25px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(10px);
-  }
-
-  /* ===== SARLAVHA STILLARI ===== */
-  h1.display-5 {
-    font-size: 42px !important;
-    font-weight: 1000 !important;
-    color: rgb(20, 33, 119) !important;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 10px !important;
-  }
-
-  .lead.text-muted {
-    font-size: 18px;
-    color: rgb(70, 70, 70) !important;
-    margin-bottom: 20px !important;
-  }
-
-  /* ===== ADMIN PANELI ===== */
-  .card.border-primary {
-    border: 2px solid rgba(5, 130, 171, 0.8) !important;
-    border-radius: 15px !important;
-    overflow: hidden;
-    backdrop-filter: blur(10px);
-    background-color: rgba(226, 237, 236, 0.9) !important;
-  }
-
-  .card-header.bg-primary {
-    background: linear-gradient(
-      to right,
-      rgba(5, 130, 171, 0.9),
-      rgba(20, 33, 119, 0.9)
-    ) !important;
-    padding: 15px 25px !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
-  }
-
-  .card-header h5 {
-    font-size: 22px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-  }
-
-  .card.border-0.shadow-sm {
-    border-radius: 12px !important;
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.9) !important;
-    border: 1px solid rgba(255, 255, 255, 0.5) !important;
-    height: 100%;
-  }
-
-  .card.border-0.shadow-sm:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2) !important;
-  }
-
-  .card-body.py-4 i.fa-3x {
-    margin-bottom: 15px;
-  }
-
-  .btn-success,
-  .btn-info,
-  .btn-warning {
-    border-radius: 10px !important;
-    padding: 10px 25px !important;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    border: none !important;
-    min-width: 160px;
-  }
-
-  .btn-success {
-    background: linear-gradient(to right, #28a745, #20c997) !important;
-  }
-
-  .btn-info {
-    background: linear-gradient(to right, #17a2b8, #0dcaf0) !important;
-  }
-
-  .btn-warning {
-    background: linear-gradient(to right, #ffc107, #fd7e14) !important;
-    color: #000 !important;
-  }
-
-  .btn-success:hover,
-  .btn-info:hover,
-  .btn-warning:hover {
-    transform: scale(0.97);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
-    opacity: 0.9;
-  }
-
-  /* ===== FANLAR BO'LIMI ===== */
-  h3.text-primary {
-    font-size: 28px;
-    font-weight: bold;
-    color: rgb(20, 33, 119) !important;
-    display: flex;
-    align-items: center;
-  }
-
-  .badge.bg-primary,
-  .badge.bg-info {
-    font-size: 14px !important;
-    padding: 8px 15px !important;
-    border-radius: 20px !important;
-    font-weight: 600;
-  }
-
-  .badge.bg-info {
-    background: linear-gradient(to right, #17a2b8, #0dcaf0) !important;
-  }
-
-  /* ===== TEST KARTALARI ===== */
-  .card.h-100.shadow-sm.border-0 {
-    border-radius: 15px !important;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.95) !important;
-    border: 1px solid rgba(226, 237, 236, 0.8) !important;
-  }
-
-  .card.h-100.shadow-sm.border-0:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
-    border-color: rgba(5, 130, 171, 0.3) !important;
-  }
-
-  .card-header.bg-white {
-    background: linear-gradient(
-      to right,
-      rgba(226, 237, 236, 0.9),
-      rgba(255, 255, 255, 0.9)
-    ) !important;
-    padding: 20px 25px 10px 25px !important;
-  }
-
-  .card-title {
-    font-size: 20px;
-    font-weight: bold;
-    color: rgb(20, 33, 119);
-    line-height: 1.4;
-  }
-
-  .badge.bg-success,
-  .badge.bg-secondary {
-    padding: 6px 12px !important;
-    border-radius: 10px !important;
-    font-size: 13px;
-  }
-
-  /* ===== TEST MA'LUMOTLARI ===== */
-  .row.text-center.mb-3 {
-    background: rgba(226, 237, 236, 0.3);
-    border-radius: 10px;
-    padding: 10px 0;
-    margin: 15px 0 !important;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-  }
-
-  .row.text-center.mb-3 .col-3 {
-    padding: 5px;
-  }
-
-  .row.text-center.mb-3 strong {
-    font-size: 20px;
-    display: block;
-    margin-top: 5px;
-  }
-
-  .text-primary {
-    color: rgb(20, 33, 119) !important;
-  }
-
-  .text-warning {
-    color: #ffc107 !important;
-  }
-
-  .text-info {
-    color: #17a2b8 !important;
-  }
-
-  .text-success {
-    color: #28a745 !important;
-  }
-
-  /* ===== PROGRESS BAR ===== */
-  .progress {
-    border-radius: 10px !important;
-    overflow: hidden;
-    background-color: rgba(226, 237, 236, 0.5) !important;
-    height: 8px !important;
-  }
-
-  .progress-bar {
-    transition: width 0.5s ease;
-  }
-
-  /* ===== TUGMALAR ===== */
-  .btn.btn-primary,
-  .btn.btn-outline-primary,
-  .btn.btn-secondary {
-    border-radius: 10px !important;
-    padding: 12px 25px !important;
-    font-weight: 600;
-    font-size: 16px;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .btn.btn-primary {
-    background: linear-gradient(
-      to right,
-      rgba(5, 130, 171, 0.9),
-      rgba(20, 33, 119, 0.9)
-    ) !important;
-    border: none !important;
-  }
-
-  .btn.btn-outline-primary {
-    border: 2px solid rgba(5, 130, 171, 0.8) !important;
-    color: rgba(5, 130, 171, 0.9) !important;
-    background: transparent !important;
-  }
-
-  .btn.btn-primary:hover {
-    transform: scale(0.97);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
-    opacity: 0.9;
-  }
-
-  .btn.btn-outline-primary:hover {
-    background: linear-gradient(
-      to right,
-      rgba(5, 130, 171, 0.1),
-      rgba(20, 33, 119, 0.1)
-    ) !important;
-    transform: scale(0.97);
-  }
-
-  .btn.btn-secondary:disabled {
-    background: linear-gradient(to right, #6c757d, #868e96) !important;
-    opacity: 0.7;
-  }
-
-  /* ===== XABARLAR VA OGOHLANTIRISHLAR ===== */
-  .alert {
-    border-radius: 12px !important;
-    border: none !important;
-    padding: 15px 20px !important;
-    backdrop-filter: blur(10px);
-  }
-
-  .alert-info {
-    background: rgba(23, 162, 184, 0.15) !important;
-    color: rgb(20, 33, 119) !important;
-    border: 1px solid rgba(23, 162, 184, 0.3) !important;
-  }
-
-  .alert-warning {
-    background: rgba(255, 193, 7, 0.15) !important;
-    color: rgb(119, 87, 20) !important;
-    border: 1px solid rgba(255, 193, 7, 0.3) !important;
-  }
-
-  /* ===== FOOTER TEXT ===== */
-  .text-center.mt-2 small {
-    color: rgba(20, 33, 119, 0.7) !important;
-    font-size: 14px;
-  }
-
-  /* ===== RESPONSIVE DESIGN ===== */
-
-  /* 1225px */
-  @media (max-width: 1225px) {
-    .container {
-      padding: 20px;
+    /* Konteyner */
+    .admin-stats-container {
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
     }
 
-    h1.display-5 {
-      font-size: 36px !important;
+    /* Sarlavha */
+    .page-title {
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.511);
+        border-radius: 10px;
+        border: 1px solid #ffffff;
+        padding: 25px;
     }
 
-    .btn-success,
-    .btn-info,
-    .btn-warning {
-      min-width: 140px;
-      padding: 8px 20px !important;
-    }
-  }
-
-  /* 1115px */
-  @media (max-width: 1115px) {
-    .container {
-      margin: 15px;
-      padding: 15px;
+    .page-title h1 {
+        font-size: 36px;
+        font-weight: 1000;
+        color: rgb(20, 33, 119);
     }
 
-    h1.display-5 {
-      font-size: 32px !important;
+    /* Asosiy karta */
+    .stats-card {
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.511);
+        border-radius: 10px;
+        border: 1px solid #ffffff;
+        padding: 25px;
     }
 
-    h3.text-primary {
-      font-size: 24px;
+    .stats-header {
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(5, 130, 171, 0.8);
+        border-radius: 10px;
+        border: 1px solid #ffffff;
+        padding: 20px;
+        margin-bottom: 20px;
     }
 
-    .card-title {
-      font-size: 18px;
-    }
-  }
-
-  /* 1001px - Tablet view */
-  @media (max-width: 1001px) {
-    .container-fluid.bg-light {
-      padding: 10px !important;
-    }
-
-    .container {
-      margin: 10px;
-      padding: 15px;
+    .stats-header h4 {
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 15px;
     }
 
-    .row.mb-5 {
-      margin-bottom: 25px !important;
+    .stats-body {
+        width: auto;
+        max-width: 100%;
+        height: auto;
     }
 
-    .col-xl-4.col-md-6.mb-4 {
-      margin-bottom: 20px !important;
+    /* Jadval */
+    .users-table-container {
+        overflow-x: auto;
     }
 
-    .btn.btn-primary,
-    .btn.btn-outline-primary {
-      padding: 10px 20px !important;
-      font-size: 15px;
-    }
-  }
-
-  /* 830px */
-  @media (max-width: 830px) {
-    .container {
-      margin: 8px;
-      padding: 12px;
+    .users-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        min-width: 800px;
     }
 
-    h1.display-5 {
-      font-size: 28px !important;
+    .users-table thead {
+        backdrop-filter: blur(10px);
+        background-color: rgba(5, 130, 171, 0.8);
+        border-radius: 10px;
     }
 
-    .lead.text-muted {
-      font-size: 16px;
+    .users-table th {
+        color: white;
+        font-weight: 600;
+        padding: 18px;
+        text-align: left;
+        font-size: 16px;
+        border: 1px solid #ffffff;
     }
 
-    .card-header.bg-white {
-      padding: 15px 20px 8px 20px !important;
+    .users-table th:first-child {
+        border-top-left-radius: 10px;
     }
 
-    .row.text-center.mb-3 strong {
-      font-size: 18px;
-    }
-  }
-
-  /* 710px */
-  @media (max-width: 710px) {
-    .container {
-      margin: 5px;
-      padding: 10px;
+    .users-table th:last-child {
+        border-top-right-radius: 10px;
     }
 
-    h1.display-5 {
-      font-size: 24px !important;
+    .users-table tbody tr {
+        transition: all 0.3s ease;
+        background-color: rgba(255, 255, 255, 0.511);
+        backdrop-filter: blur(10px);
     }
 
-    .card-header h5 {
-      font-size: 18px;
+    .users-table tbody tr:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
 
-    .badge.bg-primary,
-    .badge.bg-info {
-      font-size: 12px !important;
-      padding: 6px 12px !important;
+    .users-table td {
+        padding: 18px;
+        color: #333;
+        font-size: 15px;
+        vertical-align: middle;
+        border: 1px solid rgba(255, 255, 255, 0.5);
     }
 
-    .btn.btn-primary,
-    .btn.btn-outline-primary {
-      padding: 8px 16px !important;
-      font-size: 14px;
-    }
-  }
-
-  /* 620px */
-  @media (max-width: 620px) {
-    .container {
-      margin: 5px;
-      padding: 8px;
+    /* Foydalanuvchi nomi */
+    .username-cell {
+        font-weight: 600;
+        color: rgb(20, 33, 119);
     }
 
-    .row.mb-4 {
-      margin-bottom: 15px !important;
+    /* Ism-familiya linki */
+    .profile-link {
+        color: rgb(20, 33, 119);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: inline-block;
     }
 
-    .card.border-0.shadow-sm {
-      margin-bottom: 15px !important;
+    .profile-link:hover {
+        color: rgba(5, 130, 171, 1);
+        transform: translateX(5px);
     }
 
-    .col-xl-4.col-md-6.mb-4 {
-      width: 100% !important;
-      max-width: 100% !important;
-      flex: 0 0 100% !important;
+    /* Badge stillari */
+    .group-badge {
+        backdrop-filter: blur(10px);
+        background-color: rgba(5, 130, 171, 0.8);
+        color: white;
+        border-radius: 10px;
+        padding: 6px 12px;
+        font-size: 12px;
+        font-weight: 600;
+        display: inline-block;
+        border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
-    .row.text-center.mb-3 .col-3 {
-      padding: 3px;
+    .test-count-badge {
+        backdrop-filter: blur(10px);
+        background-color: rgba(32, 201, 151, 0.8);
+        color: white;
+        border-radius: 10px;
+        padding: 6px 12px;
+        font-size: 12px;
+        font-weight: 600;
+        display: inline-block;
+        border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
-    .row.text-center.mb-3 strong {
-      font-size: 16px;
-    }
-  }
-
-  /* 480px - Mobile */
-  @media (max-width: 480px) {
-    .container {
-      margin: 3px;
-      padding: 5px;
+    /* O'rtacha ball */
+    .average-score {
+        font-weight: 600;
+        color: rgb(20, 33, 119);
+        font-size: 16px;
     }
 
-    h1.display-5 {
-      font-size: 20px !important;
+    /* Harakatlar tugmalari */
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
     }
 
-    .lead.text-muted {
-      font-size: 14px;
+    .action-btn {
+        backdrop-filter: blur(10px);
+        background-color: rgba(5, 130, 171, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        color: white;
+        padding: 8px 15px;
+        font-size: 13px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+        text-decoration: none;
     }
 
-    h3.text-primary {
-      font-size: 20px;
+    .action-btn:hover {
+        transform: scale(0.95);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        background-color: rgba(5, 130, 171, 1);
+        color: white;
+        text-decoration: none;
     }
 
-    .card-title {
-      font-size: 16px;
+    .action-btn.stats {
+        backdrop-filter: blur(10px);
+        background-color: rgba(32, 201, 151, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
-    .btn.btn-primary,
-    .btn.btn-outline-primary {
-      padding: 6px 12px !important;
-      font-size: 13px;
+    .action-btn.stats:hover {
+        background-color: rgba(32, 201, 151, 1);
     }
 
-    .btn-success,
-    .btn-info,
-    .btn-warning {
-      min-width: 120px;
-      padding: 6px 15px !important;
-      font-size: 14px;
+    .action-btn.profile {
+        backdrop-filter: blur(10px);
+        background-color: rgba(108, 117, 125, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
-    .alert {
-      padding: 10px 15px !important;
-      font-size: 14px;
+    .action-btn.profile:hover {
+        background-color: rgba(108, 117, 125, 1);
     }
-  }
 
-  /* ===== ANIMATSIYALAR ===== */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
+    /* Bo'sh foydalanuvchilar */
+    .empty-users {
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.511);
+        border-radius: 10px;
+        border: 1px solid #ffffff;
+        padding: 40px;
+        text-align: center;
     }
-    to {
-      opacity: 1;
-      transform: translateY(0);
+
+    .empty-users i {
+        font-size: 64px;
+        color: rgba(5, 130, 171, 0.5);
+        margin-bottom: 20px;
     }
-  }
 
-  .card.h-100.shadow-sm.border-0 {
-    animation: fadeIn 0.5s ease-out;
-  }
+    .empty-users h5 {
+        font-size: 24px;
+        color: rgb(20, 33, 119);
+        margin-bottom: 15px;
+    }
 
-  /* ===== SCROLLBAR STILLARI ===== */
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
+    .empty-users p {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 25px;
+    }
 
-  ::-webkit-scrollbar-track {
-    background: rgba(226, 237, 236, 0.3);
-    border-radius: 10px;
-  }
+    /* Status ranglari */
+    .text-muted {
+        color: rgba(108, 117, 125, 0.8) !important;
+    }
 
-  ::-webkit-scrollbar-thumb {
-    background: linear-gradient(
-      to bottom,
-      rgba(5, 130, 171, 0.8),
-      rgba(20, 33, 119, 0.8)
-    );
-    border-radius: 10px;
-  }
+    /* MEDIA QUERIES */
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(
-      to bottom,
-      rgba(5, 130, 171, 1),
-      rgba(20, 33, 119, 1)
-    );
-  }
+    @media (max-width: 1225px) {
+        .admin-stats-container {
+            padding: 15px;
+        }
+
+        .page-title {
+            padding: 20px;
+        }
+
+        .page-title h1 {
+            font-size: 30px;
+        }
+
+        .stats-card {
+            padding: 20px;
+        }
+
+        .stats-header {
+            padding: 15px;
+        }
+
+        .stats-header h4 {
+            font-size: 22px;
+        }
+
+        .users-table th,
+        .users-table td {
+            padding: 15px;
+            font-size: 14px;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .empty-users {
+            padding: 30px;
+        }
+    }
+
+    @media (max-width: 1030px) {
+        .admin-stats-container {
+            padding: 12px;
+        }
+
+        .page-title {
+            padding: 18px;
+        }
+
+        .page-title h1 {
+            font-size: 28px;
+        }
+
+        .stats-card {
+            padding: 18px;
+        }
+
+        .stats-header {
+            padding: 12px;
+        }
+
+        .users-table th,
+        .users-table td {
+            padding: 12px;
+            font-size: 13px;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        .empty-users {
+            padding: 25px;
+        }
+
+        .empty-users h5 {
+            font-size: 22px;
+        }
+    }
+
+    @media (max-width: 840px) {
+        .admin-stats-container {
+            padding: 10px;
+        }
+
+        .page-title {
+            padding: 15px;
+        }
+
+        .page-title h1 {
+            font-size: 24px;
+        }
+
+        .stats-card {
+            padding: 15px;
+        }
+
+        .stats-header {
+            padding: 10px;
+        }
+
+        .stats-header h4 {
+            font-size: 20px;
+        }
+
+        .users-table {
+            min-width: 600px;
+        }
+
+        .users-table th,
+        .users-table td {
+            padding: 10px;
+            font-size: 12px;
+        }
+
+        .group-badge,
+        .test-count-badge {
+            font-size: 11px;
+            padding: 5px 10px;
+        }
+
+        .action-btn {
+            padding: 6px 10px;
+            font-size: 11px;
+        }
+
+        .empty-users {
+            padding: 20px;
+        }
+
+        .empty-users i {
+            font-size: 48px;
+        }
+
+        .empty-users h5 {
+            font-size: 20px;
+        }
+
+        .empty-users p {
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 620px) {
+        .admin-stats-container {
+            padding: 8px;
+        }
+
+        .page-title h1 {
+            font-size: 22px;
+        }
+
+        .users-table th,
+        .users-table td {
+            padding: 8px;
+            font-size: 11px;
+        }
+
+        .group-badge,
+        .test-count-badge {
+            font-size: 10px;
+            padding: 4px 8px;
+        }
+
+        .average-score {
+            font-size: 14px;
+        }
+
+        .action-btn {
+            width: 100%;
+            justify-content: center;
+            padding: 8px;
+        }
+
+        .empty-users {
+            padding: 15px;
+        }
+
+        .empty-users i {
+            font-size: 40px;
+        }
+
+        .empty-users h5 {
+            font-size: 18px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .admin-stats-container {
+            padding: 5px;
+        }
+
+        .page-title h1 {
+            font-size: 20px;
+        }
+
+        .stats-header h4 {
+            font-size: 18px;
+        }
+
+        .users-table th,
+        .users-table td {
+            padding: 6px;
+            font-size: 10px;
+        }
+
+        .action-btn {
+            font-size: 10px;
+        }
+
+        .group-badge,
+        .test-count-badge {
+            font-size: 9px;
+            padding: 3px 6px;
+        }
+    }
 </style>
-{% endblock %}
+{% endblock extra_css %}
+
 <div class="container-fluid bg-light min-vh-100 py-4">
   <div class="container">
     <!-- Sarlavha -->
@@ -641,13 +589,15 @@
             <span class="badge bg-primary fs-6 me-2">
               {{ subject.test_set.count }} ta test
             </span>
-            {% if user.is_authenticated %} {% with
-            user_level=user.usersubjectlevel_set.all|dictsort:"subject.id"|first
-            %} {% if user_level and user_level.subject == subject %}
-            <span class="badge bg-info fs-6">
-              Daraja: {{ user_level.get_difficulty_level_display }}
-            </span>
-            {% endif %} {% endwith %} {% endif %}
+            {% if user.is_authenticated %}
+              {% with user_level=user.usersubjectlevel_set.all|dictsort:"subject.id"|first %}
+                {% if user_level and user_level.subject == subject %}
+                  <span class="badge bg-info fs-6">
+                    Daraja: {{ user_level.get_difficulty_level_display }}
+                  </span>
+                {% endif %}
+              {% endwith %}
+            {% endif %}
           </div>
         </div>
         {% if subject.description %}
@@ -667,8 +617,10 @@
                 class="badge {% if test.is_active %}bg-success{% else %}bg-secondary{% endif %}"
               >
                 {% if test.is_active %}
-                <i class="fas fa-play-circle"></i> Faol {% else %}
-                <i class="fas fa-pause-circle"></i> Nofaol {% endif %}
+                <i class="fas fa-play-circle"></i> Faol
+                {% else %}
+                <i class="fas fa-pause-circle"></i> Nofaol
+                {% endif %}
               </span>
             </div>
           </div>
@@ -710,37 +662,44 @@
             <div class="mb-3">
               <small class="text-muted d-block mb-1">Savollar darajasi:</small>
               <div class="d-flex align-items-center">
-                {% with questions=test.questions.all %} {% if questions %} {%
-                comment %} Bu yerda siz oson, o'rtacha va qiyin savollar sonini
-                hisoblashingiz kerak. Hozircha hammasi bir xil ko'rsatilmoqda.
-                {% endcomment %} {% with easy_count=questions|length %} {% with
-                medium_count=questions|length %} {% with
-                hard_count=questions|length %}
-                <div class="progress flex-grow-1" style="height: 8px">
-                  <div
-                    class="progress-bar bg-success"
-                    style="width: 33%"
-                    title="Oson"
-                  ></div>
-                  <div
-                    class="progress-bar bg-warning"
-                    style="width: 34%"
-                    title="O'rtacha"
-                  ></div>
-                  <div
-                    class="progress-bar bg-danger"
-                    style="width: 33%"
-                    title="Qiyin"
-                  ></div>
-                </div>
-                {% endwith %} {% endwith %} {% endwith %} {% else %}
-                <div class="progress flex-grow-1" style="height: 8px">
-                  <div
-                    class="progress-bar bg-secondary"
-                    style="width: 100%"
-                  ></div>
-                </div>
-                {% endif %} {% endwith %}
+                {% with questions=test.questions.all %}
+                  {% if questions %}
+                    {% comment %}
+                    Bu yerda siz oson, o'rtacha va qiyin savollar sonini
+                    hisoblashingiz kerak. Hozircha hammasi bir xil ko'rsatilmoqda.
+                    {% endcomment %}
+
+                    {% comment %}
+                    Hozircha statik qiymatlar bilan ishlaymiz
+                    Keyinchalik o'zgaruvchilarni to'g'ri hisoblang
+                    {% endcomment %}
+
+                    <div class="progress flex-grow-1" style="height: 8px">
+                      <div
+                        class="progress-bar bg-success"
+                        style="width: 33%"
+                        title="Oson"
+                      ></div>
+                      <div
+                        class="progress-bar bg-warning"
+                        style="width: 34%"
+                        title="O'rtacha"
+                      ></div>
+                      <div
+                        class="progress-bar bg-danger"
+                        style="width: 33%"
+                        title="Qiyin"
+                      ></div>
+                    </div>
+                  {% else %}
+                    <div class="progress flex-grow-1" style="height: 8px">
+                      <div
+                        class="progress-bar bg-secondary"
+                        style="width: 100%"
+                      ></div>
+                    </div>
+                  {% endif %}
+                {% endwith %}
               </div>
               <div class="d-flex justify-content-between mt-1">
                 <small class="text-success">Oson</small>
@@ -752,36 +711,44 @@
 
           <div class="card-footer bg-white border-top-0 pt-0">
             <div class="d-grid">
-              {% if test.is_active %} {% if user.is_authenticated %}
-              <a href="{% url 'take_test' test.id %}" class="btn btn-primary">
-                <i class="fas fa-play me-2"></i>
-                {% for user_level in user.usersubjectlevel_set.all %} {% if
-                user_level.subject == subject %} Testni Davom Ettirish {% endif
-                %} {% empty %} Testni Boshlash {% endfor %}
-              </a>
+              {% if test.is_active %}
+                {% if user.is_authenticated %}
+                  <a href="{% url 'take_test' test.id %}" class="btn btn-primary">
+                    <i class="fas fa-play me-2"></i>
+                    {% for user_level in user.usersubjectlevel_set.all %}
+                      {% if user_level.subject == subject %}
+                        Testni Davom Ettirish
+                      {% endif %}
+                    {% empty %}
+                      Testni Boshlash
+                    {% endfor %}
+                  </a>
+                {% else %}
+                  <a
+                    href="{% url 'login' %}?next={% url 'take_test' test.id %}"
+                    class="btn btn-outline-primary"
+                  >
+                    <i class="fas fa-sign-in-alt me-2"></i>Testni Boshlash
+                  </a>
+                {% endif %}
               {% else %}
-              <a
-                href="{% url 'login' %}?next={% url 'take_test' test.id %}"
-                class="btn btn-outline-primary"
-              >
-                <i class="fas fa-sign-in-alt me-2"></i>Testni Boshlash
-              </a>
-              {% endif %} {% else %}
-              <button class="btn btn-secondary" disabled>
-                <i class="fas fa-ban me-2"></i>Test Nofaol
-              </button>
+                <button class="btn btn-secondary" disabled>
+                  <i class="fas fa-ban me-2"></i>Test Nofaol
+                </button>
               {% endif %}
             </div>
             {% if user.is_authenticated %}
-            <div class="text-center mt-2">
-              <small class="text-muted">
-                {% for result in test.testresult_set.all %} {% if result.user ==
-                user %} {% if forloop.last %} Oxirgi natija: {{ result.score
-                }}/{{ result.total_questions }} ({{
-                result.percentage|floatformat:1 }}%) {% endif %} {% endif %} {%
-                endfor %}
-              </small>
-            </div>
+              <div class="text-center mt-2">
+                <small class="text-muted">
+                  {% for result in test.testresult_set.all %}
+                    {% if result.user == user %}
+                      {% if forloop.last %}
+                        Oxirgi natija: {{ result.score }}/{{ result.total_questions }} ({{ result.percentage|floatformat:1 }}%)
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+                </small>
+              </div>
             {% endif %}
           </div>
         </div>
