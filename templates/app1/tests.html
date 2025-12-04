@@ -9,7 +9,7 @@
   }
 
   .container_test {
-    width: 95%;
+    width: 100%;
     max-width: 100%;
     margin: 0 auto;
   }
@@ -27,7 +27,6 @@
     background-color: rgba(255, 255, 255, 0.85);
     border-radius: 15px;
     padding: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
     margin-bottom: 30px !important;
   }
 
@@ -48,7 +47,6 @@
   .alert.alert-info {
     backdrop-filter: blur(10px);
     background-color: rgba(52, 152, 219, 0.15);
-    border: 1px solid rgba(52, 152, 219, 0.3);
     border-radius: 10px;
     padding: 15px 20px;
   }
@@ -61,15 +59,13 @@
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 15px;
     padding: 0;
-    border: 1px solid rgba(255, 255, 255, 0.3);
     overflow: hidden;
     margin-bottom: 40px !important;
   }
 
   .card-header.bg-primary {
-    background: linear-gradient(45deg, #667eea, #764ba2) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 20px 25px;
+    backdrop-filter: blur(10px);
+    background-color: rgba(5, 130, 171, 0.8) !important;
   }
 
   .card-header.bg-primary h5 {
@@ -86,7 +82,6 @@
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 12px;
     padding: 0;
-    border: 1px solid rgba(255, 255, 255, 0.3);
     transition: all 0.3s ease;
   }
 
@@ -108,11 +103,7 @@
   .row.mb-4 > .col-12:not(:first-child) {
     width: 100%;
     height: auto;
-    backdrop-filter: blur(15px);
-    background-color: rgba(255, 255, 255, 0.85);
     border-radius: 12px;
-    padding: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
     margin-top: 30px;
   }
 
@@ -134,31 +125,34 @@
   }
 
   /* Test kartalari styling */
-  .card.h-100.shadow-sm.border-0 {
+  .test_admin_box{
     width: 100%;
-    height: auto;
-    min-height: 350px;
-    backdrop-filter: blur(15px);
-    background-color: rgba(255, 255, 255, 0.85);
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    transition: all 0.3s ease;
-    overflow: hidden;
+        height: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.215);
+        border-radius: 10px;
+        border: 0.1px solid white;
   }
-
-  .card.h-100.shadow-sm.border-0:hover {
+    .test_box_info{
+        border-radius: 10px;
+        border: 0.1px solid white;
+        background-color: rgba(255, 255, 255, 0.215);
+    }
+  .test_admin_box.h-100.shadow-sm.border-0:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
   }
 
-  .card-header.bg-white {
-    background: rgba(255, 255, 255, 0.95) !important;
+  .test_admin_box .card-header {
+    backdrop-filter: blur(10px);
+    background-color: rgba(5, 130, 171, 0.8) !important;
     padding: 20px 20px 10px 20px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 10px 10px 0 0;
   }
 
   .card-title {
-    color: #2c3e50;
+    color: red;
     font-size: 1.3rem;
     font-weight: 600;
     margin: 0;
@@ -172,7 +166,16 @@
   .row.text-center.mb-3 .col-3 {
     padding: 0 5px;
   }
-
+  .test_baza_box {
+    width: 100%;
+    height: auto;
+ border: 0.1px solid white;
+        background-color: rgba(255, 255, 255, 0.215);
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 30px !important;
+    overflow: hidden;
+  }
   .border-end {
     border-right: 2px solid rgba(0, 0, 0, 0.1) !important;
     padding: 10px 0;
@@ -369,28 +372,24 @@
 
 <div class="container_test">
     <!-- Sarlavha -->
-    <div class="row mb-4">
-      <div class="col-12 text-center">
-        <h1 class="display-5 fw-bold text-dark mb-3">Testlar</h1>
-        <p class="lead text-muted">
+    <h1>Testlar</h1>
+    <p class="lead text-muted">
           Bilimingizni sinab ko'ring va o'zingizni sinovdan o'tkazing
         </p>
         {% if user.is_authenticated %}
-        <div class="alert alert-info d-inline-block">
+        <div class="alert  d-inline-block">
           <small>
             <i class="fas fa-info-circle me-1"></i>
             Savollar sizning oldingi natijalaringizga qarab moslashtiriladi
           </small>
         </div>
         {% endif %}
-      </div>
-    </div>
 
     <!-- Admin paneli - TEPADA -->
     {% if user.is_staff %}
     <div class="row mb-5">
       <div class="col-12">
-        <div class="card border-primary shadow">
+        <div class="test_admin_box">
           <div class="card-header bg-primary text-white">
             <h5 class="mb-0">
               <i class="fas fa-cogs me-2"></i>Test Boshqaruv Paneli
@@ -399,7 +398,7 @@
           <div class="card-body">
             <div class="row text-center">
               <div class="col-md-4 mb-3">
-                <div class="card h-100 border-0 shadow-sm">
+                <div class="test_box_info">
                   <div
                     class="card-body d-flex flex-column justify-content-center align-items-center py-4"
                   >
@@ -416,7 +415,7 @@
                 </div>
               </div>
               <div class="col-md-4 mb-3">
-                <div class="card h-100 border-0 shadow-sm">
+                <div class="test_box_info">
                   <div
                     class="card-body d-flex flex-column justify-content-center align-items-center py-4"
                   >
@@ -433,7 +432,7 @@
                 </div>
               </div>
               <div class="col-md-4 mb-3">
-                <div class="card h-100 border-0 shadow-sm">
+                <div class="test_box_info">
                   <div
                     class="card-body d-flex flex-column justify-content-center align-items-center py-4"
                   >
@@ -458,7 +457,7 @@
 
     <!-- Fanlar va testlar -->
     {% for subject in subjects %}
-    <div class="row mb-4">
+    <div class="test_baza_box">
       <div class="col-12">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h3 class="text-primary mb-0">
@@ -483,13 +482,12 @@
         <p class="text-muted">{{ subject.description }}</p>
         {% endif %}
       </div>
-    </div>
 
-    <div class="row mb-5">
+    <div class="row mb-5"">
       {% for test in subject.test_set.all %}
       <div class="col-xl-4 col-md-6 mb-4">
-        <div class="card h-100 shadow-sm border-0">
-          <div class="card-header bg-white border-bottom-0 pb-0">
+        <div class="test_baza_box">
+          <div class="">
             <div class="d-flex justify-content-between align-items-start">
               <h5 class="card-title text-dark mb-2">{{ test.title }}</h5>
               <span
@@ -578,7 +576,7 @@
             </div>
           </div>
 
-          <div class="card-footer bg-white border-top-0 pt-0">
+          <div class="">
             <div class="d-grid">
               {% if test.is_active %}
                 {% if user.is_authenticated %}
@@ -631,6 +629,8 @@
       </div>
       {% endfor %}
     </div>
+    </div>
+
     {% empty %}
     <div class="col-12">
       <div class="alert alert-warning text-center py-4">
