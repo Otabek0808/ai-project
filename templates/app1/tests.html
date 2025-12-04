@@ -1,494 +1,373 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% block extra_css %}
 <style>
-    /* Admin stats sahifasi uchun maxsus stillar */
+  .container-fluid.bg-light {
+    min-height: 100vh;
+    padding: 0;
+    background: none;
+  }
 
-    /* Konteyner */
-    .admin-stats-container {
-        width: auto;
-        max-width: 100%;
-        height: auto;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        padding: 20px;
+  .container_test {
+    width: 95%;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  .container_test h1{
+    color: black;
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+  }
+
+  /* Sarlavha styling */
+  .row.mb-4 {
+    width: 100%;
+    height: auto;
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 15px;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    margin-bottom: 30px !important;
+  }
+
+  .display-5.fw-bold {
+    color: #2c3e50;
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .lead.text-muted {
+    color: #7f8c8d !important;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+
+  .alert.alert-info {
+    backdrop-filter: blur(10px);
+    background-color: rgba(52, 152, 219, 0.15);
+    border: 1px solid rgba(52, 152, 219, 0.3);
+    border-radius: 10px;
+    padding: 15px 20px;
+  }
+
+  /* Admin panel styling */
+  .card.border-primary.shadow {
+    width: 100%;
+    height: auto;
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    overflow: hidden;
+    margin-bottom: 40px !important;
+  }
+
+  .card-header.bg-primary {
+    background: linear-gradient(45deg, #667eea, #764ba2) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 20px 25px;
+  }
+
+  .card-header.bg-primary h5 {
+    color: black;
+    font-size: 1.4rem;
+    margin: 0;
+  }
+
+  /* Admin cards styling */
+  .card.h-100.border-0.shadow-sm {
+    width: 100%;
+    height: 280px;
+    backdrop-filter: blur(15px);
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .card.h-100.border-0.shadow-sm:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-body.d-flex.flex-column {
+    padding: 25px;
+  }
+
+  .fa-3x {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+
+  /* Fanlar bo'limi styling */
+  .row.mb-4 > .col-12:not(:first-child) {
+    width: 100%;
+    height: auto;
+    backdrop-filter: blur(15px);
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    margin-top: 30px;
+  }
+
+  .d-flex.justify-content-between.align-items-center {
+    margin-bottom: 15px;
+  }
+
+  h3.text-primary {
+    color: #2c3e50 !important;
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
+
+  .badge {
+    font-size: 0.9rem !important;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  /* Test kartalari styling */
+  .card.h-100.shadow-sm.border-0 {
+    width: 100%;
+    height: auto;
+    min-height: 350px;
+    backdrop-filter: blur(15px);
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+
+  .card.h-100.shadow-sm.border-0:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-header.bg-white {
+    background: rgba(255, 255, 255, 0.95) !important;
+    padding: 20px 20px 10px 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .card-title {
+    color: #2c3e50;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  /* Ma'lumotlar qismi */
+  .row.text-center.mb-3 {
+    margin: 20px 0;
+  }
+
+  .row.text-center.mb-3 .col-3 {
+    padding: 0 5px;
+  }
+
+  .border-end {
+    border-right: 2px solid rgba(0, 0, 0, 0.1) !important;
+    padding: 10px 0;
+  }
+
+  .text-primary,
+  .text-warning,
+  .text-info,
+  .text-success {
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  .text-muted.d-block {
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+    color: #7f8c8d !important;
+  }
+
+  /* Progress bar styling */
+  .progress {
+    height: 10px !important;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    border-radius: 10px;
+  }
+
+  /* Card footer styling */
+  .card-footer.bg-white {
+    background: rgba(255, 255, 255, 0.95) !important;
+    padding: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .d-grid .btn {
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    border: none;
+    transition: all 0.3s ease;
+  }
+
+  .d-grid .btn-primary {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+  }
+
+  .d-grid .btn-primary:hover {
+    background: linear-gradient(45deg, #5a6fd8, #6a4190);
+    transform: scale(1.02);
+  }
+
+  .d-grid .btn-outline-primary {
+    border: 2px solid #667eea;
+    color: #667eea;
+    background: transparent;
+  }
+
+  .d-grid .btn-outline-primary:hover {
+    background: #667eea;
+    color: white;
+  }
+
+  .d-grid .btn-secondary {
+    background: linear-gradient(45deg, #95a5a6, #7f8c8d);
+  }
+
+  .text-center.mt-2 small {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+  }
+
+  /* Alertlar uchun styling */
+  .alert {
+    backdrop-filter: blur(15px);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .alert-info {
+    background-color: rgba(52, 152, 219, 0.15);
+    border-color: rgba(52, 152, 219, 0.3);
+  }
+
+  .alert-warning {
+    background-color: rgba(241, 196, 15, 0.15);
+    border-color: rgba(241, 196, 15, 0.3);
+  }
+
+  .alert-warning .fa-2x {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: #f39c12;
+  }
+
+  /* Responsive design */
+  @media (max-width: 1225px) {
+    .container_test {
+      width: 97%;
+      padding: 15px;
     }
 
-    /* Sarlavha */
-    .page-title {
-        width: auto;
-        max-width: 100%;
-        height: auto;
-        backdrop-filter: blur(10px);
-        background-color: rgba(255, 255, 255, 0.511);
-        border-radius: 10px;
-        border: 1px solid #ffffff;
-        padding: 25px;
+    .display-5.fw-bold {
+      font-size: 2.2rem;
     }
 
-    .page-title h1 {
-        font-size: 36px;
-        font-weight: 1000;
-        color: rgb(20, 33, 119);
+    .lead.text-muted {
+      font-size: 1.1rem;
     }
 
-    /* Asosiy karta */
-    .stats-card {
-        width: auto;
-        max-width: 100%;
-        height: auto;
-        backdrop-filter: blur(10px);
-        background-color: rgba(255, 255, 255, 0.511);
-        border-radius: 10px;
-        border: 1px solid #ffffff;
-        padding: 25px;
+    .card.h-100.border-0.shadow-sm {
+      height: 250px;
+    }
+  }
+
+  @media (max-width: 1030px) {
+    .container_test {
+      padding: 10px;
     }
 
-    .stats-header {
-        width: auto;
-        max-width: 100%;
-        height: auto;
-        backdrop-filter: blur(10px);
-        background-color: rgba(5, 130, 171, 0.8);
-        border-radius: 10px;
-        border: 1px solid #ffffff;
-        padding: 20px;
-        margin-bottom: 20px;
+    .row.mb-4 {
+      padding: 20px;
     }
 
-    .stats-header h4 {
-        color: white;
-        font-size: 24px;
-        font-weight: bold;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        gap: 15px;
+    .display-5.fw-bold {
+      font-size: 2rem;
     }
 
-    .stats-body {
-        width: auto;
-        max-width: 100%;
-        height: auto;
+    .col-xl-4 {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+  }
+
+  @media (max-width: 840px) {
+    .col-xl-4,
+    .col-md-6 {
+      flex: 0 0 100%;
+      max-width: 100%;
     }
 
-    /* Jadval */
-    .users-table-container {
-        overflow-x: auto;
+    .card.h-100.border-0.shadow-sm {
+      height: auto;
+      margin-bottom: 20px;
     }
 
-    .users-table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
-        min-width: 800px;
+    .display-5.fw-bold {
+      font-size: 1.8rem;
     }
 
-    .users-table thead {
-        backdrop-filter: blur(10px);
-        background-color: rgba(5, 130, 171, 0.8);
-        border-radius: 10px;
+    h3.text-primary {
+      font-size: 1.5rem;
     }
 
-    .users-table th {
-        color: white;
-        font-weight: 600;
-        padding: 18px;
-        text-align: left;
-        font-size: 16px;
-        border: 1px solid #ffffff;
+    .card.h-100.shadow-sm.border-0 {
+      min-height: 320px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .container_test {
+      padding: 5px;
     }
 
-    .users-table th:first-child {
-        border-top-left-radius: 10px;
+    .row.mb-4 {
+      padding: 15px;
+      margin-bottom: 20px !important;
     }
 
-    .users-table th:last-child {
-        border-top-right-radius: 10px;
+    .card-header.bg-primary {
+      padding: 15px;
     }
 
-    .users-table tbody tr {
-        transition: all 0.3s ease;
-        background-color: rgba(255, 255, 255, 0.511);
-        backdrop-filter: blur(10px);
+    .card-body.d-flex.flex-column {
+      padding: 20px;
     }
 
-    .users-table tbody tr:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    .d-flex.justify-content-between.align-items-center {
+      flex-direction: column;
+      align-items: flex-start !important;
+      gap: 10px;
     }
 
-    .users-table td {
-        padding: 18px;
-        color: #333;
-        font-size: 15px;
-        vertical-align: middle;
-        border: 1px solid rgba(255, 255, 255, 0.5);
+    .badge.fs-6 {
+      font-size: 0.8rem !important;
     }
-
-    /* Foydalanuvchi nomi */
-    .username-cell {
-        font-weight: 600;
-        color: rgb(20, 33, 119);
-    }
-
-    /* Ism-familiya linki */
-    .profile-link {
-        color: rgb(20, 33, 119);
-        text-decoration: none;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        display: inline-block;
-    }
-
-    .profile-link:hover {
-        color: rgba(5, 130, 171, 1);
-        transform: translateX(5px);
-    }
-
-    /* Badge stillari */
-    .group-badge {
-        backdrop-filter: blur(10px);
-        background-color: rgba(5, 130, 171, 0.8);
-        color: white;
-        border-radius: 10px;
-        padding: 6px 12px;
-        font-size: 12px;
-        font-weight: 600;
-        display: inline-block;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .test-count-badge {
-        backdrop-filter: blur(10px);
-        background-color: rgba(32, 201, 151, 0.8);
-        color: white;
-        border-radius: 10px;
-        padding: 6px 12px;
-        font-size: 12px;
-        font-weight: 600;
-        display: inline-block;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    /* O'rtacha ball */
-    .average-score {
-        font-weight: 600;
-        color: rgb(20, 33, 119);
-        font-size: 16px;
-    }
-
-    /* Harakatlar tugmalari */
-    .action-buttons {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-    }
-
-    .action-btn {
-        backdrop-filter: blur(10px);
-        background-color: rgba(5, 130, 171, 0.8);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 10px;
-        color: white;
-        padding: 8px 15px;
-        font-size: 13px;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        white-space: nowrap;
-        text-decoration: none;
-    }
-
-    .action-btn:hover {
-        transform: scale(0.95);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        background-color: rgba(5, 130, 171, 1);
-        color: white;
-        text-decoration: none;
-    }
-
-    .action-btn.stats {
-        backdrop-filter: blur(10px);
-        background-color: rgba(32, 201, 151, 0.8);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .action-btn.stats:hover {
-        background-color: rgba(32, 201, 151, 1);
-    }
-
-    .action-btn.profile {
-        backdrop-filter: blur(10px);
-        background-color: rgba(108, 117, 125, 0.8);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .action-btn.profile:hover {
-        background-color: rgba(108, 117, 125, 1);
-    }
-
-    /* Bo'sh foydalanuvchilar */
-    .empty-users {
-        backdrop-filter: blur(10px);
-        background-color: rgba(255, 255, 255, 0.511);
-        border-radius: 10px;
-        border: 1px solid #ffffff;
-        padding: 40px;
-        text-align: center;
-    }
-
-    .empty-users i {
-        font-size: 64px;
-        color: rgba(5, 130, 171, 0.5);
-        margin-bottom: 20px;
-    }
-
-    .empty-users h5 {
-        font-size: 24px;
-        color: rgb(20, 33, 119);
-        margin-bottom: 15px;
-    }
-
-    .empty-users p {
-        font-size: 16px;
-        color: #666;
-        margin-bottom: 25px;
-    }
-
-    /* Status ranglari */
-    .text-muted {
-        color: rgba(108, 117, 125, 0.8) !important;
-    }
-
-    /* MEDIA QUERIES */
-
-    @media (max-width: 1225px) {
-        .admin-stats-container {
-            padding: 15px;
-        }
-
-        .page-title {
-            padding: 20px;
-        }
-
-        .page-title h1 {
-            font-size: 30px;
-        }
-
-        .stats-card {
-            padding: 20px;
-        }
-
-        .stats-header {
-            padding: 15px;
-        }
-
-        .stats-header h4 {
-            font-size: 22px;
-        }
-
-        .users-table th,
-        .users-table td {
-            padding: 15px;
-            font-size: 14px;
-        }
-
-        .action-btn {
-            padding: 6px 12px;
-            font-size: 12px;
-        }
-
-        .empty-users {
-            padding: 30px;
-        }
-    }
-
-    @media (max-width: 1030px) {
-        .admin-stats-container {
-            padding: 12px;
-        }
-
-        .page-title {
-            padding: 18px;
-        }
-
-        .page-title h1 {
-            font-size: 28px;
-        }
-
-        .stats-card {
-            padding: 18px;
-        }
-
-        .stats-header {
-            padding: 12px;
-        }
-
-        .users-table th,
-        .users-table td {
-            padding: 12px;
-            font-size: 13px;
-        }
-
-        .action-buttons {
-            flex-direction: column;
-        }
-
-        .empty-users {
-            padding: 25px;
-        }
-
-        .empty-users h5 {
-            font-size: 22px;
-        }
-    }
-
-    @media (max-width: 840px) {
-        .admin-stats-container {
-            padding: 10px;
-        }
-
-        .page-title {
-            padding: 15px;
-        }
-
-        .page-title h1 {
-            font-size: 24px;
-        }
-
-        .stats-card {
-            padding: 15px;
-        }
-
-        .stats-header {
-            padding: 10px;
-        }
-
-        .stats-header h4 {
-            font-size: 20px;
-        }
-
-        .users-table {
-            min-width: 600px;
-        }
-
-        .users-table th,
-        .users-table td {
-            padding: 10px;
-            font-size: 12px;
-        }
-
-        .group-badge,
-        .test-count-badge {
-            font-size: 11px;
-            padding: 5px 10px;
-        }
-
-        .action-btn {
-            padding: 6px 10px;
-            font-size: 11px;
-        }
-
-        .empty-users {
-            padding: 20px;
-        }
-
-        .empty-users i {
-            font-size: 48px;
-        }
-
-        .empty-users h5 {
-            font-size: 20px;
-        }
-
-        .empty-users p {
-            font-size: 14px;
-        }
-    }
-
-    @media (max-width: 620px) {
-        .admin-stats-container {
-            padding: 8px;
-        }
-
-        .page-title h1 {
-            font-size: 22px;
-        }
-
-        .users-table th,
-        .users-table td {
-            padding: 8px;
-            font-size: 11px;
-        }
-
-        .group-badge,
-        .test-count-badge {
-            font-size: 10px;
-            padding: 4px 8px;
-        }
-
-        .average-score {
-            font-size: 14px;
-        }
-
-        .action-btn {
-            width: 100%;
-            justify-content: center;
-            padding: 8px;
-        }
-
-        .empty-users {
-            padding: 15px;
-        }
-
-        .empty-users i {
-            font-size: 40px;
-        }
-
-        .empty-users h5 {
-            font-size: 18px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .admin-stats-container {
-            padding: 5px;
-        }
-
-        .page-title h1 {
-            font-size: 20px;
-        }
-
-        .stats-header h4 {
-            font-size: 18px;
-        }
-
-        .users-table th,
-        .users-table td {
-            padding: 6px;
-            font-size: 10px;
-        }
-
-        .action-btn {
-            font-size: 10px;
-        }
-
-        .group-badge,
-        .test-count-badge {
-            font-size: 9px;
-            padding: 3px 6px;
-        }
-    }
+  }
 </style>
-{% endblock extra_css %}
 
-<div class="container-fluid bg-light min-vh-100 py-4">
-  <div class="container">
+<div class="container_test">
     <!-- Sarlavha -->
     <div class="row mb-4">
       <div class="col-12 text-center">
@@ -664,17 +543,7 @@
               <div class="d-flex align-items-center">
                 {% with questions=test.questions.all %}
                   {% if questions %}
-                    {% comment %}
-                    Bu yerda siz oson, o'rtacha va qiyin savollar sonini
-                    hisoblashingiz kerak. Hozircha hammasi bir xil ko'rsatilmoqda.
-                    {% endcomment %}
-
-                    {% comment %}
-                    Hozircha statik qiymatlar bilan ishlaymiz
-                    Keyinchalik o'zgaruvchilarni to'g'ri hisoblang
-                    {% endcomment %}
-
-                    <div class="progress flex-grow-1" style="height: 8px">
+                    <div class="progress flex-grow-1" style="height: 10px">
                       <div
                         class="progress-bar bg-success"
                         style="width: 33%"
@@ -692,7 +561,7 @@
                       ></div>
                     </div>
                   {% else %}
-                    <div class="progress flex-grow-1" style="height: 8px">
+                    <div class="progress flex-grow-1" style="height: 10px">
                       <div
                         class="progress-bar bg-secondary"
                         style="width: 100%"
@@ -782,5 +651,4 @@
     </div>
     {% endfor %}
   </div>
-</div>
 {% endblock %}
