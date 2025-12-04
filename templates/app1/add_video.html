@@ -1,46 +1,37 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
-<style>
-/* Asosiy konteynerlar uchun */
-.container.mt-5 {
-    min-height: 100vh;
-    padding: 0;
-    background: none;
-    margin-bottom: 13rem;
-}
+{% block content %}
 
-.card.shadow-sm {
+
+<style>
+
+.add_video_container {
     width: 75%;
-    max-width: 100%;
-    margin: 0 auto;
-    backdrop-filter: blur(20px);
-    background-color: rgba(255, 255, 255, 0.215);
-    border-radius: 15px;
+    border-radius: 10px;
     padding: 0;
     overflow: hidden;
-    margin-bottom: 40px !important;
     border: 0.1px solid white;
-    margin-top: 2rem;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.215);
 }
 
 /* Card sarlavhasi */
-.card-header.bg-primary {
+.add_video_container h4 {
     backdrop-filter: blur(10px);
     background-color: rgba(5, 130, 171, 0.8) !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     padding: 20px 30px;
-}
-
-.card-header.bg-primary h4 {
     color: white;
     font-size: 1.4rem;
     margin: 0;
+    text-align: center;
 }
 
 /* Card body */
-.card-body {
-    background-color: rgba(255, 255, 255, 0.215);
+.add_video_body {
+    width: 100%;
+    margin: 0 auto;
     padding: 30px;
 }
 
@@ -57,18 +48,20 @@
     display: block;
 }
 
-/* Crispy forms input elementlari */
+/* Crispy forms input elementlari - BACKGROUND COLOR O'ZGARTIRILDI */
 input[type="text"],
 input[type="url"],
 input[type="number"],
 input[type="date"],
+input[type="email"],
+input[type="password"],
 select,
 textarea {
     width: 100%;
     padding: 0.75rem 1rem;
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.215) !important;
+    background-color: rgba(255, 255, 255, 0.511) !important; /* O'ZGARTIRILDI */
     transition: all 0.3s ease;
     font-size: 1rem;
     color: #2c3e50;
@@ -78,11 +71,13 @@ input[type="text"]:focus,
 input[type="url"]:focus,
 input[type="number"]:focus,
 input[type="date"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
 select:focus,
 textarea:focus {
     border-color: rgba(5, 130, 171, 0.8);
     box-shadow: 0 0 0 0.3rem rgba(5, 130, 171, 0.25);
-    background-color: rgba(255, 255, 255, 0.3) !important;
+    background-color: rgba(255, 255, 255, 0.6) !important; /* O'ZGARTIRILDI */
     outline: none;
 }
 
@@ -93,14 +88,14 @@ select {
     background-repeat: no-repeat !important;
     background-position: right 1rem center !important;
     background-size: 16px !important;
-    background-color: rgba(255, 255, 255, 0.215) !important;
+    background-color: rgba(255, 255, 255, 0.511) !important; /* O'ZGARTIRILDI */
 }
 
 /* Textarea uchun */
 textarea {
     min-height: 120px;
     resize: vertical;
-    background-color: rgba(255, 255, 255, 0.215) !important;
+    background-color: rgba(255, 255, 255, 0.511) !important; /* O'ZGARTIRILDI */
 }
 
 /* Checkbox va radio buttonlar uchun */
@@ -147,7 +142,7 @@ input[type="radio"] {
     border: none;
     transition: all 0.3s ease;
     margin-right: 10px;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .btn-success {
@@ -212,11 +207,13 @@ input[type="radio"] {
     font-weight: 500;
     padding-top: calc(0.75rem + 1px);
     padding-bottom: calc(0.75rem + 1px);
+    background-color: transparent !important;
 }
 
 /* Placeholder rangini o'zgartirish */
 ::placeholder {
     color: rgba(44, 62, 80, 0.6) !important;
+    opacity: 1;
 }
 
 /* Required yulduzchalari */
@@ -226,46 +223,61 @@ input[type="radio"] {
     margin-left: 3px;
 }
 
+/* Crispy forms checkbox va radio uchun */
+.form-check {
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+}
+
+.form-check-input {
+    margin-left: -1.5rem;
+    margin-top: 0.3rem;
+}
+
+.form-check-label {
+    padding-left: 0.5rem;
+    color: #2c3e50;
+}
+
+/* Crispy forms container */
+.form-control {
+    background-color: rgba(255, 255, 255, 0.511) !important; /* O'ZGARTIRILDI */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.form-control:focus {
+    background-color: rgba(255, 255, 255, 0.6) !important; /* O'ZGARTIRILDI */
+    border-color: rgba(5, 130, 171, 0.8);
+}
+
 /* Responsive design */
 @media (max-width: 1225px) {
-    .container.mt-5 {
-        width: 97%;
-        padding: 15px;
-    }
-
-    .col-md-8 {
-        width: 100%;
-    }
-
     .card.shadow-sm {
         width: 85%;
+        margin: 3rem auto 10rem auto;
     }
 }
 
 @media (max-width: 1030px) {
     .card.shadow-sm {
-        padding: 0;
         width: 90%;
+        margin: 2.5rem auto 8rem auto;
     }
 
     .card-body {
         padding: 25px;
     }
 
-    .card-header.bg-primary {
+    .card.shadow-sm h4 {
         padding: 15px 25px;
+        font-size: 1.3rem;
     }
 }
 
 @media (max-width: 840px) {
-    .col-md-8 {
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
-
     .card.shadow-sm {
-        margin-bottom: 30px !important;
         width: 95%;
+        margin: 2rem auto 6rem auto;
     }
 
     .btn {
@@ -277,28 +289,25 @@ input[type="radio"] {
     .col-form-label {
         font-size: 0.95rem;
     }
+
+    .card.shadow-sm h4 {
+        font-size: 1.25rem;
+    }
 }
 
 @media (max-width: 576px) {
-    .container.mt-5 {
-        padding: 5px;
-        margin-top: 1rem !important;
-    }
-
     .card.shadow-sm {
         width: 100%;
-        margin-top: 1rem;
+        margin: 1.5rem auto 4rem auto;
+        border-radius: 12px;
     }
 
     .card-body {
         padding: 20px;
     }
 
-    .card-header.bg-primary {
+    .card.shadow-sm h4 {
         padding: 15px 20px;
-    }
-
-    .card-header.bg-primary h4 {
         font-size: 1.2rem;
     }
 
@@ -306,6 +315,8 @@ input[type="radio"] {
     input[type="url"],
     input[type="number"],
     input[type="date"],
+    input[type="email"],
+    input[type="password"],
     select,
     textarea {
         padding: 0.65rem 0.85rem;
@@ -316,6 +327,7 @@ input[type="radio"] {
         width: 100%;
         margin-bottom: 10px;
         margin-right: 0;
+        padding: 0.75rem 1.5rem;
     }
 
     .btn:last-child {
@@ -324,6 +336,11 @@ input[type="radio"] {
 
     .form-group {
         margin-bottom: 1.2rem !important;
+    }
+
+    .alert {
+        padding: 0.75rem 1rem;
+        margin-bottom: 1rem;
     }
 }
 
@@ -341,30 +358,59 @@ input[type="radio"] {
     input[type="url"],
     input[type="number"],
     input[type="date"],
+    input[type="email"],
+    input[type="password"],
     select,
     textarea {
         font-size: 0.9rem;
+        padding: 0.6rem 0.75rem;
     }
 
-    .card-header.bg-primary {
+    .card.shadow-sm h4 {
         padding: 12px 15px;
+        font-size: 1.1rem;
     }
 
-    .card-header.bg-primary h4 {
-        font-size: 1.1rem;
+    .btn {
+        padding: 0.6rem 1.25rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Kichik ekranlar uchun qo'shimcha */
+@media (max-width: 350px) {
+    .card-body {
+        padding: 12px;
+    }
+
+    .card.shadow-sm h4 {
+        padding: 10px 12px;
+        font-size: 1rem;
+    }
+
+    .form-group label,
+    .col-form-label {
+        font-size: 0.85rem;
+    }
+
+    input[type="text"],
+    input[type="url"],
+    input[type="number"],
+    input[type="date"],
+    input[type="email"],
+    input[type="password"],
+    select,
+    textarea {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.65rem;
     }
 }
 </style>
 
-{% block content %}
-<div class="container mt-5" style="margin-bottom: 13rem">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">Yangi Video Qo'shish</h4>
-                </div>
-                <div class="card-body">
+                <h4 style="margin-bottom: 1.7em;">Yangi Video Qo'shish</h4>
+            <div class="add_video_container">
+
+                <div class="add_video_body">
                     {% if messages %}
                         {% for message in messages %}
                             <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -382,7 +428,4 @@ input[type="radio"] {
                     </form>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
 {% endblock %}
