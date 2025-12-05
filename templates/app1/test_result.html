@@ -1,16 +1,268 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-4" style="margin-bottom: 5rem">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card shadow-lg">
-        <div class="card-header bg-primary text-white text-center">
-          <h3 class="card-title mb-0">
-            <i class="fas fa-chart-bar"></i> Test Natijasi
-          </h3>
-        </div>
-        <div class="card-body text-center">
+<style>
+  /* Asosiy container */
+  .result_test_container {
+    margin: 0 auto;
+    overflow: hidden;
+    width: 75%;
+    min-height: 100vh;
+  }
+
+  .result_test_container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #00b4db, #0083b0);
+  }
+.result_test_body {
+width:100;
+margin: 0 auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.515);
+        border-radius: 10px;
+        padding: 30px;
+        border: 1.5px solid white;
+}
+.result_test_footer {
+  padding: 15px;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.515);
+  border-radius: 0 0 10px 10px;
+  margin-top: 20px;
+  text-align: center;
+  border: 1.5px solid white;
+width:100%;
+margin: 1rem auto;
+}
+  /* Sarlavha */
+  .result_test_container h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
+  }
+
+  /* Test nomi */
+  .result_test_container h4.text-primary {
+    color: #00b4db !important;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 20px 0 10px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 12px;
+  }
+
+  /* Test tavsifi */
+  .result_test_container p.text-muted {
+    color: #e0e0e0 !important;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    margin-bottom: 25px;
+  }
+
+  /* Card umumiy */
+  .result_test_container .card {
+    border: none !important;
+    border-radius: 15px !important;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+    margin-bottom: 15px;
+  }
+
+  .result_test_container .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Card sarlavhalari */
+  .result_test_container .card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+
+  .result_test_container .card-title i {
+    font-size: 1.3rem;
+    margin-right: 10px;
+  }
+
+  /* Ballar va foiz */
+  .result_test_container h2.text-success,
+  .result_test_container h2.text-info {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 10px 0;
+    text-align: center;
+  }
+
+  /* Vaqt karti */
+  .result_test_container .border-warning {
+    border-color: #ffc107 !important;
+  }
+
+  .result_test_container .border-warning .text-warning {
+    color: #ff9800 !important;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  /* Baholash bo'limi */
+  .result_test_container .rounded {
+    border-radius: 15px !important;
+    margin: 25px 0;
+    transition: all 0.4s ease;
+  }
+
+  .result_test_container .rounded:hover {
+    transform: scale(1.02);
+  }
+
+  .result_test_container .rounded h5 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .result_test_container .rounded h5 i {
+    margin-right: 15px;
+    font-size: 1.8rem;
+  }
+
+  /* Tugmalar */
+  .result_test_container .btn {
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    border: none;
+    min-width: auto;
+  }
+
+  .result_test_container .btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  .result_test_container .btn-success {
+    background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+  }
+
+  .result_test_container .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Progress bar */
+  .result_test_container .progress {
+    height: 25px !important;
+    border-radius: 15px !important;
+    background: rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+  }
+
+  .result_test_container .progress-bar {
+    border-radius: 15px !important;
+    font-weight: 700 !important;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width 1s ease-in-out;
+  }
+
+  /* Footer */
+
+
+  /* Small textlar */
+  .result_test_container small {
+    font-size: 0.9rem;
+    opacity: 0.9;
+  }
+
+  /* Responsive dizayn */
+  @media (max-width: 768px) {
+    .result_test_container {
+      padding: 20px;
+      margin: 10px;
+    }
+
+    .result_test_container h3 {
+      font-size: 2rem;
+    }
+
+    .result_test_container h4.text-primary {
+      font-size: 1.5rem;
+    }
+
+    .result_test_container h2.text-success,
+    .result_test_container h2.text-info {
+      font-size: 2.5rem;
+    }
+
+    .result_test_container .btn {
+      padding: 10px 20px;
+      min-width: 150px;
+      margin-bottom: 10px;
+    }
+
+    .result_test_container .d-md-flex {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .result_test_container .btn-primary,
+    .result_test_container .btn-success {
+      width: 100%;
+      max-width: 250px;
+    }
+  }
+
+  /* Animationlar */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .result_test_container > * {
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  .result_test_container .card:nth-child(2) { animation-delay: 0.1s; }
+  .result_test_container .card:nth-child(3) { animation-delay: 0.2s; }
+  .result_test_container .rounded { animation-delay: 0.3s; }
+  .result_test_container .mt-4:last-child { animation-delay: 0.4s; }
+
+  /* Scroll uchun padding */
+  .result_test_container {
+    scroll-margin-top: 20px;
+  }
+</style>
+      <div class="result_test_container">
+
+          <h3 >Test Natijasi</h3>
+        <div class="result_test_body">
           <!-- Test ma'lumotlari -->
           <h4 class="text-primary">{{ test.title }}</h4>
           {% if test.description %}
@@ -45,7 +297,7 @@
             </div>
           </div>
 
-          <!-- Vaqt ma'lumotlari -->
+          <!-- Vaqt ma'lumotlari - SODDALASHTIRILGAN VERSIYA -->
           {% if time_taken_seconds %}
           <div class="card border-warning mt-3">
             <div class="card-body">
@@ -54,11 +306,13 @@
               </h6>
               <h4 class="text-warning">
                 {% widthratio time_taken_seconds 60 1 as minutes %}
-                {{ minutes|floatformat:0 }} daqiqa {{ time_taken_seconds|add:"0"|divisibleby:60|yesno:"0," }}{{ time_taken_seconds|add:"0"|divisibleby:60|yesno:"",time_taken_seconds|add:"0"|modulo:60 }} soniya
+                {% with time_int=time_taken_seconds|add:"0" %}
+                  {% with seconds=time_int|divisibleby:60|yesno:"0,"|add:"0" %}
+                    {{ minutes|floatformat:"0" }} daqiqa {{ seconds }} soniya
+                  {% endwith %}
+                {% endwith %}
               </h4>
-              <small class="text-muted"
-                >Testni ishlash uchun sarflangan vaqt</small
-              >
+              <small class="text-muted">Testni ishlash uchun sarflangan vaqt</small>
             </div>
           </div>
           {% endif %}
@@ -110,7 +364,7 @@
               <small>50%</small>
               <small>100%</small>
             </div>
-            <div class="progress" style="height: 20px">
+            <div class="progress" style="height: 10px">
               <div
                 class="progress-bar
                 {% if percentage >= 90 %}bg-success
@@ -128,27 +382,9 @@
             </div>
           </div>
         </div>
-        <div class="card-footer text-muted text-center">
-          <small
-            >Test {{ test.uploaded_at|date:"d.m.Y H:i" }} da yuklangan</small
-          >
+        <div class="result_test_footer">
+          <small>Test {{ test.uploaded_at|date:"d.m.Y H:i" }} da yuklangan</small>
         </div>
       </div>
-    </div>
-  </div>
-</div>
 
-<style>
-  .card {
-    border: none;
-    border-radius: 15px;
-  }
-  .progress {
-    border-radius: 10px;
-  }
-  .progress-bar {
-    border-radius: 10px;
-    font-weight: bold;
-  }
-</style>
 {% endblock %}
