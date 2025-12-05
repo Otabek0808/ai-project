@@ -1,114 +1,352 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container-fluid bg-light min-vh-100 py-5">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="card shadow border-0">
-                    <div class="card-header bg-primary text-white py-3">
-                        <h4 class="mb-0">
-                            <i class="fas fa-user-circle me-2"></i>Profil ma'lumotlari
-                        </h4>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-4">
-                                    <h6 class="text-muted mb-2">Ism</h6>
-                                    <p class="fs-5">{{ user_profile.first_name }}</p>
-                                </div>
-                                <div class="mb-4">
-                                    <h6 class="text-muted mb-2">Familiya</h6>
-                                    <p class="fs-5">{{ user_profile.last_name }}</p>
-                                </div>
-                                <div class="mb-4">
-                                    <h6 class="text-muted mb-2">Guruh</h6>
-                                    <p class="fs-5">
-                                        <span class="badge bg-success fs-6">{{ user_profile.group }}</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-4">
-                                    <h6 class="text-muted mb-2">Foydalanuvchi nomi</h6>
-                                    <p class="fs-5">{{ user.username }}</p>
-                                </div>
-                                <div class="mb-4">
-                                    <h6 class="text-muted mb-2">Email</h6>
-                                    <p class="fs-5">{{ user.email|default:"Kiritilmagan" }}</p>
-                                </div>
-                                <div class="mb-4">
-                                    <h6 class="text-muted mb-2">Ro'yxatdan o'tgan sana</h6>
-                                    <p class="fs-5">{{ user.date_joined|date:"d.m.Y H:i" }}</p>
-                                </div>
-                            </div>
-                        </div>
+<style>
+  /* Ekran o'lchamlariga mos responsive dizayn */
+  @media (max-width: 768px) {
+    .profile-card {
+      margin: 15px;
+    }
+  }
 
-                        <!-- Test natijalari statistikasi -->
-                        <div class="mt-5">
-                            <h5 class="mb-4">
-                                <i class="fas fa-chart-bar me-2"></i>Test natijalari
-                            </h5>
-                            {% with test_results=user.testresult_set.all %}
-                                {% if test_results %}
-                                    <div class="row">
-                                        <div class="col-md-3 mb-3">
-                                            <div class="card bg-success text-white text-center">
-                                                <div class="card-body py-3">
-                                                    <h4 class="mb-0">{{ test_results.count }}</h4>
-                                                    <small>Jami testlar</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <div class="card bg-info text-white text-center">
-                                                <div class="card-body py-3">
-                                                    <h4 class="mb-0">
-                                                        {% with best_result=test_results|dictsort:"percentage"|last %}
-                                                            {{ best_result.percentage|floatformat:1 }}%
-                                                        {% endwith %}
-                                                    </h4>
-                                                    <small>Eng yaxshi natija</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <div class="card bg-warning text-white text-center">
-                                                <div class="card-body py-3">
-                                                    <h4 class="mb-0">
-                                                        {% widthratio test_results.count test_results.count 100 %}%
-                                                    </h4>
-                                                    <small>Yakunlangan</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <div class="card bg-primary text-white text-center">
-                                                <div class="card-body py-3">
-                                                    <h4 class="mb-0">
-                                                        {% if user.last_login %}
-                                                            {{ user.last_login|date:"d.m.Y" }}
-                                                        {% else %}
-                                                            -
-                                                        {% endif %}
-                                                    </h4>
-                                                    <small>Oxirgi kirish</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% else %}
-                                    <div class="alert alert-info text-center">
-                                        <i class="fas fa-info-circle me-2"></i>
-                                        Hozircha test natijalari mavjud emas
-                                    </div>
-                                {% endif %}
-                            {% endwith %}
-                        </div>
-                    </div>
+  @media (min-width: 769px) and (max-width: 1200px) {
+    .profile-card {
+      max-width: 90%;
+      margin: 0 auto;
+    }
+  }
+
+  @media (min-width: 1201px) {
+    .profile-card {
+      max-width: 80%;
+      margin: 0 auto;
+    }
+  }
+
+  /* Barcha asosiy kontaynerlar va kartalar uchun orqa fon */
+  .profile-card {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: none !important;
+    width: 100%;
+  }
+
+  .profile-card-header {
+    background-color: rgba(13, 110, 253, 0.515) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 25px;
+  }
+
+  .profile-card-header h4 {
+    color: black !important;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .profile-card-body {
+    background-color: rgba(255, 255, 255, 0.515);
+    padding: 30px;
+  }
+
+  /* Ma'lumotlar qismi */
+  .profile-info-row {
+    margin-bottom: 30px;
+  }
+
+  .profile-info-section {
+    margin-bottom: 25px;
+  }
+
+  .profile-label {
+    color: #6c757d !important;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .profile-value {
+    color: #2c3e50;
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  /* Guruh badge */
+  .profile-group-badge {
+    background-color: rgba(25, 135, 84, 0.515) !important;
+    color: #198754 !important;
+    border: 1px solid rgba(25, 135, 84, 0.4);
+    padding: 8px 16px;
+    font-size: 1rem;
+    border-radius: 20px;
+    font-weight: 500;
+    display: inline-block;
+  }
+
+  /* Test natijalari bo'limi */
+  .profile-results-title {
+    color: #2c3e50;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  /* Statistik kartalar */
+  .profile-stats-row {
+    margin-top: 30px;
+  }
+
+  .profile-stat-card {
+    background-color: rgba(255, 255, 255, 0.515);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    padding: 20px;
+    height: 100%;
+  }
+
+  .profile-stat-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .profile-stat-success {
+    background-color: rgba(25, 135, 84, 0.515) !important;
+    border: 1px solid rgba(25, 135, 84, 0.4);
+  }
+
+  .profile-stat-info {
+    background-color: rgba(13, 202, 240, 0.515) !important;
+    border: 1px solid rgba(13, 202, 240, 0.4);
+  }
+
+  .profile-stat-warning {
+    background-color: rgba(255, 193, 7, 0.515) !important;
+    border: 1px solid rgba(255, 193, 7, 0.4);
+  }
+
+  .profile-stat-primary {
+    background-color: rgba(13, 110, 253, 0.515) !important;
+    border: 1px solid rgba(13, 110, 253, 0.4);
+  }
+
+  .profile-stat-content {
+    padding: 20px 0;
+  }
+
+  .profile-stat-content h4 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 5px;
+  }
+
+  .profile-stat-content small {
+    color: rgba(44, 62, 80, 0.8);
+    font-size: 0.95rem;
+  }
+
+  /* Alert xabarlari */
+  .profile-alert {
+    background-color: rgba(255, 255, 255, 0.515);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    border-left: 4px solid rgba(13, 202, 240, 0.8);
+    text-align: center;
+  }
+
+  .profile-alert-icon {
+    font-size: 1.2rem;
+    color: #0dcaf0;
+    margin-right: 10px;
+  }
+
+  /* Responsive dizayn */
+  @media (max-width: 768px) {
+    .profile-card {
+      margin: 15px;
+    }
+
+    .profile-card-body {
+      padding: 20px;
+    }
+
+    .profile-card-header {
+      padding: 20px;
+    }
+
+    .profile-card-header h4 {
+      font-size: 1.4rem;
+    }
+
+    .profile-value {
+      font-size: 1.1rem;
+    }
+
+    .profile-results-title {
+      font-size: 1.2rem;
+    }
+
+    .profile-stat-card {
+      margin-bottom: 15px;
+    }
+
+    .profile-stat-content h4 {
+      font-size: 1.8rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .profile-card-body {
+      padding: 15px;
+    }
+
+    .profile-card-header {
+      padding: 15px;
+    }
+
+    .profile-value {
+      font-size: 1rem;
+    }
+
+    .profile-label {
+      font-size: 0.85rem;
+    }
+
+    .profile-group-badge {
+      font-size: 0.9rem;
+      padding: 6px 12px;
+    }
+
+    .profile-stat-content h4 {
+      font-size: 1.6rem;
+    }
+
+    .profile-stat-content small {
+      font-size: 0.85rem;
+    }
+  }
+
+  /* Animatsiyalar */
+  @keyframes profileFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .profile-card {
+    animation: profileFadeIn 0.5s ease-out;
+  }
+</style>
+
+<div class="profile-card">
+    <div class="profile-card-header bg-primary text-white py-3">
+        <h4 class="mb-0">
+            <i class="fas fa-user-circle me-2"></i>Profil ma'lumotlari
+        </h4>
+    </div>
+    <div class="profile-card-body p-4">
+        <div class="row profile-info-row">
+            <div class="col-md-6">
+                <div class="profile-info-section">
+                    <h6 class="profile-label mb-2">Ism</h6>
+                    <p class="profile-value">{{ user_profile.first_name }}</p>
+                </div>
+                <div class="profile-info-section">
+                    <h6 class="profile-label mb-2">Familiya</h6>
+                    <p class="profile-value">{{ user_profile.last_name }}</p>
+                </div>
+                <div class="profile-info-section">
+                    <h6 class="profile-label mb-2">Guruh</h6>
+                    <p class="profile-value">
+                        <span class="profile-group-badge">{{ user_profile.group }}</span>
+                    </p>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="profile-info-section">
+                    <h6 class="profile-label mb-2">Foydalanuvchi nomi</h6>
+                    <p class="profile-value">{{ user.username }}</p>
+                </div>
+                <div class="profile-info-section">
+                    <h6 class="profile-label mb-2">Email</h6>
+                    <p class="profile-value">{{ user.email|default:"Kiritilmagan" }}</p>
+                </div>
+                <div class="profile-info-section">
+                    <h6 class="profile-label mb-2">Ro'yxatdan o'tgan sana</h6>
+                    <p class="profile-value">{{ user.date_joined|date:"d.m.Y H:i" }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test natijalari statistikasi -->
+        <div class="mt-5">
+            <h5 class="profile-results-title">
+                <i class="fas fa-chart-bar me-2"></i>Test natijalari
+            </h5>
+            {% with test_results=user.testresult_set.all %}
+                {% if test_results %}
+                    <div class="row profile-stats-row">
+                        <div class="col-md-3 mb-3">
+                            <div class="profile-stat-card profile-stat-success text-white text-center">
+                                <div class="profile-stat-content">
+                                    <h4 class="mb-0">{{ test_results.count }}</h4>
+                                    <small>Jami testlar</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="profile-stat-card profile-stat-info text-white text-center">
+                                <div class="profile-stat-content">
+                                    <h4 class="mb-0">
+                                        {% with best_result=test_results|dictsort:"percentage"|last %}
+                                            {{ best_result.percentage|floatformat:1 }}%
+                                        {% endwith %}
+                                    </h4>
+                                    <small>Eng yaxshi natija</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="profile-stat-card profile-stat-warning text-white text-center">
+                                <div class="profile-stat-content">
+                                    <h4 class="mb-0">
+                                        {% widthratio test_results.count test_results.count 100 %}%
+                                    </h4>
+                                    <small>Yakunlangan</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="profile-stat-card profile-stat-primary text-white text-center">
+                                <div class="profile-stat-content">
+                                    <h4 class="mb-0">
+                                        {% if user.last_login %}
+                                            {{ user.last_login|date:"d.m.Y" }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </h4>
+                                    <small>Oxirgi kirish</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="profile-alert">
+                        <i class="fas fa-info-circle profile-alert-icon"></i>
+                        Hozircha test natijalari mavjud emas
+                    </div>
+                {% endif %}
+            {% endwith %}
         </div>
     </div>
 </div>

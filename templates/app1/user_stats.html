@@ -1,14 +1,337 @@
-{% extends 'base.html' %} {% block content %}
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-lg-8 mx-auto">
-      <div class="card">
-        <div class="card-header bg-primary text-white">
-          <h4 class="mb-0">
-            <i class="fas fa-user-chart"></i> {{ user.username }} - Test
-            natijalari
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  /* Ekran o'lchamlariga mos responsive dizayn */
+  @media (max-width: 768px) {
+    .container-fluid {
+      padding: 0 15px;
+    }
+    .col-md-8 {
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1200px) {
+    .col-md-8 {
+      width: 75%;
+    }
+  }
+
+  @media (min-width: 1201px) {
+    .col-md-8 {
+      width: 66.666%;
+    }
+  }
+
+  /* Barcha asosiy kontaynerlar va kartalar uchun orqa fon */
+  .card {
+    background-color: rgba(255, 255, 255, 0.515);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+  }
+
+  .card-header {
+    background-color: rgba(13, 110, 253, 0.515);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px 10px 0 0;
+    padding: 20px;
+  }
+
+  .card-header h4 {
+    color: black;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  /* Grafik uchun stil */
+  .text-center.mb-4 {
+    margin-bottom: 30px;
+  }
+
+  .text-center.mb-4 h5 {
+    color: #2c3e50;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+
+  .img-fluid.border.rounded {
+    background-color: rgba(255, 255, 255, 0.515);
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  /* Jadval stil */
+  .table-responsive {
+    background-color: rgba(255, 255, 255, 0.515);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 25px;
+  }
+
+  .table-striped {
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .table-striped thead tr {
+    background-color: rgba(13, 110, 253, 0.3);
+  }
+
+  .table-striped th {
+    color: #2c3e50;
+    font-weight: 600;
+    padding: 15px;
+    border-bottom: 2px solid rgba(13, 110, 253, 0.3);
+  }
+
+  .table-striped td {
+    padding: 15px;
+    color: #333;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .table-striped tbody tr:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .table-striped tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.515);
+  }
+
+  .table-striped tbody tr:hover {
+    background-color: rgba(13, 110, 253, 0.1);
+  }
+
+  /* Badge stillari */
+  .badge {
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+
+  .badge.bg-success {
+    background-color: rgba(25, 135, 84, 0.8) !important;
+  }
+
+  .badge.bg-warning {
+    background-color: rgba(255, 193, 7, 0.8) !important;
+    color: #333;
+  }
+
+  .badge.bg-danger {
+    background-color: rgba(220, 53, 69, 0.8) !important;
+  }
+
+  /* Statistik kartalar */
+  .row.mt-4 {
+    margin-top: 30px;
+  }
+
+  .row.mt-4 .col-md-4 {
+    margin-bottom: 20px;
+  }
+
+  .row.mt-4 .card {
+    background-color: rgba(255, 255, 255, 0.515);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    padding: 20px;
+    height: 100%;
+  }
+
+  .row.mt-4 .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .card.text-center.bg-light {
+    background-color: rgba(248, 249, 250, 0.515) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  .card.text-center.bg-info {
+    background-color: rgba(13, 202, 240, 0.515) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  .card.text-center.bg-success {
+    background-color: rgba(25, 135, 84, 0.515) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .card-body h5.card-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 10px;
+  }
+
+  .card.text-center.bg-info.text-white .card-title,
+  .card.text-center.bg-success.text-white .card-title {
+    color: white;
+  }
+
+  .card-body p.card-text {
+    color: #6c757d;
+    font-size: 1rem;
+    margin-bottom: 0;
+  }
+
+  /* Alert xabarlari */
+  .alert {
+    background-color: rgba(255, 255, 255, 0.515);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+  }
+
+  .alert-info {
+    border-left: 4px solid rgba(13, 202, 240, 0.8);
+  }
+
+  .alert-info p {
+    color: #333;
+    margin-bottom: 5px;
+  }
+
+  /* Tugma stillari */
+  .btn {
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+  }
+
+  .btn-outline-secondary {
+    background-color: rgba(255, 255, 255, 0.515);
+    border: 2px solid #6c757d;
+    color: #6c757d;
+  }
+
+  .btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+  }
+
+  /* Ikona stillari */
+  .fas.fa-check.text-success {
+    color: rgba(25, 135, 84, 0.9);
+  }
+
+  .fas.fa-check.text-warning {
+    color: rgba(255, 193, 7, 0.9);
+  }
+
+  .fas.fa-times.text-danger {
+    color: rgba(220, 53, 69, 0.9);
+  }
+
+  .fas.fa-arrow-left {
+    margin-right: 8px;
+  }
+
+  /* Bo'sh jadval xabari */
+  .text-center.text-muted {
+    color: #6c757d !important;
+    padding: 30px;
+    font-style: italic;
+  }
+
+  /* Responsive dizayn */
+  @media (max-width: 768px) {
+    .card {
+      padding: 15px;
+    }
+
+    .card-header h4 {
+      font-size: 1.4rem;
+    }
+
+    .table-responsive {
+      padding: 10px;
+    }
+
+    .table-striped th,
+    .table-striped td {
+      padding: 10px;
+      font-size: 0.9rem;
+    }
+
+    .row.mt-4 .col-md-4 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    .card-body h5.card-title {
+      font-size: 2rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .card {
+      padding: 12px;
+    }
+
+    .card-header {
+      padding: 15px;
+    }
+
+    .text-center.mb-4 h5 {
+      font-size: 1.2rem;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-size: 0.9rem;
+    }
+
+    .badge {
+      padding: 6px 12px;
+      font-size: 0.8rem;
+    }
+  }
+
+  /* Animatsiyalar */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .card {
+    animation: fadeInUp 0.5s ease-out;
+  }
+</style>
+      <div class="user_stats_container">
+           <h4>
+             {{ user.username }} - Test natijalari
           </h4>
-        </div>
+
+
+            <a href="{% url 'admin_stats' %}" class="btn btn-outline-secondary">
+              <i class="fas fa-arrow-left"></i> Orqaga
+            </a>
         <div class="card-body">
           <!-- Grafik -->
           {% if graphic %}
@@ -27,6 +350,35 @@
           </div>
           {% endif %}
 
+          <!-- Umumiy statistika -->
+          {% if test_results %}
+          <div class="row mt-4">
+            <div class="col-md-4">
+              <div class="card text-center bg-light">
+                <div class="card-body">
+                  <h5 class="card-title">{{ test_results.count }}</h5>
+                  <p class="card-text">Jami testlar</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card text-center bg-info text-white">
+                <div class="card-body">
+                  <h5 class="card-title">{{ best_percentage }}%</h5>
+                  <p class="card-text">Eng yaxshi natija</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card text-center bg-success text-white">
+                <div class="card-body">
+                  <h5 class="card-title">{{ test_results.count }}</h5>
+                  <p class="card-text">Testlarni yakunlash</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
           <!-- Jadval -->
           <h5 class="mb-3">Batafsil statistika:</h5>
           <div class="table-responsive">
@@ -60,11 +412,13 @@
                     {% with percentage=result.percentage %}
                     <!-- ✅ METHOD NI CHAQIRISH -->
                     {% if percentage >= 80 %}
-                    <i class="fas fa-check text-success"></i> A'lo {% elif
-                    percentage >= 60 %}
-                    <i class="fas fa-check text-warning"></i> Yaxshi {% else %}
-                    <i class="fas fa-times text-danger"></i> Qoniqarsiz {% endif
-                    %} {% endwith %}
+                    <i class="fas fa-check text-success"></i> A'lo
+                    {% elif percentage >= 60 %}
+                    <i class="fas fa-check text-warning"></i> Yaxshi
+                    {% else %}
+                    <i class="fas fa-times text-danger"></i> Qoniqarsiz
+                    {% endif %}
+                    {% endwith %}
                   </td>
                 </tr>
                 {% empty %}
@@ -78,44 +432,6 @@
             </table>
           </div>
 
-          <!-- Umumiy statistika -->
-          {% if test_results %}
-          <div class="row mt-4">
-            <div class="col-md-4">
-              <div class="card text-center bg-light">
-                <div class="card-body">
-                  <h5 class="card-title">{{ test_results.count }}</h5>
-                  <p class="card-text">Jami testlar</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card text-center bg-info text-white">
-                <div class="card-body">
-                  <h5 class="card-title">{{ best_percentage }}%</h5>
-                  <p class="card-text">Eng yaxshi natija</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card text-center bg-success text-white">
-                <div class="card-body">
-                  <h5 class="card-title">{{ test_results.count }}</h5>
-                  <p class="card-text">Testlarni yakunlash</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          {% endif %}
-
-          <div class="text-center mt-4">
-            <a href="{% url 'admin_stats' %}" class="btn btn-outline-secondary">
-              <i class="fas fa-arrow-left"></i> Orqaga
-            </a>
-          </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
 {% endblock %}

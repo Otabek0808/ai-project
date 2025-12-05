@@ -1,10 +1,433 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container-fluid bg-light min-vh-100 py-5">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
+<style>
+  /* Ekran o'lchamlariga mos responsive dizayn */
+  @media (max-width: 768px) {
+    .col-lg-10 {
+      width: 100%;
+      padding: 15px;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1200px) {
+    .col-lg-10 {
+      width: 83.333%;
+    }
+  }
+
+  @media (min-width: 1201px) {
+    .col-lg-10 {
+      width: 83.333%;
+    }
+  }
+
+  /* Barcha asosiy kontaynerlar va kartalar uchun orqa fon */
+  .col-lg-10 {
+    border-radius: 12px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .card {
+    background-color: rgba(255, 255, 255, 0.515);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .card.shadow.border-0 {
+    box-shadow: none !important;
+  }
+
+  .card-header.bg-primary {
+    background-color: rgba(13, 110, 253, 0.515) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 25px;
+  }
+
+  .card-header.bg-primary.text-white {
+    color: black !important;
+  }
+
+  .badge.bg-light.text-primary {
+    background-color: rgba(255, 255, 255, 0.515) !important;
+    border: 1px solid rgba(13, 110, 253, 0.4);
+    color: #0d6efd !important;
+    font-size: 1rem;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  .card-body {
+    background-color: rgba(255, 255, 255, 0.515);
+    padding: 30px;
+
+  }
+
+  /* Sarlavha */
+  h4 {
+    color: #2c3e50;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+  }
+
+  /* Orqaga qaytish tugmasi */
+  .btn-outline-secondary {
+    background-color: rgba(255, 255, 255, 0.515);
+    border: 2px solid #6c757d;
+    color: #6c757d;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+.user_profile_body {
+
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid white;
+}
+  .btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  /* Asosiy ma'lumotlar */
+  .row.mb-5 {
+    margin-bottom: 40px;
+  }
+
+  .mb-4 {
+    margin-bottom: 25px;
+  }
+
+  .text-muted.mb-2 {
+    color: #6c757d !important;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .fs-5 {
+    color: #2c3e50;
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  /* Guruh badge */
+  .badge.bg-success.fs-6 {
+    background-color: rgba(25, 135, 84, 0.515) !important;
+    color: #198754 !important;
+    border: 1px solid rgba(25, 135, 84, 0.4);
+    padding: 8px 16px;
+    font-size: 1rem;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  /* Test natijalari bo'limi */
+  h5.mb-4.border-bottom.pb-2 {
+    color: #2c3e50;
+    font-size: 1.4rem;
+    font-weight: 600;
+    border-bottom: 2px solid rgba(13, 110, 253, 0.3) !important;
+    padding-bottom: 12px;
+  }
+
+  /* Jadval */
+  .table-responsive {
+    background-color: rgba(255, 255, 255, 0.515);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  .table-striped {
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 0;
+  }
+
+  .table-striped thead tr {
+    background-color: rgba(13, 110, 253, 0.3);
+  }
+
+  .table-striped th {
+    color: #2c3e50;
+    font-weight: 600;
+    padding: 15px;
+    border-bottom: 2px solid rgba(13, 110, 253, 0.3);
+  }
+
+  .table-striped td {
+    padding: 15px;
+    color: #333;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .table-striped tbody tr:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .table-striped tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.515);
+  }
+
+  .table-striped tbody tr:hover {
+    background-color: rgba(13, 110, 253, 0.1);
+  }
+
+  /* Test natijalari badge */
+  .table-striped .badge {
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  .table-striped .badge.bg-success {
+    background-color: rgba(25, 135, 84, 0.515) !important;
+    color: #198754;
+  }
+
+  .table-striped .badge.bg-warning {
+    background-color: rgba(255, 193, 7, 0.515) !important;
+    color: #664d03;
+  }
+
+  .table-striped .badge.bg-danger {
+    background-color: rgba(220, 53, 69, 0.515) !important;
+    color: #dc3545;
+  }
+
+  /* Statistik kartalar */
+  .row.mt-4 .col-md-4 {
+    margin-bottom: 20px;
+  }
+
+  .row.mt-4 .card {
+    background-color: rgba(255, 255, 255, 0.515);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    padding: 20px;
+  }
+
+  .row.mt-4 .card:hover {
+    transform: translateY(-5px);
+  }
+
+  .card.bg-success {
+    background-color: rgba(25, 135, 84, 0.515) !important;
+    border: 1px solid rgba(25, 135, 84, 0.4);
+  }
+
+  .card.bg-primary {
+    background-color: rgba(13, 110, 253, 0.515) !important;
+    border: 1px solid rgba(13, 110, 253, 0.4);
+  }
+
+  .card.bg-info {
+    background-color: rgba(13, 202, 240, 0.515) !important;
+    border: 1px solid rgba(13, 202, 240, 0.4);
+  }
+
+  .card.bg-success.text-white .card-body,
+  .card.bg-primary.text-white .card-body,
+  .card.bg-info.text-white .card-body {
+    color: black !important;
+  }
+
+  .card-body.py-3 h4 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 5px;
+  }
+
+  .card-body.py-3 small {
+    color: rgba(44, 62, 80, 0.8);
+    font-size: 0.95rem;
+  }
+
+  /* Alert xabarlari */
+  .alert {
+    background-color: rgba(255, 255, 255, 0.515);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-left: 4px solid rgba(13, 202, 240, 0.8);
+  }
+
+  .alert-info.text-center {
+    text-align: center;
+  }
+
+  .alert-info.text-center i {
+    font-size: 1.2rem;
+    color: #0dcaf0;
+  }
+
+  /* Harakatlar tugmalari */
+  .mt-5.text-center {
+    margin-top: 40px;
+    text-align: center;
+  }
+
+  .btn {
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    margin: 0 5px;
+  }
+
+  .btn-primary {
+    background-color: rgba(13, 110, 253, 0.515);
+    color: #0d6efd;
+    border: 1px solid rgba(13, 110, 253, 0.4);
+  }
+
+  .btn-primary:hover {
+    background-color: rgba(13, 110, 253, 0.7);
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  .btn-outline-secondary {
+    background-color: rgba(255, 255, 255, 0.515);
+    border: 1px solid #6c757d;
+    color: #6c757d;
+  }
+
+  .btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  /* Ikona stillari */
+  .fas {
+    margin-right: 8px;
+  }
+
+  .fas.fa-check.text-success {
+    color: rgba(25, 135, 84, 0.8);
+  }
+
+  .fas.fa-check.text-warning {
+    color: rgba(255, 193, 7, 0.8);
+  }
+
+  .fas.fa-times.text-danger {
+    color: rgba(220, 53, 69, 0.8);
+  }
+
+  /* Responsive dizayn */
+  @media (max-width: 768px) {
+    .col-lg-10 {
+      padding: 15px;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .card-header.bg-primary {
+      padding: 20px;
+    }
+
+    h4 {
+      font-size: 1.5rem;
+    }
+
+    h5.mb-4.border-bottom.pb-2 {
+      font-size: 1.2rem;
+    }
+
+    .table-responsive {
+      padding: 10px;
+    }
+
+    .table-striped th,
+    .table-striped td {
+      padding: 10px;
+      font-size: 0.9rem;
+    }
+
+    .row.mt-4 .col-md-4 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+
+    .mt-5.text-center .btn {
+      margin: 5px 0;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .col-lg-10 {
+      padding: 10px;
+    }
+
+    .card-body {
+      padding: 15px;
+    }
+
+    .fs-5 {
+      font-size: 1.1rem;
+    }
+
+    .text-muted.mb-2 {
+      font-size: 0.85rem;
+    }
+
+    .badge {
+      font-size: 0.8rem;
+      padding: 6px 12px;
+    }
+
+    .card-body.py-3 h4 {
+      font-size: 1.8rem;
+    }
+  }
+
+  /* Animatsiyalar */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .card {
+    animation: fadeIn 0.5s ease-out;
+  }
+</style>
+<div class="col-lg-10">
+                <h4>Foydalanuvchi profili
+                            </h4>
                 <!-- Orqaga qaytish tugmasi -->
                 <div class="mb-4">
                     <a href="{% url 'admin_stats' %}" class="btn btn-outline-secondary">
@@ -12,16 +435,11 @@
                     </a>
                 </div>
 
-                <div class="card shadow border-0">
-                    <div class="card-header bg-primary text-white py-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h4 class="mb-0">
-                                <i class="fas fa-user-circle me-2"></i>Foydalanuvchi profili
-                            </h4>
-                            <span class="badge bg-light text-primary fs-6">
+                <div class="user_profile_body">
+                    <div class="card-header">
+                        <span class="badge bg-light text-primary fs-6">
                                 Admin ko'rinishi
                             </span>
-                        </div>
                     </div>
                     <div class="card-body p-4">
                         <!-- Asosiy ma'lumotlar -->
@@ -59,7 +477,17 @@
                                     <h6 class="text-muted mb-2">Ro'yxatdan o'tgan sana</h6>
                                     <p class="fs-5">{{ profile_user.date_joined|date:"d.m.Y H:i" }}</p>
                                 </div>
+                                <div class="mt-5 text-center">
+                            <a href="{% url 'user_stats' profile_user.id %}" class="btn btn-primary me-2">
+                                <i class="fas fa-chart-line me-2"></i> Batafsil statistika
+                            </a>
+                            <a href="{% url 'admin_stats' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-list me-2"></i> Ro'yxatga qaytish
+                            </a>
+                        </div>
                             </div>
+                            <!-- Harakatlar -->
+
                         </div>
 
                         <!-- Test natijalari -->
@@ -67,9 +495,9 @@
                             <h5 class="mb-4 border-bottom pb-2">
                                 <i class="fas fa-chart-bar me-2"></i>Test natijalari
                             </h5>
-                            
+
                             {% if test_results %}
-                            <div class="table-responsive">
+
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
@@ -104,8 +532,7 @@
                                         {% endfor %}
                                     </tbody>
                                 </table>
-                            </div>
-                            
+
                             <!-- Statistik ma'lumotlar -->
                             <div class="row mt-4">
                                 <div class="col-md-4 mb-3">
@@ -153,19 +580,8 @@
                             {% endif %}
                         </div>
 
-                        <!-- Harakatlar -->
-                        <div class="mt-5 text-center">
-                            <a href="{% url 'user_stats' profile_user.id %}" class="btn btn-primary me-2">
-                                <i class="fas fa-chart-line me-2"></i> Batafsil statistika
-                            </a>
-                            <a href="{% url 'admin_stats' %}" class="btn btn-outline-secondary">
-                                <i class="fas fa-list me-2"></i> Ro'yxatga qaytish
-                            </a>
-                        </div>
+
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
 {% endblock %}
