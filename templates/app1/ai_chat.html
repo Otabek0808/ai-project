@@ -1,18 +1,19 @@
 {% extends 'base.html' %} {% block content %}
 <style>
-  #container_ai {
-    width: 100%;
-  }
+
 
   /* AI Chat uchun maxsus stillar */
-
   .ai-chat-card {
-    min-height: calc(100vh - 100px);
+    height: 80vh;
     backdrop-filter: blur(10px);
     background-color: rgba(255, 255, 255, 0.511);
     border-radius: 15px;
     border: 2px solid #ffffff;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
 
   .ai-chat-header {
@@ -21,6 +22,7 @@
     border-radius: 15px 15px 0 0 !important;
     border-bottom: 2px solid #ffffff;
     padding: 15px 20px !important;
+    flex-shrink: 0;
   }
 
   .ai-chat-header h4 {
@@ -37,20 +39,23 @@
   }
 
   .ai-chat-body {
+    flex: 1;
     padding: 25px !important;
     width: 70%;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
 
   .chat-messages-container {
-    height: 400px;
+    flex: 1;
     overflow-y: auto;
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.7);
     border: 2px solid #ffffff;
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 10px;
+    min-height: 0;
   }
 
   .chat-message {
@@ -86,11 +91,8 @@
     -webkit-hyphens: auto;
     -ms-hyphens: auto;
     hyphens: auto;
-    white-space: pre-wrap; /* Pre format saqlash */
-    white-space: -moz-pre-wrap; /* Firefox */
-    white-space: -pre-wrap; /* Opera */
-    white-space: -o-pre-wrap; /* Opera */
-    word-wrap: break-word; /* IE */
+    white-space: pre-wrap;
+    word-wrap: break-word;
   }
 
   .user-bubble {
@@ -98,23 +100,41 @@
     color: white;
     border: 1px solid #5aa9e6;
     border-radius: 15px 15px 0 15px;
-    max-width: 70%; /* Foydalanuvchi xabari kengligini cheklash */
+    max-width: 70%;
   }
 
   .bot-bubble {
-    background: rgba(255, 255, 255, 0.9);
     color: #333;
     border: 1px solid #ffffff;
     border-radius: 15px 15px 15px 0;
-    max-width: 85%; /* Bot xabari kengligini cheklash */
+    max-width: 85%; }
+
+  /* FIXED INPUT CONTAINER - BOTTOM ALWAYS */
+  .fixed-input-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(25px);
+    padding: 15px;
+    border-top: 2px solid rgba(5, 130, 171, 0.3);
+    box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    border-radius: 0;
   }
 
   .chat-input-group {
     display: flex;
     gap: 10px;
+    align-items: flex-end; /* Input va tugmani pastga tekislash */
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
-  .chat-input-group input {
+  /* Textarea uchun yangi input - ko'p qatorli yozish uchun */
+  .chat-input-group textarea {
     flex: 1;
     padding: 12px 15px;
     border: 2px solid #ffffff;
@@ -123,16 +143,38 @@
     background-color: rgba(255, 255, 255, 0.8);
     font-size: 15px;
     transition: all 0.3s ease;
+    min-height: 50px;
+    max-height: 150px; /* Maksimal balandlik */
+    resize: none; /* User o'lchamini o'zgartira olmasligi uchun */
+    line-height: 1.4;
+    font-family: inherit;
+    overflow-y: auto; /* Matn ko'p bo'lsa scroll */
   }
 
-  .chat-input-group input:focus {
+  .chat-input-group textarea:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(5, 130, 171, 0.3);
     border-color: rgba(5, 130, 171, 0.8);
   }
 
+  /* Textarea scrollbar styling */
+  .chat-input-group textarea::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .chat-input-group textarea::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+  }
+
+  .chat-input-group textarea::-webkit-scrollbar-thumb {
+    background: rgba(5, 130, 171, 0.5);
+    border-radius: 3px;
+  }
+
   .chat-submit-btn {
     padding: 12px 25px;
+    min-width: 100px;
     border: none;
     border-radius: 10px;
     backdrop-filter: blur(100px);
@@ -143,7 +185,10 @@
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
+    height: 50px;
+    flex-shrink: 0; /* Tugma kichraymasligi uchun */
   }
 
   .chat-submit-btn:hover {
@@ -218,46 +263,143 @@
     font-family: "Courier New", monospace;
     font-size: 14px;
   }
+.clear-history-btn {
+    padding: 8px 15px;
+    background-color: rgba(255, 107, 107, 0.8);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    margin-left: 10px;
+    transition: all 0.3s ease;
+  }
 
+  .clear-history-btn:hover {
+    background-color: rgba(255, 107, 107, 1);
+  }
   /* MEDIA QUERIES */
 
-  /* 1001px - Tablet view */
-  @media (max-width: 1001px) {
-    .ai-chat-container {
-      padding: 15px;
-      border-radius: 15px;
+  /* 1200px - Large tablets */
+  @media (max-width: 1200px) {
+    #container_ai {
+      height: 100vh;
     }
 
     .ai-chat-body {
+      width: 85%;
+    }
+
+    .fixed-input-container {
+      padding: 12px 15px;
+    }
+
+    .chat-input-group {
+      max-width: 1000px;
+    }
+  }
+
+  /* 992px - Tablets */
+  @media (max-width: 992px) {
+    #container_ai {
+      padding: 12px;
+      height: 100vh;
+    }
+
+    .ai-chat-body {
+      width: 90%;
       padding: 20px !important;
     }
 
+    .fixed-input-container {
+      padding: 12px;
+    }
+
     .chat-messages-container {
-      height: 350px;
-      padding: 15px;
+      padding: 18px;
+    }
+
+    .ai-chat-header h4 {
+      font-size: 22px;
+    }
+
+    .ai-chat-header .fa-robot {
+      font-size: 26px;
+    }
+
+    .message-bubble {
+      padding: 11px 16px;
+      font-size: 14.5px;
+    }
+
+    .user-bubble {
+      max-width: 75%;
+    }
+
+    .bot-bubble {
+      max-width: 90%;
+    }
+
+    .chat-input-group textarea {
+      padding: 11px 14px;
+      font-size: 14px;
+      min-height: 45px;
+    }
+
+    .chat-submit-btn {
+      padding: 11px 22px;
+      font-size: 14px;
+      min-width: 90px;
+      height: 45px;
+    }
+
+    .chat-tips {
+      font-size: 13.5px;
+    }
+
+  .form-group {
+    position: re;
+    left: 0;
+    top: 0;
+    z-index: 90;
+  }
+
+  /* 768px - Small tablets */
+  @media (max-width: 768px) {
+    #container_ai {
+      padding: 10px;
+      height: 100vh;
+    }
+
+    .ai-chat-card {
+      border-radius: 12px;
+    }
+
+    .ai-chat-body {
+      width: 95%;
+      padding: 18px !important;
+    }
+
+    .fixed-input-container {
+      padding: 10px;
+    }
+
+    .ai-chat-header {
+      padding: 12px 18px !important;
+      border-radius: 12px 12px 0 0 !important;
     }
 
     .ai-chat-header h4 {
       font-size: 20px;
     }
 
-    .user-bubble {
-      max-width: 75%; /* Kichik ekranlarda kengroq */
-    }
-
-    .bot-bubble {
-      max-width: 90%; /* Kichik ekranlarda kengroq */
-    }
-  }
-
-  /* 830px */
-  @media (max-width: 830px) {
-    .ai-chat-container {
-      padding: 10px;
+    .ai-chat-header .fa-robot {
+      font-size: 24px;
     }
 
     .chat-messages-container {
-      height: 320px;
+      padding: 16px;
+      margin-bottom: 18px;
     }
 
     .message-bubble {
@@ -270,64 +412,78 @@
     }
 
     .bot-bubble {
-      max-width: 95%;
+      max-width: 92%;
+    }
+
+    .chat-input-group textarea {
+      padding: 10px 12px;
+      font-size: 14px;
+      min-height: 42px;
+      max-height: 120px;
+    }
+
+    .chat-submit-btn {
+      padding: 10px 20px;
+      font-size: 14px;
+      min-width: 85px;
+      height: 42px;
+    }
+
+    .chat-tips {
+      font-size: 13px;
+      padding: 11px;
+      margin-top: 12px;
+    }
+
+    .welcome-message {
+      padding: 13px;
+      font-size: 14px;
+    }
+
+    .bot-bubble pre,
+    .bot-bubble code {
+      font-size: 13px;
     }
   }
 
-  /* 710px */
-  @media (max-width: 710px) {
-    .ai-chat-container {
-      padding: 8px;
+  /* 576px - Mobile landscape */
+  @media (max-width: 576px) {
+
+    .ai-chat-card {
       border-radius: 10px;
     }
 
     .ai-chat-body {
+      width: 100%;
       padding: 15px !important;
     }
 
-    .chat-messages-container {
-      height: 300px;
-      padding: 12px;
+    .fixed-input-container {
+      padding: 8px;
     }
 
     .ai-chat-header {
-      padding: 12px 15px !important;
+      padding: 10px 15px !important;
+      border-radius: 10px 10px 0 0 !important;
     }
 
     .ai-chat-header h4 {
       font-size: 18px;
     }
 
-    .chat-input-group input {
-      padding: 10px 12px;
-      font-size: 14px;
-    }
-
-    .chat-submit-btn {
-      padding: 10px 20px;
-      font-size: 14px;
-    }
-
-    .message-bubble {
-      padding: 8px 12px;
-      font-size: 13px;
-    }
-  }
-
-  /* 620px */
-  @media (max-width: 620px) {
-    .ai-chat-container {
-      padding: 5px;
+    .ai-chat-header .fa-robot {
+      font-size: 22px;
     }
 
     .chat-messages-container {
-      height: 280px;
-      padding: 10px;
+      padding: 14px;
+      margin-bottom: 15px;
     }
 
     .message-bubble {
       padding: 8px 12px;
       font-size: 13px;
+      line-height: 1.4;
     }
 
     .user-bubble {
@@ -339,41 +495,22 @@
     }
 
     .chat-input-group {
-      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+    }
+
+    .chat-input-group textarea {
+      padding: 10px 12px;
+      font-size: 13px;
+      min-height: 40px;
+      max-height: 100px;
     }
 
     .chat-submit-btn {
-      width: 100%;
-      justify-content: center;
-    }
-  }
-
-  /* 480px - Mobile */
-  @media (max-width: 480px) {
-    .ai-chat-container {
-      border-radius: 8px;
-    }
-
-    .ai-chat-body {
-      padding: 12px !important;
-    }
-
-    .chat-messages-container {
-      height: 250px;
-    }
-
-    .ai-chat-header h4 {
-      font-size: 16px;
-    }
-
-    .chat-input-group input {
-      padding: 8px 10px;
+      padding: 10px 15px;
       font-size: 13px;
-    }
-
-    .chat-submit-btn {
-      padding: 8px 15px;
-      font-size: 13px;
+      min-width: 70px;
+      height: 40px;
     }
 
     .chat-tips {
@@ -381,141 +518,525 @@
       padding: 10px;
     }
 
-    .message-bubble {
-      padding: 6px 10px;
+    .welcome-message {
+      padding: 10px;
+      font-size: 13px;
+    }
+
+    .bot-bubble pre,
+    .bot-bubble code {
       font-size: 12px;
-    }
-
-    .user-bubble {
-      max-width: 90%;
-    }
-
-    .bot-bubble {
-      max-width: 95%;
     }
   }
 
-  /* Kichik ekranlar uchun qo'shimcha */
-  @media (max-width: 360px) {
+  /* 480px - Mobile portrait */
+  @media (max-width: 480px) {
+    #container_ai {
+      height: 100vh;
+    }
+
+
+
+    .ai-chat-body {
+      padding: 12px !important;
+    }
+
+    .fixed-input-container {
+      padding: 6px 8px;
+    }
+
+    .ai-chat-header h4 {
+      font-size: 16px;
+      gap: 8px;
+    }
+
+    .ai-chat-header .fa-robot {
+      font-size: 20px;
+    }
+
+    .chat-messages-container {
+      padding: 12px;
+      margin-bottom: 15px;
+    }
+
     .message-bubble {
-      font-size: 11px;
-      padding: 5px 8px;
+      padding: 7px 10px;
+      font-size: 12.5px;
+      line-height: 1.3;
+    }
+
+    .chat-input-group textarea {
+      padding: 8px 10px;
+      font-size: 12.5px;
+      min-height: 38px;
+      max-height: 90px;
+    }
+
+    .chat-submit-btn {
+      padding: 8px 12px;
+      font-size: 12.5px;
+      min-width: 65px;
+      height: 38px;
+    }
+
+    .chat-tips {
+      font-size: 11.5px;
+      padding: 9px;
+    }
+
+    .welcome-message {
+      padding: 9px;
+      font-size: 12px;
+    }
+
+    .bot-bubble pre {
+      padding: 8px;
+    }
+  }
+
+  /* 400px dan pastda - FIXED INPUT */
+  @media (max-width: 400px) {
+
+    .ai-chat-card {
+      border-radius: 8px;
+    }
+
+    .fixed-input-container {
+      padding: 6px;
+    }
+
+    .ai-chat-header {
+      padding: 8px 12px !important;
+      border-radius: 8px 8px 0 0 !important;
+    }
+
+    .ai-chat-header h4 {
+      font-size: 15px;
+    }
+
+    .ai-chat-header .fa-robot {
+      font-size: 18px;
+    }
+
+    .ai-chat-body {
+      padding: 10px !important;
+    }
+
+    .chat-messages-container {
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .message-bubble {
+      padding: 6px 9px;
+      font-size: 12px;
     }
 
     .user-bubble,
     .bot-bubble {
-      max-width: 95%;
+      max-width: 96%;
+    }
+
+    .chat-input-group {
+      gap: 5px;
+    }
+
+    .chat-input-group textarea {
+      padding: 7px 9px;
+      font-size: 12px;
+      min-height: 36px;
+      max-height: 80px;
+    }
+
+    .chat-submit-btn {
+      padding: 7px 9px;
+      font-size: 12px;
+      min-width: 55px;
+      height: 36px;
+    }
+
+    .chat-submit-btn i {
+      font-size: 14px;
+      margin-right: 0;
+    }
+
+    .chat-submit-btn span {
+      display: none; /* "Junatish" yozuvini yashirish */
+    }
+
+    .chat-tips {
+      font-size: 11px;
+      padding: 7px;
+      margin-top: 8px;
+    }
+
+    .bot-bubble pre,
+    .bot-bubble code {
+      font-size: 11px;
+    }
+  }
+
+  /* 360px - Small mobile */
+  @media (max-width: 360px) {
+    #container_ai {
+      height: 100vh;
+      padding: 4px;
+    }
+
+    .ai-chat-card {
+      border-radius: 6px;
+    }
+
+    .fixed-input-container {
+      padding: 5px;
+    }
+
+    .ai-chat-header {
+      padding: 7px 10px !important;
+      border-radius: 6px 6px 0 0 !important;
+    }
+
+    .ai-chat-header h4 {
+      font-size: 14px;
+    }
+
+    .ai-chat-header .fa-robot {
+      font-size: 17px;
+    }
+
+    .chat-input-group textarea {
+      padding: 6px 8px;
+      font-size: 11.5px;
+      min-height: 34px;
+      max-height: 70px;
+    }
+
+    .chat-submit-btn {
+      padding: 6px 8px;
+      font-size: 11.5px;
+      min-width: 50px;
+      height: 34px;
+    }
+
+    .chat-submit-btn i {
+      font-size: 13px;
+    }
+
+    .chat-messages-container {
+      padding: 8px;
+    }
+  }
+
+  /* 320px - Extra small mobile */
+  @media (max-width: 320px) {
+    #container_ai {
+      height: 100vh;
+      padding: 3px;
+    }
+
+    .fixed-input-container {
+      padding: 4px;
+    }
+
+    .ai-chat-header {
+      padding: 6px 8px !important;
+    }
+
+    .ai-chat-header h4 {
+      font-size: 13px;
+    }
+
+    .ai-chat-header .fa-robot {
+      font-size: 16px;
+    }
+
+    .chat-input-group {
+      gap: 4px;
+    }
+
+    .chat-input-group textarea {
+      padding: 5px 7px;
+      font-size: 11px;
+      min-height: 32px;
+      max-height: 60px;
+    }
+
+    .chat-submit-btn {
+      padding: 5px 7px;
+      font-size: 11px;
+      min-width: 45px;
+      height: 32px;
+    }
+
+    .chat-submit-btn i {
+      font-size: 12px;
+    }
+  }
+
+  /* Android/iOS klaviatura ochilganda moslashuv */
+  @media (max-height: 500px) {
+    .chat-input-group textarea {
+      max-height: 70px;
+    }
+
+    .chat-messages-container {
+      margin-bottom: 10px;
     }
   }
 </style>
 
-<div class="ai-chat-container mt-3" id="container_ai">
-  <div class="row justify-content-center">
-    <div class="col-12">
-      <div class="ai-chat-card">
-        <div class="ai-chat-header card-header text-white">
-          <h4 class="mb-0"><i class="fas fa-robot"></i> AI Chat Bot</h4>
-        </div>
-        <div class="ai-chat-body card-body">
-          <div class="chat-messages-container" id="chat-container">
-            <div class="welcome-message">
-              <i class="fas fa-info-circle"></i> Savolingizni bering, men sizga
-              yordam berishga harakat qilaman!
-            </div>
-          </div>
-
-          <form id="chat-form">
-            {% csrf_token %}
-            <div class="chat-input-group">
-              <input
-                type="text"
-                id="user-input"
-                class="form-control"
-                placeholder="Savolingizni yozing..."
-                required
-                autocomplete="off"
-              />
-              <button type="submit" class="chat-submit-btn">
-                <i class="fas fa-paper-plane"></i> Yuborish
-              </button>
-            </div>
-          </form>
-
-          <div class="chat-tips">
-            <small>
-              <i class="fas fa-lightbulb"></i> Maslahat: Dasturlash, Python,
-              Django, HTML, CSS, JavaScript haqida savol bering.
-            </small>
-          </div>
+     <main>
+  <div class="ai-chat-card">
+    <div class="ai-chat-header card-header text-white d-flex justify-content-between align-items-center">
+      <h4 class="mb-0"><i class="fas fa-robot"></i> AI Chat Bot</h4>
+      <button id="clear-history" class="clear-history-btn">
+        <i class="fas fa-trash-alt"></i> Tarixni tozalash
+      </button>
+    </div>
+    <div class="ai-chat-body card-body">
+      <div class="chat-messages-container" id="chat-container">
+        <!-- Xabarlar shu yerga yuklanadi -->
+        <div class="welcome-message" id="welcome-message">
+          <i class="fas fa-info-circle"></i> Savolingizni bering, men sizga
+          yordam berishga harakat qilaman!
         </div>
       </div>
+      <div class="chat-tips" style="margin-bottom: 15px;">
+        <small>
+          <i class="fas fa-lightbulb"></i> Maslahat: Dasturlash, Python,
+          Django, HTML, CSS, JavaScript haqida savol bering.
+        </small>
+      </div>
+
+      <form id="chat-form" class="form-group">
+        {% csrf_token %}
+        <div class="chat-input-group">
+          <input
+            type="text"
+            id="user-input"
+            class="form-control"
+            placeholder="Savolingizni yozing..."
+            required
+            autocomplete="off"
+          />
+          <button type="submit" class="chat-submit-btn">
+            <i class="fas fa-paper-plane"></i> Yuborish
+          </button>
+        </div>
+      </form>
     </div>
   </div>
-</div>
-{% endblock %} {% block scripts %}
+</main>
+{% endblock %}
+
+{% block scripts %}
 <script>
-  document.getElementById("chat-form").addEventListener("submit", function (e) {
+  // LocalStorage da chat tarixi uchun kalit
+  const CHAT_STORAGE_KEY = 'ai_chat_history';
+
+  // Sahifa yuklanganda chat tarixini yuklash
+  document.addEventListener('DOMContentLoaded', function() {
+    loadChatHistory();
+
+    // Clear history tugmasi uchun event listener
+    document.getElementById('clear-history').addEventListener('click', function() {
+      if (confirm('Barcha chat tarixini tozalashni istaysizmi?')) {
+        clearChatHistory();
+      }
+    });
+
+    // Inputga fokus qilish
+    const userInput = document.getElementById('user-input');
+    if (userInput) {
+      setTimeout(() => {
+        userInput.focus();
+      }, 300);
+    }
+  });
+
+  // Chat tarixini localStorage dan yuklash
+  function loadChatHistory() {
+    try {
+      const savedChat = localStorage.getItem(CHAT_STORAGE_KEY);
+      const chatContainer = document.getElementById('chat-container');
+
+      // Welcome xabarini saqlash
+      const welcomeMessage = document.getElementById('welcome-message');
+
+      if (savedChat) {
+        const messages = JSON.parse(savedChat);
+
+        // Agar xabarlar mavjud bo'lsa, welcome xabarini yashirish
+        if (messages.length > 0) {
+          if (welcomeMessage) {
+            welcomeMessage.style.display = 'none';
+          }
+
+          // Har bir xabarni ekranga chiqarish
+          messages.forEach(msg => {
+            addMessageToScreen(msg.text, msg.sender, false); // false - localStorage ga saqlamaslik
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Chat tarixini yuklashda xatolik:', error);
+    }
+  }
+
+  // Chat tarixini localStorage ga saqlash
+  function saveMessageToStorage(text, sender) {
+    try {
+      let messages = [];
+      const savedChat = localStorage.getItem(CHAT_STORAGE_KEY);
+
+      if (savedChat) {
+        messages = JSON.parse(savedChat);
+      }
+
+      // Yangi xabarni qo'shish
+      messages.push({
+        text: text,
+        sender: sender,
+        timestamp: new Date().toISOString()
+      });
+
+      // Faqat oxirgi 50 ta xabarni saqlash (optima)
+      if (messages.length > 50) {
+        messages = messages.slice(-50);
+      }
+
+      localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(messages));
+    } catch (error) {
+      console.error('Xabarni saqlashda xatolik:', error);
+    }
+  }
+
+  // Chat tarixini tozalash
+  function clearChatHistory() {
+    localStorage.removeItem(CHAT_STORAGE_KEY);
+
+    // Ekrandan xabarlarni olib tashlash
+    const chatContainer = document.getElementById('chat-container');
+    const welcomeMessage = document.getElementById('welcome-message');
+
+    // Faqat xabarlarni tozalash, welcome message qolsin
+    const messages = chatContainer.querySelectorAll('.chat-message');
+    messages.forEach(msg => msg.remove());
+
+    // Welcome message ni ko'rsatish
+    if (welcomeMessage) {
+      welcomeMessage.style.display = 'block';
+    }
+
+    // Fokusni inputga qaytarish
+    document.getElementById('user-input').focus();
+
+    // Toast yoki xabar ko'rsatish
+    showToast('Chat tarixi tozalandi');
+  }
+
+  // Toast xabar ko'rsatish
+  function showToast(message) {
+    // Simple toast yaratish
+    const toast = document.createElement('div');
+    toast.textContent = message;
+    toast.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(5, 130, 171, 0.9);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      z-index: 9999;
+      animation: fadeInOut 3s ease-in-out;
+    `;
+
+    document.body.appendChild(toast);
+
+    // 3 soniyadan so'ng olib tashlash
+    setTimeout(() => {
+      toast.remove();
+    }, 3000);
+  }
+
+  // Form submit handler
+  document.getElementById('chat-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const userInput = document.getElementById("user-input");
+    const userInput = document.getElementById('user-input');
     const message = userInput.value.trim();
 
     if (!message) return;
 
     // Foydalanuvchi xabarini ko'rsatish
-    addMessage(message, "user");
-    userInput.value = "";
+    addMessageToScreen(message, 'user', true); // true - localStorage ga saqlash
+    userInput.value = '';
+
+    // Welcome message ni yashirish
+    const welcomeMessage = document.getElementById('welcome-message');
+    if (welcomeMessage) {
+      welcomeMessage.style.display = 'none';
+    }
 
     // Inputni vaqtincha disabled qilish
     userInput.disabled = true;
-    document.querySelector(".chat-submit-btn").disabled = true;
-    document.querySelector(".chat-submit-btn").innerHTML =
-      '<i class="fas fa-spinner fa-spin"></i> Kutish...';
+    const submitBtn = document.querySelector('.chat-submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Kutish...';
 
     // AI javobini so'rash
-    fetch("/ai-chat/", {
-      method: "POST",
+    fetch('/ai-chat/', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]")
-          .value,
+        'Content-Type': 'application/json',
+        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
       },
       body: JSON.stringify({ message: message }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
       .then((data) => {
-        // Matnni formatlash (agar kod bo'lsa)
-        const formattedResponse = formatMessage(data.response);
-        addMessage(formattedResponse, "bot");
+        if (data.response) {
+          // Matnni formatlash
+          const formattedResponse = formatMessage(data.response);
+          addMessageToScreen(formattedResponse, 'bot', true); // true - localStorage ga saqlash
+        } else {
+          throw new Error('No response from server');
+        }
       })
       .catch((error) => {
-        console.error("Error:", error);
-        addMessage("Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.", "bot");
+        console.error('Error:', error);
+        addMessageToScreen('Xatolik yuz berdi. Iltimos, qayta urinib ko\'ring.', 'bot', true);
       })
       .finally(() => {
         // Inputni qayta aktivlashtirish
         userInput.disabled = false;
-        document.querySelector(".chat-submit-btn").disabled = false;
-        document.querySelector(".chat-submit-btn").innerHTML =
-          '<i class="fas fa-paper-plane"></i> Yuborish';
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Yuborish';
         userInput.focus();
       });
   });
 
-  function addMessage(text, sender) {
-    const chatContainer = document.getElementById("chat-container");
-    const messageDiv = document.createElement("div");
+  // Xabarni ekranga qo'shish
+  function addMessageToScreen(text, sender, saveToStorage = true) {
+    const chatContainer = document.getElementById('chat-container');
+    const messageDiv = document.createElement('div');
     messageDiv.className = `chat-message ${
-      sender === "user" ? "user-message" : "bot-message"
+      sender === 'user' ? 'user-message' : 'bot-message'
     }`;
 
-    const bubble = document.createElement("div");
+    const bubble = document.createElement('div');
     bubble.className = `message-bubble ${
-      sender === "user" ? "user-bubble" : "bot-bubble"
+      sender === 'user' ? 'user-bubble' : 'bot-bubble'
     }`;
 
     // Agar bot javobi bo'lsa va formatlash kerak bo'lsa
-    if (sender === "bot") {
+    if (sender === 'bot') {
       bubble.innerHTML = formatMessage(text);
     } else {
       bubble.textContent = text;
@@ -526,54 +1047,41 @@
 
     // Scrollni pastga olib borish
     chatContainer.scrollTop = chatContainer.scrollHeight;
+
+    // Agar localStorage ga saqlash kerak bo'lsa
+    if (saveToStorage) {
+      saveMessageToStorage(text, sender);
+    }
   }
 
-  // Matnni formatlash funksiyasi (kod uchun)
+  // Matnni formatlash funksiyasi
   function formatMessage(text) {
-    // Oddiy text return qilish
+    // Agar text string bo'lmasa, string ga o'tkazish
+    if (typeof text !== 'string') {
+      text = String(text);
+    }
+
     return text
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;")
-      .replace(/\n/g, "<br>")
-      .replace(/```([\s\S]*?)```/g, "<pre><code>$1</code></pre>")
-      .replace(/`([^`]+)`/g, "<code>$1</code>");
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;')
+      .replace(/\n/g, '<br>')
+      .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+      .replace(/`([^`]+)`/g, '<code>$1</code>');
   }
 
   // Enter tugmasi bilan yuborish
-  document
-    .getElementById("user-input")
-    .addEventListener("keypress", function (e) {
-      if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        document.getElementById("chat-form").dispatchEvent(new Event("submit"));
-      }
-    });
-
-  // Shift+Enter bilan yangi qator
-  document
-    .getElementById("user-input")
-    .addEventListener("keydown", function (e) {
-      if (e.key === "Enter" && e.shiftKey) {
-        // Yangi qator qo'shish
-        return true;
-      }
-    });
-
-  // Sahifa yuklanganda inputga fokus qilish
-  document.addEventListener("DOMContentLoaded", function () {
-    const userInput = document.getElementById("user-input");
-    if (userInput) {
-      setTimeout(() => {
-        userInput.focus();
-      }, 300);
+  document.getElementById('user-input').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      document.getElementById('chat-form').dispatchEvent(new Event('submit'));
     }
   });
 
   // Chat container o'lchami o'zgarganda scrollni pastga olib borish
-  const chatContainer = document.getElementById("chat-container");
+  const chatContainer = document.getElementById('chat-container');
   if (chatContainer) {
     const observer = new MutationObserver(function () {
       chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -581,5 +1089,17 @@
 
     observer.observe(chatContainer, { childList: true, subtree: true });
   }
+
+  // CSS animation qo'shish
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(-10px); }
+      10% { opacity: 1; transform: translateY(0); }
+      90% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-10px); }
+    }
+  `;
+  document.head.appendChild(style);
 </script>
 {% endblock %}

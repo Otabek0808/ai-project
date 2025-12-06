@@ -4,30 +4,38 @@
   .documents_box {
     margin-bottom: 76px;
     margin-top: 30px;
+    width: 100%;
   }
+
   #new_mat a button {
     width: auto;
     height: auto;
     border-radius: 10px;
-    padding: 10px;
+    padding: 12px 20px;
     border: none;
     font-size: 14px;
     color: rgb(60, 72, 105);
     transition: 0.3s ease;
     background-color: rgba(255, 255, 255, 0.939);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
   }
+
   #new_mat a button:hover {
     background-color: rgba(255, 255, 255, 0.433);
     box-shadow: none;
     color: rgb(7, 50, 121);
   }
+
   #row {
     margin-top: -40px;
   }
+
   #row_contaner {
     background: none;
+    padding: 10px;
   }
+
   .card {
     border-radius: 15px;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
@@ -38,7 +46,10 @@
     border: 1px solid #ffffff;
     background: none;
     background-color: none;
+    display: flex;
+    flex-direction: column;
   }
+
   .cont_fan {
     width: 100%;
     text-align: center;
@@ -47,6 +58,23 @@
     backdrop-filter: blur(10px);
     background: rgba(48, 159, 203, 0.712);
     color: #ffffff;
+    flex-shrink: 0;
+  }
+
+  .cont_fan i {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+  }
+
+  .cont_fan h4 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  .cont_fan p {
+    font-size: 0.9rem;
+    opacity: 0.9;
   }
 
   .card_info {
@@ -55,28 +83,50 @@
     align-items: center;
     width: 100%;
     height: 100%;
-    padding: 30px 0 30px 0;
-    backdrop-filter: blur(1000000px);
-
+    padding: 25px 0;
+    backdrop-filter: blur(10px);
     background-color: rgba(255, 255, 255, 0.363);
+    flex: 1;
+    min-height: 120px;
   }
+
+  .card_info div {
+    text-align: center;
+  }
+
+  .card_info h5 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: rgb(48, 159, 203);
+    margin-bottom: 5px;
+  }
+
+  .card_info small {
+    font-size: 0.85rem;
+    color: #666;
+  }
+
   .mat_button {
     text-align: center;
-    padding: 10px;
+    padding: 15px 10px;
     border-radius: 0 0 10px 10px;
     backdrop-filter: blur(10px);
     background: rgba(48, 159, 203, 0.712);
+    flex-shrink: 0;
   }
+
   .mat_button a {
     display: block;
     text-decoration: none;
-    padding: 10px;
+    padding: 12px;
     border-radius: 8px;
-    margin-top: 10px;
+    margin: 8px 10px;
     color: black;
     backdrop-filter: blur(100px);
     background-color: rgba(255, 255, 255, 0.511);
     transition: 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
   }
 
   .mat_button a:hover {
@@ -84,10 +134,10 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     opacity: 0.7;
   }
+
   .card:hover {
     transform: translateY(-8px);
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15) !important;
-    width: 100%;
     border-radius: 10px;
     backdrop-filter: blur(10px);
   }
@@ -102,13 +152,403 @@
   }
 
   /* Responsive dizayn */
-  @media (max-width: 768px) {
-    .display-5 {
-      font-size: 2rem;
+
+  /* 1200px - Large tablets */
+  @media (max-width: 1200px) {
+    .documents_box {
+      margin-top: 25px;
+      margin-bottom: 70px;
+    }
+
+    .col-xl-4 {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+
+    .cont_fan {
+      padding: 20px;
+    }
+
+    .cont_fan h4 {
+      font-size: 1.4rem;
+    }
+
+    .card_info h5 {
+      font-size: 1.8rem;
+    }
+  }
+
+  /* 992px - Tablets */
+  /* 992px - Tablets */
+@media (max-width: 992px) {
+    .documents_box {
+      margin-top: 20px;
+      margin-bottom: 65px;
+      padding: 0 15px;
+    }
+
+    #new_mat {
+      flex-direction: row; /* Gorizontal qoldiramiz */
+      align-items: center !important; /* Markazga tekislashtiramiz */
+      gap: 15px;
+    }
+
+    #new_mat a button {
+      width: auto; /* To'liq kenglik emas */
+      min-width: 150px; /* Minimal kenglik */
+      text-align: center;
+      white-space: nowrap; /* Matn qatorga sig'masdan */
+    }
+
+    /* Faqat kichik tabletlarda gorizontal qoldiramiz */
+    .col-xl-4 {
+      flex: 0 0 50%; /* 2 ta ustun qoldiramiz */
+      max-width: 50%;
+    }
+
+    .col-lg-6 {
+      flex: 0 0 50%; /* 2 ta ustun qoldiramiz */
+      max-width: 50%;
+    }
+
+    #row_contaner {
+      padding: 10px;
     }
 
     .card {
-      margin-bottom: 1.5rem;
+      margin-top: 20px;
+      max-width: 100%; /* Maksimal kenglik */
+      margin-left: 0;
+      margin-right: 0;
+      height: 100%; /* Balandlikni to'ldirish */
+    }
+
+    .cont_fan {
+      padding: 20px 15px; /* Qisqaroq gorizontal padding */
+    }
+
+    .cont_fan i {
+      font-size: 2.2rem;
+    }
+
+    .cont_fan h4 {
+      font-size: 1.3rem;
+      white-space: nowrap; /* Fan nomlari qatorga sig'masdan */
+      overflow: hidden;
+      text-overflow: ellipsis; /* Uzoq matnlar uchun ... */
+    }
+
+    .card_info {
+      padding: 20px 0;
+      min-height: 100px;
+    }
+
+    .card_info h5 {
+      font-size: 1.7rem;
+    }
+
+    .mat_button {
+      padding: 12px 10px;
+    }
+
+    .mat_button a {
+      padding: 10px 8px; /* Qisqaroq gorizontal padding */
+      margin: 6px 8px;
+      font-size: 0.85rem;
+      white-space: nowrap; /* Tugma matnlari qatorga sig'masdan */
+      text-align: center;
+    }
+
+    /* Agar matn juda uzun bo'lsa */
+    .cont_fan p {
+      font-size: 0.85rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* Maksimal 2 qator */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+ /* 768px - Small tablets */
+@media (max-width: 768px) {
+    .documents_box {
+      margin-top: 15px;
+      margin-bottom: 60px;
+      padding: 0 10px;
+    }
+
+    #row {
+      margin-top: -30px;
+    }
+
+    h1 {
+      font-size: 1.8rem !important;
+    }
+
+    .lead.text-muted {
+      font-size: 0.95rem !important;
+    }
+
+    /* 768px da VERTIKAL joylashish */
+    .col-xl-4,
+    .col-lg-6 {
+      flex: 0 0 50%; /* 1 ustun - vertikal */
+      max-width: 50%;
+    }
+
+    #row_contaner {
+      padding: 8px;
+    }
+
+    .card {
+      margin-top: 15px; /* Markazga joylashish uchun maksimal kenglik */
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 8px;
+    }
+
+    .cont_fan {
+      padding: 18px 15px;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .cont_fan i {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .cont_fan h4 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      white-space: normal; /* Matnni to'liq ko'rsatish */
+      overflow: visible;
+      text-overflow: clip;
+    }
+
+    .cont_fan p {
+      font-size: 0.85rem;
+      display: block; /* To'liq ko'rsatish */
+      -webkit-line-clamp: none;
+      overflow: visible;
+    }
+
+    .card_info {
+      padding: 15px 0;
+      min-height: 90px;
+    }
+
+    .card_info h5 {
+      font-size: 1.6rem;
+    }
+
+    .card_info small {
+      font-size: 0.8rem;
+    }
+
+    .mat_button {
+      padding: 10px 8px;
+      border-radius: 0 0 8px 8px;
+    }
+
+    .mat_button a {
+      padding: 8px;
+      margin: 5px 8px;
+      font-size: 0.8rem;
+      border-radius: 6px;
+      white-space: normal; /* Matnni to'liq ko'rsatish */
+      text-align: center;
+    }
+
+    #new_mat {
+    flex-wrap: wrap; /* Vertikal joylashish */
+      align-items: flex-start !important;
+      gap: 15px;
+    }
+
+    #new_mat a button {
+      padding: 10px 16px;
+      font-size: 0.9rem;
+      width: 100%; /* To'liq kenglik */
+      min-width: auto; /* Minimal kenglikni olib tashlash */
+      white-space: nowrap;
+    }
+  }
+  /* 576px - Mobile landscape */
+  @media (max-width: 576px) {
+    .documents_box {
+      margin-bottom: 55px;
+      padding: 0 8px;
+    }
+
+    #new_mat {flex-direction: column; /* Vertikal joylashish */
+      gap: 12px;
+    }
+.col-xl-4,
+    .col-lg-6 {
+      flex: 0 0 100%; /* 1 ustun - vertikal */
+      max-width: 100%;
+    }
+    h1 {
+      font-size: 1.6rem !important;
+      margin-bottom: 5px !important;
+    }
+
+    .lead.text-muted {
+      font-size: 0.9rem !important;
+      margin-bottom: 15px !important;
+    }
+
+    #row_contaner {
+      padding: 5px;
+    }
+
+    .card {
+      margin-top: 10px;
+      border-radius: 7px;
+      padding: 10px;
+    }
+
+    .cont_fan {
+      padding: 15px 12px;
+      border-radius: 7px 7px 0 0;
+    }
+
+    .cont_fan i {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .cont_fan h4 {
+      font-size: 1.1rem;
+    }
+
+    .cont_fan p {
+      font-size: 0.8rem;
+    }
+
+    .card_info {
+      padding: 12px 0;
+      min-height: 80px;
+    }
+
+    .card_info h5 {
+      font-size: 1.5rem;
+    }
+
+    .card_info small {
+      font-size: 0.75rem;
+    }
+
+    .mat_button {
+      padding: 8px;
+    }
+
+    .mat_button a {
+      padding: 8px 6px;
+      margin: 4px 6px;
+      font-size: 0.75rem;
+    }
+
+    #new_mat a button {
+      padding: 8px 14px;
+      font-size: 0.85rem;
+      width: 100%;
+    }
+  }
+
+  /* 480px - Mobile portrait */
+  @media (max-width: 480px) {
+    .documents_box {
+      margin-bottom: 50px;
+      padding: 0 5px;
+    }
+
+    #row {
+      margin-top: -20px;
+    }
+
+    h1 {
+      font-size: 1.4rem !important;
+    }
+
+    .lead.text-muted {
+      font-size: 0.85rem !important;
+    }
+
+    .cont_fan {
+      padding: 12px 10px;
+    }
+
+    .cont_fan i {
+      font-size: 1.6rem;
+    }
+
+    .cont_fan h4 {
+      font-size: 1rem;
+    }
+
+    .card_info {
+      padding: 10px 0;
+      min-height: 70px;
+    }
+
+    .card_info h5 {
+      font-size: 1.4rem;
+    }
+
+    .mat_button {
+      padding: 6px;
+    }
+
+    .mat_button a {
+      padding: 7px 5px;
+      margin: 3px 5px;
+      font-size: 0.7rem;
+    }
+  }
+
+  /* 360px - Small mobile */
+  @media (max-width: 360px) {
+    .documents_box {
+      margin-bottom: 45px;
+      padding: 0 3px;
+    }
+
+    .cont_fan {
+      padding: 10px 8px;
+    }
+
+    .cont_fan i {
+      font-size: 1.4rem;
+    }
+
+    .cont_fan h4 {
+      font-size: 0.9rem;
+    }
+
+    .card_info {
+      padding: 8px 0;
+      min-height: 65px;
+    }
+
+    .card_info h5 {
+      font-size: 1.3rem;
+    }
+
+    .card_info small {
+      font-size: 0.7rem;
+    }
+
+    .mat_button a {
+      padding: 6px 4px;
+      margin: 3px 4px;
+      font-size: 0.65rem;
+    }
+
+    #new_mat a button {
+      padding: 7px 12px;
+      font-size: 0.8rem;
     }
   }
 
@@ -125,6 +565,31 @@
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  /* Empty state styling */
+  .card.text-center.py-5 .fa-3x {
+    font-size: 3rem;
+    margin-bottom: 15px;
+  }
+
+  .card.text-center.py-5 h4 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 768px) {
+    .card.text-center.py-5 .fa-3x {
+      font-size: 2.5rem;
+    }
+
+    .card.text-center.py-5 h4 {
+      font-size: 1.1rem;
+    }
+
+    .card.text-center.py-5 p {
+      font-size: 0.9rem;
     }
   }
 </style>
