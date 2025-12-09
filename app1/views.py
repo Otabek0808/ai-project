@@ -46,7 +46,7 @@ def home(request):
             percentages = [result.percentage() for result in test_results]
 
             # Ranglar
-            colors = ['blue' for p in percentages]
+            colors = ['lightblue' for p in percentages]
             # Ustunli diagramma
             bars = plt.bar(test_names, percentages, color=colors, alpha=0.7, edgecolor='black')
 
