@@ -14,6 +14,7 @@
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
 
+                        <!-- Xatoliklarni ko'rsatish -->
                         {% if form.errors %}
                         <div class="alert alert-danger">
                             <strong>Xatolik!</strong> Iltimos, quyidagi xatoliklarni tuzating:
@@ -32,25 +33,25 @@
 
                         <!-- Fan tanlash -->
                         <div class="mb-3">
-                            <label for="{{ form.subject.id_for_label }}" class="form-label">Fan</label>
+                            <label for="id_subject" class="form-label">Fan</label>
                             {{ form.subject }}
                         </div>
 
                         <!-- Test nomi -->
                         <div class="mb-3">
-                            <label for="{{ form.title.id_for_label }}" class="form-label">Test Nomi</label>
+                            <label for="id_title" class="form-label">Test Nomi</label>
                             {{ form.title }}
                         </div>
 
                         <!-- Tavsif -->
                         <div class="mb-3">
-                            <label for="{{ form.description.id_for_label }}" class="form-label">Tavsif</label>
+                            <label for="id_description" class="form-label">Tavsif</label>
                             {{ form.description }}
                         </div>
 
                         <!-- Test fayli -->
                         <div class="mb-3">
-                            <label for="{{ form.test_file.id_for_label }}" class="form-label">Test Fayli</label>
+                            <label for="id_test_file" class="form-label">Test Fayli</label>
                             {{ form.test_file }}
                             <div class="form-text">
                                 Faqat .txt fayllar qabul qilinadi. Yangi format:
@@ -69,24 +70,28 @@
                         <div class="row">
                             <!-- Test vaqti -->
                             <div class="col-md-6 mb-3">
-                                <label for="{{ form.time_limit_minutes.id_for_label }}" class="form-label">
+                                <label for="id_time_limit_minutes" class="form-label">
                                     Test Vaqti (daqiqa)
                                 </label>
                                 {{ form.time_limit_minutes }}
+                                {% if form.time_limit_minutes.help_text %}
                                 <div class="form-text">
                                     {{ form.time_limit_minutes.help_text }}
                                 </div>
+                                {% endif %}
                             </div>
 
                             <!-- Savollar soni -->
                             <div class="col-md-6 mb-3">
-                                <label for="{{ form.question_count.id_for_label }}" class="form-label">
+                                <label for="id_question_count" class="form-label">
                                     Savollar Soni
                                 </label>
                                 {{ form.question_count }}
+                                {% if form.question_count.help_text %}
                                 <div class="form-text">
                                     {{ form.question_count.help_text }}
                                 </div>
+                                {% endif %}
                             </div>
                         </div>
 
@@ -145,19 +150,100 @@ Javob: B
 <style>
 .card {
     border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    border-radius: 10px 10px 0 0 !important;
+    padding: 15px 20px;
 }
 
 .form-control, .form-select {
     border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 10px 15px;
+    transition: all 0.3s;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 
 .btn {
     border-radius: 8px;
+    padding: 10px 25px;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #0b5ed7 0%, #0a58ca 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(13, 110, 253, 0.3);
 }
 
 pre {
     font-size: 0.9rem;
     line-height: 1.4;
+    background-color: #f8f9fa;
+    border-left: 4px solid #0d6efd;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+}
+
+.alert {
+    border-radius: 8px;
+    border: none;
+}
+
+.form-text {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-top: 5px;
 }
 </style>
+
+<!-- JavaScript validatsiya -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const fileInput = document.querySelector('#id_test_file');
+
+    if (form && fileInput) {
+        form.addEventListener('submit', function(e) {
+            // Fayl formatini tekshirish
+            if (fileInput.files.length > 0) {
+                const fileName = fileInput.files[0].name.toLowerCase();
+                if (!fileName.endsWith('.txt')) {
+                    e.preventDefault();
+                    alert('Iltimos, faqat .txt formatidagi fayllarni yuklang!');
+                    fileInput.focus();
+                    return false;
+                }
+
+                // Fayl hajmini tekshirish (5MB)
+                const fileSize = fileInput.files[0].size;
+                const maxSize = 5 * 1024 * 1024; // 5MB
+                if (fileSize > maxSize) {
+                    e.preventDefault();
+                    alert('Fayl hajmi 5MB dan katta bo\'lmasligi kerak!');
+                    return false;
+                }
+            }
+
+            // Yuklash jarayonida tugmani disable qilish
+            const submitBtn = this.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Yuklanmoqda...';
+            }
+        });
+    }
+});
+</script>
 {% endblock %}

@@ -51,8 +51,7 @@
                 <i class="fas fa-clock"></i> Sarflangan Vaqt
               </h6>
               <h4 class="text-warning">
-                {% widthratio time_taken_seconds 60 1 as minutes %} {{ minutes
-                }} daqiqa {{ time_taken_seconds|divisibleby:60|yesno:",0" }}
+                {% widthratio time_taken_seconds 60 1 as minutes %} {{ minutes }} daqiqa {{ time_taken_seconds|divisibleby:60|yesno:",0" }}
                 soniya
               </h4>
               <small class="text-muted"
@@ -68,11 +67,14 @@
           >
             <h5>
               {% if percentage >= 90 %}
-              <i class="fas fa-star"></i> A'lo! Juda yaxshi! {% elif percentage
-              >= 70 %} <i class="fas fa-thumbs-up"></i> Yaxshi! {% elif
-              percentage >= 50 %} <i class="fas fa-check"></i> Qoniqarli {% else
-              %} <i class="fas fa-redo"></i> Qaytadan o'rganib chiqing {% endif
-              %}
+                <i class="fas fa-star"></i> A'lo! Juda yaxshi!
+              {% elif percentage >= 70 %}
+                <i class="fas fa-thumbs-up"></i> Yaxshi!
+              {% elif percentage >= 50 %}
+                <i class="fas fa-check"></i> Qoniqarli
+              {% else %}
+                <i class="fas fa-redo"></i> Qaytadan o'rganib chiqing
+              {% endif %}
             </h5>
             <p class="mb-0">
               {% if percentage >= 90 %} Siz bu mavzuni mukammal

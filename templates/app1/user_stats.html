@@ -60,11 +60,13 @@
                     {% with percentage=result.percentage %}
                     <!-- ✅ METHOD NI CHAQIRISH -->
                     {% if percentage >= 80 %}
-                    <i class="fas fa-check text-success"></i> A'lo {% elif
-                    percentage >= 60 %}
-                    <i class="fas fa-check text-warning"></i> Yaxshi {% else %}
-                    <i class="fas fa-times text-danger"></i> Qoniqarsiz {% endif
-                    %} {% endwith %}
+                    <i class="fas fa-check text-success"></i> A'lo
+                    {% elif percentage >= 60 %}
+                    <i class="fas fa-check text-warning"></i> Yaxshi
+                    {% else %}
+                    <i class="fas fa-times text-danger"></i> Qoniqarsiz
+                    {% endif %}
+                    {% endwith %}
                   </td>
                 </tr>
                 {% empty %}
