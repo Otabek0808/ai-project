@@ -34,6 +34,7 @@ urlpatterns = [
     path('ai-chat/', views.ai_chat, name='ai_chat'),
     path('subject/<int:subject_id>/documents/', views.subject_documents, name='subject_documents'),
 
+
     # Test tizimi
     path('tests/', views.tests, name='tests'),
     path('test/<int:test_id>/', views.take_test, name='take_test'),

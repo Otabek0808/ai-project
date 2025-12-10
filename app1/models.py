@@ -42,7 +42,6 @@ class Test(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     uploaded_at = models.DateTimeField(default=timezone.now)
-
     # Faqat vaqt chegarasi
     time_limit_minutes = models.PositiveIntegerField(
         default=30,

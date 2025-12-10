@@ -14,63 +14,227 @@ import time
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
+from users.models import UserProfile
 
 
-# -------------------- ASOSIY SAHIFALAR --------------------
 def home(request):
-    """Bosh sahifa"""
+    """Bosh sahifa - Yangilangan versiya"""
     graphic = None
 
+    # BARCHA foydalanuvchilar uchun materiallar
+    videos = VideoLesson.objects.all()
+    documents = Document.objects.all()
+    tests = Test.objects.all()
+    users = UserProfile.objects.all()
+
+    # Fanlar bo'yicha materiallar statistikasi
+    subject_materials = {}
+
+    # 1. Har bir fan uchun materiallarni hisoblash
+    for doc in documents:
+        if doc.subject:
+            subject_name = doc.subject.name
+            if subject_name not in subject_materials:
+                subject_materials[subject_name] = {
+                    'documents': 1,
+                    'videos': 0,
+                    'tests': 0,
+                    'total': 1
+                }
+            else:
+                subject_materials[subject_name]['documents'] += 1
+                subject_materials[subject_name]['total'] += 1
+
+    for video in videos:
+        if video.subject:
+            subject_name = video.subject.name
+            if subject_name not in subject_materials:
+                subject_materials[subject_name] = {
+                    'documents': 0,
+                    'videos': 1,
+                    'tests': 0,
+                    'total': 1
+                }
+            else:
+                subject_materials[subject_name]['videos'] += 1
+                subject_materials[subject_name]['total'] += 1
+
+    for test in tests:
+        if test.subject:
+            subject_name = test.subject.name
+            if subject_name not in subject_materials:
+                subject_materials[subject_name] = {
+                    'documents': 0,
+                    'videos': 0,
+                    'tests': 1,
+                    'total': 1
+                }
+            else:
+                subject_materials[subject_name]['tests'] += 1
+                subject_materials[subject_name]['total'] += 1
+
+    # 2. Foydalanuvchilarning har bir fan uchun o'zlashtirish darajasi
+    user_subject_progress = {}
     if request.user.is_authenticated:
-        # Foydalanuvchining test natijalarini olish
-        test_results = TestResult.objects.filter(user=request.user).order_by('completed_at')
+        test_results = TestResult.objects.filter(user=request.user).select_related('test')
 
-        if test_results:
-            # Grafik yaratish
-            import matplotlib
-            matplotlib.use('Agg')
-            import matplotlib.pyplot as plt
-            import io
-            import base64
+        for result in test_results:
+            if result.test and result.test.subject:
+                subject_name = result.test.subject.name
+                percentage = result.percentage()
 
-            plt.figure(figsize=(10, 5))
+                if subject_name not in user_subject_progress:
+                    user_subject_progress[subject_name] = {
+                        'total_percentage': percentage,
+                        'count': 1,
+                        'avg_percentage': percentage
+                    }
+                else:
+                    user_subject_progress[subject_name]['total_percentage'] += percentage
+                    user_subject_progress[subject_name]['count'] += 1
+                    user_subject_progress[subject_name]['avg_percentage'] = \
+                        user_subject_progress[subject_name]['total_percentage'] / \
+                        user_subject_progress[subject_name]['count']
 
-            # Testlar va ballar
-            test_names = [f"Test {i + 1}" for i in range(len(test_results))]
-            percentages = [result.percentage() for result in test_results]
+    # 3. Grafik yaratish - IKKALA DIAGRAMMA HAM DUMALOQ
+    if subject_materials:
+        import matplotlib
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
+        import io
+        import base64
+        import numpy as np
 
-            # Ranglar
-            colors = ['lightblue']
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 7))
 
-            # Ustunli diagramma
-            bars = plt.bar(test_names, percentages, color=colors, alpha=0.7, edgecolor='blue')
+        # 3.1. Fanlar bo'yicha materiallar (dumaloq diagramma)
+        subjects = list(subject_materials.keys())
+        total_materials = [subject_materials[subj]['total'] for subj in subjects]
 
-            # Har bir ustun ustiga foizlarni yozish
-            for bar, percentage in zip(bars, percentages):
-                plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 1,
-                         f'{percentage:.1f}%', ha='center', va='bottom', fontweight='bold')
+        # Materiallar soni bo'yicha tartiblash
+        sorted_indices = np.argsort(total_materials)[::-1]
+        subjects = [subjects[i] for i in sorted_indices]
+        total_materials = [total_materials[i] for i in sorted_indices]
 
-            # Formatlar
-            plt.title(f'Sizning Test Natijalaringiz', fontsize=14, fontweight='bold')
-            plt.xlabel('Testlar', fontsize=12)
-            plt.ylabel('Foiz (%)', fontsize=12)
-            plt.xticks(rotation=0)
-            plt.ylim(0, 100)
-            plt.grid(True, alpha=0.3, axis='y')
+        # Faqat materiali ko'p bo'lgan 10 ta fanni ko'rsatish
+        if len(subjects) > 10:
+            subjects = subjects[:10]
+            total_materials = total_materials[:10]
+            others_total = sum(total_materials[10:]) if len(total_materials) > 10 else 0
+            subjects.append('Boshqa fanlar')
+            total_materials.append(others_total)
 
-            plt.tight_layout()
+        colors1 = plt.cm.Set3(np.linspace(0, 1, len(subjects)))
+        wedges1, texts1, autotexts1 = ax1.pie(
+            total_materials,
+            labels=subjects,
+            colors=colors1,
+            autopct=lambda pct: f'{pct:.1f}%\n({int(pct * sum(total_materials) / 100)})' if pct > 5 else '',
+            startangle=90,
+            pctdistance=0.8,
+            textprops={'fontsize': 9}
+        )
+        ax1.set_title('Fanlar bo\'yicha materiallar taqsimoti', fontweight='bold', fontsize=12, pad=20)
 
-            # Grafikni base64 ga o'tkazish
-            buffer = io.BytesIO()
-            plt.savefig(buffer, format='png', dpi=100, bbox_inches='tight')
-            buffer.seek(0)
-            image_png = buffer.getvalue()
-            buffer.close()
-            graphic = base64.b64encode(image_png).decode('utf-8')
-            plt.close()
+        # Markazda ma'lumot
+        centre_circle1 = plt.Circle((0, 0), 0.70, fc='white')
+        ax1.add_artist(centre_circle1)
+        total_all_materials = sum(total_materials)
+        ax1.text(0, 0.1, f'Jami:', ha='center', va='center', fontsize=10, fontweight='bold')
+        ax1.text(0, -0.05, f'{total_all_materials}', ha='center', va='center', fontsize=16, fontweight='bold')
+        ax1.text(0, -0.15, f'material', ha='center', va='center', fontsize=9)
+
+        # 3.2. Foydalanuvchilarning o'zlashtirish darajasi (dumaloq diagramma)
+        if user_subject_progress and request.user.is_authenticated:
+            user_subjects = list(user_subject_progress.keys())
+            user_avg_percentages = [user_subject_progress[subj]['avg_percentage'] for subj in user_subjects]
+
+            if len(user_subjects) > 0:
+                # O'zlashtirish darajasi bo'yicha tartiblash
+                sorted_indices = np.argsort(user_avg_percentages)[::-1]
+                user_subjects = [user_subjects[i] for i in sorted_indices]
+                user_avg_percentages = [user_avg_percentages[i] for i in sorted_indices]
+
+                # Faqat 10 ta fan ko'rsatish
+                if len(user_subjects) > 10:
+                    user_subjects = user_subjects[:10]
+                    user_avg_percentages = user_avg_percentages[:10]
+
+                # Baholash bo'yicha ranglar
+                colors2 = []
+                for perc in user_avg_percentages:
+                    if perc >= 80:
+                        colors2.append('#4CAF50')  # Yaxshi
+                    elif perc >= 60:
+                        colors2.append('#FFC107')  # O'rtacha
+                    else:
+                        colors2.append('#F44336')  # Qoniqarsiz
+
+                wedges2, texts2, autotexts2 = ax2.pie(
+                    user_avg_percentages,
+                    labels=user_subjects,
+                    colors=colors2,
+                    autopct=lambda pct: f'{pct:.1f}%' if pct > 5 else '',
+                    startangle=90,
+                    pctdistance=0.8,
+                    textprops={'fontsize': 9}
+                )
+
+                # Markazda ma'lumot
+                centre_circle2 = plt.Circle((0, 0), 0.70, fc='white')
+                ax2.add_artist(centre_circle2)
+                avg_overall = sum(user_avg_percentages) / len(user_avg_percentages) if user_avg_percentages else 0
+                ax2.text(0, 0.1, f'O\'rtacha:', ha='center', va='center', fontsize=10, fontweight='bold')
+                ax2.text(0, -0.05, f'{avg_overall:.1f}%', ha='center', va='center', fontsize=16, fontweight='bold')
+                ax2.text(0, -0.15, f'{len(user_subjects)} fan', ha='center', va='center', fontsize=9)
+
+                # Legend
+                from matplotlib.patches import Patch
+                legend_elements = [
+                    Patch(facecolor='#4CAF50', label='Yaxshi (80-100%)'),
+                    Patch(facecolor='#FFC107', label='O\'rtacha (60-79%)'),
+                    Patch(facecolor='#F44336', label='Qoniqarsiz (0-59%)')
+                ]
+                ax2.legend(handles=legend_elements, loc='center left', bbox_to_anchor=(1, 0, 0.5, 1), fontsize=9)
+
+            else:
+                ax2.text(0.5, 0.5, 'Hozircha test\nnatijalari yo\'q',
+                         ha='center', va='center', fontsize=12,
+                         transform=ax2.transAxes)
+        else:
+            ax2.text(0.5, 0.5, 'Tizimga kiring\nva test topshiring',
+                     ha='center', va='center', fontsize=12,
+                     transform=ax2.transAxes)
+
+        ax2.set_title(f'{"Foydalanuvchi" if request.user.is_authenticated else "Umumiy"} o\'zlashtirish darajasi',
+                      fontweight='bold', fontsize=12, pad=20)
+
+        plt.suptitle('Fanlar statistikasi', fontsize=14, fontweight='bold', y=0.95)
+        plt.tight_layout()
+
+        # Grafikni base64 ga o'tkazish
+        buffer = io.BytesIO()
+        plt.savefig(buffer, format='png', dpi=100, bbox_inches='tight')
+        buffer.seek(0)
+        image_png = buffer.getvalue()
+        buffer.close()
+        graphic = base64.b64encode(image_png).decode('utf-8')
+        plt.close()
 
     return render(request, 'app1/home.html', {
-        'graphic': graphic  # ✅ Kontekstga qo'shildi
+        'graphic': graphic,
+        'videos': videos,
+        'videos_count': videos.count(),
+        'documents': documents,
+        'documents_count': documents.count(),
+        'test_count': tests.count(),
+        'user_count': users.count(),
+        'subject_materials': subject_materials,
+        'user_subject_progress': user_subject_progress if request.user.is_authenticated else None,
+        'total_subjects': len(subject_materials),
+        'avg_progress': sum([data['avg_percentage'] for data in user_subject_progress.values()]) / len(
+            user_subject_progress)
+        if user_subject_progress else 0
     })
 def about(request):
     """Loyiha haqida sahifa"""
@@ -126,6 +290,8 @@ def add_document(request):
 def video_lessons(request):
     """Video darslar ro'yxati"""
     videos = VideoLesson.objects.all()
+    videos_count = videos.count()  # Sonini hisoblash
+
     return render(request, 'app1/video_lessons.html', {'videos': videos})
 
 
@@ -412,51 +578,82 @@ def admin_stats(request):
 @login_required
 @user_passes_test(is_admin)
 def user_stats(request, user_id):
-    """Foydalanuvchi statistikasi - Ustunli diagramma bilan"""
+    """Foydalanuvchi statistikasi - Fanlar bo'yicha maksimal natijalar bilan Dumaloq diagramma"""
     user = get_object_or_404(User, id=user_id)
-    test_results = TestResult.objects.filter(user=user).order_by('completed_at')  # ✅ completed_at bo'yicha tartiblash
+    test_results = TestResult.objects.filter(user=user).select_related('test').order_by('completed_at')
 
-    # Eng yaxshi natijani hisoblaymiz
+    # Fanlar bo'yicha guruhlash va har bir fanda eng yaxshi natijani olish
+    subject_stats = {}
+    for result in test_results:
+        subject_name = result.test.subject.name if result.test.subject else "Noma'lum fan"
+        percentage = result.percentage()
+
+        # Har bir fan uchun eng yaxshi natijani saqlash
+        if subject_name not in subject_stats or percentage > subject_stats[subject_name]['best_score']:
+            subject_stats[subject_name] = {
+                'best_score': percentage,
+                'test_count': subject_stats.get(subject_name, {}).get('test_count', 0) + 1,
+                'last_test': result.completed_at
+            }
+
+    # Eng yaxshi umumiy natijani hisoblash
     best_percentage = 0
     if test_results:
         percentages = [result.percentage() for result in test_results]
         best_percentage = max(percentages)
 
-    # Ustunli diagramma
-    plt.figure(figsize=(12, 6))
+    # Dumaloq diagramma yaratish
+    plt.figure(figsize=(10, 10))
 
-    if test_results:
-        # Testlar va ballar (tugatilish vaqti tartibida)
-        test_names = [f"Test {i + 1}" for i in range(len(test_results))]  # ✅ Test 1, Test 2, ...
-        percentages = [result.percentage() for result in test_results]
+    if subject_stats:
+        # Fanlar va eng yaxshi ballar
+        subjects = list(subject_stats.keys())
+        best_scores = [subject_stats[subj]['best_score'] for subj in subjects]
+        test_counts = [subject_stats[subj]['test_count'] for subj in subjects]
 
-        # Ranglar - ballarga qarab
-        colors = ['green' if p >= 80 else 'orange' if p >= 60 else 'red' for p in percentages]
+        # Ranglar
+        colors = plt.cm.Set3(np.linspace(0, 1, len(subjects)))
 
-        # Ustunli diagramma
-        bars = plt.bar(test_names, percentages, color=colors, alpha=0.7, edgecolor='black')
+        # Dumaloq diagramma
+        wedges, texts, autotexts = plt.pie(
+            best_scores,
+            labels=subjects,
+            colors=colors,
+            autopct='%1.1f%%',
+            startangle=90,
+            pctdistance=0.85,
+            textprops={'fontsize': 11}
+        )
 
-        # Har bir ustun ustiga foizlarni yozish
-        for bar, percentage in zip(bars, percentages):
-            plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 1,
-                     f'{percentage:.1f}%', ha='center', va='bottom', fontweight='bold')
+        # Markazda ma'lumot
+        centre_circle = plt.Circle((0, 0), 0.70, fc='white')
+        plt.gca().add_artist(centre_circle)
 
-        # Formatlar
-        plt.title(f'{user.username} - Test Natijalari (Ketma-ketlik)', fontsize=14, fontweight='bold')
-        plt.xlabel('Testlar (tugatilish tartibida)', fontsize=12)
-        plt.ylabel('Foiz (%)', fontsize=12)
-        plt.xticks(rotation=0)  # ✅ Aylantirish yo'q
-        plt.ylim(0, 100)
-        plt.grid(True, alpha=0.3, axis='y')
+        # Markazda umumiy ma'lumot
+        total_subjects = len(subjects)
+        total_tests = sum(test_counts)
+        avg_best_score = sum(best_scores) / len(best_scores) if best_scores else 0
 
-        # Legend
-        from matplotlib.patches import Patch
-        legend_elements = [
-            Patch(facecolor='green', alpha=0.7, label='Yaxshi (80%+)'),
-            Patch(facecolor='orange', alpha=0.7, label='Qoniqarli (60-79%)'),
-            Patch(facecolor='red', alpha=0.7, label='Qoniqarsiz (<60%)')
-        ]
-        plt.legend(handles=legend_elements)
+        plt.text(0, 0.1, f'{user.username}', ha='center', va='center',
+                 fontsize=16, fontweight='bold')
+        plt.text(0, -0.05, f'Fanlar: {total_subjects}', ha='center', va='center',
+                 fontsize=12)
+        plt.text(0, -0.15, f'Testlar: {total_tests}', ha='center', va='center',
+                 fontsize=12)
+        plt.text(0, -0.25, f"O'rtacha: {avg_best_score:.1f}%", ha='center', va='center',
+                 fontsize=12)
+
+        # Sarlavha
+        plt.title(f'{user.username} - Fanlar bo\'yicha Eng Yaxshi Natijalar',
+                  fontsize=16, fontweight='bold', pad=20)
+
+        # Legend - har bir fan uchun testlar soni va eng yaxshi ball
+        legend_labels = []
+        for i, (subject, stats) in enumerate(subject_stats.items()):
+            legend_labels.append(f"{subject}: {stats['best_score']:.1f}% ({stats['test_count']} test)")
+
+        plt.legend(wedges, legend_labels, title="Fanlar tafsiloti",
+                   loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), fontsize=10)
 
         plt.tight_layout()
 
@@ -471,11 +668,29 @@ def user_stats(request, user_id):
     else:
         graphic = None
 
+    # Template uchun qo'shimcha ma'lumotlar
+    subject_details = []
+    if subject_stats:
+        for subject, stats in subject_stats.items():
+            subject_details.append({
+                'name': subject,
+                'best_score': stats['best_score'],
+                'test_count': stats['test_count'],
+                'last_test': stats['last_test'].strftime("%d.%m.%Y %H:%M") if stats['last_test'] else "Noma'lum"
+            })
+        # Eng yaxshi natija bo'yicha tartiblash
+        subject_details.sort(key=lambda x: x['best_score'], reverse=True)
+
     return render(request, 'app1/user_stats.html', {
         'user': user,
         'test_results': test_results,
         'graphic': graphic,
-        'best_percentage': round(best_percentage, 1)
+        'best_percentage': round(best_percentage, 1),
+        'subject_details': subject_details,  # Fanlar tafsiloti
+        'total_subjects': len(subject_stats) if subject_stats else 0,
+        'total_tests': sum([s['test_count'] for s in subject_stats.values()]) if subject_stats else 0,
+        'avg_best_score': sum([s['best_score'] for s in subject_stats.values()]) / len(
+            subject_stats) if subject_stats else 0
     })
 
 @login_required
