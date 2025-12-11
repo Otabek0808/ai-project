@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Loyiha Haqida - Code Compiler{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- Loyiha haqida -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 text-center bg-primary text-white">
+                    <h1 class="h3 mb-0">
+                        <i class="bi bi-code-square me-2"></i>
+                        Code Compiler
+                    </h1>
+                    <p class="mb-0 mt-2">Dasturlashni o'rganish va mashq qilish platformasi</p>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-5">
+                        <div class="display-1 text-primary mb-3">
+                            <i class="bi bi-laptop"></i>
+                        </div>
+                        <h2 class="h4 text-gray-800">Dasturlashni o'rganing, mashq qiling, rivojlaning!</h2>
+                    </div>
+
+                    <div class="row mb-5">
+                        <div class="col-md-4 text-center mb-4">
+                            <div class="rounded-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3"
+                                 style="width: 80px; height: 80px;">
+                                <i class="bi bi-pencil-square display-4 text-primary"></i>
+                            </div>
+                            <h4 class="h5 font-weight-bold">Kod Yozing</h4>
+                            <p class="text-muted">
+                                Turli qiyinchilikdagi dasturlash savollariga javob yozing
+                            </p>
+                        </div>
+                        <div class="col-md-4 text-center mb-4">
+                            <div class="rounded-circle bg-success bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3"
+                                 style="width: 80px; height: 80px;">
+                                <i class="bi bi-play-circle display-4 text-success"></i>
+                            </div>
+                            <h4 class="h5 font-weight-bold">Testdan O'ting</h4>
+                            <p class="text-muted">
+                                Kodlaringizni avtomatik test tizimi orqali tekshiring
+                            </p>
+                        </div>
+                        <div class="col-md-4 text-center mb-4">
+                            <div class="rounded-circle bg-info bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3"
+                                 style="width: 80px; height: 80px;">
+                                <i class="bi bi-graph-up display-4 text-info"></i>
+                            </div>
+                            <h4 class="h5 font-weight-bold">Rivojlaning</h4>
+                            <p class="text-muted">
+                                Progressingizni kuzatib boring va o'z bilimingizni oshiring
+                            </p>
+                        </div>
+                    </div>
+
+                    <h3 class="h5 font-weight-bold text-primary mb-3">
+                        <i class="bi bi-check-circle me-2"></i>
+                        Loyihaning Maqsadi
+                    </h3>
+                    <p class="mb-4">
+                        Code Compiler - bu dasturlashni o'rganuvchilar va tajribali dasturchilar uchun
+                        mo'ljallangan onlayn platforma. Bu yerda siz turli qiyinchilik darajasidagi
+                        dasturlash masalalarini yechishingiz, kodlaringizni test qilishingiz va
+                        natijalaringizni kuzatishingiz mumkin.
+                    </p>
+
+                    <h3 class="h5 font-weight-bold text-primary mb-3">
+                        <i class="bi bi-star me-2"></i>
+                        Xususiyatlari
+                    </h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="bi bi-check text-success me-2"></i>
+                                    Ko'p tilli qo'llab-quvvatlash (Python, JavaScript, Java, C++)
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-check text-success me-2"></i>
+                                    Avtomatik test tizimi
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-check text-success me-2"></i>
+                                    Real vaqtda kodni ishga tushirish
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="bi bi-check text-success me-2"></i>
+                                    Detallangan natijalar va tahlillar
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-check text-success me-2"></i>
+                                    Progress monitoring
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-check text-success me-2"></i>
+                                    Foydalanuvchilarni reytingi
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Qo'llab-quvvatlanadigan tillar -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        <i class="bi bi-translate me-2"></i>
+                        Qo'llab-quvvatlanadigan Dasturlash Tillari
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3 mb-4">
+                            <div class="p-4 border rounded">
+                                <i class="bi bi-filetype-py display-4 text-primary mb-3"></i>
+                                <h5 class="font-weight-bold">Python</h5>
+                                <p class="small text-muted">Oddiy va kuchli</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="p-4 border rounded">
+                                <i class="bi bi-filetype-js display-4 text-warning mb-3"></i>
+                                <h5 class="font-weight-bold">JavaScript</h5>
+                                <p class="small text-muted">Veb dasturlash</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="p-4 border rounded">
+                                <i class="bi bi-filetype-java display-4 text-danger mb-3"></i>
+                                <h5 class="font-weight-bold">Java</h5>
+                                <p class="small text-muted">Platformadan mustaqil</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="p-4 border rounded">
+                                <i class="bi bi-filetype-c display-4 text-info mb-3"></i>
+                                <h5 class="font-weight-bold">C++</h5>
+                                <p class="small text-muted">Tezkor va kuchli</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jamoa haqida -->
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        <i class="bi bi-people me-2"></i>
+                        Biz Haqimizda
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <p class="mb-4">
+                        Biz - dasturlashni o'rganish jarayonini osonlashtirish va samarali qilishni
+                        maqsad qilgan yosh va qiziquvchan dasturchilardan iborat jamoa. Code Compiler
+                        loyihasi orqali biz dasturlashni o'rganayotgan barcha insonlarga yordam berishni,
+                        ularning bilim va ko'nikmalarini rivojlantirishlariga hissa qo'shishni niyat qildik.
+                    </p>
+
+                    <div class="text-center mt-5">
+                        <a href="{% url 'app2:code_practice' %}" class="btn btn-primary btn-lg">
+                            <i class="bi bi-play-circle me-2"></i>
+                            Dasturlashni Boshlash
+                        </a>
+                        <a href="{% url 'app2:documentation' %}" class="btn btn-outline-primary btn-lg ms-2">
+                            <i class="bi bi-book me-2"></i>
+                            Qo'llanma
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

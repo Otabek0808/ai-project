@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     # Local apps
     'app1',
+    'app2',
     'users',
 ]
 
@@ -258,3 +259,8 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 # File upload settings
 # FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
 # DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
+
+# Session settings
+SESSION_COOKIE_AGE = 1209600  # 2 hafta
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False

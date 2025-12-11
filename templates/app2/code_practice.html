@@ -1,0 +1,534 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Python Code Practice - Python Dasturlash Mashqlari{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Sahifa sarlavhasi -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h2 text-gray-800">
+                        <i class="fab fa-python text-primary me-2"></i>
+                        Python Code Practice
+                    </h1>
+                    <p class="text-muted mb-0">Python dasturlash tilini mashq qiling va kodlaringizni testlang</p>
+                </div>
+
+                {% if is_admin %}
+                <div>
+                    <a href="{% url 'app2:add_question' %}" class="btn btn-primary python-btn">
+                        <i class="fas fa-plus-circle me-2"></i> Yangi Python Savol
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Qidiruv va filtrlash -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0">
+                                    <i class="fas fa-search text-muted"></i>
+                                </span>
+                                <input type="text" name="q" class="form-control border-start-0"
+                                       placeholder="Python savollar bo'yicha qidirish..."
+                                       value="{{ search_query }}" id="searchInput">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <select name="difficulty" class="form-select" id="difficultyFilter">
+                                <option value="">Barcha qiyinchilik darajalari</option>
+                                <option value="easy" {% if difficulty_filter == 'easy' %}selected{% endif %}>Oson</option>
+                                <option value="medium" {% if difficulty_filter == 'medium' %}selected{% endif %}>O'rtacha</option>
+                                <option value="hard" {% if difficulty_filter == 'hard' %}selected{% endif %}>Qiyin</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="d-flex gap-2">
+                                <button type="button" class="btn btn-primary w-100" onclick="searchQuestions()">
+                                    <i class="fas fa-search me-2"></i> Qidirish
+                                </button>
+                                {% if search_query or difficulty_filter %}
+                                <a href="{% url 'app2:code_practice' %}" class="btn btn-outline-secondary">
+                                    <i class="fas fa-times"></i>
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistika kartalari -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                <i class="fab fa-python me-1"></i> Jami Python Savollar
+                            </div>
+                            <div class="h2 mb-0 font-weight-bold text-gray-800">
+                                {{ total_questions }}
+                            </div>
+                            <div class="mt-2 mb-0 text-xs">
+                                <span class="text-success">
+                                    <i class="fas fa-check-circle"></i> {{ questions|length }} ko'rsatilmoqda
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fab fa-python fa-2x text-primary opacity-25"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            {% with easy_count=questions|dictsortreversed:"difficulty"|dictsort:"difficulty"|first %}
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                <i class="fas fa-star me-1"></i> Oson Savollar
+                            </div>
+                            <div class="h2 mb-0 font-weight-bold text-gray-800">
+                                {{ questions|dictsort:"difficulty"|dictsortreversed:"difficulty"|first }}
+                            </div>
+                            {% endwith %}
+                            <div class="mt-2 mb-0 text-xs">
+                                <span class="badge bg-success">Boshlang'ich</span>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-star fa-2x text-success opacity-25"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                <i class="fas fa-chart-line me-1"></i> O'rtacha Savollar
+                            </div>
+                            <div class="h2 mb-0 font-weight-bold text-gray-800">
+                                {{ questions|dictsort:"difficulty"|dictsortreversed:"difficulty"|slice:"1:2"|first }}
+                            </div>
+                            <div class="mt-2 mb-0 text-xs">
+                                <span class="badge bg-warning">O'rta</span>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-chart-line fa-2x text-warning opacity-25"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                <i class="fas fa-fire me-1"></i> Qiyin Savollar
+                            </div>
+                            <div class="h2 mb-0 font-weight-bold text-gray-800">
+                                {{ questions|dictsort:"difficulty"|dictsortreversed:"difficulty"|slice:"2:3"|first }}
+                            </div>
+                            <div class="mt-2 mb-0 text-xs">
+                                <span class="badge bg-danger">Advanced</span>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-fire fa-2x text-danger opacity-25"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Python savollar ro'yxati -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow border-0">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center python-header">
+                    <div>
+                        <h6 class="m-0 font-weight-bold text-white">
+                            <i class="fab fa-python me-2"></i>
+                            Python Dasturlash Mashqlari
+                        </h6>
+                        <small class="text-white-50">Har bir savol uchun kod yozing va testlang</small>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="badge bg-light text-dark">
+                            <i class="fab fa-python me-1"></i> {{ questions|length }} ta savol
+                        </span>
+                        {% if is_admin %}
+                        <a href="{% url 'app2:my_questions' %}" class="btn btn-sm btn-light">
+                            <i class="fas fa-list me-1"></i> Mening Savollarim
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card-body p-0">
+                    {% if questions %}
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th style="width: 50px;">ID</th>
+                                        <th>Python Savol</th>
+                                        <th style="width: 100px;">Qiyinchilik</th>
+                                        <th style="width: 120px;">Muallif</th>
+                                        <th style="width: 100px;">Yechimlar</th>
+                                        <th style="width: 120px;">Harakatlar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for question in questions %}
+                                    <tr class="align-middle">
+                                        <td class="fw-bold text-primary">#{{ question.id }}</td>
+                                        <td>
+                                            <div>
+                                                <h6 class="mb-1">
+                                                    <a href="{% url 'app2:practice_question' question.id %}"
+                                                       class="text-dark text-hover-primary">
+                                                        {{ question.question_text|truncatewords:20 }}
+                                                    </a>
+                                                </h6>
+                                                <div class="small text-muted">
+                                                    <i class="fas fa-calendar-alt me-1"></i>
+                                                    {{ question.created_at|date:"d.m.Y" }}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="badge
+                                                {% if question.difficulty == 'easy' %}bg-success
+                                                {% elif question.difficulty == 'medium' %}bg-warning
+                                                {% else %}bg-danger{% endif %}">
+                                                <i class="fas
+                                                    {% if question.difficulty == 'easy' %}fa-star
+                                                    {% elif question.difficulty == 'medium' %}fa-chart-line
+                                                    {% else %}fa-fire{% endif %} me-1">
+                                                </i>
+                                                {{ question.get_difficulty_display }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="symbol symbol-30 me-2">
+                                                    <div class="symbol-label bg-light-primary">
+                                                        <span class="text-primary fw-bold">
+                                                            {{ question.created_by.username|first|upper }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="fw-bold small">{{ question.created_by.username }}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-secondary">
+                                                <i class="fas fa-code me-1"></i>
+                                                {{ question.submissions.count }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <a href="{% url 'app2:practice_question' question.id %}"
+                                                   class="btn btn-primary" title="Ishlash" data-bs-toggle="tooltip">
+                                                    <i class="fas fa-play"></i> Ishlash
+                                                </a>
+                                                {% if is_admin %}
+                                                <a href="{% url 'app2:manage_question' question.id %}"
+                                                   class="btn btn-outline-secondary" title="Boshqarish" data-bs-toggle="tooltip">
+                                                    <i class="fas fa-cog"></i>
+                                                </a>
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <div class="mb-4">
+                                <i class="fab fa-python fa-4x text-muted opacity-25"></i>
+                            </div>
+                            <h5 class="text-muted mb-3">Python savollar topilmadi</h5>
+                            <p class="text-muted mb-4">
+                                {% if search_query %}
+                                    "{{ search_query }}" so'rovi bo'yicha hech narsa topilmadi.
+                                {% else %}
+                                    Hozircha Python savollar mavjud emas.
+                                {% endif %}
+                            </p>
+                            <div class="d-flex justify-content-center gap-3">
+                                {% if is_admin %}
+                                <a href="{% url 'app2:add_question' %}" class="btn btn-primary">
+                                    <i class="fas fa-plus-circle me-2"></i> Birinchi Python Savolni Qo'shing
+                                </a>
+                                {% endif %}
+                                {% if search_query or difficulty_filter %}
+                                <a href="{% url 'app2:code_practice' %}" class="btn btn-outline-secondary">
+                                    <i class="fas fa-times me-2"></i> Filtrlarni Tozalash
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                {% if questions %}
+                <div class="card-footer bg-light">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="text-muted small">
+                                <i class="fab fa-python me-1"></i>
+                                {{ total_questions }} ta Python savol mavjud
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex justify-content-end align-items-center gap-2">
+                                <a href="{% url 'app2:documentation' %}" class="btn btn-sm btn-outline-info">
+                                    <i class="fas fa-book me-1"></i> Python Documentation
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Qo'shimcha resurslar -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-primary mb-4">
+                        <i class="fas fa-lightbulb me-2"></i>
+                        Python O'rganish Resurslari
+                    </h5>
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <div class="card h-100 border-0 bg-light">
+                                <div class="card-body text-center">
+                                    <i class="fab fa-python fa-2x text-primary mb-3"></i>
+                                    <h6 class="card-title">Python Asoslari</h6>
+                                    <p class="card-text small text-muted">Print, input, o'zgaruvchilar, operatorlar</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card h-100 border-0 bg-light">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-code fa-2x text-success mb-3"></i>
+                                    <h6 class="card-title">Control Flow</h6>
+                                    <p class="card-text small text-muted">if/else, for/while tsikllari, funksiyalar</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card h-100 border-0 bg-light">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-list fa-2x text-warning mb-3"></i>
+                                    <h6 class="card-title">Ma'lumot Turlari</h6>
+                                    <p class="card-text small text-muted">List, tuple, dict, set va ular bilan ishlash</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card h-100 border-0 bg-light">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-cogs fa-2x text-danger mb-3"></i>
+                                    <h6 class="card-title">Advanced Python</h6>
+                                    <p class="card-text small text-muted">OOP, decoratorlar, generatorlar, exception handling</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.python-header {
+    background: linear-gradient(135deg, #3776AB 0%, #306998 100%);
+    border-bottom: 3px solid #FFD43B;
+}
+
+.python-btn {
+    background: linear-gradient(135deg, #3776AB 0%, #306998 100%);
+    border: none;
+}
+
+.python-btn:hover {
+    background: linear-gradient(135deg, #306998 0%, #265a82 100%);
+}
+
+.symbol {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.475rem;
+}
+
+.symbol-30 {
+    width: 30px;
+    height: 30px;
+}
+
+.symbol-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+}
+
+.bg-light-primary {
+    background-color: rgba(55, 118, 171, 0.1) !important;
+}
+
+/* Table styles */
+.table-hover tbody tr:hover {
+    background-color: rgba(55, 118, 171, 0.05);
+}
+
+.table td {
+    vertical-align: middle;
+    padding: 1rem 0.75rem;
+}
+
+.table th {
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+/* Card hover effect */
+.card.border-0.shadow-sm:hover {
+    transform: translateY(-2px);
+    transition: transform 0.2s ease;
+}
+
+/* Search input */
+#searchInput {
+    border-radius: 0.375rem 0 0 0.375rem;
+}
+
+.input-group-text {
+    border-radius: 0.375rem 0 0 0.375rem;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function searchQuestions() {
+    const searchQuery = $('#searchInput').val();
+    const difficulty = $('#difficultyFilter').val();
+
+    let url = '{% url "app2:code_practice" %}?';
+    const params = [];
+
+    if (searchQuery) {
+        params.push(`q=${encodeURIComponent(searchQuery)}`);
+    }
+
+    if (difficulty) {
+        params.push(`difficulty=${difficulty}`);
+    }
+
+    if (params.length > 0) {
+        url += params.join('&');
+    }
+
+    window.location.href = url;
+}
+
+$(document).ready(function() {
+    // Tooltip'ni faollashtirish
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+
+    // Enter bosganda qidirish
+    $('#searchInput').keypress(function(e) {
+        if (e.which === 13) {
+            searchQuestions();
+        }
+    });
+
+    // Table row hover effect
+    $('tbody tr').hover(
+        function() {
+            $(this).addClass('table-active');
+        },
+        function() {
+            $(this).removeClass('table-active');
+        }
+    );
+
+    // Quick difficulty filter
+    $('.badge.bg-success, .badge.bg-warning, .badge.bg-danger').click(function() {
+        const difficulty = $(this).text().toLowerCase();
+        $('#difficultyFilter').val(difficulty === 'oson' ? 'easy' :
+                                   difficulty === 'o\'rtacha' ? 'medium' : 'hard');
+        searchQuestions();
+    });
+
+    // Real-time search (debounce)
+    let searchTimeout;
+    $('#searchInput').on('input', function() {
+        clearTimeout(searchTimeout);
+        const query = $(this).val();
+
+        if (query.length >= 3 || query.length === 0) {
+            searchTimeout = setTimeout(() => {
+                searchQuestions();
+            }, 500);
+        }
+    });
+});
+</script>
+{% endblock %}

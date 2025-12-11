@@ -1,0 +1,728 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Python Admin Panel - Code Compiler{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Sarlavha -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 text-gray-800">
+                <i class="fab fa-python text-primary me-2"></i>
+                Python Admin Panel
+            </h1>
+            <p class="text-muted mb-0">Python Code Compiler boshqaruvi</p>
+        </div>
+        <div class="btn-group">
+            <a href="{% url 'app2:add_question' %}" class="btn btn-primary python-btn">
+                <i class="fas fa-plus-circle me-2"></i> Yangi Python Savol
+            </a>
+            <button type="button" class="btn btn-outline-primary" onclick="window.location.reload()">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Statistika kartalari -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Jami Python Savollar
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{ stats.total_questions }}
+                            </div>
+                            <div class="mt-2 mb-0 text-muted text-xs">
+                                <span class="text-success mr-2">
+                                    <i class="fas fa-check-circle"></i> {{ stats.active_questions }} faol
+                                </span>
+                                <span class="text-danger">
+                                    <i class="fas fa-times-circle"></i> {{ stats.total_questions|add:"-"|add:stats.active_questions }} nofaol
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fab fa-python fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Python Yuborishlar
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{ stats.total_submissions }}
+                            </div>
+                            <div class="mt-2 mb-0 text-muted text-xs">
+                                <span class="text-success mr-2">
+                                    <i class="fas fa-check-circle"></i> {{ stats.successful_submissions }} muvaffaqiyatli
+                                </span>
+                                <span class="text-danger">
+                                    <i class="fas fa-times-circle"></i> {{ stats.total_submissions|add:"-"|add:stats.successful_submissions }} xato
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-code fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Foydalanuvchilar
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{ stats.total_users }}
+                            </div>
+                            <div class="mt-2 mb-0 text-muted text-xs">
+                                <span class="badge bg-primary">
+                                    <i class="fab fa-python me-1"></i> Python
+                                </span>
+                                <span class="ms-2">Bugun: {{ stats.active_today }}</span>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Python Muvaffaqiyati
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {% if stats.total_submissions > 0 %}
+                                    {% widthratio stats.successful_submissions stats.total_submissions 100 %}%
+                                {% else %}
+                                    0%
+                                {% endif %}
+                            </div>
+                            <div class="mt-2 mb-0 text-muted text-xs">
+                                <div class="progress" style="height: 5px;">
+                                    <div class="progress-bar bg-success" role="progressbar"
+                                         style="width: {% if stats.total_submissions > 0 %}{% widthratio stats.successful_submissions stats.total_submissions 100 %}%{% else %}0%{% endif %};">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-chart-line fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab panel -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 python-header">
+                    <ul class="nav nav-tabs card-header-tabs" id="adminTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="questions-tab" data-bs-toggle="tab"
+                                    data-bs-target="#questions" type="button" role="tab">
+                                <i class="fab fa-python me-2"></i> Python Savollar
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="submissions-tab" data-bs-toggle="tab"
+                                    data-bs-target="#submissions" type="button" role="tab">
+                                <i class="fas fa-code me-2"></i> Python Yuborishlar
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card-body">
+                    <div class="tab-content" id="adminTabsContent">
+                        <!-- Python Savollar tab -->
+                        <div class="tab-pane fade show active" id="questions" role="tabpanel">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Python Savol</th>
+                                            <th>Qiyinchilik</th>
+                                            <th>Muallif</th>
+                                            <th>Yechimlar</th>
+                                            <th>Holat</th>
+                                            <th>Sana</th>
+                                            <th>Amallar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for question in questions %}
+                                        <tr>
+                                            <td class="fw-bold">#{{ question.id }}</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="symbol symbol-40 me-3">
+                                                        <div class="symbol-label bg-light-primary">
+                                                            <i class="fab fa-python text-primary"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ms-2">
+                                                        <div class="fw-bold">
+                                                            <a href="{% url 'app2:practice_question' question.id %}" class="text-dark text-hover-primary">
+                                                                {{ question.question_text|truncatewords:6 }}
+                                                            </a>
+                                                        </div>
+                                                        <div class="small text-muted">
+                                                            {{ question.created_at|date:"d.m.Y H:i" }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="badge
+                                                    {% if question.difficulty == 'easy' %}bg-success
+                                                    {% elif question.difficulty == 'medium' %}bg-warning
+                                                    {% else %}bg-danger{% endif %}">
+                                                    <i class="fas fa-chart-line me-1"></i>
+                                                    {{ question.get_difficulty_display }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="ms-2">
+                                                        <div class="fw-bold">
+                                                            {{ question.created_by.username }}
+                                                        </div>
+                                                        <div class="small text-muted">
+                                                            {{ question.created_by.email|default:"-" }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-secondary">
+                                                    <i class="fas fa-code me-1"></i>
+                                                    {{ question.submissions.count }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                {% if question.is_active %}
+                                                <span class="badge bg-success">
+                                                    <i class="fas fa-check-circle me-1"></i> Faol
+                                                </span>
+                                                {% else %}
+                                                <span class="badge bg-danger">
+                                                    <i class="fas fa-times-circle me-1"></i> Nofaol
+                                                </span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <div class="small">
+                                                    {{ question.created_at|date:"d.m.Y" }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group btn-group-sm">
+                                                    <a href="{% url 'app2:practice_question' question.id %}"
+                                                       class="btn btn-outline-primary" title="Ko'rish" data-bs-toggle="tooltip">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+                                                    <form method="post" action="{% url 'app2:manage_question' question.id %}" class="d-inline">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="action" value="toggle">
+                                                        <button type="submit" class="btn btn-outline-warning" title="Holatni o'zgartirish" data-bs-toggle="tooltip">
+                                                            {% if question.is_active %}
+                                                                <i class="fas fa-toggle-on"></i>
+                                                            {% else %}
+                                                                <i class="fas fa-toggle-off"></i>
+                                                            {% endif %}
+                                                        </button>
+                                                    </form>
+                                                    <button type="button" class="btn btn-outline-danger"
+                                                            onclick="confirmDelete({{ question.id }}, '{{ question.question_text|truncatewords:5|escapejs }}')"
+                                                            title="O'chirish" data-bs-toggle="tooltip">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="8" class="text-center py-5">
+                                                <div class="text-muted">
+                                                    <i class="fab fa-python fa-3x mb-3"></i>
+                                                    <p>Hech qanday Python savol topilmadi</p>
+                                                    <a href="{% url 'app2:add_question' %}" class="btn btn-primary">
+                                                        <i class="fas fa-plus-circle me-2"></i> Birinchi savolni qo'shing
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Python Yuborishlar tab -->
+                        <div class="tab-pane fade" id="submissions" role="tabpanel">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6 class="mb-0">
+                                    <i class="fas fa-code text-primary me-2"></i>
+                                    So'nggi Python Yuborishlar
+                                </h6>
+                                <span class="badge bg-primary">
+                                    Jami: {{ stats.total_submissions }}
+                                </span>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Foydalanuvchi</th>
+                                            <th>Python Savol</th>
+                                            <th>Holat</th>
+                                            <th>Vaqt</th>
+                                            <th>Ishlash vaqti</th>
+                                            <th>Natija</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for submission in submissions %}
+                                        <tr>
+                                            <td class="fw-bold">#{{ submission.id }}</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="symbol symbol-40 me-3">
+                                                        <div class="symbol-label bg-light-primary">
+                                                            <span class="text-primary fw-bold">
+                                                                {{ submission.user.username|first|upper }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ms-2">
+                                                        <div class="fw-bold">
+                                                            {{ submission.user.username }}
+                                                        </div>
+                                                        <div class="small text-muted">
+                                                            {{ submission.user.email|default:"-" }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'app2:practice_question' submission.question.id %}" class="text-dark text-hover-primary">
+                                                    {{ submission.question.question_text|truncatewords:4 }}
+                                                </a>
+                                                <div class="small text-muted">
+                                                    <span class="badge
+                                                        {% if submission.question.difficulty == 'easy' %}bg-success
+                                                        {% elif submission.question.difficulty == 'medium' %}bg-warning
+                                                        {% else %}bg-danger{% endif %}">
+                                                        {{ submission.question.get_difficulty_display }}
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {% if submission.status == 'success' %}
+                                                <span class="badge bg-success">
+                                                    <i class="fas fa-check-circle me-1"></i> Muvaffaqiyatli
+                                                </span>
+                                                {% elif submission.status == 'failed' %}
+                                                <span class="badge bg-danger">
+                                                    <i class="fas fa-times-circle me-1"></i> Xato
+                                                </span>
+                                                {% elif submission.status == 'error' %}
+                                                <span class="badge bg-warning text-dark">
+                                                    <i class="fas fa-exclamation-triangle me-1"></i> Runtime
+                                                </span>
+                                                {% else %}
+                                                <span class="badge bg-secondary">
+                                                    <i class="fas fa-clock me-1"></i> Kutilmoqda
+                                                </span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <div class="small">
+                                                    <i class="fas fa-clock text-muted me-1"></i>
+                                                    {{ submission.created_at|date:"H:i" }}
+                                                </div>
+                                                <div class="small text-muted">
+                                                    {{ submission.created_at|date:"d.m.Y" }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {% if submission.execution_time %}
+                                                <span class="badge bg-info">
+                                                    <i class="fas fa-stopwatch me-1"></i>
+                                                    {{ submission.execution_time }}s
+                                                </span>
+                                                {% else %}
+                                                <span class="text-muted">-</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'app2:submission_result' submission.id %}"
+                                                   class="btn btn-sm btn-outline-primary" title="Natijani ko'rish" data-bs-toggle="tooltip">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="7" class="text-center py-5">
+                                                <div class="text-muted">
+                                                    <i class="fas fa-code fa-3x mb-3"></i>
+                                                    <p>Hech qanday Python yuborish topilmadi</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Foydalanuvchilar tab -->
+                        <div class="tab-pane fade" id="users" role="tabpanel">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Foydalanuvchi</th>
+                                            <th>Email</th>
+                                            <th>Python Yuborishlar</th>
+                                            <th>Muvaffaqiyat</th>
+                                            <th>Ro'yxatdan</th>
+                                            <th>Holat</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for user_data in users_with_info %}
+                                        {% with user=user_data.user info=user_data.info submission_count=user_data.submission_count successful_count=user_data.successful_count success_rate=user_data.success_rate %}
+                                        <tr>
+                                            <td class="fw-bold">#{{ user.id }}</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="symbol symbol-40 me-3">
+                                                        <div class="symbol-label bg-light-primary">
+                                                            <span class="text-primary fw-bold">
+                                                                {{ user.username|first|upper }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ms-2">
+                                                        <div class="fw-bold">
+                                                            {{ user.username }}
+                                                        </div>
+                                                        <div class="small text-muted">
+                                                            {{ info.full_name|default:"-" }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>{{ user.email|default:"-" }}</td>
+                                            <td>
+                                                <span class="badge bg-secondary">
+                                                    <i class="fab fa-python me-1"></i>
+                                                    {{ submission_count }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                {% if submission_count > 0 %}
+                                                <div class="d-flex align-items-center">
+                                                    <div class="progress flex-grow-1 me-2" style="height: 6px;">
+                                                        <div class="progress-bar bg-success" role="progressbar"
+                                                             style="width: {{ success_rate|floatformat:0 }}%;">
+                                                        </div>
+                                                    </div>
+                                                    <span class="small fw-bold">
+                                                        {{ success_rate|floatformat:1 }}%
+                                                    </span>
+                                                </div>
+                                                {% else %}
+                                                <span class="text-muted">-</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <div class="small">
+                                                    {{ user.date_joined|date:"d.m.Y" }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {% if user.is_staff or user.is_superuser %}
+                                                <span class="badge bg-danger">
+                                                    <i class="fas fa-user-shield me-1"></i> Admin
+                                                </span>
+                                                {% elif submission_count > 0 %}
+                                                <span class="badge bg-success">
+                                                    <i class="fas fa-user-check me-1"></i> Faol
+                                                </span>
+                                                {% else %}
+                                                <span class="badge bg-warning text-dark">
+                                                    <i class="fas fa-user-clock me-1"></i> Yangi
+                                                </span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endwith %}
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="7" class="text-center py-5">
+                                                <div class="text-muted">
+                                                    <i class="fas fa-users fa-3x mb-3"></i>
+                                                    <p>Hech qanday foydalanuvchi topilmadi</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin statistika -->
+                <div class="card-footer bg-light">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h6 class="text-primary mb-3">
+                                <i class="fab fa-python me-2"></i>
+                                Python Platformasi
+                            </h6>
+                            <div class="small text-muted">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Python 3.11+</span>
+                                    <span class="badge bg-success">Faol</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Test muhiti</span>
+                                    <span class="badge bg-info">Secure</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="text-success mb-3">
+                                <i class="fas fa-chart-line me-2"></i>
+                                Statistika
+                            </h6>
+                            <div class="small text-muted">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>O'rtacha muvaffaqiyat</span>
+                                    <span>
+                                        {% if stats.total_submissions > 0 %}
+                                            {% widthratio stats.successful_submissions stats.total_submissions 100 %}%
+                                        {% else %}0%{% endif %}
+                                    </span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span>O'rtacha yechim vaqti</span>
+                                    <span>
+                                        {% with avg_time=stats.avg_execution_time|default:0 %}
+                                            {{ avg_time|floatformat:2 }}s
+                                        {% endwith %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="text-warning mb-3">
+                                <i class="fas fa-cogs me-2"></i>
+                                Sozlamalar
+                            </h6>
+                            <div class="d-flex flex-wrap gap-2">
+                                <a href="{% url 'app2:code_practice' %}" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-play me-1"></i> Platforma
+                                </a>
+                                <a href="{% url 'app2:documentation' %}" class="btn btn-sm btn-outline-info">
+                                    <i class="fas fa-book me-1"></i> Python Docs
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- O'chirish tasdiq modal oynasi -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Python Savolni o'chirish
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <strong>Eslatma:</strong> Bu amalni qaytarib bo'lmaydi!
+                </div>
+                <p><strong id="questionTitle"></strong> nomli Python savolini o'chirishni istaysizmi?</p>
+                <p class="text-muted small">
+                    <i class="fas fa-info-circle me-1"></i>
+                    Savol bilan birga unga bog'langan barcha yuborishlar ham o'chiriladi.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-2"></i> Bekor qilish
+                </button>
+                <form method="post" action="" id="deleteForm">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="delete">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash me-2"></i> O'chirish
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.python-header {
+    background: linear-gradient(135deg, #3776AB 0%, #306998 100%);
+    border-bottom: 3px solid #FFD43B;
+}
+
+.python-btn {
+    background: linear-gradient(135deg, #3776AB 0%, #306998 100%);
+    border: none;
+}
+
+.python-btn:hover {
+    background: linear-gradient(135deg, #306998 0%, #265a82 100%);
+}
+
+.symbol {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.475rem;
+}
+
+.symbol-40 {
+    width: 40px;
+    height: 40px;
+}
+
+.symbol-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+}
+
+.bg-light-primary {
+    background-color: rgba(55, 118, 171, 0.1) !important;
+}
+
+/* Progress bar custom */
+.progress {
+    border-radius: 10px;
+}
+
+.progress-bar {
+    border-radius: 10px;
+}
+
+/* Table hover effect */
+.table-hover tbody tr:hover {
+    background-color: rgba(55, 118, 171, 0.05);
+}
+
+/* Badge styles */
+.badge {
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+}
+
+/* Tooltip */
+[data-bs-toggle="tooltip"] {
+    cursor: pointer;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function confirmDelete(questionId, questionTitle) {
+    $('#questionTitle').text(questionTitle);
+    $('#deleteForm').attr('action', '{% url "app2:manage_question" 0 %}'.replace('0', questionId));
+    $('#deleteModal').modal('show');
+}
+
+$(document).ready(function() {
+    // Tooltip'ni faollashtirish
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+
+    // Tab-larni faollashtirish
+    $('#adminTabs button').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+
+    // Auto-refresh for active tab
+    let activeTab = 'questions';
+    $('#adminTabs button').on('shown.bs.tab', function (e) {
+        activeTab = e.target.id.replace('-tab', '');
+    });
+
+    // Refresh every 30 seconds
+    setInterval(function() {
+        if (activeTab === 'submissions') {
+            // Only refresh submissions tab as it's most dynamic
+            console.log('Auto-refresh check for submissions');
+        }
+    }, 30000);
+
+    // Search functionality
+    $('input[type="search"]').on('keyup', function() {
+        var value = $(this).val().toLowerCase();
+        var tableId = $(this).data('table');
+        $('#' + tableId + ' tbody tr').filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+});
+</script>
+{% endblock %}
