@@ -8,6 +8,7 @@
 
 .col-md-8 {
     width: 100%;
+    margin: 0 auto;
 }
 
 .card.shadow {
@@ -19,6 +20,7 @@
     border: 0.1px solid white;
     margin-bottom: 2rem;
     width: 60%;
+    margin: 0 auto;
 }
 
 /* Card sarlavhasi */
@@ -278,6 +280,9 @@ pre.bg-light.p-3.border.rounded {
 
 /* Responsive design */
 @media (max-width: 1225px) {
+.card.shadow{
+width: 80%;
+}
     .col-md-8 {
         width: 85%;
     }
@@ -288,6 +293,8 @@ pre.bg-light.p-3.border.rounded {
 }
 
 @media (max-width: 1030px) {
+
+
     .col-md-8 {
         width: 90%;
         margin: 3rem auto;
@@ -340,6 +347,9 @@ pre.bg-light.p-3.border.rounded {
 }
 
 @media (max-width: 576px) {
+.card.shadow{
+width: 100%;
+}
     .col-md-8 {
         width: 100%;
         margin: 1.5rem auto;
@@ -598,9 +608,6 @@ Javob: B
                 </div>
             </div>
         </div>
-
-<<<<<<< HEAD
-=======
 <style>
 .card {
     border-radius: 10px;
@@ -700,5 +707,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
 {% endblock %}

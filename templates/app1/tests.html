@@ -1,219 +1,166 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<<<<<<< HEAD
-=======
 
 {% block extra_css %}
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
 <style>
-  .container_test {
-    width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
-  }
-  .container_test h1{
-    color: black;
-    font-size: 2.8rem;
-    margin-bottom: 15px;
+  /* ===== UMUMIY STILLAR ===== */
+  .container-fluid.bg-light {
+    background: linear-gradient(to right, #87ceeb, #87ceeb, #f2d8e2) !important;
+    min-height: 100vh;
   }
 
-  /* Sarlavha styling */
-  .row.mb-4 {
-    width: 100%;
-    height: auto;
-    backdrop-filter: blur(20px);
-    background-color: rgba(255, 255, 255, 0.85);
+  .test-container {
+    background-color: rgba(255, 255, 255, 0.411);
     border-radius: 15px;
-    padding: 30px;
-    margin-bottom: 30px !important;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 2px solid #ffffff;
+    padding: 20px;
+    width: 100%;
   }
 
-  .display-5.fw-bold {
-    color: #2c3e50;
-    font-size: 2.8rem;
-    margin-bottom: 15px;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  /* ===== SARLAVHA STILLARI ===== */
+  h1.display-5 {
+    font-size: 42px !important;
+    font-weight: 1000 !important;
+    color: rgb(20, 33, 119) !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px !important;
   }
 
   .lead.text-muted {
-    color: #7f8c8d !important;
-    font-size: 1.2rem;
-    margin-bottom: 20px;
+    font-size: 18px;
+    color: rgb(70, 70, 70) !important;
+    margin-bottom: 20px !important;
   }
 
-  .alert.alert-info {
-    backdrop-filter: blur(10px);
-    background-color: rgba(52, 152, 219, 0.15);
-    border-radius: 10px;
-    padding: 15px 20px;
-  }
-
-  /* Admin panel styling */
-  .card.border-primary.shadow {
-    width: 100%;
-    height: auto;
-    backdrop-filter: blur(20px);
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 15px;
-    padding: 0;
+  /* ===== ADMIN PANELI ===== */
+  .card.border-primary {
+    border: 2px solid rgba(5, 130, 171, 0.8) !important;
+    border-radius: 15px !important;
     overflow: hidden;
-    margin-bottom: 40px !important;
+    backdrop-filter: blur(10px);
+
   }
 
   .card-header.bg-primary {
-    backdrop-filter: blur(10px);
-    background-color: rgba(5, 130, 171, 0.8) !important;
+    background: linear-gradient(
+      to right,
+      rgba(5, 130, 171, 0.9),
+      rgba(20, 33, 119, 0.9)
+    ) !important;
+    padding: 15px 25px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
   }
 
-  .card-header.bg-primary h5 {
-    color: black;
-    font-size: 1.4rem;
-    margin: 0;
+  .card-header h5 {
+    font-size: 22px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
   }
 
-  /* Admin cards styling */
-  .card.h-100.border-0.shadow-sm {
-    width: 100%;
-    height: auto;
-    backdrop-filter: blur(15px);
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 12px;
-    padding: 0;
+  .card.border-0.shadow-sm {
+    border-radius: 12px !important;
     transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    height: 100%;
   }
 
-  .card.h-100.border-0.shadow-sm:hover {
+  .card.border-0.shadow-sm:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2) !important;
   }
 
-  .card-body.d-flex.flex-column {
-    padding: 25px;
-  }
-
-  .fa-3x {
-    font-size: 3rem;
-    margin-bottom: 20px;
-  }
-
-  /* Fanlar bo'limi styling */
-  .row.mb-4 > .col-12:not(:first-child) {
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
-    margin-top: 30px;
-  }
-
-  .d-flex.justify-content-between.align-items-center {
+  .card-body.py-4 i.fa-3x {
     margin-bottom: 15px;
   }
 
+  .btn-success,
+  .btn-info,
+  .btn-warning {
+    border-radius: 10px !important;
+    padding: 10px 25px !important;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none !important;
+    min-width: 160px;
+  }
+
+  .btn-success {
+    background: linear-gradient(to right, #28a745, #20c997) !important;
+  }
+
+  .btn-info {
+    background: linear-gradient(to right, #17a2b8, #0dcaf0) !important;
+  }
+
+  .btn-warning {
+    background: linear-gradient(to right, #ffc107, #fd7e14) !important;
+    color: #000 !important;
+  }
+
+  .btn-success:hover,
+  .btn-info:hover,
+  .btn-warning:hover {
+    transform: scale(0.97);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+    opacity: 0.9;
+  }
+
+  /* ===== FANLAR BO'LIMI ===== */
   h3.text-primary {
-    color: #2c3e50 !important;
-    font-size: 1.8rem;
+    font-size: 28px;
+    font-weight: bold;
+    color: rgb(20, 33, 119) !important;
+    display: flex;
+    align-items: center;
+  }
+
+  .badge.bg-primary,
+  .badge.bg-info {
+    font-size: 14px !important;
+    padding: 8px 15px !important;
+    border-radius: 20px !important;
     font-weight: 600;
   }
 
-  .badge {
-    font-size: 0.9rem !important;
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-weight: 500;
+  .badge.bg-info {
+    background: linear-gradient(to right, #17a2b8, #0dcaf0) !important;
   }
 
-  /* Test kartalari styling */
-  .test_admin_box{
-    width: 100%;
-     height: auto;
-        backdrop-filter: blur(10px);
-        background-color: rgba(255, 255, 255, 0.215);
-        border-radius: 10px;
-        border: 0.1px solid white;
+  /* ===== TEST KARTALARI ===== */
+  .card.h-100.shadow-sm.border-0 {
+    border-radius: 15px !important;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid rgba(226, 237, 236, 0.8) !important;
   }
-    .test_box_info{
-        border-radius: 10px;
-        border: 0.1px solid white;
-        background-color: rgba(255, 255, 255, 0.215);
-    }
-  .test_admin_box.h-100.shadow-sm.border-0:hover {
+
+  .card.h-100.shadow-sm.border-0:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+    border-color: rgba(5, 130, 171, 0.3) !important;
   }
 
-  .test_admin_box .card-header {
-    backdrop-filter: blur(10px);
-    background-color: rgba(5, 130, 171, 0.8) !important;
-    padding: 20px 20px 10px 20px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    border-radius: 10px 10px 0 0;
+  .card-header.bg-white {
+    background: linear-gradient(
+      to right,
+      rgba(226, 237, 236, 0.9),
+      rgba(255, 255, 255, 0.9)
+    ) !important;
+    padding: 20px 25px 10px 25px !important;
   }
 
   .card-title {
-    color: red;
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(20, 33, 119);
+    line-height: 1.4;
   }
 
-<<<<<<< HEAD
-  /* Ma'lumotlar qismi */
-  .row.text-center.mb-3 {
-    margin: 20px 0;
-  }
-
-  .row.text-center.mb-3 .col-3 {
-    padding: 0 5px;
-  }
-  .test_baza_box {
-    width: 100%;
-    height: auto;
- border: 0.1px solid white;
-        background-color: rgba(255, 255, 255, 0.215);
-    border-radius: 10px;
-    padding: 30px;
-    margin-bottom: 30px !important;
-    overflow: hidden;
-  }
-  .test_baza_info {
-  width: 100%;
-    height: auto;
- border: 0.1px solid white;
-        background-color: rgba(255, 255, 255, 0.215);
-    border-radius: 10px;
-    padding: 30px;
-    overflow: hidden;
-  }
-  .result_info {
-    display: flex;
-    width: 100%;
-  }
-  .border-end {
-    border-right: 2px solid rgba(0, 0, 0, 0.1) !important;
-    padding: 10px 0;
-  }
-
-  .text-primary,
-  .text-warning,
-  .text-info,
-  .text-success {
-    font-size: 1.4rem;
-    font-weight: 700;
-  }
-
-  .text-muted.d-block {
-    font-size: 0.85rem;
-    margin-bottom: 5px;
-    color: #7f8c8d !important;
-  }
-
-  /* Progress bar styling */
-  .progress {
-    height: 10px !important;
-    border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.05);
-=======
   .badge.bg-success,
   .badge.bg-secondary {
     padding: 6px 12px !important;
@@ -259,90 +206,91 @@
   /* ===== PROGRESS BAR ===== */
   .progress {
     border-radius: 10px !important;
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
     overflow: hidden;
+    background-color: rgba(226, 237, 236, 0.5) !important;
+    height: 8px !important;
   }
 
   .progress-bar {
-    border-radius: 10px;
+    transition: width 0.5s ease;
   }
 
-  /* Card footer styling */
-  .card-footer.bg-white {
-    background: rgba(255, 255, 255, 0.95) !important;
-    padding: 20px;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
-  }
-
-  .d-grid .btn {
-    padding: 12px 20px;
-    font-size: 1rem;
+  /* ===== TUGMALAR ===== */
+  .btn.btn-primary,
+  .btn.btn-outline-primary,
+  .btn.btn-secondary {
+    border-radius: 10px !important;
+    padding: 12px 25px !important;
     font-weight: 600;
-    border-radius: 10px;
-    border: none;
+    font-size: 16px;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
   }
 
-  .d-grid .btn-primary {
-    background: linear-gradient(45deg, #667eea, #764ba2);
+  .btn.btn-primary {
+    background: linear-gradient(
+      to right,
+      rgba(5, 130, 171, 0.9),
+      rgba(20, 33, 119, 0.9)
+    ) !important;
+    border: none !important;
   }
 
-  .d-grid .btn-primary:hover {
-    background: linear-gradient(45deg, #5a6fd8, #6a4190);
-    transform: scale(1.02);
+  .btn.btn-outline-primary {
+    border: 2px solid rgba(5, 130, 171, 0.8) !important;
+    color: rgba(5, 130, 171, 0.9) !important;
+    background: transparent !important;
   }
 
-  .d-grid .btn-outline-primary {
-    border: 2px solid #667eea;
-    color: #667eea;
-    background: transparent;
+  .btn.btn-primary:hover {
+    transform: scale(0.97);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+    opacity: 0.9;
   }
 
-  .d-grid .btn-outline-primary:hover {
-    background: #667eea;
-    color: white;
+  .btn.btn-outline-primary:hover {
+    background: linear-gradient(
+      to right,
+      rgba(5, 130, 171, 0.1),
+      rgba(20, 33, 119, 0.1)
+    ) !important;
+    transform: scale(0.97);
   }
 
-  .d-grid .btn-secondary {
-    background: linear-gradient(45deg, #95a5a6, #7f8c8d);
+  .btn.btn-secondary:disabled {
+    background: linear-gradient(to right, #6c757d, #868e96) !important;
+    opacity: 0.7;
   }
 
-  .text-center.mt-2 small {
-    color: #7f8c8d;
-    font-size: 0.9rem;
-  }
-
-  /* Alertlar uchun styling */
+  /* ===== XABARLAR VA OGOHLANTIRISHLAR ===== */
   .alert {
-    backdrop-filter: blur(15px);
-    border-radius: 12px;
-    padding: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px !important;
+    border: none !important;
+    padding: 15px 20px !important;
+    backdrop-filter: blur(10px);
   }
 
   .alert-info {
-    background-color: rgba(52, 152, 219, 0.15);
-    border-color: rgba(52, 152, 219, 0.3);
+    background: rgba(23, 162, 184, 0.15) !important;
+    color: rgb(20, 33, 119) !important;
+    border: 1px solid rgba(23, 162, 184, 0.3) !important;
   }
 
   .alert-warning {
-    background-color: rgba(241, 196, 15, 0.15);
-    border-color: rgba(241, 196, 15, 0.3);
+    background: rgba(255, 193, 7, 0.15) !important;
+    color: rgb(119, 87, 20) !important;
+    border: 1px solid rgba(255, 193, 7, 0.3) !important;
   }
 
-  .alert-warning .fa-2x {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-    color: #f39c12;
+  /* ===== FOOTER TEXT ===== */
+  .text-center.mt-2 small {
+    color: rgba(20, 33, 119, 0.7) !important;
+    font-size: 14px;
   }
 
-<<<<<<< HEAD
-  /* Responsive design */
-  @media (max-width: 1400px) {
-    .display-5.fw-bold {
-      font-size: 2.5rem;
-    }
-=======
   /* ===== ANIMATSIYALAR ===== */
   @keyframes fadeIn {
     from {
@@ -388,27 +336,13 @@
   }
 
   /* ===== RESPONSIVE DESIGN ===== */
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
 
-    h3.text-primary {
-      font-size: 1.7rem;
-    }
-
-    .card-title {
-      font-size: 1.2rem;
-    }
-  }
-
-  @media (max-width: 1200px) {
-    .container_test {
-      width: 97%;
+  /* 1225px */
+  @media (max-width: 1225px) {
+    .container {
       padding: 20px;
     }
 
-<<<<<<< HEAD
-    .display-5.fw-bold {
-      font-size: 2.3rem;
-=======
     h1.display-5 {
       font-size: 36px !important;
     }
@@ -472,34 +406,16 @@
 
     h1.display-5 {
       font-size: 28px !important;
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
     }
 
     .lead.text-muted {
-      font-size: 1.1rem;
+      font-size: 16px;
     }
 
-    .card-header.bg-primary h5 {
-      font-size: 1.3rem;
+    .card-header.bg-white {
+      padding: 15px 20px 8px 20px !important;
     }
 
-<<<<<<< HEAD
-    h3.text-primary {
-      font-size: 1.6rem;
-    }
-
-    .text-primary,
-    .text-warning,
-    .text-info,
-    .text-success {
-      font-size: 1.3rem;
-    }
-  }
-
-  @media (max-width: 992px) {
-    .container_test {
-      padding: 15px;
-=======
     .test-stats strong {
       font-size: 18px;
     }
@@ -538,17 +454,12 @@
     .container {
       margin: 5px;
       padding: 8px;
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
     }
 
     .row.mb-4 {
-      padding: 25px;
+      margin-bottom: 15px !important;
     }
 
-<<<<<<< HEAD
-    .display-5.fw-bold {
-      font-size: 2.1rem;
-=======
     .card.border-0.shadow-sm {
       margin-bottom: 15px !important;
     }
@@ -584,243 +495,39 @@
 
     h1.display-5 {
       font-size: 20px !important;
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
     }
 
     .lead.text-muted {
-      font-size: 1.05rem;
-    }
-
-    .col-xl-4 {
-      flex: 0 0 50%;
-      max-width: 50%;
-    }
-
-    .card.h-100.border-0.shadow-sm {
-      height: auto;
-      min-height: 280px;
-    }
-
-    .card-header.bg-primary h5 {
-      font-size: 1.2rem;
-    }
-
-    .card-title {
-      font-size: 1.15rem;
-    }
-
-    .test_baza_box,
-    .test_baza_info {
-      padding: 25px;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .container_test {
-      padding: 12px;
-    }
-
-<<<<<<< HEAD
-    .row.mb-4 {
-      padding: 20px;
-    }
-
-    .display-5.fw-bold {
-      font-size: 1.9rem;
-    }
-
-    .lead.text-muted {
-      font-size: 1rem;
-      margin-bottom: 15px;
-    }
-
-    .col-xl-4,
-    .col-md-6 {
-      flex: 0 0 100%;
-      max-width: 100%;
-    }
-
-    .card.h-100.border-0.shadow-sm {
-      height: auto;
-      margin-bottom: 20px;
-      min-height: 260px;
+      font-size: 14px;
     }
 
     h3.text-primary {
-      font-size: 1.5rem;
-    }
-
-    .card-header.bg-primary h5 {
-      font-size: 1.15rem;
+      font-size: 20px;
     }
 
     .card-title {
-      font-size: 1.1rem;
+      font-size: 16px;
     }
 
-    .text-primary,
-    .text-warning,
-    .text-info,
-    .text-success {
-      font-size: 1.2rem;
+    .btn.btn-primary,
+    .btn.btn-outline-primary {
+      padding: 6px 12px !important;
+      font-size: 13px;
     }
 
-    .test_baza_box,
-    .test_baza_info {
-      padding: 20px;
-    }
-
-    .card-body.d-flex.flex-column {
-      padding: 20px;
-    }
-
-    .fa-3x {
-      font-size: 2.5rem;
-    }
-  }
-
-  @media (max-width: 576px) {
-    .container_test {
-      padding: 10px;
-    }
-
-    .row.mb-4 {
-      padding: 18px;
-      margin-bottom: 25px !important;
-    }
-
-    .display-5.fw-bold {
-      font-size: 1.7rem;
-      margin-bottom: 10px;
-    }
-
-    .lead.text-muted {
-      font-size: 0.95rem;
-      margin-bottom: 12px;
-    }
-
-    .card-header.bg-primary {
-      padding: 15px;
-    }
-
-    .card-header.bg-primary h5 {
-      font-size: 1.1rem;
-    }
-
-    .card-body.d-flex.flex-column {
-      padding: 18px;
-    }
-
-    .card.h-100.border-0.shadow-sm {
-      min-height: 240px;
-    }
-
-    .d-flex.justify-content-between.align-items-center {
-      flex-direction: column;
-      align-items: flex-start !important;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .badge.fs-6 {
-      font-size: 0.85rem !important;
-      padding: 6px 12px;
-    }
-
-    h3.text-primary {
-      font-size: 1.4rem;
-    }
-
-    .card-title {
-      font-size: 1.05rem;
-    }
-
-    .text-primary,
-    .text-warning,
-    .text-info,
-    .text-success {
-      font-size: 1.1rem;
-    }
-
-    .text-muted.d-block {
-      font-size: 0.8rem;
-    }
-
-    .test_baza_box,
-    .test_baza_info {
-      padding: 18px;
-    }
-
-    .d-grid .btn {
-      padding: 10px 16px;
-      font-size: 0.95rem;
-    }
-
-    .fa-3x {
-      font-size: 2.2rem;
-      margin-bottom: 15px;
-=======
     .btn-success,
     .btn-info,
     .btn-warning {
       min-width: 110px;
       padding: 5px 10px !important;
       font-size: 13px;
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
     }
 
     .alert {
-      padding: 15px;
+      padding: 10px 15px !important;
+      font-size: 14px;
     }
 
-    .alert-warning .fa-2x {
-      font-size: 2rem;
-      margin-bottom: 10px;
-    }
-
-<<<<<<< HEAD
-  @media (max-width: 400px) {
-    .display-5.fw-bold {
-      font-size: 1.5rem;
-    }
-
-    .lead.text-muted {
-      font-size: 0.9rem;
-    }
-
-    .card-header.bg-primary h5 {
-      font-size: 1rem;
-    }
-
-    .card-title {
-      font-size: 1rem;
-    }
-
-    h3.text-primary {
-      font-size: 1.3rem;
-    }
-
-    .text-primary,
-    .text-warning,
-    .text-info,
-    .text-success {
-      font-size: 1rem;
-    }
-
-    .test_baza_box,
-    .test_baza_info {
-      padding: 15px;
-    }
-
-    .d-grid .btn {
-      padding: 8px 14px;
-      font-size: 0.9rem;
-    }
-  }
-</style>
-
-<div class="container_test">
-=======
     .test-stats {
       margin: 10px 0 !important;
       padding: 8px 0;
@@ -836,19 +543,45 @@
       padding: 4px 8px !important;
     }
   }
+    .test_info_style {
+      border-radius: 15px !important;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 2px solid white !important;
+    background-color: rgba(255, 255, 255, 0.311);
+    }
+    .test_info_style:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+      border-color: rgba(5, 130, 171, 0.3) !important;
+    }
+  }
 </style>
 {% endblock %}
 
-<div class="container-fluid bg-light min-vh-100 py-4">
-  <div class="container">
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
-    <!-- Sarlavha -->
-    <h1>Testlar</h1>
-    <p class="lead text-muted">
+<div style="display: flex; align-items: center; justify-content: space-between;">
+
+        <div>
+            <h1 class="display-5 fw-bold text-dark mb-3">Testlar</h1>
+        <p class="lead text-muted">
           Bilimingizni sinab ko'ring va o'zingizni sinovdan o'tkazing
         </p>
+        </div>
+
+    {% if user.is_staff %}
+          <a href="{% url 'upload_test_file' %}" class="btn btn-info">
+            <i class="fas fa-upload me-2"></i>Fayl Yuklash
+          </a>
+    {% endif %}
+</div>
+  <div class="test-container">
+    <!-- Sarlavha -->
+
+    <div class="row mb-4">
+      <div >
+
         {% if user.is_authenticated %}
-        <div class="alert  d-inline-block">
+        <div class="alert alert-info d-inline-block">
           <small>
             <i class="fas fa-info-circle me-1"></i>
             Savollar sizning oldingi natijalaringizga qarab moslashtiriladi
@@ -856,111 +589,32 @@
         </div>
         {% endif %}
 
-    <!-- Admin paneli - TEPADA -->
-    {% if user.is_staff %}
-    <div class="row mb-5">
-      <div class="col-12">
-        <div class="test_admin_box">
-          <div class="card-header bg-primary text-white">
-            <h5 class="mb-0">
-              <i class="fas fa-cogs me-2"></i>Test Boshqaruv Paneli
-            </h5>
-          </div>
-          <div class="card-body">
-            <div class="row text-center">
-              <div class="col-md-4 mb-3">
-<<<<<<< HEAD
-                <div class="test_box_info">
-                  <div
-                    class="card-body d-flex flex-column justify-content-center align-items-center py-4"
-                  >
-=======
-                <div class="card h-100 border-0 shadow-sm">
-                  <div class="card-body d-flex flex-column justify-content-center align-items-center py-4">
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
-                    <i class="fas fa-plus-circle fa-3x text-success mb-3"></i>
-                    <h5 class="text-dark">Yangi Test</h5>
-                    <p class="text-muted">Qo'lda test yaratish</p>
-                    <a href="{% url 'create_test' %}" class="btn btn-success mt-auto">
-                      <i class="fas fa-plus me-2"></i>Test Yaratish
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 mb-3">
-<<<<<<< HEAD
-                <div class="test_box_info">
-                  <div
-                    class="card-body d-flex flex-column justify-content-center align-items-center py-4"
-                  >
-=======
-                <div class="card h-100 border-0 shadow-sm">
-                  <div class="card-body d-flex flex-column justify-content-center align-items-center py-4">
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
-                    <i class="fas fa-upload fa-3x text-info mb-3"></i>
-                    <h5 class="text-dark">Fayldan Yuklash</h5>
-                    <p class="text-muted">TXT fayldan testlar</p>
-                    <a href="{% url 'upload_test_file' %}" class="btn btn-info mt-auto">
-                      <i class="fas fa-upload me-2"></i>Fayl Yuklash
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 mb-3">
-<<<<<<< HEAD
-                <div class="test_box_info">
-                  <div
-                    class="card-body d-flex flex-column justify-content-center align-items-center py-4"
-                  >
-=======
-                <div class="card h-100 border-0 shadow-sm">
-                  <div class="card-body d-flex flex-column justify-content-center align-items-center py-4">
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
-                    <i class="fas fa-book fa-3x text-warning mb-3"></i>
-                    <h5 class="text-dark">Fan Qo'shish</h5>
-                    <p class="text-muted">Yangi fan yaratish</p>
-                    <a href="{% url 'add_subject' %}" class="btn btn-warning mt-auto">
-                      <i class="fas fa-book me-2"></i>Fan Yaratish
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
-    {% endif %}
+
+    <!-- Admin paneli - TEPADA -->
 
     <!-- Fanlar va testlar -->
     {% for subject in subjects %}
-    <div class="test_baza_box">
+    <div class="row mb-4">
       <div class="col-12">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h3 class="text-primary mb-0">
             <i class="fas fa-book me-2"></i>{{ subject.name }}
+
           </h3>
           <div>
             <span class="badge bg-primary fs-6 me-2">
               {{ subject.test_set.count }} ta test
             </span>
             {% if user.is_authenticated %}
-<<<<<<< HEAD
-              {% with user_level=user.usersubjectlevel_set.all|dictsort:"subject.id"|first %}
-                {% if user_level and user_level.subject == subject %}
-=======
               {% for user_level in user.usersubjectlevel_set.all %}
                 {% if user_level.subject == subject %}
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
                   <span class="badge bg-info fs-6">
                     Daraja: {{ user_level.get_difficulty_level_display }}
                   </span>
                 {% endif %}
-<<<<<<< HEAD
-              {% endwith %}
-=======
               {% endfor %}
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
             {% endif %}
           </div>
         </div>
@@ -968,74 +622,49 @@
         <p class="text-muted mb-0">{{ subject.description }}</p>
         {% endif %}
       </div>
+    </div>
 
-    <div class="row">
+    <div class="row mb-5">
       {% for test in subject.test_set.all %}
-      <div class="col-xl-4 col-md-6">
-        <div class="test_baza_info">
-          <div class="">
+      <div class="col-xl-4 col-md-6 mb-4" >
+        <div  class="test_info_style"  >
+          <div class="card-header border-bottom-0 pb-0" >
             <div class="d-flex justify-content-between align-items-start">
               <h5 class="card-title text-dark mb-2">{{ test.title }}</h5>
               <span class="badge {% if test.is_active %}bg-success{% else %}bg-secondary{% endif %}">
                 {% if test.is_active %}
-<<<<<<< HEAD
-                <i class="fas fa-play-circle"></i> Faol
-                {% else %}
-                <i class="fas fa-pause-circle"></i> Nofaol
-=======
                   <i class="fas fa-play-circle"></i> Faol
                 {% else %}
                   <i class="fas fa-pause-circle"></i> Nofaol
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
                 {% endif %}
               </span>
             </div>
           </div>
 
-          <div class="">
+          <div class="card-body pt-0">
             <!-- Test ma'lumotlari -->
-<<<<<<< HEAD
-            <div class="result_info text-center mb-3">
-              <div class="col-3">
-                <div class="border-end">
-                  <small class=" d-block">Savollar</small>
-                  <strong class="text-primary"
-                    >{{ test.question_count }}</strong
-                  >
-=======
             <div class="row text-center test-stats">
               <div class="col-3">
                 <div class="border-end">
                   <small class="text-muted d-block">Savollar</small>
                   <strong class="text-primary">{{ test.question_count }}</strong>
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
                 </div>
               </div>
               <div class="col-3">
                 <div class="border-end">
-<<<<<<< HEAD
-                  <small class=" d-block">Vaqt</small>
-                  <strong class="text-warning"
-                    >{{ test.time_limit_minutes }} daq</strong
-                  >
-=======
                   <small class="text-muted d-block">Vaqt</small>
                   <strong class="text-warning">{{ test.time_limit_minutes }} daq</strong>
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
                 </div>
               </div>
               <div class="col-3">
                 <div class="border-end">
-<<<<<<< HEAD
-                  <small class=" d-block">Urinishlar</small>
-                  <strong class="text-info"
-                    >{{ test.testresult_set.count }}</strong
-                  >
-=======
                   <small class="text-muted d-block">Urinishlar</small>
                   <strong class="text-info">{{ test.testresult_set.count }}</strong>
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
                 </div>
+              </div>
+              <div class="col-3">
+                <small class="text-muted d-block">Mavjud</small>
+                <strong class="text-success">{{ test.questions.count }}</strong>
               </div>
             </div>
 
@@ -1045,31 +674,6 @@
               <div class="d-flex align-items-center">
                 {% with questions=test.questions.all %}
                   {% if questions %}
-<<<<<<< HEAD
-                    <div class="progress flex-grow-1" style="height: 10px">
-                      <div
-                        class="progress-bar bg-success"
-                        style="width: 33%"
-                        title="Oson"
-                      ></div>
-                      <div
-                        class="progress-bar bg-warning"
-                        style="width: 34%"
-                        title="O'rtacha"
-                      ></div>
-                      <div
-                        class="progress-bar bg-danger"
-                        style="width: 33%"
-                        title="Qiyin"
-                      ></div>
-                    </div>
-                  {% else %}
-                    <div class="progress flex-grow-1" style="height: 10px">
-                      <div
-                        class="progress-bar bg-secondary"
-                        style="width: 100%"
-                      ></div>
-=======
                     {% comment %}
                     Darajalarni hisoblash - aslida modelda difficulty_level maydoniga qarab hisoblash kerak
                     Bu misolda taxminiy qiymatlar ko'rsatilgan
@@ -1084,7 +688,6 @@
                   {% else %}
                     <div class="progress flex-grow-1" style="height: 8px">
                       <div class="progress-bar bg-secondary" style="width: 100%"></div>
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
                     </div>
                   {% endif %}
                 {% endwith %}
@@ -1097,7 +700,7 @@
             </div>
           </div>
 
-          <div class="">
+          <div class="card-footer border-top-0 pt-0">
             <div class="d-grid">
               {% if test.is_active %}
                 {% if user.is_authenticated %}
@@ -1112,14 +715,7 @@
                     {% endfor %}
                   </a>
                 {% else %}
-<<<<<<< HEAD
-                  <a
-                    href="{% url 'login' %}?next={% url 'take_test' test.id %}"
-                    class="btn btn-outline-primary"
-                  >
-=======
                   <a href="{% url 'login' %}?next={% url 'take_test' test.id %}" class="btn btn-outline-primary">
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
                     <i class="fas fa-sign-in-alt me-2"></i>Testni Boshlash
                   </a>
                 {% endif %}
@@ -1133,15 +729,8 @@
               <div class="text-center mt-2">
                 <small class="text-muted">
                   {% for result in test.testresult_set.all %}
-<<<<<<< HEAD
-                    {% if result.user == user %}
-                      {% if forloop.last %}
-                        Oxirgi natija: {{ result.score }}/{{ result.total_questions }} ({{ result.percentage|floatformat:1 }}%)
-                      {% endif %}
-=======
                     {% if result.user == user and forloop.last %}
                       Oxirgi natija: {{ result.score }}/{{ result.total_questions }} ({{ result.percentage|floatformat:1 }}%)
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
                     {% endif %}
                   {% endfor %}
                 </small>
@@ -1159,8 +748,6 @@
       </div>
       {% endfor %}
     </div>
-    </div>
-
     {% empty %}
     <div class="col-12">
       <div class="alert alert-warning text-center py-4">
@@ -1180,8 +767,4 @@
     </div>
     {% endfor %}
   </div>
-<<<<<<< HEAD
-=======
-</div>
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
 {% endblock %}

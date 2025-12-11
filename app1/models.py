@@ -26,11 +26,21 @@ class Document(models.Model):
 
 
 # -------------------- VideoLesson --------------------
+# models.py - VideoLesson modeliga qo'shing
 class VideoLesson(models.Model):
     title = models.CharField(max_length=255)
     iframe_code = models.TextField()  # YouTube iframe kodi
     description = models.TextField(blank=True, null=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    # Subject qo'shing (ixtiyoriy, ForeignKey yoki CharField)
+    subject = models.ForeignKey(
+        Subject,
+        on_delete=models.SET_NULL,  # yoki CASCADE
+        null=True,
+        blank=True,
+        verbose_name="Fan"
+    )
 
     def __str__(self):
         return self.title

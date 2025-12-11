@@ -322,6 +322,586 @@
   .card {
     animation: fadeInUp 0.5s ease-out;
   }
+  .info_result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    height: auto;
+    gap: 20px;
+  }
+  .box_info_result {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.515);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  text-align: center;
+  }
+    .responsive-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: stretch;
+    margin-bottom: 30px;
+    min-height: 320px;
+  }
+
+  /* Grafik qismi - yangi chiroyli stil */
+  .graphic-section {
+    width: 58%;
+    height: auto;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.65));
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .graphic-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #4dabf7, #339af0, #228be6);
+    border-radius: 20px 20px 0 0;
+  }
+
+  .graphic-section h5 {
+    color: #2c3e50;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    position: relative;
+    padding-bottom: 10px;
+  }
+
+  .graphic-section h5::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #4dabf7, #228be6);
+    border-radius: 3px;
+  }
+
+  .graphic-container {
+    width: 100%;
+    height: 100%;
+    min-height: 250px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .graphic-img {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: contain;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    border-radius: 12px;
+    padding: 15px;
+    background: white;
+    box-shadow:
+      0 6px 20px rgba(0, 0, 0, 0.08),
+      0 2px 4px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+  }
+
+  .graphic-img:hover {
+    transform: translateY(-5px);
+    box-shadow:
+      0 12px 30px rgba(0, 0, 0, 0.12),
+      0 4px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Grafiktagi yozuvlar uchun maxsus stillar */
+  .graphic-legend {
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: #495057;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  /* Statistika qismi - yangi chiroyli stil */
+  .stats-section {
+    display: flex;
+    flex-direction: column;
+    width: 42%;
+    height: auto;
+    gap: 18px;
+  }
+
+  .stat-box {
+    width: 100%;
+    flex: 1;
+    padding: 25px 20px;
+    border-radius: 18px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    text-align: center;
+    box-shadow:
+      0 8px 25px rgba(0, 0, 0, 0.07),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg,
+      rgba(77, 171, 247, 0.05) 0%,
+      rgba(51, 154, 240, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .stat-box:hover::before {
+    opacity: 1;
+  }
+
+  .stat-box:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow:
+      0 15px 35px rgba(0, 0, 0, 0.12),
+      0 5px 15px rgba(0, 0, 0, 0.08);
+    border-color: rgba(77, 171, 247, 0.3);
+  }
+
+  .stat-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 15px;
+    background: linear-gradient(135deg, #4dabf7, #228be6);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 12px rgba(77, 171, 247, 0.3);
+  }
+
+  .stat-box h5.card-title {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background: linear-gradient(135deg, #2c3e50, #4a5568);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-box p.card-text {
+    color: #495057;
+    font-size: 1.05rem;
+    margin-bottom: 0;
+    font-weight: 600;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    letter-spacing: 0.3px;
+    opacity: 0.9;
+  }
+
+  /* Har bir stat box uchun turli ranglar */
+  .stat-box:nth-child(1) .stat-icon {
+    background: linear-gradient(135deg, #4dabf7, #339af0);
+  }
+
+  .stat-box:nth-child(2) .stat-icon {
+    background: linear-gradient(135deg, #51cf66, #40c057);
+  }
+
+  .stat-box:nth-child(3) .stat-icon {
+    background: linear-gradient(135deg, #ff922b, #fd7e14);
+  }
+
+  /* Grafik yo'q bo'lganda */
+  .no-graphic-container {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.65));
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+  }
+
+  .no-graphic-icon {
+    font-size: 4rem;
+    color: #adb5bd;
+    margin-bottom: 20px;
+    opacity: 0.6;
+  }
+
+  .no-graphic-container p {
+    color: #6c757d;
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+    font-weight: 500;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  }
+
+  /* Mobil qurilmalar uchun (max-width: 768px) */
+  @media (max-width: 768px) {
+    .responsive-container {
+      flex-direction: column;
+      gap: 25px;
+      min-height: auto;
+    }
+
+    .graphic-section {
+      width: 100%;
+      padding: 20px;
+      border-radius: 16px;
+    }
+
+    .stats-section {
+      width: 100%;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .stat-box {
+      width: 48%;
+      min-height: 160px;
+      padding: 20px 15px;
+      border-radius: 16px;
+    }
+
+    .graphic-section h5 {
+      font-size: 1.25rem;
+      margin-bottom: 15px;
+    }
+
+    .stat-icon {
+      width: 40px;
+      height: 40px;
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+    }
+
+    .stat-box h5.card-title {
+      font-size: 2rem;
+    }
+
+    .stat-box p.card-text {
+      font-size: 0.95rem;
+    }
+
+    .graphic-img {
+      max-height: 280px;
+      padding: 12px;
+    }
+
+    .graphic-container {
+      min-height: 200px;
+    }
+  }
+
+  /* Kichik mobil qurilmalar (max-width: 576px) */
+  @media (max-width: 576px) {
+    .responsive-container {
+      gap: 20px;
+    }
+
+    .graphic-section {
+      padding: 18px;
+      border-radius: 14px;
+    }
+
+    .graphic-section h5 {
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+    }
+
+    .stats-section {
+      gap: 12px;
+      flex-direction: column;
+    }
+
+    .stat-box {
+      width: 100%;
+      min-height: 140px;
+      padding: 18px 12px;
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-icon {
+      width: 36px;
+      height: 36px;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .stat-box h5.card-title {
+      font-size: 1.8rem;
+    }
+
+    .stat-box p.card-text {
+      font-size: 0.9rem;
+    }
+
+    .graphic-img {
+      max-height: 220px;
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .graphic-legend {
+      font-size: 0.75rem;
+      padding: 6px 10px;
+    }
+  }
+
+  /* Planshetlar (min-width: 769px) va (max-width: 1024px) */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .graphic-section {
+      width: 55%;
+      padding: 22px;
+      border-radius: 18px;
+    }
+
+    .stats-section {
+      width: 45%;
+      gap: 16px;
+    }
+
+    .stat-box {
+      padding: 22px 16px;
+      border-radius: 16px;
+    }
+
+    .graphic-section h5 {
+      font-size: 1.3rem;
+    }
+
+    .stat-box h5.card-title {
+      font-size: 2.2rem;
+    }
+
+    .stat-box p.card-text {
+      font-size: 1rem;
+    }
+
+    .graphic-img {
+      max-height: 280px;
+    }
+  }
+
+  /* Katta ekranlar (min-width: 1367px) */
+  @media (min-width: 1367px) {
+    .graphic-section {
+      width: 62%;
+      padding: 30px;
+      border-radius: 24px;
+    }
+
+    .stats-section {
+      width: 38%;
+      gap: 22px;
+    }
+
+    .stat-box {
+      padding: 30px 25px;
+      border-radius: 20px;
+    }
+
+    .graphic-section h5 {
+      font-size: 1.5rem;
+      margin-bottom: 25px;
+    }
+
+    .stat-icon {
+      width: 56px;
+      height: 56px;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+
+    .stat-box h5.card-title {
+      font-size: 2.8rem;
+      margin-bottom: 12px;
+    }
+
+    .stat-box p.card-text {
+      font-size: 1.1rem;
+    }
+
+    .graphic-img {
+      max-height: 350px;
+      padding: 20px;
+      border-radius: 16px;
+    }
+
+    .graphic-container {
+      min-height: 300px;
+    }
+  }
+
+  /* Animatsiyalar */
+  @keyframes floatIn {
+    0% {
+      opacity: 0;
+      transform: translateY(40px) scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+
+  .graphic-section {
+    animation: floatIn 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .stat-box {
+    animation: floatIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) both;
+  }
+
+  .stat-box:nth-child(1) { animation-delay: 0.1s; }
+  .stat-box:nth-child(2) { animation-delay: 0.2s; }
+  .stat-box:nth-child(3) { animation-delay: 0.3s; }
+
+  /* Loading effekti grafik uchun */
+  .graphic-loading {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .graphic-loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
+    animation: shimmer 2s infinite;
+  }
+
+  /* Font import (agar internet bor bo'lsa) */
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  /* Qorong'u rejim */
+  @media (prefers-color-scheme: dark) {
+    .graphic-section,
+    .stat-box,
+    .no-graphic-container {
+      background: linear-gradient(145deg, rgba(30, 30, 40, 0.85), rgba(25, 25, 35, 0.65));
+      border-color: rgba(255, 255, 255, 0.15);
+      color: #e9ecef;
+    }
+
+    .graphic-section h5,
+    .stat-box h5.card-title,
+    .stat-box p.card-text {
+      color: #e9ecef;
+      background: linear-gradient(135deg, #e9ecef, #ced4da);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .graphic-img {
+      background: #2d3436;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .stat-icon {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .graphic-legend {
+      background: rgba(40, 40, 50, 0.9);
+      color: #dee2e6;
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+  }
+
+  /* Accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .stat-box,
+    .graphic-section {
+      animation: none;
+      transition: none;
+    }
+
+    .stat-box:hover {
+      transform: none;
+    }
+  }
+
+  /* Yuqori kontrast rejim */
+  @media (prefers-contrast: high) {
+    .graphic-section,
+    .stat-box {
+      border-width: 3px;
+      border-color: #000;
+    }
+
+    .stat-box h5.card-title {
+      color: #000;
+      -webkit-text-fill-color: #000;
+    }
+  }
+
 </style>
       <div class="user_stats_container">
            <h4>
@@ -333,52 +913,43 @@
               <i class="fas fa-arrow-left"></i> Orqaga
             </a>
         <div class="card-body">
-          <!-- Grafik -->
-          {% if graphic %}
-          <div class="text-center mb-4">
-            <h5>Test natijalari grafigi:</h5>
-            <img
-              src="data:image/png;base64,{{ graphic }}"
-              alt="Test natijalari grafigi"
-              class="img-fluid border rounded"
-            />
-          </div>
-          {% else %}
-          <div class="alert alert-info">
-            <p>Test natijalari: {{ test_results.count }} ta</p>
-            <p>Grafik: {{ graphic|yesno:"Mavjud,Mavjud emas" }}</p>
-          </div>
-          {% endif %}
+         <div class="responsive-container">
+  <!-- Grafik qismi -->
+  {% if graphic %}
+  <div class="graphic-section">
+    <h5>Test natijalari grafigi</h5>
+    <img
+      src="data:image/png;base64,{{ graphic }}"
+      alt="Test natijalari grafigi"
+      class="graphic-img"
+    />
+  </div>
+  {% else %}
+  <div class="graphic-section">
+    <h5>Test natijalari</h5>
+    <p>Natijalar soni: {{ test_results.count }} ta</p>
+    <p>Grafik: {{ graphic|yesno:"Mavjud,Mavjud emas" }}</p>
+  </div>
+  {% endif %}
 
-          <!-- Umumiy statistika -->
-          {% if test_results %}
-          <div class="row mt-4">
-            <div class="col-md-4">
-              <div class="card text-center bg-light">
-                <div class="card-body">
-                  <h5 class="card-title">{{ test_results.count }}</h5>
-                  <p class="card-text">Jami testlar</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card text-center bg-info text-white">
-                <div class="card-body">
-                  <h5 class="card-title">{{ best_percentage }}%</h5>
-                  <p class="card-text">Eng yaxshi natija</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card text-center bg-success text-white">
-                <div class="card-body">
-                  <h5 class="card-title">{{ test_results.count }}</h5>
-                  <p class="card-text">Testlarni yakunlash</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          {% endif %}
+  <!-- Umumiy statistika -->
+  {% if test_results %}
+  <div class="stats-section">
+    <div class="stat-box">
+      <h5 class="card-title">{{ test_results.count }}</h5>
+      <p class="card-text">Jami testlar</p>
+    </div>
+    <div class="stat-box">
+      <h5 class="card-title">{{ best_percentage }}%</h5>
+      <p class="card-text">Eng yaxshi natija</p>
+    </div>
+    <div class="stat-box">
+      <h5 class="card-title">{{ test_results.count }}</h5>
+      <p class="card-text">Testlarni yakunlash</p>
+    </div>
+  </div>
+  {% endif %}
+</div>
           <!-- Jadval -->
           <h5 class="mb-3">Batafsil statistika:</h5>
           <div class="table-responsive">
