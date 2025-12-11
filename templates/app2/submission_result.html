@@ -1,0 +1,529 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Python Test Natijasi - {{ submission.id }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <!-- Python test natijasi -->
+            <div class="card shadow border-0 mb-4">
+                <div class="card-header py-3 python-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="m-0 font-weight-bold text-white">
+                                <i class="fab fa-python me-2"></i>
+                                Python Test Natijasi #{{ submission.id }}
+                            </h6>
+                            <small class="text-white-50">Python kodingizning test natijasi</small>
+                        </div>
+                        <div class="btn-group">
+                            <a href="{% url 'app2:practice_question' submission.question.id %}"
+                               class="btn btn-sm btn-light">
+                                <i class="fas fa-redo me-2"></i> Qayta Urinish
+                            </a>
+                            <a href="{% url 'app2:submission_history' %}"
+                               class="btn btn-sm btn-outline-light">
+                                <i class="fas fa-history me-2"></i> Tarix
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <!-- Status ko'rsatkichi -->
+                    <div class="alert {% if submission.status == 'success' %}alert-success
+                                     {% elif submission.status == 'failed' %}alert-danger
+                                     {% else %}alert-warning{% endif %} border-0 shadow-sm">
+                        <div class="d-flex align-items-center">
+                            <div class="me-4" style="font-size: 3rem;">
+                                {% if submission.status == 'success' %}
+                                    ✅
+                                {% elif submission.status == 'failed' %}
+                                    ❌
+                                {% else %}
+                                    ⚠️
+                                {% endif %}
+                            </div>
+                            <div class="flex-grow-1">
+                                <h4 class="alert-heading mb-2">
+                                    {% if submission.status == 'success' %}
+                                        <i class="fas fa-trophy me-2"></i> Python Test Muvaffaqiyatli!
+                                    {% elif submission.status == 'failed' %}
+                                        <i class="fas fa-times-circle me-2"></i> Python Test Xato!
+                                    {% else %}
+                                        <i class="fas fa-exclamation-triangle me-2"></i> Python Runtime Xatolik!
+                                    {% endif %}
+                                </h4>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <p class="mb-2">
+                                            <strong>Python Savol:</strong>
+                                            <a href="{% url 'app2:practice_question' submission.question.id %}"
+                                               class="text-decoration-none">
+                                                {{ submission.question.question_text|truncatewords:15 }}
+                                            </a>
+                                        </p>
+                                        <div class="small">
+                                            <span class="badge
+                                                {% if submission.question.difficulty == 'easy' %}bg-success
+                                                {% elif submission.question.difficulty == 'medium' %}bg-warning
+                                                {% else %}bg-danger{% endif %} me-2">
+                                                {{ submission.question.get_difficulty_display }}
+                                            </span>
+                                            <span class="badge bg-primary me-2">
+                                                <i class="fab fa-python me-1"></i> Python
+                                            </span>
+                                            <span class="text-muted">
+                                                <i class="fas fa-calendar-alt me-1"></i>
+                                                {{ submission.created_at|date:"d.m.Y H:i" }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 text-md-end">
+                                        <div class="display-6 fw-bold">
+                                            {% if submission.execution_time %}
+                                                {{ submission.execution_time }}s
+                                            {% else %}
+                                                0.00s
+                                            {% endif %}
+                                        </div>
+                                        <div class="small text-muted">
+                                            <i class="fas fa-stopwatch me-1"></i> Ish vaqti
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Natija detallari -->
+                    <div class="row mt-4">
+                        <!-- Python chiqish natijasi -->
+                        <div class="col-lg-12 mb-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-header bg-primary text-white">
+                                    <h6 class="m-0 font-weight-bold">
+                                        <i class="fas fa-terminal me-2"></i>
+                                        Python Dastur Chiqishi
+                                    </h6>
+                                </div>
+                                <div class="card-body p-0">
+                                    {% if submission.test_result.output %}
+                                    <div class="position-relative">
+                                        <pre class="python-output p-4 m-0 bg-dark text-light"
+                                             style="font-family: 'Monaco', 'Consolas', monospace;
+                                                    font-size: 13px;
+                                                    line-height: 1.5;
+                                                    max-height: 300px;
+                                                    overflow-y: auto;
+                                                    white-space: pre-wrap;
+                                                    word-wrap: break-word;">
+{{ submission.test_result.output }}</pre>
+                                        <button type="button" class="btn btn-sm btn-outline-light position-absolute"
+                                                style="top: 10px; right: 10px;"
+                                                onclick="copyOutput()" title="Nusxalash">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                    {% else %}
+                                    <div class="p-5 text-center text-muted">
+                                        <i class="fas fa-code fa-3x mb-3 opacity-25"></i>
+                                        <p class="mb-0">Hech qanday chiqish yo'q</p>
+                                        <small class="text-muted">Python dastur hech narsa chop etmagan</small>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% if submission.test_result.message %}
+                                <div class="card-footer bg-warning text-dark">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        <div>{{ submission.test_result.message }}</div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Python kodingiz -->
+                    <div class="card border-0 shadow-sm mt-4">
+                        <div class="card-header bg-success text-white">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h6 class="m-0 font-weight-bold">
+                                    <i class="fab fa-python me-2"></i>
+                                    Sizning Python Kodingiz
+                                </h6>
+                                <div class="btn-group btn-group-sm">
+                                    <button type="button" class="btn btn-outline-light" onclick="copyCode()"
+                                            title="Kodni nusxalash">
+                                        <i class="fas fa-copy"></i> Nusxalash
+                                    </button>
+                                    <button type="button" class="btn btn-outline-light" onclick="toggleLineNumbers()"
+                                            title="Qator raqamlarini ko'rsatish/yashirish">
+                                        <i class="fas fa-list-ol"></i> Qatorlar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="position-relative">
+                                <div id="codeContainer">
+                                    <pre id="pythonCode" class="python-code p-4 m-0 bg-dark text-light"
+                                         style="font-family: 'Monaco', 'Consolas', monospace;
+                                                font-size: 13px;
+                                                line-height: 1.5;
+                                                max-height: 400px;
+                                                overflow-y: auto;
+                                                white-space: pre;
+                                                tab-size: 4;">
+{{ submission.code }}</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tahlil va maslahatlar -->
+                    {% if submission.status == 'failed' or submission.status == 'error' %}
+                    <div class="card border-0 shadow-sm mt-4 border-start border-3 border-danger">
+                        <div class="card-header bg-light">
+                            <h6 class="m-0 font-weight-bold text-danger">
+                                <i class="fas fa-bug me-2"></i>
+                                Python Xatolarini Tahlil Qilish
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6 class="text-primary mb-3">
+                                        <i class="fas fa-search me-2"></i>
+                                        Tekshirishlar
+                                    </h6>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2">
+                                            <i class="fas {% if 'assert' in submission.code %}fa-check-circle text-success{% else %}fa-times-circle text-danger{% endif %} me-2"></i>
+                                            assert funksiyasi ishlatilganmi?
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas {% if 'print' in submission.code %}fa-check-circle text-success{% else %}fa-times-circle text-danger{% endif %} me-2"></i>
+                                            print() funksiyasi borligini tekshiring
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas {% if 'def ' in submission.code %}fa-check-circle text-success{% else %}fa-times-circle text-danger{% endif %} me-2"></i>
+                                            Asosiy funksiya mavjudligi
+                                        </li>
+                                        <li>
+                                            <i class="fas {% if 'return' in submission.code or 'print' in submission.code %}fa-check-circle text-success{% else %}fa-times-circle text-danger{% endif %} me-2"></i>
+                                            Natijani qaytarish yoki chop etish
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="text-primary mb-3">
+                                        <i class="fas fa-lightbulb me-2"></i>
+                                        Maslahatlar
+                                    </h6>
+                                    <div class="alert alert-info">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        <strong>Python uchun maslahatlar:</strong>
+                                        <ul class="mt-2 mb-0">
+                                            <li>Funksiya nomi to'g'ri yozilganligini tekshiring</li>
+                                            <li>Indentatsiya (4 probel) to'g'ri bajarilganligini tekshiring</li>
+                                            <li>Xatolarni try/except bloklari orqali ushlang</li>
+                                            <li>Test holatlarini to'liq qamrab oling</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Navigation va amallar -->
+                <div class="card-footer bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <a href="{% url 'app2:code_practice' %}" class="btn btn-outline-primary">
+                                <i class="fas fa-list me-2"></i> Boshqa Python Savollar
+                            </a>
+                            <a href="{% url 'app2:practice_question' submission.question.id %}"
+                               class="btn btn-primary ms-2">
+                                <i class="fas fa-redo me-2"></i> Python Kodni Qayta Ishlash
+                            </a>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="symbol symbol-40 me-3">
+                                <div class="symbol-label bg-light-primary">
+                                    <span class="text-primary fw-bold">
+                                        {{ submission.user.username|first|upper }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="fw-bold">{{ submission.user.username }}</div>
+                                <div class="small text-muted">
+                                    {{ submission.created_at|date:"d.m.Y H:i" }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- O'xshash Python savollar -->
+            <div class="card border-0 shadow-sm mt-4">
+                <div class="card-header bg-info text-white">
+                    <h6 class="m-0 font-weight-bold">
+                        <i class="fas fa-lightbulb me-2"></i>
+                        O'xshash Python Savollar
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for question in similar_questions|slice:":4" %}
+                        <div class="col-md-6 col-lg-3 mb-3">
+                            <div class="card h-100 border-0 bg-light hover-shadow">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <span class="badge
+                                            {% if question.difficulty == 'easy' %}bg-success
+                                            {% elif question.difficulty == 'medium' %}bg-warning
+                                            {% else %}bg-danger{% endif %}">
+                                            {{ question.get_difficulty_display }}
+                                        </span>
+                                        <small class="text-muted">#{{ question.id }}</small>
+                                    </div>
+                                    <h6 class="card-title">
+                                        <a href="{% url 'app2:practice_question' question.id %}"
+                                           class="text-dark text-decoration-none">
+                                            {{ question.question_text|truncatewords:8 }}
+                                        </a>
+                                    </h6>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <span class="badge bg-primary">
+                                            <i class="fab fa-python me-1"></i> Python
+                                        </span>
+                                        <a href="{% url 'app2:practice_question' question.id %}"
+                                           class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-play"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="col-12">
+                            <div class="text-center py-4">
+                                <i class="fab fa-python fa-2x text-muted opacity-25 mb-3"></i>
+                                <p class="text-muted">Hozircha o'xshash Python savollar mavjud emas</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.python-header {
+    background: linear-gradient(135deg, #3776AB 0%, #306998 100%);
+    border-bottom: 3px solid #FFD43B;
+}
+
+.symbol {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.475rem;
+}
+
+.symbol-40 {
+    width: 40px;
+    height: 40px;
+}
+
+.symbol-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+}
+
+.bg-light-primary {
+    background-color: rgba(55, 118, 171, 0.1) !important;
+}
+
+.python-code, .python-output {
+    font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* Python syntax highlighting */
+.python-code .keyword { color: #0086b3; font-weight: bold; }
+.python-code .string { color: #183691; }
+.python-code .comment { color: #969896; font-style: italic; }
+.python-code .function { color: #795da3; font-weight: bold; }
+.python-code .number { color: #008080; }
+
+.hover-shadow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1) !important;
+    transition: all 0.3s ease;
+}
+
+/* Line numbers */
+.line-numbers {
+    counter-reset: line;
+}
+
+.line-numbers .line-number {
+    display: block;
+    counter-increment: line;
+}
+
+.line-numbers .line-number:before {
+    content: counter(line);
+    display: inline-block;
+    width: 40px;
+    margin-right: 15px;
+    text-align: right;
+    color: #666;
+    border-right: 1px solid #444;
+    padding-right: 10px;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function copyOutput() {
+    const output = document.querySelector('.python-output').textContent;
+    navigator.clipboard.writeText(output).then(() => {
+        showToast('Python chiqish nusxalandi!', 'success');
+    }).catch(err => {
+        showToast('Nusxalash xatosi: ' + err, 'danger');
+    });
+}
+
+function copyCode() {
+    const code = document.getElementById('pythonCode').textContent;
+    navigator.clipboard.writeText(code).then(() => {
+        showToast('Python kodi nusxalandi!', 'success');
+    }).catch(err => {
+        showToast('Nusxalash xatosi: ' + err, 'danger');
+    });
+}
+
+function toggleLineNumbers() {
+    const codeElement = document.getElementById('pythonCode');
+    const codeContainer = document.getElementById('codeContainer');
+
+    if (codeContainer.classList.contains('line-numbers')) {
+        codeContainer.classList.remove('line-numbers');
+        // Remove line numbers
+        const lines = codeElement.innerHTML.split('\n');
+        codeElement.innerHTML = lines.map(line => line.replace(/<span class="line-number">.*?<\/span>/, '')).join('\n');
+    } else {
+        codeContainer.classList.add('line-numbers');
+        // Add line numbers
+        const lines = codeElement.innerHTML.split('\n');
+        codeElement.innerHTML = lines.map((line, index) =>
+            `<span class="line-number">${line}</span>`
+        ).join('\n');
+    }
+}
+
+function showToast(message, type = 'success') {
+    // Remove existing toasts
+    document.querySelectorAll('.toast-alert').forEach(toast => toast.remove());
+
+    // Create new toast
+    const toast = document.createElement('div');
+    toast.className = `toast-alert alert alert-${type} alert-dismissible fade show position-fixed`;
+    toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    toast.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+
+    document.body.appendChild(toast);
+
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
+
+function applyPythonSyntaxHighlighting() {
+    const codeElement = document.getElementById('pythonCode');
+    if (!codeElement) return;
+
+    let code = codeElement.textContent;
+
+    // Python keywords
+    const keywords = ['def', 'class', 'return', 'if', 'else', 'elif', 'for', 'while',
+                     'try', 'except', 'finally', 'with', 'as', 'import', 'from',
+                     'assert', 'raise', 'pass', 'break', 'continue', 'lambda', 'yield',
+                     'True', 'False', 'None', 'and', 'or', 'not', 'in', 'is'];
+
+    // Highlight keywords
+    keywords.forEach(keyword => {
+        const regex = new RegExp(`\\b${keyword}\\b`, 'g');
+        code = code.replace(regex, `<span class="keyword">${keyword}</span>`);
+    });
+
+    // Highlight strings (single and double quotes, triple quotes)
+    code = code.replace(/(['"])(.*?)\1/g, '<span class="string">$&</span>');
+    code = code.replace(/(['"]{3})(.*?)\1/gs, '<span class="string">$&</span>');
+
+    // Highlight comments
+    code = code.replace(/(#.*$)/gm, '<span class="comment">$1</span>');
+
+    // Highlight numbers
+    code = code.replace(/\b(\d+\.?\d*|\.\d+)\b/g, '<span class="number">$1</span>');
+
+    // Highlight function definitions
+    code = code.replace(/def (\w+)/g, '<span class="keyword">def</span> <span class="function">$1</span>');
+
+    codeElement.innerHTML = code;
+}
+
+$(document).ready(function() {
+    // Sahifani yuklashda chiqishni pastga skrollash
+    setTimeout(() => {
+        $('html, body').animate({
+            scrollTop: $('.alert').offset().top - 100
+        }, 500);
+    }, 300);
+
+    // Apply Python syntax highlighting
+    applyPythonSyntaxHighlighting();
+
+    // Auto scroll to output if there's an error
+    {% if submission.status == 'failed' or submission.status == 'error' %}
+    setTimeout(() => {
+        const outputElement = document.querySelector('.python-output');
+        if (outputElement) {
+            outputElement.scrollTop = outputElement.scrollHeight;
+        }
+    }, 500);
+    {% endif %}
+
+    // Initialize tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'));
+    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+});
+</script>
+{% endblock %}

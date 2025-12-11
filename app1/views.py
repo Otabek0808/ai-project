@@ -709,3 +709,4 @@ def user_profile_detail(request, user_id):
         'user_profile': user_profile,
         'test_results': test_results
     })
+#------------------- Test compilator ------------------

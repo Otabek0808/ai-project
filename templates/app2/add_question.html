@@ -1,0 +1,514 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Python Yangi Savol Qo'shish{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- Yangi Python savol qo'shish formasi -->
+            <div class="card shadow">
+                <div class="card-header py-3 python-header">
+                    <h6 class="m-0 font-weight-bold text-white">
+                        <i class="fab fa-python me-2"></i>
+                        Yangi Python Savol Qo'shish
+                    </h6>
+                </div>
+
+                <div class="card-body">
+                    <form method="post" id="questionForm">
+                        {% csrf_token %}
+
+                        <!-- Savol matni -->
+                        <div class="mb-4">
+                            <label for="{{ form.question_text.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-question-circle text-primary me-1"></i>
+                                Python Savol Matni
+                                <span class="text-danger">*</span>
+                            </label>
+                            {{ form.question_text }}
+                            <div class="form-text text-muted">
+                                Python dasturlash tiliga oid savolni aniq va tushunarli yozing.<br>
+                                <strong>Misol:</strong> "Sonni faktorialini hisoblovchi Python funksiya yozing"
+                            </div>
+                            {% if form.question_text.errors %}
+                            <div class="alert alert-danger small mt-1 p-2">
+                                <i class="fas fa-exclamation-triangle me-1"></i>
+                                {{ form.question_text.errors }}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Python Test kodi -->
+                        <div class="mb-4">
+                            <label for="{{ form.test_code.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-code text-success me-1"></i>
+                                Python Test Kodi
+                                <span class="text-danger">*</span>
+                            </label>
+                            {{ form.test_code }}
+                            <div class="form-text text-muted">
+                                Python dasturi uchun test kodini kiriting. <code>assert</code> va <code>print()</code> dan foydalaning.<br>
+                                <strong>Misol:</strong>
+                                <code class="d-block mt-1">
+def test_solution():<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# Test 1: Faktorial 5<br>
+&nbsp;&nbsp;&nbsp;&nbsp;assert factorial(5) == 120<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# Test 2: Faktorial 0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;assert factorial(0) == 1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print("✅ Barcha testlar muvaffaqiyatli o'tdi!")</code>
+                            </div>
+                            {% if form.test_code.errors %}
+                            <div class="alert alert-danger small mt-1 p-2">
+                                <i class="fas fa-exclamation-triangle me-1"></i>
+                                {{ form.test_code.errors }}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Sozlamalar -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label for="{{ form.difficulty.id_for_label }}" class="form-label fw-bold mb-0">
+                                            <i class="fas fa-chart-line text-warning me-1"></i>
+                                            Qiyinchilik Darajasi
+                                        </label>
+                                        <span class="badge bg-primary ms-2">
+                                            <i class="fab fa-python me-1"></i> Python
+                                        </span>
+                                    </div>
+                                    {{ form.difficulty }}
+                                    <div class="form-text">
+                                        Savolning qiyinchilik darajasini tanlang
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">
+                                        <i class="fas fa-info-circle text-info me-1"></i>
+                                        Dasturlash Tili
+                                    </label>
+                                    <div class="alert alert-info p-3">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fab fa-python fa-2x me-3 text-primary"></i>
+                                            <div>
+                                                <h6 class="mb-1">Python 3</h6>
+                                                <p class="mb-0 small">Faqat Python dasturlash tili qo'llab-quvvatlanadi</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Python test kodi uchun misollar -->
+                        <div class="card border-left-primary mb-4">
+                            <div class="card-header bg-transparent border-primary">
+                                <h6 class="m-0 font-weight-bold text-primary">
+                                    <i class="fas fa-lightbulb me-2"></i>
+                                    Python Test Kodi Misollari
+                                </h6>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="accordion" id="pythonExamples">
+                                    <!-- Misol 1: Faktorial -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#example1">
+                                                <i class="fas fa-calculator me-2"></i> Faktorial hisoblash
+                                            </button>
+                                        </h2>
+                                        <div id="example1" class="accordion-collapse collapse show" data-bs-parent="#pythonExamples">
+                                            <div class="accordion-body">
+                                                <h6>Savol:</h6>
+                                                <p>"Sonning faktorialini hisoblovchi Python funksiya yozing"</p>
+
+                                                <h6>Test kodi:</h6>
+                                                <pre class="python-code bg-dark text-light p-3 rounded"><code>def test_factorial():
+    # Test 1: Oddiy holat
+    assert factorial(5) == 120, "5! = 120 bo'lishi kerak"
+
+    # Test 2: 0 faktorial
+    assert factorial(0) == 1, "0! = 1 bo'lishi kerak"
+
+    # Test 3: 1 faktorial
+    assert factorial(1) == 1, "1! = 1 bo'lishi kerak"
+
+    # Test 4: Katta son
+    assert factorial(10) == 3628800, "10! = 3628800 bo'lishi kerak"
+
+    print("✅ Barcha faktorial testlari muvaffaqiyatli o'tdi!")
+
+# Testni ishga tushirish
+test_factorial()</code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Misol 2: Palindrom -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#example2">
+                                                <i class="fas fa-exchange-alt me-2"></i> Palindrom tekshirish
+                                            </button>
+                                        </h2>
+                                        <div id="example2" class="accordion-collapse collapse" data-bs-parent="#pythonExamples">
+                                            <div class="accordion-body">
+                                                <h6>Savol:</h6>
+                                                <p>"Berilgan so'z palindrom ekanligini tekshiruvchi Python funksiya yozing"</p>
+
+                                                <h6>Test kodi:</h6>
+                                                <pre class="python-code bg-dark text-light p-3 rounded"><code>def test_is_palindrome():
+    # Test 1: Oddiy palindrom
+    assert is_palindrome("radar") == True, "'radar' palindrom bo'lishi kerak"
+
+    # Test 2: Katta harflar
+    assert is_palindrome("Racecar") == False, "'Racecar' katta harf bilan palindrom emas"
+
+    # Test 3: Bo'sh satr
+    assert is_palindrome("") == True, "Bo'sh satr palindrom hisoblanadi"
+
+    # Test 4: Raqamlar
+    assert is_palindrome("12321") == True, "'12321' palindrom bo'lishi kerak"
+
+    print("✅ Barcha palindrom testlari muvaffaqiyatli o'tdi!")
+
+# Testni ishga tushirish
+test_is_palindrome()</code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Misol 3: Yig'indi -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#example3">
+                                                <i class="fas fa-plus-circle me-2"></i> Ro'yxat yig'indisi
+                                            </button>
+                                        </h2>
+                                        <div id="example3" class="accordion-collapse collapse" data-bs-parent="#pythonExamples">
+                                            <div class="accordion-body">
+                                                <h6>Savol:</h6>
+                                                <p>"Ro'yxatdagi sonlar yig'indisini hisoblovchi Python funksiya yozing"</p>
+
+                                                <h6>Test kodi:</h6>
+                                                <pre class="python-code bg-dark text-light p-3 rounded"><code>def test_sum_list():
+    # Test 1: Oddiy ro'yxat
+    assert sum_list([1, 2, 3, 4, 5]) == 15, "[1,2,3,4,5] yig'indisi 15"
+
+    # Test 2: Bo'sh ro'yxat
+    assert sum_list([]) == 0, "Bo'sh ro'yxat yig'indisi 0"
+
+    # Test 3: Manfiy sonlar
+    assert sum_list([-1, -2, -3]) == -6, "[-1,-2,-3] yig'indisi -6"
+
+    # Test 4: Faqat bitta element
+    assert sum_list([10]) == 10, "[10] yig'indisi 10"
+
+    print("✅ Barcha yig'indi testlari muvaffaqiyatli o'tdi!")
+
+# Testni ishga tushirish
+test_sum_list()</code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tugmalar -->
+                        <div class="d-flex justify-content-between align-items-center border-top pt-4">
+                            <div>
+                                <button type="submit" class="btn btn-primary btn-lg px-4">
+                                    <i class="fas fa-save me-2"></i> Python Savolni Saqlash
+                                </button>
+                                <button type="button" class="btn btn-outline-info" id="previewBtn">
+                                    <i class="fas fa-eye me-2"></i> Ko'rib Chiqish
+                                </button>
+                            </div>
+                            <div>
+                                <a href="{% url 'app2:code_practice' %}" class="btn btn-outline-secondary">
+                                    <i class="fas fa-times me-2"></i> Bekor Qilish
+                                </a>
+                                <button type="reset" class="btn btn-outline-danger ms-2">
+                                    <i class="fas fa-undo me-2"></i> Tozalash
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Qo'shimcha ma'lumot -->
+                <div class="card-footer bg-light">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-primary">
+                                <i class="fas fa-lightbulb me-2"></i>
+                                Maslahatlar
+                            </h6>
+                            <ul class="small">
+                                <li>Savol aniq va tushunarli bo'lsin</li>
+                                <li>Test kodida kamida 3-4 ta test bo'lsin</li>
+                                <li>Turli xil holatlarni (edge cases) tekshiring</li>
+                                <li>Funksiya nomlari ingliz tilida bo'lsin</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-success">
+                                <i class="fas fa-check-circle me-2"></i>
+                                Tekshiruvlar
+                            </h6>
+                            <ul class="small">
+                                <li>Savol matni kamida 20 belgi</li>
+                                <li>Test kodi kamida 30 belgi</li>
+                                <li>Test kodida assert yoki if/else tekshiruvi</li>
+                                <li>Natijani chop etish (print)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Ko'rish modal oynasi -->
+<div class="modal fade" id="previewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">
+                    <i class="fab fa-python me-2"></i>
+                    Python Savol Ko'rinishi
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="previewContent"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-2"></i> Yopish
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.python-header {
+    background: linear-gradient(135deg, #3776AB 0%, #306998 100%);
+    border-bottom: 3px solid #FFD43B;
+}
+
+.python-code {
+    font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.bg-dark {
+    background-color: #2b2b2b !important;
+}
+
+/* Form elementlari uchun maxsus stillar */
+#{{ form.question_text.id_for_label }} {
+    font-size: 16px;
+    line-height: 1.6;
+    border-left: 4px solid #3776AB;
+}
+
+#{{ form.test_code.id_for_label }} {
+    font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+    font-size: 14px;
+    border-left: 4px solid #28a745;
+}
+
+.form-text code {
+    background-color: #f8f9fa;
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid #dee2e6;
+}
+
+/* Difficulty ranglari */
+#{{ form.difficulty.id_for_label }} option[value="easy"] {
+    color: #28a745;
+    font-weight: 500;
+}
+
+#{{ form.difficulty.id_for_label }} option[value="medium"] {
+    color: #ffc107;
+    font-weight: 500;
+}
+
+#{{ form.difficulty.id_for_label }} option[value="hard"] {
+    color: #dc3545;
+    font-weight: 500;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: rgba(55, 118, 171, 0.1);
+    color: #3776AB;
+}
+
+.accordion-button:focus {
+    border-color: #3776AB;
+    box-shadow: 0 0 0 0.25rem rgba(55, 118, 171, 0.25);
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // Forma elementlarini olish
+    var questionText = $('#{{ form.question_text.id_for_label }}');
+    var testCode = $('#{{ form.test_code.id_for_label }}');
+    var difficulty = $('#{{ form.difficulty.id_for_label }}');
+
+    // Textarea'larni kengaytirish
+    questionText.css({
+        'min-height': '150px',
+        'max-height': '400px',
+        'resize': 'vertical'
+    });
+
+    testCode.css({
+        'min-height': '250px',
+        'max-height': '500px',
+        'resize': 'vertical'
+    });
+
+    // Ko'rish tugmasi
+    $('#previewBtn').click(function() {
+        var preview = '';
+
+        // Difficulty badge rangi
+        var diffClass = 'bg-success';
+        var diffText = 'Oson';
+        if (difficulty.val() === 'medium') {
+            diffClass = 'bg-warning';
+            diffText = "O'rtacha";
+        } else if (difficulty.val() === 'hard') {
+            diffClass = 'bg-danger';
+            diffText = 'Qiyin';
+        }
+
+        // Savol matni
+        preview += '<div class="card mb-4 border-primary">';
+        preview += '<div class="card-header bg-primary text-white">';
+        preview += '<h5 class="mb-0"><i class="fab fa-python me-2"></i>Python Savol</h5>';
+        preview += '</div>';
+        preview += '<div class="card-body">';
+        preview += '<div class="mb-3">';
+        preview += '<span class="badge ' + diffClass + ' me-2">' + diffText + '</span>';
+        preview += '<span class="badge bg-info"><i class="fab fa-python me-1"></i>Python</span>';
+        preview += '</div>';
+        preview += '<h6 class="text-primary">Savol:</h6>';
+        preview += '<div class="p-3 bg-light rounded">';
+        preview += questionText.val().replace(/\n/g, '<br>');
+        preview += '</div>';
+        preview += '</div></div>';
+
+        // Test kodi
+        preview += '<div class="card border-success">';
+        preview += '<div class="card-header bg-success text-white">';
+        preview += '<h5 class="mb-0"><i class="fas fa-code me-2"></i>Python Test Kodi</h5>';
+        preview += '</div>';
+        preview += '<div class="card-body p-0">';
+        preview += '<pre class="m-0"><code class="language-python">' + testCode.val() + '</code></pre>';
+        preview += '</div></div>';
+
+        // Preview modal ga joylash
+        $('#previewContent').html(preview);
+
+        // Python syntax highlighting
+        if (typeof hljs !== 'undefined') {
+            $('#previewContent pre code').each(function(i, block) {
+                hljs.highlightElement(block);
+            });
+        }
+
+        // Modalni ochish
+        $('#previewModal').modal('show');
+    });
+
+    // Formani yuborishdan oldin tekshirish
+    $('#questionForm').submit(function(e) {
+        var isValid = true;
+        var errorMessage = '';
+
+        // Savol matni tekshiruvi
+        if (!questionText.val().trim()) {
+            errorMessage += '✗ Iltimos, Python savol matnini kiriting!\n';
+            isValid = false;
+            questionText.addClass('is-invalid');
+        } else if (questionText.val().trim().length < 20) {
+            errorMessage += '✗ Savol matni juda qisqa (kamida 20 belgi)!\n';
+            isValid = false;
+            questionText.addClass('is-invalid');
+        } else {
+            questionText.removeClass('is-invalid');
+        }
+
+        // Test kodi tekshiruvi
+        if (!testCode.val().trim()) {
+            errorMessage += '✗ Iltimos, Python test kodini kiriting!\n';
+            isValid = false;
+            testCode.addClass('is-invalid');
+        } else if (testCode.val().trim().length < 30) {
+            errorMessage += '✗ Test kodi juda qisqa (kamida 30 belgi)!\n';
+            isValid = false;
+            testCode.addClass('is-invalid');
+        } else if (!testCode.val().toLowerCase().includes('assert') &&
+                  !testCode.val().toLowerCase().includes('print')) {
+            errorMessage += '✗ Test kodida assert yoki print funksiyasi bo\'lishi kerak!\n';
+            isValid = false;
+            testCode.addClass('is-invalid');
+        } else {
+            testCode.removeClass('is-invalid');
+        }
+
+        // Xatolikni ko'rsatish
+        if (!isValid) {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'error',
+                title: 'Forma xatolari',
+                html: errorMessage.replace(/\n/g, '<br>'),
+                confirmButtonText: 'Tushunarli'
+            });
+        }
+
+        return isValid;
+    });
+
+    // Real-time tekshirish
+    questionText.on('input', function() {
+        var length = $(this).val().trim().length;
+        if (length >= 20) {
+            $(this).removeClass('is-invalid').addClass('is-valid');
+        } else {
+            $(this).removeClass('is-valid');
+        }
+    });
+
+    testCode.on('input', function() {
+        var code = $(this).val().trim();
+        if (code.length >= 30 && (code.toLowerCase().includes('assert') ||
+            code.toLowerCase().includes('print'))) {
+            $(this).removeClass('is-invalid').addClass('is-valid');
+        } else {
+            $(this).removeClass('is-valid');
+        }
+    });
+});
+</script>
+{% endblock %}

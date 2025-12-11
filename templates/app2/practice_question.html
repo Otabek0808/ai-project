@@ -1,0 +1,365 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Python Savol {{ question.id }} - Kod Yozish{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <!-- Python savol matni (chap panel) -->
+        <div class="col-lg-4 mb-4">
+            <!-- Python savol kartasi -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 python-header">
+                    <h6 class="m-0 font-weight-bold text-white">
+                        <i class="fab fa-python me-2"></i>
+                        Python Savol #{{ question.id }}
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <span class="badge
+                            {% if question.difficulty == 'easy' %}bg-success
+                            {% elif question.difficulty == 'medium' %}bg-warning
+                            {% else %}bg-danger{% endif %} me-2">
+                            <i class="fas
+                                {% if question.difficulty == 'easy' %}fa-star
+                                {% elif question.difficulty == 'medium' %}fa-chart-line
+                                {% else %}fa-fire{% endif %} me-1">
+                            </i>
+                            {{ question.get_difficulty_display }}
+                        </span>
+                        <span class="badge bg-primary me-2">
+                            <i class="fab fa-python me-1"></i> Python
+                        </span>
+                        {% if question.created_by == user %}
+                        <span class="badge bg-secondary">
+                            <i class="fas fa-user-check me-1"></i> Siz qo'shgansiz
+                        </span>
+                        {% endif %}
+                    </div>
+
+                    <div class="question-content mb-4">
+                        <h5 class="font-weight-bold mb-3 text-primary">Savol:</h5>
+                        <div class="bg-light p-4 rounded border-start border-3 border-primary">
+                            <div style="white-space: pre-wrap; line-height: 1.6;">
+                                {{ question.question_text }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Muallif ma'lumotlari -->
+                    <div class="d-flex align-items-center border-top pt-3">
+                        <div class="symbol symbol-40 me-3">
+                            <div class="symbol-label bg-light-primary">
+                                <span class="text-primary fw-bold">
+                                    {{ question.created_by.username|first|upper }}
+                                </span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="fw-bold">{{ question.created_by.username }}</div>
+                            <div class="text-muted small">
+                                <i class="fas fa-calendar-alt me-1"></i>
+                                {{ question.created_at|date:"d.m.Y H:i" }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Oldingi Python yuborishlar -->
+            {% if previous_submissions %}
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        <i class="fas fa-history me-2"></i>
+                        Oldingi Yechimlar
+                    </h6>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        {% for sub in previous_submissions %}
+                        <a href="{% url 'app2:submission_result' sub.id %}"
+                           class="list-group-item list-group-item-action py-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="fw-bold small">
+                                        <i class="fas fa-clock me-1 text-muted"></i>
+                                        {{ sub.created_at|date:"H:i" }}
+                                    </div>
+                                    <div class="small text-muted mt-1">
+                                        {{ sub.code|truncatechars:40 }}
+                                    </div>
+                                </div>
+                                <div>
+                                    {% if sub.status == 'success' %}
+                                    <span class="badge bg-success">
+                                        <i class="fas fa-check-circle me-1"></i> Muvaffaqiyatli
+                                    </span>
+                                    {% elif sub.status == 'failed' %}
+                                    <span class="badge bg-danger">
+                                        <i class="fas fa-times-circle me-1"></i> Xato
+                                    </span>
+                                    {% elif sub.status == 'error' %}
+                                    <span class="badge bg-warning text-dark">
+                                        <i class="fas fa-exclamation-triangle me-1"></i> Runtime
+                                    </span>
+                                    {% else %}
+                                    <span class="badge bg-secondary">
+                                        <i class="fas fa-clock me-1"></i> Kutilmoqda
+                                    </span>
+                                    {% endif %}
+                                    {% if sub.execution_time %}
+                                    <div class="small text-muted text-center mt-1">
+                                        <i class="fas fa-stopwatch"></i> {{ sub.execution_time }}s
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Python kod editori (o'ng panel) -->
+        <div class="col-lg-8">
+            <div class="card shadow border-0">
+                <div class="card-header py-3 python-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6 class="m-0 font-weight-bold text-white">
+                            <i class="fas fa-code me-2"></i>
+                            Python Kod Editori
+                        </h6>
+                        <span class="badge bg-light text-dark">
+                            Python 3.11+
+                        </span>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <form method="post" id="codeForm">
+                        {% csrf_token %}
+
+                        <!-- Python kod editori -->
+                        <div class="mb-3">
+                            <label for="{{ form.code.id_for_label }}" class="form-label fw-bold">
+                                <i class="fab fa-python me-1 text-primary"></i>
+                                Python Kodingizni yozing:
+                            </label>
+                            {{ form.code }}
+                            <div class="form-text text-muted">
+                                Python 3.11+ sintaksisidan foydalaning.
+                            </div>
+                            {% if form.code.errors %}
+                            <div class="alert alert-danger small mt-2">
+                                {{ form.code.errors }}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Test natijasi (AJAX uchun) -->
+                        <div id="testResult" class="card mb-3 d-none">
+                            <div class="card-header">
+                                <h6 class="m-0 font-weight-bold" id="resultTitle"></h6>
+                            </div>
+                            <div class="card-body">
+                                <pre class="mb-0 bg-dark text-light p-3 rounded" id="resultOutput" style="max-height: 200px; overflow-y: auto;"></pre>
+                                <div id="resultMessage" class="mt-2"></div>
+                            </div>
+                        </div>
+
+                        <!-- Tugmalar -->
+                        <div class="d-flex justify-content-between border-top pt-4">
+                            <div>
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>Natijani Ko'rish
+                                </button>
+                            </div>
+                            <div>
+                                <a href="{% url 'app2:code_practice' %}" class="btn btn-outline-primary">
+                                    <i class="fas fa-arrow-left me-2"></i> Orqaga
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.python-header {
+    background: linear-gradient(135deg, #3776AB 0%, #306998 100%);
+}
+
+.symbol {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.475rem;
+}
+
+.symbol-40 {
+    width: 40px;
+    height: 40px;
+}
+
+.symbol-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+}
+
+.bg-light-primary {
+    background-color: rgba(55, 118, 171, 0.1) !important;
+}
+
+/* Code editor styling */
+#{{ form.code.id_for_label }} {
+    font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 400px;
+    border: 2px solid #e3e6f0;
+    border-radius: 0.375rem;
+    transition: border-color 0.15s ease-in-out;
+}
+
+#{{ form.code.id_for_label }}:focus {
+    border-color: #3776AB;
+    box-shadow: 0 0 0 0.2rem rgba(55, 118, 171, 0.25);
+}
+
+.list-group-item-action:hover {
+    background-color: rgba(55, 118, 171, 0.05);
+}
+
+.border-start {
+    border-left-width: 3px !important;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // Form elementini olish
+    const codeTextarea = $('#{{ form.code.id_for_label }}');
+
+    // Textarea height adjustment
+    codeTextarea.on('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    }).trigger('input');
+
+    // Testni ishga tushirish (AJAX)
+    $('#runTestBtn').click(function() {
+        const code = codeTextarea.val().trim();
+        const csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+
+        if (!code) {
+            alert('Iltimos, Python kodingizni yozing!');
+            return;
+        }
+
+        const btn = $(this);
+        btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i> Tekshirilmoqda...');
+
+        $.ajax({
+            url: '{% url "app2:run_test_code" %}',
+            type: 'POST',
+            data: JSON.stringify({
+                'question_id': {{ question.id }},
+                'code': code
+            }),
+            contentType: 'application/json',
+            headers: {
+                'X-CSRFToken': csrfToken
+            },
+            success: function(response) {
+                const resultCard = $('#testResult');
+                const resultTitle = $('#resultTitle');
+                const resultOutput = $('#resultOutput');
+                const resultMessage = $('#resultMessage');
+
+                resultCard.removeClass('d-none');
+
+                if (response.success) {
+                    const result = response.result;
+
+                    // Natijani ranglarni o'rnatish
+                    if (result.status === 'success') {
+                        resultCard.find('.card-header').removeClass('bg-danger bg-warning').addClass('bg-success');
+                        resultTitle.html('<i class="fas fa-check-circle me-2"></i> Python Test Muvaffaqiyatli!');
+                    } else if (result.status === 'failed') {
+                        resultCard.find('.card-header').removeClass('bg-success bg-warning').addClass('bg-danger');
+                        resultTitle.html('<i class="fas fa-times-circle me-2"></i> Python Test Xato!');
+                    } else {
+                        resultCard.find('.card-header').removeClass('bg-success bg-danger').addClass('bg-warning');
+                        resultTitle.html('<i class="fas fa-exclamation-triangle me-2"></i> Python Runtime Xatolik!');
+                    }
+
+                    // Chiqishni ko'rsatish
+                    resultOutput.text(result.output || 'Hech qanday chiqish yo\'q');
+
+                    // Xabar va vaqt
+                    if (result.message) {
+                        resultMessage.html(`<div class="alert alert-info small">
+                            <i class="fas fa-info-circle me-2"></i>
+                            ${result.message}
+                        </div>`);
+                    } else {
+                        resultMessage.empty();
+                    }
+
+                    // Sahifani pastga skrollash
+                    $('html, body').animate({
+                        scrollTop: resultCard.offset().top - 100
+                    }, 500);
+
+                } else {
+                    alert('Xatolik: ' + response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('Server xatosi! Iltimos, qayta urinib ko\'ring.');
+            },
+            complete: function() {
+                btn.prop('disabled', false).html('<i class="fas fa-play me-2"></i> Testni Ishga Tushirish');
+            }
+        });
+    });
+
+    // Formani yuborishdan oldin tekshirish
+    $('#codeForm').submit(function(e) {
+        const code = codeTextarea.val().trim();
+
+        if (!code) {
+            e.preventDefault();
+            alert('Iltimos, Python kodingizni yozing!');
+            return false;
+        }
+
+        // Kod minimal uzunligi
+        if (code.length < 10) {
+            e.preventDefault();
+            alert('Iltimos, kamida 10 belgidan iborat Python kod yozing!');
+            return false;
+        }
+
+        return true;
+    });
+});
+</script>
+{% endblock %}
