@@ -3,23 +3,16 @@
 {% block content %}
 <style>
   /* Ekran o'lchamlariga mos responsive dizayn */
-  @media (max-width: 768px) {
-    .profile-card {
-      margin: 15px;
-    }
-  }
 
   @media (min-width: 769px) and (max-width: 1200px) {
     .profile-card {
-      max-width: 90%;
-      margin: 0 auto;
+      width: 90%;
     }
   }
 
   @media (min-width: 1201px) {
     .profile-card {
-      max-width: 80%;
-      margin: 0 auto;
+      width: 80%;
     }
   }
 
@@ -29,7 +22,8 @@
     border-radius: 12px;
     overflow: hidden;
     box-shadow: none !important;
-    width: 100%;
+    width: 75%;
+    margin: 0 auto;
   }
 
   .profile-card-header {
@@ -40,7 +34,7 @@
 
   .profile-card-header h4 {
     color: black !important;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 600;
     margin: 0;
   }
@@ -136,7 +130,7 @@
   }
 
   .profile-stat-content h4 {
-    font-size: 2.2rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: #2c3e50;
     margin-bottom: 5px;
@@ -163,14 +157,18 @@
     color: #0dcaf0;
     margin-right: 10px;
   }
+@media (max-width: 768px){
 
+    .profile-card {
+      width: 95%;
+    }
+}
   /* Responsive dizayn */
   @media (max-width: 768px) {
-    .profile-card {
-      margin: 15px;
-    }
 
-    .profile-card-body {
+
+
+   .profile-card-body {
       padding: 20px;
     }
 
@@ -200,6 +198,7 @@
   }
 
   @media (max-width: 576px) {
+
     .profile-card-body {
       padding: 15px;
     }
@@ -218,7 +217,6 @@
 
     .profile-group-badge {
       font-size: 0.9rem;
-      padding: 6px 12px;
     }
 
     .profile-stat-content h4 {
