@@ -1,53 +1,485 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% block content %}
 <style>
+  /* Asosiy konteynerlar */
   .video_container {
     width: 100%;
-    height: auto;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    /* Asosiy konteynerga fon bermaymiz */
   }
+
+  /* Video header qismi */
   .video_header {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    padding: 40px 0;
+    padding: 2.5rem 0;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(13, 110, 253, 0.1);
   }
+
+  .video_header h1.display-5 {
+    color: #212121;
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .video_header .text-muted {
+    color: #6c757d !important;
+    font-size: 1.1rem;
+    max-width: 600px;
+  }
+
+  /* Tugmalar */
+  .btn {
+    backdrop-filter: blur(10px);
+    border: none;
+    border-radius: 10px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
+  }
+
+  .btn:hover::before {
+    left: 100%;
+  }
+
+  .btn-success {
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.9), rgba(32, 201, 151, 0.9));
+    color: white;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2);
+  }
+
+  .btn-success:hover {
+    background: linear-gradient(135deg, rgba(33, 136, 56, 0.9), rgba(26, 161, 121, 0.9));
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
+    color: white;
+  }
+
+  /* Video kartalari */
+  .row.g-4 {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -1rem;
+  }
+
+  .col-md-6.col-lg-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  /* Video info kartasi - faqat bu yerda rgba(255, 255, 255, 0.311) */
   .info_video {
     width: 100%;
     height: auto;
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.511);
-    border-radius: 10px;
-    border: 0.1px solid white;
+    min-height: 350px;
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
   }
+
+  .info_video:hover {
+    transform: translateY(-10px);
+    border-color: rgba(13, 110, 253, 0.2);
+  }
+
+  /* Video qutisi */
   .box_video {
     width: 100%;
-    height: auto;
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.511);
-    border-radius: 10px 10px 0 0;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 12px 12px 0 0;
+    overflow: hidden;
   }
-  .box_video::before {
-    display: block;
-    padding-top: var(--bs-aspect-ratio);
-    content: "";
-  }
-  .box_video > * {
+
+  .box_video iframe {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 10px 10px 0 0;
+    border: none;
+    border-radius: 12px 12px 0 0;
   }
 
-  .box_video {
-    --bs-aspect-ratio: 56.25%; /* 9 ÷ 16 = 0.5625 */
-  }
+  /* Video ma'lumotlari */
   .box_info_video {
-    padding: 10px;
-    width: 100%;
-    height: auto;
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .box_info_video h6 {
+    color: #212121;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    overflow: hidden;
+  }
+
+  .box_info_video .card-text {
+    color: #5a6268;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .box_info_video .text-muted {
+    color: #868e96 !important;
+    font-size: 0.85rem;
+    margin-top: auto;
+    text-align: right;
+  }
+
+  /* Alert xabarlari - faqat bu yerda rgba(255, 255, 255, 0.311) */
+  .alert {
+    backdrop-filter: blur(10px)
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  }
+
+  .alert-info {
+    color: #0c5460;
+    border-left: 4px solid rgba(23, 162, 184, 0.5);
+  }
+
+  /* Admin ma'lumot kartasi - faqat bu yerda rgba(255, 255, 255, 0.311) */
+  .card.border-warning {
+    backdrop-filter: blur(15px);
+    background-color: rgba(255, 255, 255, 0.311);
+    border: 1.5px solid rgba(255, 193, 7, 0.3);
+    border-radius: 15px;
+    overflow: hidden;
+    margin-top: 2rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  }
+
+  .card-header.bg-warning {
+    backdrop-filter: blur(10px);
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.9), rgba(255, 180, 0, 0.9)) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .card-header.bg-warning h5 {
+    color: black;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .card-body p {
+    color: black;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  /* Ikonkalar */
+  .fas {
+    vertical-align: middle;
+  }
+
+  /* Animatsiyalar */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .info_video {
+    animation: fadeInUp 0.5s ease-out;
+  }
+
+  /* Responsive dizayn */
+
+  /* Katta ekranlar (1200px+) */
+  @media (min-width: 1200px) {
+    .col-md-6.col-lg-4 {
+      flex: 0 0 33.333%;
+      max-width: 33.333%;
+    }
+
+    .video_header {
+      padding: 3rem 0;
+    }
+
+    .video_header h1.display-5 {
+      font-size: 3rem;
+    }
+  }
+
+  /* O'rtacha ekranlar (992px - 1199px) */
+  @media (min-width: 992px) and (max-width: 1199px) {
+    .col-md-6.col-lg-4 {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+
+    .video_header h1.display-5 {
+      font-size: 2.8rem;
+    }
+  }
+
+  /* Kichik ekranlar (768px - 991px) */
+  @media (min-width: 768px) and (max-width: 991px) {
+    .col-md-6.col-lg-4 {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+
+    .video_header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+      padding: 2rem 0;
+    }
+
+    .video_header h1.display-5 {
+      font-size: 2.5rem;
+    }
+
+    .box_info_video h6 {
+      font-size: 1.1rem;
+    }
+  }
+
+  /* Kichikroq ekranlar (576px - 767px) */
+  @media (min-width: 576px) and (max-width: 767px) {
+    .col-md-6.col-lg-4 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    .video_container {
+      padding: 1.5rem;
+    }
+
+    .video_header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+    }
+
+    .video_header h1.display-5 {
+      font-size: 2.2rem;
+    }
+
+    .info_video {
+      min-height: 320px;
+    }
+
+    .box_info_video {
+      padding: 1.25rem;
+    }
+
+    .btn {
+      padding: 0.65rem 1.25rem;
+      font-size: 0.95rem;
+    }
+  }
+
+  /* Mobil qurilmalar (576px dan kichik) */
+  @media (max-width: 575px) {
+    .video_container {
+      padding: 1rem;
+    }
+
+    .video_header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+      margin-bottom: 1.5rem;
+    }
+
+    .video_header h1.display-5 {
+      font-size: 1.8rem;
+      line-height: 1.2;
+    }
+
+    .video_header .text-muted {
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    .row.g-4 {
+      margin: -0.75rem;
+    }
+
+    .col-md-6.col-lg-4 {
+      padding: 0.75rem;
+    }
+
+    .info_video {
+      min-height: 300px;
+    }
+
+    .box_video {
+      padding-bottom: 56.25%;
+    }
+
+    .box_info_video {
+      padding: 1rem;
+    }
+
+    .box_info_video h6 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .box_info_video .card-text {
+      font-size: 0.9rem;
+      -webkit-line-clamp: 2;
+    }
+
+    .box_info_video .text-muted {
+      font-size: 0.8rem;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+    }
+
+    .alert {
+      padding: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .card.border-warning {
+      margin-top: 1.5rem;
+    }
+
+    .card-header.bg-warning,
+    .card-body {
+      padding: 1rem;
+    }
+  }
+
+  /* Juda kichik ekranlar (375px dan kichik) */
+  @media (max-width: 374px) {
+    .video_container {
+      padding: 0.75rem;
+    }
+
+    .video_header h1.display-5 {
+      font-size: 1.6rem;
+    }
+
+    .video_header .text-muted {
+      font-size: 0.9rem;
+    }
+
+    .info_video {
+      min-height: 280px;
+    }
+
+    .box_info_video h6 {
+      font-size: 0.95rem;
+    }
+
+    .box_info_video .card-text {
+      font-size: 0.85rem;
+    }
+  }
+
+  /* Yuqori piksellik ekranlar uchun */
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .info_video,
+    .card.border-warning,
+    .alert {
+      backdrop-filter: blur(20px);
+    }
+
+    .btn {
+      backdrop-filter: blur(15px);
+    }
+  }
+
+  /* Qorong'u mavzu uchun tayyor - o'chirib qo'ydim, chunki asosiy konteyner fon bermaydi */
+  @media (prefers-color-scheme: dark) {
+    /* Asosiy konteynerga fon bermaymiz */
+    .video_header h1.display-5 {
+      color: #ffffff;
+    }
+
+    .video_header .text-muted {
+      color: rgba(255, 255, 255, 0.7) !important;
+    }
+
+    .info_video {
+      background-color: rgba(255, 255, 255, 0.311);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .box_info_video h6 {
+      color: #ffffff;
+    }
+
+    .box_info_video .card-text {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .box_info_video .text-muted {
+      color: rgba(255, 255, 255, 0.6) !important;
+    }
+
+    .alert,
+    .card.border-warning {
+      background-color: rgba(255, 255, 255, 0.311);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
   }
 </style>
+
 <div class="video_container">
   <!-- Sarlavha va admin tugmasi -->
   <div class="video_header">
