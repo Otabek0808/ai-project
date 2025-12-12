@@ -797,8 +797,15 @@
       <div class="chat-messages-container" id="chat-container">
         <!-- Xabarlar shu yerga yuklanadi -->
         <div class="welcome-message" id="welcome-message">
-          <i class="fas fa-info-circle"></i> Savolingizni bering, men sizga
-          yordam berishga harakat qilaman!
+          <i class="fas fa-info-circle"></i>
+            {% if user.is_authenticated %}
+            {% csrf_token %}
+            Sizning mutaxassisligingiz bo'yicha talabalarga yana qanday bilimlarni berishni istaysiz? Menga tushunarli tarzda yozing,
+            men sizga qiziqarli metodlarni taqdim etaman. Marhamat!
+            {% else %}
+            O'z mutaxassislik faningizdan nimalarni bilishni istaysiz? Tushunarli tarzda yozing men sizga yordam
+            beraman! Masalan har xil o'yinlar va metodlarni qo'llab tayyorlab beraman.
+            {% endif %}
         </div>
       </div>
       <div class="chat-tips" style="margin-bottom: 15px;">

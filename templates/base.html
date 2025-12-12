@@ -1,1118 +1,1579 @@
 <!DOCTYPE html>
 <html lang="uz">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta property="og:title" content="AI Project" />
-    <meta property="og:description" content="AI Project haqida qisqacha ma'lumot" />
-    <meta property="og:image" content="https://ai-project-1fhu.onrender.com/static/img/preview.png" />
+    <meta
+      property="og:description"
+      content="AI Project haqida qisqacha ma'lumot"
+    />
+    <meta
+      property="og:image"
+      content="https://ai-project-1fhu.onrender.com/static/img/preview.png"
+    />
     <meta property="og:url" content="https://ai-project-1fhu.onrender.com/" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IT Ta'lim Portali</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
     <style>
-        /* Umumiy stillar */
-        * {
-            padding: 0;
-            margin: 0;
-            font-family: "Times New Roman", Times, serif;
-            box-sizing: border-box;
-        }
+      /* Umumiy stillar */
+      * {
+        padding: 0;
+        margin: 0;
+        font-family: "Times New Roman", Times, serif;
+        box-sizing: border-box;
+      }
 
-        body {
-            min-height: 100vh;
-            overflow-x: hidden;
-            background: linear-gradient(to right, #87ceeb, #87ceeb, #f2d8e2);
-        }
+      body {
+        min-height: 100vh;
+        overflow-x: hidden;
+        background: linear-gradient(to right, #87ceeb, #87ceeb, #f2d8e2);
+      }
 
-        h4 {
-            font-size: 32px;
-            font-weight: bold;
-        }
+      h4 {
+        font-size: 32px;
+        font-weight: bold;
+      }
 
-        h6 {
-            font-weight: bold;
-        }
+      h6 {
+        font-weight: bold;
+      }
 
-        body h1 {
-            font-weight: 1000;
-        }
+      body h1 {
+        font-weight: 1000;
+      }
 
-        /* Yuklanish animatsiyasi uchun CSS */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to right, #87ceeb, #87ceeb, #f2d8e2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            opacity: 1;
-            transition: opacity 0.5s ease;
-        }
+      /* Yuklanish animatsiyasi uchun CSS */
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to right, #87ceeb, #87ceeb, #f2d8e2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        opacity: 1;
+        transition: opacity 0.5s ease;
+      }
 
-        .cube-loader-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 30px;
-        }
+      .cube-loader-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+      }
 
+      .cube-loader {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        transform-style: preserve-3d;
+        transform: rotateX(-30deg);
+        animation: cubeRotate 4s linear infinite;
+      }
+
+      @keyframes cubeRotate {
+        0% {
+          transform: rotateX(-30deg) rotateY(0deg);
+        }
+        100% {
+          transform: rotateX(-30deg) rotateY(360deg);
+        }
+      }
+
+      .cube-wrapper {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+      }
+
+      .cube-span {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          151deg,
+          hsl(0, 48%, 42%) 0%,
+          hsl(0, 53%, 58%) 45.6%,
+          hsl(0, 64%, 57%) 54%,
+          hsl(0, 91%, 63%) 63.4%,
+          hsl(0, 93%, 95%) 73.7%,
+          hsl(0, 94%, 63%) 86.2%,
+          hsl(0, 96%, 66%) 96.3%,
+          hsl(0, 96%, 54%) 99%,
+          hsl(0, 99%, 58%) 100%
+        );
+        transform: rotateY(calc(90deg * var(--i))) translateZ(50px);
+        transform-style: preserve-3d;
+      }
+
+      .cube-top {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background: hsl(339, 3.13%, 25.1%);
+        transform: rotateX(90deg) translateZ(50px);
+        transform-style: preserve-3d;
+      }
+
+      .cube-top::before {
+        content: "";
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background: hsl(0, 93%, 68%);
+        transform: translateZ(-120px);
+        filter: blur(20px);
+        box-shadow: 0 0 20px rgba(255, 69, 0, 0.3),
+          0 0 40px rgba(255, 69, 0, 0.4), 0 0 60px rgba(255, 69, 0, 0.5),
+          0 0 80px rgba(255, 69, 0, 0.6);
+      }
+
+      .loading-text {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        animation: textPulse 1.5s ease-in-out infinite;
+      }
+
+      @keyframes textPulse {
+        0%,
+        100% {
+          opacity: 0.7;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.05);
+        }
+      }
+
+      /* Kichik ekranlar uchun moslashuv */
+      @media (max-width: 768px) {
         .cube-loader {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            transform-style: preserve-3d;
-            transform: rotateX(-30deg);
-            animation: cubeRotate 4s linear infinite;
-        }
-
-        @keyframes cubeRotate {
-            0% {
-                transform: rotateX(-30deg) rotateY(0deg);
-            }
-            100% {
-                transform: rotateX(-30deg) rotateY(360deg);
-            }
-        }
-
-        .cube-wrapper {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
+          width: 70px;
+          height: 70px;
         }
 
         .cube-span {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                151deg,
-                hsl(0, 48%, 42%) 0%,
-                hsl(0, 53%, 58%) 45.6%,
-                hsl(0, 64%, 57%) 54.0%,
-                hsl(0, 91%, 63%) 63.4%,
-                hsl(0, 93%, 95%) 73.7%,
-                hsl(0, 94%, 63%) 86.2%,
-                hsl(0, 96%, 66%) 96.3%,
-                hsl(0, 96%, 54%) 99%,
-                hsl(0, 99%, 58%) 100%
-            );
-            transform: rotateY(calc(90deg * var(--i))) translateZ(50px);
-            transform-style: preserve-3d;
+          transform: rotateY(calc(90deg * var(--i))) translateZ(35px);
         }
 
         .cube-top {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background: hsl(339, 3.13%, 25.1%);
-            transform: rotateX(90deg) translateZ(50px);
-            transform-style: preserve-3d;
+          width: 70px;
+          height: 70px;
+          transform: rotateX(90deg) translateZ(35px);
         }
 
         .cube-top::before {
-            content: '';
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background: hsl(0, 93%, 68%);
-            transform: translateZ(-120px);
-            filter: blur(20px);
-            box-shadow:
-                0 0 20px rgba(255, 69, 0, 0.3),
-                0 0 40px rgba(255, 69, 0, 0.4),
-                0 0 60px rgba(255, 69, 0, 0.5),
-                0 0 80px rgba(255, 69, 0, 0.6);
+          width: 70px;
+          height: 70px;
+          transform: translateZ(-85px);
         }
 
         .loading-text {
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            animation: textPulse 1.5s ease-in-out infinite;
+          font-size: 1.2rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .cube-loader {
+          width: 50px;
+          height: 50px;
         }
 
-        @keyframes textPulse {
-            0%, 100% {
-                opacity: 0.7;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.05);
-            }
+        .cube-span {
+          transform: rotateY(calc(90deg * var(--i))) translateZ(25px);
         }
 
-        /* Kichik ekranlar uchun moslashuv */
-        @media (max-width: 768px) {
-            .cube-loader {
-                width: 70px;
-                height: 70px;
-            }
-
-            .cube-span {
-                transform: rotateY(calc(90deg * var(--i))) translateZ(35px);
-            }
-
-            .cube-top {
-                width: 70px;
-                height: 70px;
-                transform: rotateX(90deg) translateZ(35px);
-            }
-
-            .cube-top::before {
-                width: 70px;
-                height: 70px;
-                transform: translateZ(-85px);
-            }
-
-            .loading-text {
-                font-size: 1.2rem;
-            }
+        .cube-top {
+          width: 50px;
+          height: 50px;
+          transform: rotateX(90deg) translateZ(25px);
         }
 
-        @media (max-width: 480px) {
-            .cube-loader {
-                width: 50px;
-                height: 50px;
-            }
-
-            .cube-span {
-                transform: rotateY(calc(90deg * var(--i))) translateZ(25px);
-            }
-
-            .cube-top {
-                width: 50px;
-                height: 50px;
-                transform: rotateX(90deg) translateZ(25px);
-            }
-
-            .cube-top::before {
-                width: 50px;
-                height: 50px;
-                transform: translateZ(-60px);
-            }
-
-            .loading-text {
-                font-size: 1rem;
-            }
+        .cube-top::before {
+          width: 50px;
+          height: 50px;
+          transform: translateZ(-60px);
         }
 
-        /* Container box */
-        .contaner_box {
-            display: flex;
-            min-height: 100vh;
-            width: 100%;
-            position: relative;
+        .loading-text {
+          font-size: 1rem;
         }
+      }
 
-        /* Menu qismi */
-        .menu {
-            width: 220px;
-            height: 100vh;
-            backdrop-filter: blur(10px);
-            background-color: rgba(226, 237, 236, 0.664);
-            border-right: 1px solid #ffffff;
-            position: fixed;
-            left: 0;
-            top: 0;
-            z-index: 90;
-            overflow-y: auto;
-            transition: transform 0.5s ease;
-            transform: translateX(-100%);
-        }
+      /* Container box */
+      .contaner_box {
+        display: flex;
+        min-height: 100vh;
+        width: 100%;
+        position: relative;
+      }
 
-        .menu.show {
-            transform: translateX(0);
-        }
+      /* Menu qismi */
+      .menu {
+        width: 220px;
+        height: 100vh;
+        backdrop-filter: blur(10px);
+        background-color: rgba(226, 237, 236, 0.664);
+        border-right: 1px solid #ffffff;
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 90;
+        overflow-y: auto;
+        transition: transform 0.5s ease;
+        transform: translateX(-100%);
+      }
 
-        .menu article {
-            margin-top: 100px;
-            margin-bottom: 60px;
-            padding: 0 20px;
-        }
+      .menu.show {
+        transform: translateX(0);
+      }
 
-        .menu article a {
-            text-decoration: none;
-        }
+      .menu article {
+        margin-top: 100px;
+        margin-bottom: 60px;
+        padding: 0 20px;
+      }
 
-        .menu article a button {
-            width: 100%;
-            cursor: pointer;
-            border: none;
-            border-radius: 10px;
-            margin-top: 5px;
-            background: none;
-            font-size: 16px;
-            transition: 0.3s ease;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            padding: 12px 15px;
-            text-align: left;
-        }
+      .menu article a {
+        text-decoration: none;
+      }
 
-        .menu article a button:hover {
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            background: rgba(255, 255, 255, 0.3);
-        }
+      .menu article a button {
+        width: 100%;
+        cursor: pointer;
+        border: none;
+        border-radius: 10px;
+        margin-top: 5px;
+        background: none;
+        font-size: 16px;
+        transition: 0.3s ease;
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        padding: 12px 15px;
+        text-align: left;
+      }
 
-        .menu article a button svg,
-        .menu article a button i {
-            width: 20px;
-            height: 20px;
-            flex-shrink: 0;
-        }
+      .menu article a button:hover {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        background: rgba(255, 255, 255, 0.3);
+      }
 
-        /* Asosiy content */
-        .hed_main {
-            flex: 1;
-            padding: 20px;
-            transition: margin-left 0.5s ease;
-            width: 100%;
-            min-height: 100vh;
-        }
+      .menu article a button svg,
+      .menu article a button i {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+      }
 
-        .hed_main.menu-open {
-            margin-left: 220px;
-        }
+      /* Asosiy content */
+      .hed_main {
+        flex: 1;
+        padding: 20px;
+        transition: margin-left 0.5s ease;
+        width: 100%;
+        min-height: 100vh;
+      }
 
-        /* Header qismi */
-        header {
-            width: 100%;
-            height: auto;
-            margin-bottom: 20px;
-        }
+      .hed_main.menu-open {
+        margin-left: 220px;
+      }
 
-        .section_header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            height: auto;
-            padding: 10px 0;
-        }
+      /* Header qismi */
+      header {
+        width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+      }
 
-        .logo {
-            display: flex;
-            align-items: center;
-        }
+      .section_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        padding: 10px 0;
+      }
 
-        .logo svg {
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
-            backdrop-filter: blur(100px);
-            background-color: rgba(255, 255, 255, 0.782);
-            border-radius: 10px;
-            padding: 10px;
-            transition: all 0.5s ease;
-        }
+      .logo {
+        display: flex;
+        align-items: center;
+      }
 
-        .logo svg:hover {
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            transform: scale(1.05);
-        }
+      .logo svg {
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        backdrop-filter: blur(100px);
+        background-color: rgba(255, 255, 255, 0.782);
+        border-radius: 10px;
+        padding: 10px;
+        transition: all 0.5s ease;
+      }
 
-        .profil_img {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            position: relative;
-            z-index: 100;
-        }
+      .logo svg:hover {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        transform: scale(1.05);
+      }
 
-        .profil_img img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 3px solid white;
-            transition: 0.3s ease;
-            cursor: pointer;
-            object-fit: cover;
-        }
+      .profil_img {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+        z-index: 100;
+      }
 
-        .profil_img img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
+      .profil_img img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 3px solid white;
+        transition: 0.3s ease;
+        cursor: pointer;
+        object-fit: cover;
+      }
 
-        .profil_img span {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            text-decoration: none;
-            border-radius: 10px;
-            transition: 0.3s ease;
-            color: rgb(20, 33, 119);
-            font-size: 16px;
-            font-weight: 500;
-        }
+      .profil_img img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
 
-        .list_btn_box {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            height: 50px;
-            padding: 0 15px;
-        }
+      .profil_img span {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        text-decoration: none;
+        border-radius: 10px;
+        transition: 0.3s ease;
+        color: rgb(20, 33, 119);
+        font-size: 16px;
+        font-weight: 500;
+      }
 
-        .list_btn_box a {
-            text-decoration: none;
-        }
+      .list_btn_box {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: 50px;
+        padding: 0 15px;
+      }
 
+      .list_btn_box a {
+        text-decoration: none;
+      }
+
+      .list_btn_box a button {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: auto;
+        min-width: 120px;
+        height: 40px;
+        cursor: pointer;
+        backdrop-filter: blur(100px);
+        background-color: rgba(5, 130, 171, 0.511);
+        border-radius: 10px;
+        transition: 0.3s ease;
+        color: rgb(0, 0, 0);
+        border: none;
+        padding: 0 15px;
+      }
+
+      .list_btn_box form button {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: auto;
+        min-width: 100px;
+        height: 40px;
+        cursor: pointer;
+        backdrop-filter: blur(100px);
+        background-color: rgba(5, 130, 171, 0.511);
+        border-radius: 10px;
+        transition: 0.3s ease;
+        color: rgb(20, 33, 119);
+        border: none;
+        padding: 0 15px;
+      }
+
+      .list_btn_box button:hover {
+        transform: scale(0.97);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        opacity: 0.7;
+      }
+
+      .list_btn_box a button p,
+      .list_btn_box form button p {
+        color: rgb(0, 0, 0);
+        font-size: 14px;
+        margin-top: 0;
+        white-space: nowrap;
+      }
+
+      .list_btn_box svg {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+      }
+
+      /* MEDIA QUERIES */
+      @media (max-width: 1225px) {
         .list_btn_box a button {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: auto;
-            min-width: 120px;
-            height: 40px;
-            cursor: pointer;
-            backdrop-filter: blur(100px);
-            background-color: rgba(5, 130, 171, 0.511);
-            border-radius: 10px;
-            transition: 0.3s ease;
-            color: rgb(0, 0, 0);
-            border: none;
-            padding: 0 15px;
+          width: 140px;
+          height: 38px;
+          padding: 0 10px;
         }
 
         .list_btn_box form button {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: auto;
-            min-width: 100px;
-            height: 40px;
-            cursor: pointer;
-            backdrop-filter: blur(100px);
-            background-color: rgba(5, 130, 171, 0.511);
-            border-radius: 10px;
-            transition: 0.3s ease;
-            color: rgb(20, 33, 119);
-            border: none;
-            padding: 0 15px;
-        }
-
-        .list_btn_box button:hover {
-            transform: scale(0.97);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            opacity: 0.7;
+          width: 110px;
+          height: 38px;
+          padding: 0 10px;
         }
 
         .list_btn_box a button p,
         .list_btn_box form button p {
-            color: rgb(0, 0, 0);
-            font-size: 14px;
-            margin-top: 0;
-            white-space: nowrap;
+          font-size: 12px;
+        }
+      }
+
+      @media (max-width: 1115px) {
+        .logo svg {
+          width: 38px;
+          height: 38px;
+          padding: 8px;
         }
 
-        .list_btn_box svg {
-            width: 18px;
-            height: 18px;
-            flex-shrink: 0;
+        .menu article {
+          margin-top: 95px;
+          margin-bottom: 48px;
+          padding: 0 15px;
         }
 
-        /* MEDIA QUERIES */
-        @media (max-width: 1225px) {
-            .list_btn_box a button {
-                width: 140px;
-                height: 38px;
-                padding: 0 10px;
-            }
-
-            .list_btn_box form button {
-                width: 110px;
-                height: 38px;
-                padding: 0 10px;
-            }
-
-            .list_btn_box a button p,
-            .list_btn_box form button p {
-                font-size: 12px;
-            }
+        .menu article a button {
+          font-size: 15px;
+          padding: 10px 12px;
+          gap: 12px;
         }
 
-        @media (max-width: 1115px) {
-            .logo svg {
-                width: 38px;
-                height: 38px;
-                padding: 8px;
-            }
+        .profil_img span {
+          font-size: 15px;
+        }
+      }
 
-            .menu article {
-                margin-top: 95px;
-                margin-bottom: 48px;
-                padding: 0 15px;
-            }
-
-            .menu article a button {
-                font-size: 15px;
-                padding: 10px 12px;
-                gap: 12px;
-            }
-
-            .profil_img span {
-                font-size: 15px;
-            }
+      @media (max-width: 1001px) {
+        .menu {
+          width: 220px;
+          z-index: 100;
+          backdrop-filter: blur(100px);
+          background-color: rgba(220, 232, 232, 0.884);
         }
 
-        @media (max-width: 1001px) {
-            .menu {
-                width: 220px;
-                z-index: 100;
-                backdrop-filter: blur(100px);
-                background-color: rgba(220, 232, 232, 0.884);
-            }
-
-            .hed_main.menu-open {
-                margin-left: 0;
-            }
-
-            .list_btn_box {
-                display: none;
-                backdrop-filter: blur(100px);
-                background-color: rgba(0, 0, 0, 0.221);
-                width: 80px;
-                height: auto;
-            }
-
-            .profil_img span {
-                display: none;
-            }
-
-            #listBtn {
-                position: absolute;
-                z-index: 100;
-                border-radius: 10px;
-                padding: 10px;
-                flex-direction: column;
-                gap: 8px;
-                min-width: 180px;
-                top: 60px;
-                right: -10px;
-            }
-
-            #listBtn.active {
-                display: flex;
-            }
-
-            .logo svg {
-                position: fixed;
-                top: 15px;
-                left: 15px;
-                z-index: 101;
-                background-color: rgba(255, 255, 255, 0.9);
-            }
+        .hed_main.menu-open {
+          margin-left: 0;
         }
 
-        @media (max-width: 830px) {
-            .logo svg {
-                width: 40px;
-                height: 40px;
-            }
-
-            .hed_main {
-                padding: 15px;
-            }
+        .list_btn_box {
+          display: none;
+          backdrop-filter: blur(100px);
+          background-color: rgba(0, 0, 0, 0.221);
+          width: 80px;
+          height: auto;
         }
 
-        @media (max-width: 710px) {
-            .logo svg {
-                border-radius: 4px;
-            }
-
-            .profil_img img {
-                width: 40px;
-                height: 40px;
-            }
-
-            .hed_main {
-                padding: 10px;
-            }
-
-            .menu article {
-                margin-top: 70px;
-                padding: 0 10px;
-            }
-
-            .menu article a button {
-                font-size: 14px;
-                padding: 8px 10px;
-                gap: 10px;
-            }
-
-            #listBtn {
-                top: 45px;
-                right: 5px;
-                min-width: 160px;
-            }
+        .profil_img span {
+          display: none;
         }
 
-        @media (max-width: 620px) {
-            .logo svg {
-                padding: 4px;
-            }
-
-            .profil_img img {
-                width: 35px;
-                height: 35px;
-            }
-
-            .hed_main {
-                padding: 8px;
-            }
-
-            #listBtn {
-                top: 40px;
-                min-width: 140px;
-            }
-
-            #listBtn button {
-                height: 35px;
-                font-size: 12px;
-                padding: 0 10px;
-            }
+        #listBtn {
+          position: absolute;
+          z-index: 100;
+          border-radius: 10px;
+          padding: 10px;
+          flex-direction: column;
+          gap: 8px;
+          min-width: 180px;
+          top: 60px;
+          right: -10px;
         }
 
-        @media (max-width: 480px) {
-            .logo svg {
-                padding: 3px;
-            }
-
-            .profil_img img {
-                width: 30px;
-                height: 30px;
-                border-width: 2px;
-            }
-
-            .menu {
-                width: 200px;
-            }
-
-            .hed_main {
-                padding: 5px;
-            }
-
-            #listBtn {
-                top: 35px;
-                min-width: 120px;
-            }
+        #listBtn.active {
+          display: flex;
         }
+
+        .logo svg {
+          position: fixed;
+          top: 15px;
+          left: 15px;
+          z-index: 101;
+          background-color: rgba(255, 255, 255, 0.9);
+        }
+      }
+
+      @media (max-width: 830px) {
+        .logo svg {
+          width: 40px;
+          height: 40px;
+        }
+
+        .hed_main {
+          padding: 15px;
+        }
+      }
+
+      @media (max-width: 710px) {
+        .logo svg {
+          border-radius: 4px;
+        }
+
+        .profil_img img {
+          width: 40px;
+          height: 40px;
+        }
+
+        .hed_main {
+          padding: 10px;
+        }
+
+        .menu article {
+          margin-top: 70px;
+          padding: 0 10px;
+        }
+
+        .menu article a button {
+          font-size: 14px;
+          padding: 8px 10px;
+          gap: 10px;
+        }
+
+        #listBtn {
+          top: 45px;
+          right: 5px;
+          min-width: 160px;
+        }
+      }
+
+      @media (max-width: 620px) {
+        .logo svg {
+          padding: 4px;
+        }
+
+        .profil_img img {
+          width: 35px;
+          height: 35px;
+        }
+
+        .hed_main {
+          padding: 8px;
+        }
+
+        #listBtn {
+          top: 40px;
+          min-width: 140px;
+        }
+
+        #listBtn button {
+          height: 35px;
+          font-size: 12px;
+          padding: 0 10px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .logo svg {
+          padding: 3px;
+        }
+
+        .profil_img img {
+          width: 30px;
+          height: 30px;
+          border-width: 2px;
+        }
+
+        .menu {
+          width: 200px;
+        }
+
+        .hed_main {
+          padding: 5px;
+        }
+
+        #listBtn {
+          top: 35px;
+          min-width: 120px;
+        }
+      }
+      .menu_logo {
+        width: auto;
+        max-height: 40px;
+        text-align: center;
+      }
+      .menu_logo img{
+        width: 100px;
+        height: 100px;
+      }
+        .logo-container {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .logo {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: logoFloat 6s ease-in-out infinite;
+  }
+
+  .logo-brain {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #0066cc, #6600cc);
+    clip-path: polygon(
+      50% 0%,
+      85% 15%,
+      100% 50%,
+      85% 85%,
+      50% 100%,
+      15% 85%,
+      0% 50%,
+      15% 15%
+    );
+    animation: brainPulse 4s ease-in-out infinite;
+    box-shadow: 0 0 15px rgba(0, 102, 204, 0.5),
+      inset 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+
+  .logo-brain::before {
+    content: "";
+    position: absolute;
+    width: 60%;
+    height: 60%;
+    background: linear-gradient(45deg, #00aaff, #aa00ff);
+    clip-path: polygon(
+      50% 0%,
+      85% 15%,
+      100% 50%,
+      85% 85%,
+      50% 100%,
+      15% 85%,
+      0% 50%,
+      15% 15%
+    );
+    top: 20%;
+    left: 20%;
+    animation: brainInnerPulse 3s ease-in-out infinite;
+  }
+
+  .logo-circuit {
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    border: 2px solid transparent;
+    border-image: linear-gradient(45deg, #0066cc, #6600cc, #00aaff, #aa00ff) 1;
+    border-radius: 50%;
+    animation: circuitRotate 8s linear infinite;
+  }
+
+  .logo-circuit::before {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #0066cc;
+    border-radius: 50%;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 8px #0066cc;
+  }
+
+  .logo-circuit::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #6600cc;
+    border-radius: 50%;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 8px #6600cc;
+  }
+
+  .logo-data {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background: linear-gradient(45deg, #00aaff, #aa00ff);
+    clip-path: polygon(
+      20% 0%,
+      80% 0%,
+      100% 20%,
+      100% 80%,
+      80% 100%,
+      20% 100%,
+      0% 80%,
+      0% 20%
+    );
+    animation: dataSpin 5s linear infinite;
+    box-shadow: 0 0 10px rgba(0, 170, 255, 0.7);
+  }
+
+  .logo-text {
+    position: absolute;
+    bottom: -25px;
+    font-size: 9px;
+    font-weight: bold;
+    color: #0066cc;
+    text-shadow: 0 0 5px rgba(0, 102, 204, 0.5);
+    white-space: nowrap;
+    font-family: Arial, sans-serif;
+    width: 100%;
+    text-align: center;
+  }
+
+  @keyframes logoFloat {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-8px) rotate(3deg);
+    }
+  }
+
+  @keyframes brainPulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+  }
+
+  @keyframes brainInnerPulse {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
+
+  @keyframes circuitRotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes dataSpin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Yuklanish animatsiyasi -->
     <div class="loading-overlay" id="loadingOverlay">
-        <div class="cube-loader-container">
-            <div class="cube-loader">
-                <div class="cube-top"></div>
-                <div class="cube-wrapper">
-                    <span style="--i:0" class="cube-span"></span>
-                    <span style="--i:1" class="cube-span"></span>
-                    <span style="--i:2" class="cube-span"></span>
-                    <span style="--i:3" class="cube-span"></span>
-                </div>
-            </div>
-            <div class="loading-text">Yuklanmoqda...</div>
+      <div class="cube-loader-container">
+        <div class="cube-loader">
+          <div class="cube-top"></div>
+          <div class="cube-wrapper">
+            <span style="--i: 0" class="cube-span"></span>
+            <span style="--i: 1" class="cube-span"></span>
+            <span style="--i: 2" class="cube-span"></span>
+            <span style="--i: 3" class="cube-span"></span>
+          </div>
         </div>
+        <div class="loading-text">Yuklanmoqda...</div>
+      </div>
     </div>
 
     <section class="contaner_box">
-        <div class="menu" id="menu_box">
-            <article id="menuBtn">
-                <!-- Home/Boshqaruv paneli -->
-                <a href="{% url 'home' %}">
-                    <button id="menu_button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                        </svg>
-                        Boshqaruv paneli
-                    </button>
-                </a>
+      <div class="menu" id="menu_box">
+        <div class="logo-container">
+  <div class="logo">
+    <div class="logo-brain"></div>
+    <div class="logo-circuit"></div>
+    <div class="logo-data"></div>
+    <div class="logo-text">AI & Data Processing</div>
+  </div>
+</div>
+        <article id="menuBtn">
+          <!-- Home/Boshqaruv paneli -->
+          <a href="{% url 'home' %}">
+            <button id="menu_button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-person-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"
+                />
+              </svg>
+              Boshqaruv paneli
+            </button>
+          </a>
 
-                <!-- Code Practice linki -->
-                <a href="{% url 'app2:code_practice' %}">
-                    <button id="menu_button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-code-slash" viewBox="0 0 16 16">
-                            <path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0m6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0"/>
-                        </svg>
-                        Code Practice
-                    </button>
-                </a>
+          <!-- Code Practice linki -->
+          <a href="{% url 'app2:code_practice' %}">
+            <button id="menu_button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-code-slash"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0m6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0"
+                />
+              </svg>
+              Code Practice
+            </button>
+          </a>
 
-                <!-- Code Admin linki (faqat staff/admin uchun) -->
-                {% if user.is_staff %}
-                <a href="{% url 'app2:admin_panel' %}">
-                    <button id="menu_button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
-                            <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
-                        </svg>
-                        Code Admin
-                    </button>
+          <!-- Code Admin linki (faqat staff/admin uchun) -->
+          {% if user.is_staff %}
+          <a href="{% url 'app2:admin_panel' %}">
+            <button id="menu_button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-gear-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"
+                />
+              </svg>
+              Code Admin
+            </button>
+          </a>
+          {% endif %}
+
+          <!-- ESKI LINKLAR -->
+          <a href="{% url 'about' %}">
+            <button id="menu_button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-info-circle"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
+                />
+                <path
+                  d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"
+                />
+              </svg>
+              Biz haqimizda
+            </button>
+          </a>
+          {% if user.is_staff %}
+
+          <a href="{% url 'documents' %}">
+            <button id="menu_button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-file-earmark-pdf"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"
+                />
+                <path
+                  d="M4.603 14.087a.8.8 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.7 7.7 0 0 1 1.482-.645 20 20 0 0 0 1.062-2.227 7.3 7.3 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538.007.188-.012.396-.047.614-.084.51-.27 1.134-.52 1.794a11 11 0 0 0 .98 1.686 5.8 5.8 0 0 1 1.334.05c.364.066.734.195.96.465.12.144.193.32.2.518.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416.86.86 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.7 5.7 0 0 1-.911-.95 11.7 11.7 0 0 0-1.997.406 11.3 11.3 0 0 1-1.02 1.51c-.292.35-.609.656-.927.787a.8.8 0 0 1-.58.029m1.379-1.901q-.25.115-.459.238c-.328.194-.541.383-.647.547-.094.145-.096.25-.04.361q.016.032.026.044l.035-.012c.137-.056.355-.235.635-.572a8 8 0 0 0 .45-.606m1.64-1.33a13 13 0 0 1 1.01-.193 12 12 0 0 1-.51-.858 21 21 0 0 1-.5 1.05zm2.446.45q.226.245.435.41c.24.19.407.253.498.256a.1.1 0 0 0 .07-.015.3.3 0 0 0 .094-.125.44.44 0 0 0 .059-.2.1.1 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a4 4 0 0 0-.612-.053zM8.078 7.8a7 7 0 0 0 .2-.828q.046-.282.038-.465a.6.6 0 0 0-.032-.198.5.5 0 0 0-.145.04c-.087.035-.158.106-.196.283-.04.192-.03.469.046.822q.036.167.09.346z"
+                />
+              </svg>
+              Fan materiallari
+            </button>
+          </a>
+          <a href="{% url 'add_subject' %}">
+            <button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-database"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M4.318 2.687C5.234 2.271 6.536 2 8 2s2.766.27 3.682.687C12.644 3.125 13 3.627 13 4c0 .374-.356.875-1.318 1.313C10.766 5.729 9.464 6 8 6s-2.766-.27-3.682-.687C3.356 4.875 3 4.373 3 4c0-.374.356-.875 1.318-1.313M13 5.698V7c0 .374-.356.875-1.318 1.313C10.766 8.729 9.464 9 8 9s-2.766-.27-3.682-.687C3.356 7.875 3 7.373 3 7V5.698c.271.202.58.378.904.525C4.978 6.711 6.427 7 8 7s3.022-.289 4.096-.777A5 5 0 0 0 13 5.698M14 4c0-1.007-.875-1.755-1.904-2.223C11.022 1.289 9.573 1 8 1s-3.022.289-4.096.777C2.875 2.245 2 2.993 2 4v9c0 1.007.875 1.755 1.904 2.223C4.978 15.71 6.427 16 8 16s3.022-.289 4.096-.777C13.125 14.755 14 14.007 14 13zm-1 4.698V10c0 .374-.356.875-1.318 1.313C10.766 11.729 9.464 12 8 12s-2.766-.27-3.682-.687C3.356 10.875 3 10.373 3 10V8.698c.271.202.58.378.904.525C4.978 9.71 6.427 10 8 10s3.022-.289 4.096-.777A5 5 0 0 0 13 8.698m0 3V13c0 .374-.356.875-1.318 1.313C10.766 14.729 9.464 15 8 15s-2.766-.27-3.682-.687C3.356 13.875 3 13.373 3 13v-1.302c.271.202.58.378.904.525C4.978 12.71 6.427 13 8 13s3.022-.289 4.096-.777c.324-.147.633-.323.904-.525"
+                />
+              </svg>
+              Fan Yaratish
+            </button>
+          </a>
+          <a href="{% url 'admin_stats' %}">
+            <button><i class="fas fa-chart-bar"></i> Statistika</button>
+          </a>
+
+          {% endif %}
+
+          <a href="{% url 'video_lessons' %}">
+            <button id="menu_button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-camera-video"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1z"
+                />
+              </svg>
+              Video darslar
+            </button>
+          </a>
+
+          <a href="{% url 'tests' %}">
+            <button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-card-checklist"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"
+                />
+                <path
+                  d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"
+                />
+              </svg>
+              Testlar
+            </button>
+          </a>
+
+          <!-- Staff/Admin uchun linklar -->
+
+          <!-- AI Chat -->
+          <a href="{% url 'ai_chat' %}">
+            <button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-robot"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5M3 8.062C3 6.76 4.235 5.765 5.53 5.886a26.6 26.6 0 0 0 4.94 0C11.765 5.765 13 6.76 13 8.062v1.157a.93.93 0 0 1-.765.935c-.845.147-2.34.346-4.235.346s-3.39-.2-4.235-.346A.93.93 0 0 1 3 9.219zm4.542-.827a.25.25 0 0 0-.217.068l-.92.9a25 25 0 0 1-1.871-.183.25.25 0 0 0-.068.495c.55.076 1.232.149 2.02.193a.25.25 0 0 0 .189-.071l.754-.736.847 1.71a.25.25 0 0 0 .404.062l.932-.97a25 25 0 0 0 1.922-.188.25.25 0 0 0-.068-.495c-.538.074-1.207.145-1.98.189a.25.25 0 0 0-.166.076l-.754.785-.842-1.7a.25.25 0 0 0-.182-.135"
+                />
+                <path
+                  d="M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2zM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5"
+                />
+              </svg>
+              AI chat
+            </button>
+          </a>
+        </article>
+      </div>
+
+      <section class="hed_main" id="hedMain">
+        <header id="heaDer">
+          <section class="section_header">
+            <div class="logo">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                viewBox="0 0 16 16"
+                id="menu"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
+                />
+              </svg>
+            </div>
+            <div class="profil_img" id="contanerList">
+              <div class="list_btn_box" id="listBtn">
+                {% if user.is_authenticated %}
+                <!-- Chiqish -->
+                <a href="{% url 'profile' %}">
+                  <button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-person-lines-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1z"
+                      />
+                    </svg>
+                    <p id="imgBtn">Profil</p>
+                  </button>
+                </a>
+                <form method="post" action="{% url 'logout' %}">
+                  {% csrf_token %}
+                  <button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-box-arrow-right"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"
+                      />
+                    </svg>
+                    <p id="imgBtn">Chiqish</p>
+                  </button>
+                </form>
+                {% else %}
+                <!-- kirish -->
+                <a href="{% url 'register' %}">
+                  <button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-person-fill-add"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"
+                      />
+                      <path
+                        d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"
+                      />
+                    </svg>
+                    <p id="imgBtn">Ro'yxatdan o'tish</p>
+                  </button>
+                </a>
+                <a href="{% url 'login' %}">
+                  <button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-box-arrow-in-right"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"
+                      />
+                    </svg>
+                    <p id="imgBtn">Kirish</p>
+                  </button>
                 </a>
                 {% endif %}
-
-                <!-- ESKI LINKLAR -->
-                <a href="{% url 'about' %}">
-                    <button id="menu_button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
-                        </svg>
-                        Biz haqimizda
-                    </button>
-                </a>
-
-                <a href="{% url 'documents' %}">
-                    <button id="menu_button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-pdf" viewBox="0 0 16 16">
-                            <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
-                            <path d="M4.603 14.087a.8.8 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.7 7.7 0 0 1 1.482-.645 20 20 0 0 0 1.062-2.227 7.3 7.3 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538.007.188-.012.396-.047.614-.084.51-.27 1.134-.52 1.794a11 11 0 0 0 .98 1.686 5.8 5.8 0 0 1 1.334.05c.364.066.734.195.96.465.12.144.193.32.2.518.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416.86.86 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.7 5.7 0 0 1-.911-.95 11.7 11.7 0 0 0-1.997.406 11.3 11.3 0 0 1-1.02 1.51c-.292.35-.609.656-.927.787a.8.8 0 0 1-.58.029m1.379-1.901q-.25.115-.459.238c-.328.194-.541.383-.647.547-.094.145-.096.25-.04.361q.016.032.026.044l.035-.012c.137-.056.355-.235.635-.572a8 8 0 0 0 .45-.606m1.64-1.33a13 13 0 0 1 1.01-.193 12 12 0 0 1-.51-.858 21 21 0 0 1-.5 1.05zm2.446.45q.226.245.435.41c.24.19.407.253.498.256a.1.1 0 0 0 .07-.015.3.3 0 0 0 .094-.125.44.44 0 0 0 .059-.2.1.1 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a4 4 0 0 0-.612-.053zM8.078 7.8a7 7 0 0 0 .2-.828q.046-.282.038-.465a.6.6 0 0 0-.032-.198.5.5 0 0 0-.145.04c-.087.035-.158.106-.196.283-.04.192-.03.469.046.822q.036.167.09.346z"/>
-                        </svg>
-                        Fan materiallari
-                    </button>
-                </a>
-
-                <a href="{% url 'video_lessons' %}">
-                    <button id="menu_button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-video" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1z"/>
-                        </svg>
-                        Video darslar
-                    </button>
-                </a>
-
-                <a href="{% url 'tests' %}">
-                    <button>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
-                            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
-                            <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"/>
-                        </svg>
-                        Testlar
-                    </button>
-                </a>
-
-                <!-- Staff/Admin uchun linklar -->
-                {% if user.is_staff %}
-                <a href="{% url 'admin_stats' %}">
-                    <button><i class="fas fa-chart-bar"></i> Statistika</button>
-                </a>
-
-                <a href="{% url 'add_subject' %}">
-                    <button>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-database" viewBox="0 0 16 16">
-                            <path d="M4.318 2.687C5.234 2.271 6.536 2 8 2s2.766.27 3.682.687C12.644 3.125 13 3.627 13 4c0 .374-.356.875-1.318 1.313C10.766 5.729 9.464 6 8 6s-2.766-.27-3.682-.687C3.356 4.875 3 4.373 3 4c0-.374.356-.875 1.318-1.313M13 5.698V7c0 .374-.356.875-1.318 1.313C10.766 8.729 9.464 9 8 9s-2.766-.27-3.682-.687C3.356 7.875 3 7.373 3 7V5.698c.271.202.58.378.904.525C4.978 6.711 6.427 7 8 7s3.022-.289 4.096-.777A5 5 0 0 0 13 5.698M14 4c0-1.007-.875-1.755-1.904-2.223C11.022 1.289 9.573 1 8 1s-3.022.289-4.096.777C2.875 2.245 2 2.993 2 4v9c0 1.007.875 1.755 1.904 2.223C4.978 15.71 6.427 16 8 16s3.022-.289 4.096-.777C13.125 14.755 14 14.007 14 13zm-1 4.698V10c0 .374-.356.875-1.318 1.313C10.766 11.729 9.464 12 8 12s-2.766-.27-3.682-.687C3.356 10.875 3 10.373 3 10V8.698c.271.202.58.378.904.525C4.978 9.71 6.427 10 8 10s3.022-.289 4.096-.777A5 5 0 0 0 13 8.698m0 3V13c0 .374-.356.875-1.318 1.313C10.766 14.729 9.464 15 8 15s-2.766-.27-3.682-.687C3.356 13.875 3 13.373 3 13v-1.302c.271.202.58.378.904.525C4.978 12.71 6.427 13 8 13s3.022-.289 4.096-.777c.324-.147.633-.323.904-.525"/>
-                        </svg>
-                        Fan Yaratish
-                    </button>
-                </a>
-                {% endif %}
-
-                <!-- AI Chat -->
-                <a href="{% url 'ai_chat' %}">
-                    <button>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-robot" viewBox="0 0 16 16">
-                            <path d="M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5M3 8.062C3 6.76 4.235 5.765 5.53 5.886a26.6 26.6 0 0 0 4.94 0C11.765 5.765 13 6.76 13 8.062v1.157a.93.93 0 0 1-.765.935c-.845.147-2.34.346-4.235.346s-3.39-.2-4.235-.346A.93.93 0 0 1 3 9.219zm4.542-.827a.25.25 0 0 0-.217.068l-.92.9a25 25 0 0 1-1.871-.183.25.25 0 0 0-.068.495c.55.076 1.232.149 2.02.193a.25.25 0 0 0 .189-.071l.754-.736.847 1.71a.25.25 0 0 0 .404.062l.932-.97a25 25 0 0 0 1.922-.188.25.25 0 0 0-.068-.495c-.538.074-1.207.145-1.98.189a.25.25 0 0 0-.166.076l-.754.785-.842-1.7a.25.25 0 0 0-.182-.135"/>
-                            <path d="M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2zM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5"/>
-                        </svg>
-                        AI chat
-                    </button>
-                </a>
-            </article>
-        </div>
-
-        <section class="hed_main" id="hedMain">
-            <header id="heaDer">
-                <section class="section_header">
-                    <div class="logo">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" id="menu">
-                            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-                        </svg>
-                    </div>
-                    <div class="profil_img" id="contanerList">
-                        <div class="list_btn_box" id="listBtn">
-                            {% if user.is_authenticated %}
-                            <!-- Chiqish -->
-                            <a href="{% url 'profile' %}">
-                                <button>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
-                                        <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1z"/>
-                                    </svg>
-                                    <p id="imgBtn">Profil</p>
-                                </button>
-                            </a>
-                            <form method="post" action="{% url 'logout' %}">
-                                {% csrf_token %}
-                                <button>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
-                                        <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
-                                    </svg>
-                                    <p id="imgBtn">Chiqish</p>
-                                </button>
-                            </form>
-                            {% else %}
-                            <!-- kirish -->
-                            <a href="{% url 'register' %}">
-                                <button>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-add" viewBox="0 0 16 16">
-                                        <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                                        <path d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
-                                    </svg>
-                                    <p id="imgBtn">Ro'yxatdan o'tish</p>
-                                </button>
-                            </a>
-                            <a href="{% url 'login' %}">
-                                <button>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
-                                        <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
-                                    </svg>
-                                    <p id="imgBtn">Kirish</p>
-                                </button>
-                            </a>
-                            {% endif %}
-                        </div>
-                        <span><i class="fas fa-user"></i> {{ user.username }} </span>
-                        <img src="https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg?semt=ais_hybrid&w=740&q=80" alt="no photo" id="loginBtn" />
-                    </div>
-                </section>
-            </header>
-            <main>
-                {% block content %}
-                <!-- CONTENT BLOCK - Bu yerda sizning asl kontentingiz bo'ladi -->
-                {% endblock %}
-            </main>
-        </section>
+              </div>
+              <span><i class="fas fa-user"></i> {{ user.username }} </span>
+              <img
+                src="https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg?semt=ais_hybrid&w=740&q=80"
+                alt="no photo"
+                id="loginBtn"
+              />
+            </div>
+          </section>
+        </header>
+        <main>
+          {% block content %}
+          <!-- CONTENT BLOCK - Bu yerda sizning asl kontentingiz bo'ladi -->
+          {% endblock %}
+        </main>
+      </section>
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Yuklanish animatsiyasi boshqaruvi
-        window.addEventListener('load', function() {
-            const loadingOverlay = document.getElementById('loadingOverlay');
+      // Yuklanish animatsiyasi boshqaruvi - YANGILANGAN VERSIYA
+      let loadingTimeout;
+      const loadingOverlay = document.getElementById("loadingOverlay");
+      const MAX_WAIT_TIME = 2000; // 1 soniya
 
-            // Sahifa yuklangandan so'ng animatsiyani yopish
-            setTimeout(function() {
-                if (loadingOverlay) {
-                    loadingOverlay.style.opacity = '0';
+      // Sahifa yuklanishi boshlangan vaqti
+      const pageLoadStartTime = Date.now();
 
-                    setTimeout(function() {
-                        loadingOverlay.style.display = 'none';
-                    }, 500);
-                }
-            }, 1000); // 1 soniya yuklanishni ko'rsatish
-        });
+      // Sahifa yuklanishini kuzatish
+      window.addEventListener("load", function () {
+        const loadTime = Date.now() - pageLoadStartTime;
 
-        // DOM elementlarini tanlab olamiz
-        const menuIcon = document.getElementById("menu");
-        const menuBox = document.getElementById("menu_box");
-        const hedMain = document.getElementById("hedMain");
-        const loginBtn = document.getElementById("loginBtn");
-        const listBtn = document.getElementById("listBtn");
-        const userSpan = document.querySelector(".profil_img span");
-        const listBtnBox = document.querySelector(".list_btn_box");
+        // Agar yuklanish 1 soniyadan oshsa, animatsiyani ko'rsatish
+        if (loadTime > MAX_WAIT_TIME) {
+          showLoadingAnimation();
 
-        // Menuni ochish/yopish holati
-        let isMenuOpen = localStorage.getItem("menuOpen") === "true";
+          // Animatsiyani 2 soniya ko'rsatish
+          setTimeout(() => {
+            hideLoadingAnimation();
+          }, 2000);
+        } else {
+          // Tez yuklangan, animatsiyani ko'rsatmaymiz
+          hideLoadingAnimation();
+        }
+      });
 
-        // ListBtn ochilish holati
-        let isListBtnOpen = false;
+      // DOMContentLoaded bo'lganda ham tekshiramiz
+      document.addEventListener("DOMContentLoaded", function () {
+        // Agar DOM tez yuklansa va hali window.load bo'lmagan bo'lsa
+        const domLoadTime = Date.now() - pageLoadStartTime;
 
-        // Dastlabki holatni sozlash
+        if (domLoadTime > MAX_WAIT_TIME && !window.loaded) {
+          showLoadingAnimation();
+        }
+      });
+
+      // Animatsiyani ko'rsatish funksiyasi
+      function showLoadingAnimation() {
+        if (loadingOverlay) {
+          loadingOverlay.classList.add("active");
+          loadingOverlay.style.display = "flex";
+
+          // CSS transition uchun kichik kechikish
+          setTimeout(() => {
+            loadingOverlay.style.opacity = "1";
+          }, 10);
+        }
+      }
+
+      // Animatsiyani yashirish funksiyasi
+      function hideLoadingAnimation() {
+        if (loadingOverlay) {
+          loadingOverlay.style.opacity = "0";
+
+          // Transition tugagach elementni yashirish
+          setTimeout(() => {
+            loadingOverlay.classList.remove("active");
+            loadingOverlay.style.display = "none";
+          }, 500);
+        }
+      }
+
+      // Agar sahifa yuklanishi juda uzoq davom etsa (10 soniyadan oshsa)
+      const safetyTimeout = setTimeout(() => {
+        hideLoadingAnimation();
+      }, 10000); // 10 soniya - xavfsizlik timeout
+
+      // Agar animatsiya ko'rsatilgan bo'lsa, ularni tozalash
+      window.addEventListener("load", function () {
+        clearTimeout(safetyTimeout);
+        window.loaded = true;
+      });
+
+      // ... (sizning boshqa JavaScript kodlaringiz bir xil qoladi) ...
+      // DOM elementlarini tanlab olamiz
+      const menuIcon = document.getElementById("menu");
+      const menuBox = document.getElementById("menu_box");
+      const hedMain = document.getElementById("hedMain");
+      const loginBtn = document.getElementById("loginBtn");
+      const listBtn = document.getElementById("listBtn");
+      const userSpan = document.querySelector(".profil_img span");
+      const listBtnBox = document.querySelector(".list_btn_box");
+
+      // Menuni ochish/yopish holati
+      let isMenuOpen = localStorage.getItem("menuOpen") === "true";
+
+      // ListBtn ochilish holati
+      let isListBtnOpen = false;
+
+      // Dastlabki holatni sozlash
+      updateMenuState();
+      updateElementsForScreenSize();
+
+      // Menu ikonkasi bosilganda
+      menuIcon.addEventListener("click", (e) => {
+        e.stopPropagation();
+        isMenuOpen = !isMenuOpen;
         updateMenuState();
-        updateElementsForScreenSize();
+        localStorage.setItem("menuOpen", isMenuOpen);
+      });
 
-        // Menu ikonkasi bosilganda
-        menuIcon.addEventListener("click", (e) => {
-            e.stopPropagation();
-            isMenuOpen = !isMenuOpen;
+      // Menu holatini yangilash funksiyasi
+      function updateMenuState() {
+        if (isMenuOpen) {
+          menuBox.classList.add("show");
+          hedMain.classList.add("menu-open");
+        } else {
+          menuBox.classList.remove("show");
+          hedMain.classList.remove("menu-open");
+        }
+      }
+
+      // Profil rasmi bosilganda - gorizontal qisqarish/kengayish
+      loginBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (!isListBtnOpen) {
+          openListBtnHorizontally();
+        } else {
+          closeListBtnHorizontally();
+        }
+
+        isListBtnOpen = !isListBtnOpen;
+      });
+
+      // Gorizontal yo'nalishda ListBtn ni ochish
+      function openListBtnHorizontally() {
+        listBtn.style.display = "flex";
+        listBtn.classList.add("active");
+
+        listBtn.style.width = "0";
+        listBtn.style.overflow = "hidden";
+        listBtn.style.transition = "width 0.3s ease, opacity 0.3s ease";
+        listBtn.style.opacity = "0";
+
+        setTimeout(() => {
+          const targetWidth = getListBtnWidth();
+          listBtn.style.width = targetWidth + "px";
+          listBtn.style.opacity = "1";
+
+          setTimeout(() => {
+            listBtn.style.overflow = "visible";
+          }, 300);
+        }, 10);
+      }
+
+      // Gorizontal yo'nalishda ListBtn ni yopish
+      function closeListBtnHorizontally() {
+        listBtn.style.width = "0";
+        listBtn.style.opacity = "0";
+        listBtn.style.overflow = "hidden";
+
+        setTimeout(() => {
+          listBtn.style.display = "none";
+          listBtn.classList.remove("active");
+        }, 300);
+      }
+
+      // Ekran o'lchamiga qarab ListBtn kengligini hisoblash
+      function getListBtnWidth() {
+        const width = window.innerWidth;
+
+        if (width < 480) {
+          return 140;
+        } else if (width < 620) {
+          return 160;
+        } else if (width < 699) {
+          return 180;
+        } else if (width < 1001) {
+          return 200;
+        } else if (width < 1115) {
+          return 320;
+        } else {
+          return 340;
+        }
+      }
+
+      // ListBtn joylashuvini sozlash
+      function adjustListBtnPosition() {
+        const width = window.innerWidth;
+
+        listBtn.style.flexDirection = "row";
+        listBtn.style.alignItems = "center";
+        listBtn.style.justifyContent = "center";
+
+        if (width < 620) {
+          listBtn.style.top = "50px";
+          listBtn.style.right = "10px";
+          listBtn.style.flexWrap = "nowrap";
+        } else if (width < 699) {
+          listBtn.style.top = "55px";
+          listBtn.style.right = "15px";
+          listBtn.style.flexWrap = "nowrap";
+        } else if (width < 1001) {
+          listBtn.style.top = "60px";
+          listBtn.style.right = "20px";
+          listBtn.style.flexWrap = "wrap";
+        } else {
+          listBtn.style.top = "65px";
+          listBtn.style.right = "0";
+          listBtn.style.flexWrap = "nowrap";
+        }
+      }
+
+      // Sahifaning boshqa joyiga bosilganda ListBtn yopilishi
+      document.addEventListener("click", (e) => {
+        if (!e.target.closest(".profil_img") && !e.target.closest("#listBtn")) {
+          if (isListBtnOpen) {
+            closeListBtnHorizontally();
+            isListBtnOpen = false;
+          }
+        }
+
+        if (
+          window.innerWidth < 1001 &&
+          !e.target.closest(".menu") &&
+          e.target !== menuIcon
+        ) {
+          if (isMenuOpen) {
+            isMenuOpen = false;
             updateMenuState();
-            localStorage.setItem("menuOpen", isMenuOpen);
-        });
+            localStorage.setItem("menuOpen", "false");
+          }
+        }
+      });
 
-        // Menu holatini yangilash funksiyasi
-        function updateMenuState() {
-            if (isMenuOpen) {
-                menuBox.classList.add("show");
-                hedMain.classList.add("menu-open");
-            } else {
-                menuBox.classList.remove("show");
-                hedMain.classList.remove("menu-open");
-            }
+      // Ekran o'lchamiga mos elementlarni sozlash
+      function updateElementsForScreenSize() {
+        const width = window.innerWidth;
+
+        if (listBtnBox) {
+          if (width < 1001) {
+            listBtnBox.style.display = "none";
+          } else {
+            listBtnBox.style.display = "flex";
+          }
         }
 
-        // Profil rasmi bosilganda - gorizontal qisqarish/kengayish
-        loginBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-
-            if (!isListBtnOpen) {
-                openListBtnHorizontally();
-            } else {
-                closeListBtnHorizontally();
-            }
-
-            isListBtnOpen = !isListBtnOpen;
-        });
-
-        // Gorizontal yo'nalishda ListBtn ni ochish
-        function openListBtnHorizontally() {
-            listBtn.style.display = "flex";
-            listBtn.classList.add("active");
-
-            listBtn.style.width = "0";
-            listBtn.style.overflow = "hidden";
-            listBtn.style.transition = "width 0.3s ease, opacity 0.3s ease";
-            listBtn.style.opacity = "0";
-
-            setTimeout(() => {
-                const targetWidth = getListBtnWidth();
-                listBtn.style.width = targetWidth + "px";
-                listBtn.style.opacity = "1";
-
-                setTimeout(() => {
-                    listBtn.style.overflow = "visible";
-                }, 300);
-            }, 10);
+        if (userSpan) {
+          if (width < 1001) {
+            userSpan.style.display = "none";
+          } else {
+            userSpan.style.display = "flex";
+          }
         }
 
-        // Gorizontal yo'nalishda ListBtn ni yopish
-        function closeListBtnHorizontally() {
-            listBtn.style.width = "0";
-            listBtn.style.opacity = "0";
-            listBtn.style.overflow = "hidden";
-
-            setTimeout(() => {
-                listBtn.style.display = "none";
-                listBtn.classList.remove("active");
-            }, 300);
-        }
-
-        // Ekran o'lchamiga qarab ListBtn kengligini hisoblash
-        function getListBtnWidth() {
-            const width = window.innerWidth;
+        if (menuIcon) {
+          if (width < 1001) {
+            menuIcon.style.position = "fixed";
+            menuIcon.style.zIndex = "101";
 
             if (width < 480) {
-                return 140;
+              menuIcon.style.top = "10px";
+              menuIcon.style.left = "10px";
+              menuIcon.style.width = "25px";
+              menuIcon.style.height = "25px";
             } else if (width < 620) {
-                return 160;
-            } else if (width < 699) {
-                return 180;
-            } else if (width < 1001) {
-                return 200;
-            } else if (width < 1115) {
-                return 320;
+              menuIcon.style.top = "12px";
+              menuIcon.style.left = "12px";
+              menuIcon.style.width = "28px";
+              menuIcon.style.height = "28px";
+            } else if (width < 710) {
+              menuIcon.style.top = "15px";
+              menuIcon.style.left = "15px";
+              menuIcon.style.width = "30px";
+              menuIcon.style.height = "30px";
             } else {
-                return 340;
+              menuIcon.style.top = "15px";
+              menuIcon.style.left = "15px";
+              menuIcon.style.width = "35px";
+              menuIcon.style.height = "35px";
             }
+          } else {
+            menuIcon.style.position = "relative";
+            menuIcon.style.top = "auto";
+            menuIcon.style.left = "auto";
+            menuIcon.style.width = "50px";
+            menuIcon.style.height = "50px";
+            menuIcon.style.zIndex = "100";
+          }
         }
 
-        // ListBtn joylashuvini sozlash
-        function adjustListBtnPosition() {
-            const width = window.innerWidth;
-
-            listBtn.style.flexDirection = "row";
-            listBtn.style.alignItems = "center";
-            listBtn.style.justifyContent = "center";
-
-            if (width < 620) {
-                listBtn.style.top = "50px";
-                listBtn.style.right = "10px";
-                listBtn.style.flexWrap = "nowrap";
-            } else if (width < 699) {
-                listBtn.style.top = "55px";
-                listBtn.style.right = "15px";
-                listBtn.style.flexWrap = "nowrap";
-            } else if (width < 1001) {
-                listBtn.style.top = "60px";
-                listBtn.style.right = "20px";
-                listBtn.style.flexWrap = "wrap";
-            } else {
-                listBtn.style.top = "65px";
-                listBtn.style.right = "0";
-                listBtn.style.flexWrap = "nowrap";
-            }
+        if (width >= 1001) {
+          isMenuOpen = localStorage.getItem("menuOpen") === "true";
+          updateMenuState();
+        } else {
+          if (isMenuOpen) {
+            isMenuOpen = false;
+            updateMenuState();
+            localStorage.setItem("menuOpen", "false");
+          }
         }
 
-        // Sahifaning boshqa joyiga bosilganda ListBtn yopilishi
-        document.addEventListener("click", (e) => {
-            if (!e.target.closest(".profil_img") && !e.target.closest("#listBtn")) {
-                if (isListBtnOpen) {
-                    closeListBtnHorizontally();
-                    isListBtnOpen = false;
-                }
-            }
+        if (isListBtnOpen) {
+          adjustListBtnPosition();
+          const currentWidth = parseInt(listBtn.style.width) || 0;
+          const targetWidth = getListBtnWidth();
 
-            if (window.innerWidth < 1001 && !e.target.closest(".menu") && e.target !== menuIcon) {
-                if (isMenuOpen) {
-                    isMenuOpen = false;
-                    updateMenuState();
-                    localStorage.setItem("menuOpen", "false");
-                }
-            }
-        });
-
-        // Ekran o'lchamiga mos elementlarni sozlash
-        function updateElementsForScreenSize() {
-            const width = window.innerWidth;
-
-            if (listBtnBox) {
-                if (width < 1001) {
-                    listBtnBox.style.display = "none";
-                } else {
-                    listBtnBox.style.display = "flex";
-                }
-            }
-
-            if (userSpan) {
-                if (width < 1001) {
-                    userSpan.style.display = "none";
-                } else {
-                    userSpan.style.display = "flex";
-                }
-            }
-
-            if (menuIcon) {
-                if (width < 1001) {
-                    menuIcon.style.position = "fixed";
-                    menuIcon.style.zIndex = "101";
-
-                    if (width < 480) {
-                        menuIcon.style.top = "10px";
-                        menuIcon.style.left = "10px";
-                        menuIcon.style.width = "25px";
-                        menuIcon.style.height = "25px";
-                    } else if (width < 620) {
-                        menuIcon.style.top = "12px";
-                        menuIcon.style.left = "12px";
-                        menuIcon.style.width = "28px";
-                        menuIcon.style.height = "28px";
-                    } else if (width < 710) {
-                        menuIcon.style.top = "15px";
-                        menuIcon.style.left = "15px";
-                        menuIcon.style.width = "30px";
-                        menuIcon.style.height = "30px";
-                    } else {
-                        menuIcon.style.top = "15px";
-                        menuIcon.style.left = "15px";
-                        menuIcon.style.width = "35px";
-                        menuIcon.style.height = "35px";
-                    }
-                } else {
-                    menuIcon.style.position = "relative";
-                    menuIcon.style.top = "auto";
-                    menuIcon.style.left = "auto";
-                    menuIcon.style.width = "50px";
-                    menuIcon.style.height = "50px";
-                    menuIcon.style.zIndex = "100";
-                }
-            }
-
-            if (width >= 1001) {
-                isMenuOpen = localStorage.getItem("menuOpen") === "true";
-                updateMenuState();
-            } else {
-                if (isMenuOpen) {
-                    isMenuOpen = false;
-                    updateMenuState();
-                    localStorage.setItem("menuOpen", "false");
-                }
-            }
-
-            if (isListBtnOpen) {
-                adjustListBtnPosition();
-                const currentWidth = parseInt(listBtn.style.width) || 0;
-                const targetWidth = getListBtnWidth();
-
-                if (currentWidth !== targetWidth) {
-                    listBtn.style.width = targetWidth + "px";
-                }
-            }
+          if (currentWidth !== targetWidth) {
+            listBtn.style.width = targetWidth + "px";
+          }
         }
+      }
 
-        // Ekran o'lchami o'zgarganda
-        function handleResize() {
-            updateElementsForScreenSize();
+      // Ekran o'lchami o'zgarganda
+      function handleResize() {
+        updateElementsForScreenSize();
 
-            if (isListBtnOpen) {
-                adjustListBtnPosition();
-                const targetWidth = getListBtnWidth();
-                listBtn.style.width = targetWidth + "px";
-            }
+        if (isListBtnOpen) {
+          adjustListBtnPosition();
+          const targetWidth = getListBtnWidth();
+          listBtn.style.width = targetWidth + "px";
         }
+      }
 
-        // Dastlabki yuklanishda va ekran o'lchami o'zgarganda
-        window.addEventListener("load", function() {
-            handleResize();
+      // Dastlabki yuklanishda va ekran o'lchami o'zgarganda
+      window.addEventListener("load", function () {
+        handleResize();
 
-            listBtn.style.display = "none";
-            listBtn.classList.remove("active");
+        listBtn.style.display = "none";
+        listBtn.classList.remove("active");
+        isListBtnOpen = false;
+
+        listBtn.style.transition = "width 0.3s ease, opacity 0.3s ease";
+      });
+
+      window.addEventListener("resize", handleResize);
+
+      // Escape tugmasi bilan menyuni yopish
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          if (isListBtnOpen) {
+            closeListBtnHorizontally();
             isListBtnOpen = false;
-
-            listBtn.style.transition = "width 0.3s ease, opacity 0.3s ease";
-        });
-
-        window.addEventListener("resize", handleResize);
-
-        // Escape tugmasi bilan menyuni yopish
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") {
-                if (isListBtnOpen) {
-                    closeListBtnHorizontally();
-                    isListBtnOpen = false;
-                }
-                if (window.innerWidth < 1001 && isMenuOpen) {
-                    isMenuOpen = false;
-                    updateMenuState();
-                    localStorage.setItem("menuOpen", "false");
-                }
-            }
-        });
-
-        // JavaScript xatoliklarini oldini olish
-        if (menuIcon) {
-            menuIcon.style.cursor = "pointer";
+          }
+          if (window.innerWidth < 1001 && isMenuOpen) {
+            isMenuOpen = false;
+            updateMenuState();
+            localStorage.setItem("menuOpen", "false");
+          }
         }
+      });
 
-        if (loginBtn) {
-            loginBtn.style.cursor = "pointer";
-        }
+      // JavaScript xatoliklarini oldini olish
+      if (menuIcon) {
+        menuIcon.style.cursor = "pointer";
+      }
 
-        // Bootstrap tooltip uchun
-        document.addEventListener("DOMContentLoaded", function() {
-            var tooltipTriggerList = [].slice.call(
-                document.querySelectorAll('[data-bs-toggle="tooltip"]')
-            );
-            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl);
+      if (loginBtn) {
+        loginBtn.style.cursor = "pointer";
+      }
+
+      // Bootstrap tooltip uchun
+      document.addEventListener("DOMContentLoaded", function () {
+        var tooltipTriggerList = [].slice.call(
+          document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        );
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+      });
+
+      // Menu tugmalari uchun active klass boshqaruvi
+      document.addEventListener("DOMContentLoaded", function () {
+        const menuButtons = document.querySelectorAll(".menu article a button");
+
+        if (menuButtons.length > 0) {
+          menuButtons.forEach((button) => {
+            button.addEventListener("click", function () {
+              menuButtons.forEach((btn) => btn.classList.remove("active"));
+              this.classList.add("active");
             });
-        });
+          });
+        }
+      });
+        // Logo hover effect
+  const logo = document.querySelector(".logo");
 
-        // Menu tugmalari uchun active klass boshqaruvi
-        document.addEventListener("DOMContentLoaded", function() {
-            const menuButtons = document.querySelectorAll(".menu article a button");
+  logo.addEventListener("mouseenter", () => {
+    logo.style.transform = "scale(1.1)";
+    logo.style.transition = "transform 0.3s ease";
+  });
 
-            if (menuButtons.length > 0) {
-                menuButtons.forEach((button) => {
-                    button.addEventListener("click", function() {
-                        menuButtons.forEach((btn) => btn.classList.remove("active"));
-                        this.classList.add("active");
-                    });
-                });
-            }
-        });
+  logo.addEventListener("mouseleave", () => {
+    logo.style.transform = "scale(1)";
+  });
+
+  // Dynamic color cycling for logo
+  let logoHue = 200;
+  function updateLogoColors() {
+    logoHue = (logoHue + 1) % 360;
+
+    const logoBrain = document.querySelector(".logo-brain");
+    const logoCircuit = document.querySelector(".logo-circuit");
+    const logoData = document.querySelector(".logo-data");
+
+    if (logoBrain) {
+      logoBrain.style.background = `linear-gradient(45deg,
+                hsl(${logoHue}, 100%, 50%),
+                hsl(${(logoHue + 90) % 360}, 100%, 50%))`;
+    }
+
+    if (logoCircuit) {
+      logoCircuit.style.borderImage = `linear-gradient(45deg,
+                hsl(${logoHue}, 100%, 50%),
+                hsl(${(logoHue + 90) % 360}, 100%, 50%),
+                hsl(${(logoHue + 180) % 360}, 100%, 50%),
+                hsl(${(logoHue + 270) % 360}, 100%, 50%)) 1`;
+    }
+
+    if (logoData) {
+      logoData.style.background = `linear-gradient(45deg,
+                hsl(${logoHue}, 100%, 50%),
+                hsl(${(logoHue + 180) % 360}, 100%, 50%))`;
+    }
+
+    requestAnimationFrame(updateLogoColors);
+  }
+
+  updateLogoColors();
     </script>
 
     {% block scripts %}{% endblock %}
-</body>
+  </body>
 </html>
