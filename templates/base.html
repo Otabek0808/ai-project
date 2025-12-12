@@ -623,186 +623,26 @@
         max-height: 40px;
         text-align: center;
       }
-      .menu_logo img{
+      .menu_logo img {
         width: 100px;
         height: 100px;
       }
-        .logo-container {
-    width: 100px;
-    height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .logo {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: logoFloat 6s ease-in-out infinite;
-  }
-
-  .logo-brain {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, #0066cc, #6600cc);
-    clip-path: polygon(
-      50% 0%,
-      85% 15%,
-      100% 50%,
-      85% 85%,
-      50% 100%,
-      15% 85%,
-      0% 50%,
-      15% 15%
-    );
-    animation: brainPulse 4s ease-in-out infinite;
-    box-shadow: 0 0 15px rgba(0, 102, 204, 0.5),
-      inset 0 0 10px rgba(255, 255, 255, 0.3);
-  }
-
-  .logo-brain::before {
-    content: "";
-    position: absolute;
-    width: 60%;
-    height: 60%;
-    background: linear-gradient(45deg, #00aaff, #aa00ff);
-    clip-path: polygon(
-      50% 0%,
-      85% 15%,
-      100% 50%,
-      85% 85%,
-      50% 100%,
-      15% 85%,
-      0% 50%,
-      15% 15%
-    );
-    top: 20%;
-    left: 20%;
-    animation: brainInnerPulse 3s ease-in-out infinite;
-  }
-
-  .logo-circuit {
-    position: absolute;
-    width: 120%;
-    height: 120%;
-    border: 2px solid transparent;
-    border-image: linear-gradient(45deg, #0066cc, #6600cc, #00aaff, #aa00ff) 1;
-    border-radius: 50%;
-    animation: circuitRotate 8s linear infinite;
-  }
-
-  .logo-circuit::before {
-    content: "";
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: #0066cc;
-    border-radius: 50%;
-    top: -5px;
-    left: 50%;
-    transform: translateX(-50%);
-    box-shadow: 0 0 8px #0066cc;
-  }
-
-  .logo-circuit::after {
-    content: "";
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: #6600cc;
-    border-radius: 50%;
-    bottom: -4px;
-    left: 50%;
-    transform: translateX(-50%);
-    box-shadow: 0 0 8px #6600cc;
-  }
-
-  .logo-data {
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    background: linear-gradient(45deg, #00aaff, #aa00ff);
-    clip-path: polygon(
-      20% 0%,
-      80% 0%,
-      100% 20%,
-      100% 80%,
-      80% 100%,
-      20% 100%,
-      0% 80%,
-      0% 20%
-    );
-    animation: dataSpin 5s linear infinite;
-    box-shadow: 0 0 10px rgba(0, 170, 255, 0.7);
-  }
-
-  .logo-text {
-    position: absolute;
-    bottom: -25px;
-    font-size: 9px;
-    font-weight: bold;
-    color: #0066cc;
-    text-shadow: 0 0 5px rgba(0, 102, 204, 0.5);
-    white-space: nowrap;
-    font-family: Arial, sans-serif;
-    width: 100%;
-    text-align: center;
-  }
-
-  @keyframes logoFloat {
-    0%,
-    100% {
-      transform: translateY(0) rotate(0deg);
-    }
-    50% {
-      transform: translateY(-8px) rotate(3deg);
-    }
-  }
-
-  @keyframes brainPulse {
-    0%,
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-    50% {
-      transform: scale(1.05);
-      opacity: 0.9;
-    }
-  }
-
-  @keyframes brainInnerPulse {
-    0%,
-    100% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.1);
-    }
-  }
-
-  @keyframes circuitRotate {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-  @keyframes dataSpin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
+      .logo-container {
+        width: 100px;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .glavniy_logo {
+        width: 100%;
+      }
+      .glavniy_logo img {
+        width: 120px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
     </style>
   </head>
   <body>
@@ -824,14 +664,9 @@
 
     <section class="contaner_box">
       <div class="menu" id="menu_box">
-        <div class="logo-container">
-  <div class="logo">
-    <div class="logo-brain"></div>
-    <div class="logo-circuit"></div>
-    <div class="logo-data"></div>
-    <div class="logo-text">AI & Data Processing</div>
-  </div>
-</div>
+        <div class="glavniy_logo">
+          <img src="./img/logo/logo50.png" alt="no photo" />
+        </div>
         <article id="menuBtn">
           <!-- Home/Boshqaruv paneli -->
           <a href="{% url 'home' %}">
@@ -1527,51 +1362,6 @@
           });
         }
       });
-        // Logo hover effect
-  const logo = document.querySelector(".logo");
-
-  logo.addEventListener("mouseenter", () => {
-    logo.style.transform = "scale(1.1)";
-    logo.style.transition = "transform 0.3s ease";
-  });
-
-  logo.addEventListener("mouseleave", () => {
-    logo.style.transform = "scale(1)";
-  });
-
-  // Dynamic color cycling for logo
-  let logoHue = 200;
-  function updateLogoColors() {
-    logoHue = (logoHue + 1) % 360;
-
-    const logoBrain = document.querySelector(".logo-brain");
-    const logoCircuit = document.querySelector(".logo-circuit");
-    const logoData = document.querySelector(".logo-data");
-
-    if (logoBrain) {
-      logoBrain.style.background = `linear-gradient(45deg,
-                hsl(${logoHue}, 100%, 50%),
-                hsl(${(logoHue + 90) % 360}, 100%, 50%))`;
-    }
-
-    if (logoCircuit) {
-      logoCircuit.style.borderImage = `linear-gradient(45deg,
-                hsl(${logoHue}, 100%, 50%),
-                hsl(${(logoHue + 90) % 360}, 100%, 50%),
-                hsl(${(logoHue + 180) % 360}, 100%, 50%),
-                hsl(${(logoHue + 270) % 360}, 100%, 50%)) 1`;
-    }
-
-    if (logoData) {
-      logoData.style.background = `linear-gradient(45deg,
-                hsl(${logoHue}, 100%, 50%),
-                hsl(${(logoHue + 180) % 360}, 100%, 50%))`;
-    }
-
-    requestAnimationFrame(updateLogoColors);
-  }
-
-  updateLogoColors();
     </script>
 
     {% block scripts %}{% endblock %}
