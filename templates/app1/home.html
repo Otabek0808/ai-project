@@ -1,13 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boshqaruv Paneli</title>
-  <style>
+<style>
     /* Asosiy stillar */
     .static_contaner_section {
         width: auto;
@@ -18,6 +12,7 @@
         justify-content: space-between;
         margin-bottom: 20px;
     }
+
     .contaner_info {
         width: 100%;
         height: auto;
@@ -28,15 +23,18 @@
         border: 0.1px solid white;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+
     .contaner_info:hover {
         transform: translateY(-5px);
         box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     }
+
     .log_num {
         display: flex;
         align-items: center;
         gap: 15px;
     }
+
     .log_num svg {
         width: 50px;
         height: 50px;
@@ -45,10 +43,12 @@
         padding: 10px;
         border-radius: 10px;
     }
+
     .log_num h2 {
         font-size: 36px;
         margin: 0;
     }
+
     .contaner_info p {
         font-size: 18px;
         margin-top: 20px;
@@ -69,7 +69,7 @@
         margin-bottom: 20px;
     }
 
-    /* TWO-COLUMNS QISMI - YANGI STILLAR */
+    /* TWO-COLUMNS QISMI */
     .two-columns {
         display: flex;
         gap: 20px;
@@ -329,6 +329,7 @@
         margin-top: 20px;
         flex-wrap: wrap;
     }
+
     .stat-card {
         flex: 1;
         min-width: 200px;
@@ -338,11 +339,13 @@
         padding: 20px;
         text-align: center;
     }
+
     .stat-value {
         font-size: 32px;
         font-weight: bold;
         margin: 10px 0;
     }
+
     .stat-label {
         font-size: 14px;
         opacity: 0.9;
@@ -373,11 +376,13 @@
             padding: 15px;
         }
     }
+
     @media (max-width:840px) {
         .contaner_info{
             flex: 35%;
         }
     }
+
     @media (max-width: 768px) {
         .column {
             padding: 20px;
@@ -461,452 +466,726 @@
     .column {
         animation: fadeInUp 0.5s ease-out;
     }
-    .contaner_infoj {
-        text-align: center;
-        height: 100%;
+
+    /* YOZUV VA NUR EFFEKT UCHUN STILLAR */
+
+    .contaner_infos {
         width: 100%;
-                transition: all 1.3s ease;
-      }
-      .contaner_infos {
-    width: 100%;
-    height: auto;
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.511);
-    border-radius: 10px;
-    padding: 25px;
-    border: 0.1px solid white;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    margin-bottom: 20px;
-    position: relative;
-    overflow: hidden;
-}
-
-.contaner_infos::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(13, 202, 240, 0.1), rgba(23, 162, 184, 0.1));
-    z-index: 0;
-}
-
-.contaner_infos:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(13, 202, 240, 0.2);
-}
-
-.contaner_infoh5 {
-    font-family: "Noto Sans", Sans-serif;
-    font-size: 1.5rem;
-    font-weight: 500;
-    line-height: 1.6;
-    color: #2c3e50;
-    margin-bottom: 1.5rem;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-    background: linear-gradient(45deg, #0d6efd, #0582ab, #0dcaf0);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: fadeInUp 1s ease-out forwards;
-    opacity: 0;
-}
-
-/* Gradient text animation effect */
-@keyframes gradientText {
-    0% {
-        background-position: 0% 50%;
+        height: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.85);
+        border-radius: 15px;
+        padding: 30px;
+        border: 0.1px solid rgba(255, 255, 255, 0.4);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        margin-bottom: 20px;
+        position: relative;
+        overflow: hidden;
+        box-shadow:
+            0 15px 35px rgba(0, 0, 0, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
-    50% {
-        background-position: 100% 50%;
+
+    .contaner_infos::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg,
+            rgba(13, 202, 240, 0.15) 0%,
+            rgba(23, 162, 184, 0.15) 50%,
+            rgba(13, 110, 253, 0.15) 100%);
+        z-index: 0;
     }
-    100% {
-        background-position: 0% 50%;
+
+    .contaner_infos:hover {
+        transform: translateY(-8px);
+        box-shadow:
+            0 25px 50px rgba(13, 202, 240, 0.25),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4);
     }
-}
 
-.contaner_infoh5 span {
-    background-size: 200% 200%;
-    animation: gradientText 3s ease infinite;
-}
-
-.box_home_btn {
-    text-align: end;
-    position: relative;
-    z-index: 1;
-}
-
-.box_home_btn a {
-    text-decoration: none;
-    display: inline-block;
-}
-
-.box_home_btn .btn {
-    backdrop-filter: blur(10px);
-    background: linear-gradient(135deg, rgba(40, 167, 69, 0.9), rgba(32, 201, 151, 0.9));
-    border: none;
-    border-radius: 8px;
-    padding: 0.85rem 2rem;
-    font-weight: 500;
-    font-size: 1.1rem;
-    color: white;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    animation: fadeInRight 1s ease-out 0.5s forwards;
-    opacity: 0;
-}
-
-.box_home_btn .btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: 0.5s;
-}
-
-.box_home_btn .btn:hover::before {
-    left: 100%;
-}
-
-.box_home_btn .btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
-    background: linear-gradient(135deg, rgba(33, 136, 56, 0.9), rgba(26, 161, 121, 0.9));
-}
-
-.box_home_btn .btn:active {
-    transform: translateY(-1px);
-}
-
-.box_home_btn .btn i {
-    margin-right: 8px;
-    font-size: 1rem;
-}
-
-/* Animatsiyalar */
-@keyframes fadeInUp {
-    from {
+    /* YORQIN GRADIENT TEXT - RANG TEZ O'ZGARSIN */
+    .contaner_infoh5 {
+        font-family: "Noto Sans", "Segoe UI", sans-serif;
+        font-size: 2.2rem;
+        font-weight: 700;
+        line-height: 1.3;
+        text-align: center;
+        position: relative;
+        z-index: 10;
+        padding: 0 20px;
+        margin-bottom: 1.5rem;
         opacity: 0;
         transform: translateY(30px);
+        animation: fadeInUp 1s ease-out forwards;
+        text-shadow:
+            0 0 10px rgba(255, 255, 255, 0.5),
+            0 0 20px rgba(255, 255, 255, 0.3);
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
-@keyframes fadeInRight {
-    from {
+    /* YORQIN GRADIENT TEXT */
+    .main-gradient-text {
+        background: linear-gradient(
+            90deg,
+            #ff0000 0%,    /* Qizil */
+            #ff9900 14%,   /* To'q sariq */
+            #ffff00 28%,   /* Sariq */
+            #33ff00 42%,   /* Yashil */
+            #00ffff 56%,   /* Moviy-ko'k */
+            #0066ff 70%,   /* Ko'k */
+            #9900ff 84%,   /* Binafsha */
+            #ff00ff 100%   /* Pushti */
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent !important;
+        background-size: 500% 100%;
+        animation: fastRainbowFlow 4s linear infinite;
+        display: inline-block;
+        font-weight: 800;
+        letter-spacing: 1px;
+    }
+
+    /* TEZ RANG O'ZGARISH ANIMATSIYASI */
+    @keyframes fastRainbowFlow {
+        0% {
+            background-position: 0% 50%;
+            filter: hue-rotate(0deg) brightness(1.2);
+        }
+        25% {
+            background-position: 100% 50%;
+            filter: hue-rotate(90deg) brightness(1.3);
+        }
+        50% {
+            background-position: 200% 50%;
+            filter: hue-rotate(180deg) brightness(1.4);
+        }
+        75% {
+            background-position: 300% 50%;
+            filter: hue-rotate(270deg) brightness(1.3);
+        }
+        100% {
+            background-position: 400% 50%;
+            filter: hue-rotate(360deg) brightness(1.2);
+        }
+    }
+
+    .subtitle-text {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-top: 15px;
+        display: block;
+        opacity: 0.9;
+        animation: subtitleFadeIn 1.2s ease-out 0.5s forwards;
         opacity: 0;
-        transform: translateX(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.4);
-    }
-    70% {
-        box-shadow: 0 0 0 10px rgba(13, 110, 253, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(13, 110, 253, 0);
-    }
-}
-
-@keyframes typing {
-    from {
-        width: 0;
-    }
-    to {
-        width: 100%;
-    }
-}
-
-@keyframes blink {
-    50% {
-        border-color: transparent;
-    }
-}
-
-/* Saytga kirganda paydo bo'ladigan tekst animatsiyasi */
-.typewriter-text {
-    overflow: hidden;
-    border-right: 3px solid #0dcaf0;
-    white-space: nowrap;
-    margin: 0 auto;
-    letter-spacing: .15em;
-    animation:
-        typing 3.5s steps(40, end),
-        blink .75s step-end infinite;
-}
-
-/* Responsive dizayn */
-@media (max-width: 768px) {
-    .contaner_infoh5 {
-        font-size: 1.3rem;
-        text-align: center;
-        animation: fadeInUp 0.8s ease-out forwards;
     }
 
+    @keyframes subtitleFadeIn {
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* TUGMA UCHUN STILLAR */
     .box_home_btn {
         text-align: center;
-        margin-top: 1rem;
+        position: relative;
+        z-index: 1;
+        margin-top: 25px;
+        opacity: 0;
+        animation: fadeInUp 0.8s ease-out 0.8s forwards;
+    }
+
+    .box_home_btn a {
+        text-decoration: none;
+        display: inline-block;
     }
 
     .box_home_btn .btn {
-        width: 100%;
-        padding: 0.75rem 1.5rem;
-        font-size: 1rem;
-        animation: fadeInUp 1s ease-out 0.5s forwards;
-    }
-}
-
-@media (max-width: 576px) {
-    .contaner_info {
-        padding: 20px 15px;
-    }
-
-    .contaner_infoh5 {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        min-height: 55px;
+        background: linear-gradient(135deg,
+            rgba(40, 167, 69, 0.95) 0%,
+            rgba(32, 201, 151, 0.95) 100%);
+        border: none;
+        border-radius: 12px;
+        color: white;
         font-size: 1.2rem;
-        line-height: 1.5;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        padding: 15px 35px;
+        box-shadow:
+            0 8px 25px rgba(40, 167, 69, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
     }
 
-    .typewriter-text {
-        white-space: normal;
-        border-right: none;
-        animation: fadeInUp 1s ease-out forwards;
+    .box_home_btn .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.25) 50%,
+            transparent 100%
+        );
+        transition: 0.8s;
     }
-}
 
-/* JavaScript bilan boshqariladigan animatsiya klassi */
-.text-reveal {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
+    .box_home_btn .btn:hover::before {
+        left: 100%;
+    }
 
-.text-reveal.revealed {
-    opacity: 1;
-    transform: translateY(0);
-}
-  </style>
-</head>
-<body>
+    .box_home_btn .btn:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow:
+            0 15px 35px rgba(40, 167, 69, 0.6),
+            inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        background: linear-gradient(135deg,
+            rgba(33, 136, 56, 0.95) 0%,
+            rgba(26, 161, 121, 0.95) 100%);
+    }
 
-    <main>
-        <!-- Asosiy statistik kartalar -->
-        <div class="contaner_infos" style="margin-bottom: 20px;">
-    <h5 class="contaner_infoh5" id="welcomeText">
-        Sun'iy intellekt va ma'lumotlar qayta ishlash platformamizga xush kelibsiz!
-        Tizimdan to'liq foydalanish uchun ro'yxatdan o'ting.
-    </h5>
-    <div class="box_home_btn">
-        <a href="{% url 'register' %}">
-            <button class="btn btn-success">
-                <i class="fas fa-user-plus me-2"></i>Ro'yxatdan o'tish
-            </button>
-        </a>
+    .box_home_btn .btn:active {
+        transform: translateY(-2px) scale(0.98);
+    }
+
+    .box_home_btn .btn i {
+        margin-right: 12px;
+        font-size: 1.2rem;
+    }
+
+    /* Pulsatsiya effekti */
+    @keyframes pulse {
+        0% {
+            box-shadow:
+                0 8px 25px rgba(40, 167, 69, 0.4),
+                0 0 0 0 rgba(13, 110, 253, 0.6);
+        }
+        70% {
+            box-shadow:
+                0 8px 25px rgba(40, 167, 69, 0.4),
+                0 0 0 15px rgba(13, 110, 253, 0);
+        }
+        100% {
+            box-shadow:
+                0 8px 25px rgba(40, 167, 69, 0.4),
+                0 0 0 0 rgba(13, 110, 253, 0);
+        }
+    }
+
+    .pulse-effect {
+        animation: pulse 3s infinite 1.5s;
+    }
+
+    /* NUR EFFEKT UCHUN STILLAR */
+
+    /* 1. YOZUV ATROFIDA NURLANISH */
+    .text-glow-effect {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 105%;
+        height: 135%;
+        background: radial-gradient(
+            ellipse at center,
+            rgba(255, 255, 255, 0.25) 0%,
+            rgba(255, 255, 255, 0.15) 20%,
+            rgba(255, 255, 255, 0.1) 40%,
+            transparent 70%
+        );
+        filter: blur(40px);
+        z-index: 1;
+        animation: glowPulse 3s ease-in-out infinite;
+        pointer-events: none;
+    }
+
+    @keyframes glowPulse {
+        0%, 100% {
+            opacity: 0.5;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+            opacity: 0.7;
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+    }
+
+    /* 2. NUR CHIZIQLARI */
+    .ray-effect-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .ray-line {
+        position: absolute;
+        width: 2px;
+        height: 150px;
+        background: linear-gradient(
+            to top,
+            transparent,
+            rgba(255, 255, 255, 0.6),
+            transparent
+        );
+        transform-origin: bottom center;
+        animation: rayMove 3s linear infinite;
+        opacity: 0;
+        filter: blur(1px);
+    }
+
+    @keyframes rayMove {
+        0% {
+            transform: translateY(100px) rotate(var(--angle)) scaleY(0);
+            opacity: 0;
+        }
+        10% {
+            opacity: 0.7;
+            transform: translateY(80px) rotate(var(--angle)) scaleY(1);
+        }
+        90% {
+            opacity: 0.7;
+        }
+        100% {
+            transform: translateY(-150px) rotate(var(--angle)) scaleY(0);
+            opacity: 0;
+        }
+    }
+
+    /* 3. YULDIZCHALAR */
+    .sparkle-effect-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .sparkle-dot {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: white;
+        border-radius: 50%;
+        filter: blur(1px);
+        animation: sparkleTwinkle 2s infinite;
+        opacity: 0;
+        box-shadow:
+            0 0 15px rgba(255, 255, 255, 0.7),
+            0 0 30px rgba(255, 255, 255, 0.5);
+    }
+
+    @keyframes sparkleTwinkle {
+        0%, 100% {
+            opacity: 0;
+            transform: scale(0.3);
+        }
+        50% {
+            opacity: 1;
+            transform: scale(1.2);
+            box-shadow:
+                0 0 20px rgba(255, 255, 255, 0.9),
+                0 0 40px rgba(255, 255, 255, 0.7);
+        }
+    }
+
+    /* Responsive dizayn yozuv uchun */
+    @media (max-width: 1200px) {
+        .contaner_infoh5 {
+            font-size: 2rem;
+        }
+        .subtitle-text {
+            font-size: 1.3rem;
+        }
+        .box_home_btn .btn {
+            font-size: 1.1rem;
+            padding: 12px 30px;
+            min-height: 50px;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .contaner_infoh5 {
+            font-size: 1.8rem;
+        }
+        .subtitle-text {
+            font-size: 1.2rem;
+            margin-top: 12px;
+        }
+        .box_home_btn .btn {
+            font-size: 1rem;
+            padding: 10px 25px;
+            min-height: 45px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .contaner_infos {
+            padding: 25px 20px;
+        }
+        .contaner_infoh5 {
+            font-size: 1.6rem;
+            padding: 0 15px;
+        }
+        .subtitle-text {
+            font-size: 1.1rem;
+        }
+        .box_home_btn {
+            margin-top: 20px;
+        }
+        .box_home_btn .btn {
+            width: 100%;
+            max-width: 300px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .contaner_infos {
+            padding: 20px 15px;
+            border-radius: 12px;
+        }
+        .contaner_infoh5 {
+            font-size: 1.4rem;
+            line-height: 1.2;
+        }
+        .subtitle-text {
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        .box_home_btn .btn {
+            font-size: 0.95rem;
+            padding: 10px 20px;
+            min-height: 40px;
+        }
+        .main-gradient-text {
+            animation: fastRainbowFlow 3s linear infinite;
+        }
+    }
+</style>
+
+<main>
+    <!-- Asosiy kirish yozuvi -->
+    <div class="contaner_infos" id="welcomeContainer">
+        <!-- Nurlanish effektlari -->
+        <div class="text-glow-effect"></div>
+        <div class="ray-effect-container" id="rayContainer"></div>
+        <div class="sparkle-effect-container" id="sparkleContainer"></div>
+
+        <!-- Asosiy matn - ENDI YORQIN KO'RINADI -->
+        <h5 class="contaner_infoh5">
+            <span class="main-gradient-text" id="mainText">
+                Sun'iy intellekt va ma'lumotlar qayta ishlash platformamizga xush kelibsiz!
+            </span>
+            <span class="subtitle-text" id="subText">
+                Tizimdan to'liq foydalanish uchun ro'yxatdan o'ting.
+            </span>
+        </h5>
+
+        <!-- Tugma -->
+        <div class="box_home_btn">
+            <a href="{% url 'register' %}">
+                <button class="btn btn-success" id="registerBtn">
+                    <i class="fas fa-user-plus me-2"></i>Ro'yxatdan o'tish
+                </button>
+            </a>
+        </div>
     </div>
-</div>
-        <section class="static_contaner_section">
-            <!-- Videodarslar -->
-            <div class="contaner_info">
-                <div class="log_num">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file" viewBox="0 0 16 16" style="color: rgb(52, 52, 148)">
-                        <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1"/>
-                    </svg>
-                    <h2>{{ videos_count }}</h2>
-                </div>
-                <p>Videodarslar</p>
-            </div>
 
-            <!-- Testlar -->
-            <div class="contaner_info">
-                <div class="log_num">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16" style="color: green">
-                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>
-                    </svg>
-                    <h2>{{ test_count }}</h2>
-                </div>
-                <p>Umumiy testlar</p>
+    <!-- Asosiy statistik kartalar -->
+    <section class="static_contaner_section">
+        <!-- Videodarslar -->
+        <div class="contaner_info">
+            <div class="log_num">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file" viewBox="0 0 16 16" style="color: rgb(52, 52, 148)">
+                    <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1"/>
+                </svg>
+                <h2>{{ videos_count }}</h2>
             </div>
-
-            <!-- Materiallar -->
-            <div class="contaner_info">
-                <div class="log_num">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-right" viewBox="0 0 16 16" style="color: blueviolet">
-                        <path fill-rule="evenodd" d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708z"/>
-                    </svg>
-                    <h2>{{ documents_count }}</h2>
-                </div>
-                <p>Materiallar</p>
-            </div>
-
-            <!-- Foydalanuvchilar -->
-            <div class="contaner_info">
-                <div class="log_num">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-percent" viewBox="0 0 16 16" style="color: orange">
-                        <path d="M13.442 2.558a.625.625 0 0 1 0 .884l-10 10a.625.625 0 1 1-.884-.884l10-10a.625.625 0 0 1 .884 0M4.5 6a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5m7 6a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 1 0 0 5"/>
-                    </svg>
-                    <h2>{{ user_count }}</h2>
-                </div>
-                <p>Foydalanuvchilar soni</p>
-            </div>
-        </section>
-
-        <!-- Umumiy statistika -->
-        <div class="overall-stats">
-            <div class="stat-card">
-                <div>📚</div>
-                <div class="stat-value">{{ total_subjects }}</div>
-                <div class="stat-label">Jami fanlar</div>
-            </div>
-            {% if request.user.is_authenticated and user_subject_progress %}
-            <div class="stat-card" style="background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);">
-                <div>📈</div>
-                <div class="stat-value">{{ avg_progress|floatformat:1 }}%</div>
-                <div class="stat-label">O'rtacha o'zlashtirish</div>
-            </div>
-            <div class="stat-card" style="background: linear-gradient(135deg, #FFC107 0%, #FF9800 100%);">
-                <div>✅</div>
-                <div class="stat-value">{{ user_subject_progress|length }}</div>
-                <div class="stat-label">O'zlashtirilgan fanlar</div>
-            </div>
-            {% endif %}
+            <p>Videodarslar</p>
         </div>
 
-        <!-- Grafik -->
-        <div class="graphic-container">
-            <h4 style="display: flex; align-items: center; gap: 10px;">
-                📊 Fanlar statistikasi
-            </h4>
-            {% if graphic %}
-            <div class="text-center">
-                <img src="data:image/png;base64,{{ graphic }}" alt="Fanlar statistikasi grafigi" class="img-fluid border rounded" style="max-height: 500px;">
-                <div class="mt-3" style="display: flex; justify-content: center; gap: 20px; font-size: 12px; color: #666;">
-                    <div>
-                        <span style="display: inline-block; width: 15px; height: 15px; background: #4CAF50; border-radius: 50%; margin-right: 5px;"></span>
-                        Yaxshi (80-100%)
-                    </div>
-                    <div>
-                        <span style="display: inline-block; width: 15px; height: 15px; background: #FFC107; border-radius: 50%; margin-right: 5px;"></span>
-                        O'rtacha (60-79%)
-                    </div>
-                    <div>
-                        <span style="display: inline-block; width: 15px; height: 15px; background: #F44336; border-radius: 50%; margin-right: 5px;"></span>
-                        Qoniqarsiz (0-59%)
-                    </div>
-                </div>
+        <!-- Testlar -->
+        <div class="contaner_info">
+            <div class="log_num">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16" style="color: green">
+                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>
+                </svg>
+                <h2>{{ test_count }}</h2>
             </div>
-            {% else %}
-            <div class="text-center text-muted py-5">
-                <p>Statistika grafigi mavjud emas</p>
-            </div>
-            {% endif %}
+            <p>Umumiy testlar</p>
         </div>
 
-        <!-- Ikki ustunli ma'lumotlar -->
-        <div class="two-columns">
-            <!-- Fanlar bo'yicha materiallar -->
-            <div class="column">
-                <h5>📚 Fanlar bo'yicha materiallar</h5>
-                <div class="material-list">
-                    {% for subject, data in subject_materials.items %}
-                    <div class="material-item">
-                        <div>
-                            <strong>{{ subject }}</strong>
-                            <div class="material-details">
-                                <span>📹 {{ data.videos }} video</span>
-                                <span>📄 {{ data.documents }} material</span>
-                                <span>📝 {{ data.tests }} test</span>
-                            </div>
-                        </div>
-                        <div style="text-align: right;">
-                            <span class="material-count">{{ data.total }}</span>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
+        <!-- Materiallar -->
+        <div class="contaner_info">
+            <div class="log_num">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-right" viewBox="0 0 16 16" style="color: blueviolet">
+                    <path fill-rule="evenodd" d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708z"/>
+                </svg>
+                <h2>{{ documents_count }}</h2>
             </div>
-
-            <!-- Foydalanuvchi o'zlashtirishi -->
-            {% if request.user.is_authenticated and user_subject_progress %}
-            <div class="column">
-                <h5>👤 {{ request.user.username }} - O'zlashtirish darajasi</h5>
-                <div class="progress-list">
-                    {% for subject, data in user_subject_progress.items %}
-                    <div class="progress-item">
-                        <div class="progress-header">
-                            <strong>{{ subject }}</strong>
-                            <span class="{% if data.avg_percentage >= 80 %}text-success{% elif data.avg_percentage >= 60 %}text-warning{% else %}text-danger{% endif %}">
-                                {{ data.avg_percentage|floatformat:1 }}%
-                            </span>
-                        </div>
-                        <div class="progress-bar-container">
-                            <div class="progress-fill
-                                {% if data.avg_percentage >= 80 %}high
-                                {% elif data.avg_percentage >= 60 %}medium
-                                {% else %}low{% endif %}"
-                                style="width: {{ data.avg_percentage }}%">
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            {% else %}
-            <div class="column">
-                <h5>👤 O'zlashtirish darajasi</h5>
-                <div class="text-center text-muted py-4">
-                    <p>Tizimga kiring va test topshiring</p>
-                    <a href="{% url 'login' %}" class="btn btn-primary mt-2">Tizimga kirish</a>
-                </div>
-            </div>
-            {% endif %}
+            <p>Materiallar</p>
         </div>
-    </main>
+
+        <!-- Foydalanuvchilar -->
+        <div class="contaner_info">
+            <div class="log_num">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-percent" viewBox="0 0 16 16" style="color: orange">
+                    <path d="M13.442 2.558a.625.625 0 0 1 0 .884l-10 10a.625.625 0 1 1-.884-.884l10-10a.625.625 0 0 1 .884 0M4.5 6a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5m7 6a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 1 0 0 5"/>
+                </svg>
+                <h2>{{ user_count }}</h2>
+            </div>
+            <p>Foydalanuvchilar soni</p>
+        </div>
+    </section>
+
+    <!-- Umumiy statistika -->
+    <div class="overall-stats">
+        <div class="stat-card">
+            <div>📚</div>
+            <div class="stat-value">{{ total_subjects }}</div>
+            <div class="stat-label">Jami fanlar</div>
+        </div>
+        {% if request.user.is_authenticated and user_subject_progress %}
+        <div class="stat-card" style="background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);">
+            <div>📈</div>
+            <div class="stat-value">{{ avg_progress|floatformat:1 }}%</div>
+            <div class="stat-label">O'rtacha o'zlashtirish</div>
+        </div>
+        <div class="stat-card" style="background: linear-gradient(135deg, #FFC107 0%, #FF9800 100%);">
+            <div>✅</div>
+            <div class="stat-value">{{ user_subject_progress|length }}</div>
+            <div class="stat-label">O'zlashtirilgan fanlar</div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Grafik -->
+    <div class="graphic-container">
+        <h4 style="display: flex; align-items: center; gap: 10px;">
+            📊 Fanlar statistikasi
+        </h4>
+        {% if graphic %}
+        <div class="text-center">
+            <img src="data:image/png;base64,{{ graphic }}" alt="Fanlar statistikasi grafigi" class="img-fluid border rounded" style="max-height: 500px;">
+            <div class="mt-3" style="display: flex; justify-content: center; gap: 20px; font-size: 12px; color: #666;">
+                <div>
+                    <span style="display: inline-block; width: 15px; height: 15px; background: #4CAF50; border-radius: 50%; margin-right: 5px;"></span>
+                    Yaxshi (80-100%)
+                </div>
+                <div>
+                    <span style="display: inline-block; width: 15px; height: 15px; background: #FFC107; border-radius: 50%; margin-right: 5px;"></span>
+                    O'rtacha (60-79%)
+                </div>
+                <div>
+                    <span style="display: inline-block; width: 15px; height: 15px; background: #F44336; border-radius: 50%; margin-right: 5px;"></span>
+                    Qoniqarsiz (0-59%)
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="text-center text-muted py-5">
+            <p>Statistika grafigi mavjud emas</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Ikki ustunli ma'lumotlar -->
+    <div class="two-columns">
+        <!-- Fanlar bo'yicha materiallar -->
+        <div class="column">
+            <h5>📚 Fanlar bo'yicha materiallar</h5>
+            <div class="material-list">
+                {% for subject, data in subject_materials.items %}
+                <div class="material-item">
+                    <div>
+                        <strong>{{ subject }}</strong>
+                        <div class="material-details">
+                            <span>📹 {{ data.videos }} video</span>
+                            <span>📄 {{ data.documents }} material</span>
+                            <span>📝 {{ data.tests }} test</span>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <span class="material-count">{{ data.total }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Foydalanuvchi o'zlashtirishi -->
+        {% if request.user.is_authenticated and user_subject_progress %}
+        <div class="column">
+            <h5>👤 {{ request.user.username }} - O'zlashtirish darajasi</h5>
+            <div class="progress-list">
+                {% for subject, data in user_subject_progress.items %}
+                <div class="progress-item">
+                    <div class="progress-header">
+                        <strong>{{ subject }}</strong>
+                        <span class="{% if data.avg_percentage >= 80 %}text-success{% elif data.avg_percentage >= 60 %}text-warning{% else %}text-danger{% endif %}">
+                            {{ data.avg_percentage|floatformat:1 }}%
+                        </span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-fill
+                            {% if data.avg_percentage >= 80 %}high
+                            {% elif data.avg_percentage >= 60 %}medium
+                            {% else %}low{% endif %}"
+                            style="width: {{ data.avg_percentage }}%">
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+        <div class="column">
+            <h5>👤 O'zlashtirish darajasi</h5>
+            <div class="text-center text-muted py-4">
+                <p>Tizimga kiring va test topshiring</p>
+                <a href="{% url 'login' %}" class="btn btn-primary mt-2">Tizimga kirish</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</main>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const welcomeText = document.querySelector('.contaner_infoh5');
+    const mainText = document.getElementById('mainText');
+    const subText = document.getElementById('subText');
+    const registerBtn = document.getElementById('registerBtn');
+    const rayContainer = document.getElementById('rayContainer');
+    const sparkleContainer = document.getElementById('sparkleContainer');
 
-    // Saytga kirganda animatsiyani boshlash
+    // 1. Gradient animatsiyani boshlash
+    mainText.style.animation = 'fastRainbowFlow 4s linear infinite';
+
+    // 2. Subtitle animatsiyasi
     setTimeout(() => {
-        welcomeText.style.animation = 'fadeInUp 1s ease-out forwards';
+        subText.style.opacity = '1';
+    }, 500);
 
-        // Gradient effekt
-        let gradientPos = 0;
-        const gradientAnimation = setInterval(() => {
-            gradientPos = (gradientPos + 1) % 100;
-            welcomeText.style.backgroundPosition = `${gradientPos}% 50%`;
-        }, 50);
+    // 3. Button animatsiyasi
+    setTimeout(() => {
+        registerBtn.style.opacity = '1';
+        registerBtn.classList.add('pulse-effect');
+    }, 1000);
 
-        // 3 soniyadan keyin gradient animatsiyani to'xtatish
-        setTimeout(() => {
-            clearInterval(gradientAnimation);
-        }, 3000);
+    // 4. NUR EFFEKTINI YARATISH
 
-    }, 300); // 300ms kechikish
+    // Nur chiziqlari yaratish
+    function createRays() {
+        const container = document.querySelector('.contaner_infos');
+        const containerRect = container.getBoundingClientRect();
+        const centerX = containerRect.width / 2;
+        const centerY = containerRect.height / 2;
 
-    // Tugma uchun pulsatsiya effekti
-    const registerBtn = document.querySelector('.box_home_btn .btn');
-    if (registerBtn) {
-        registerBtn.style.animation = 'pulse 2s infinite 1.5s';
+        for (let i = 0; i < 8; i++) {
+            const ray = document.createElement('div');
+            ray.className = 'ray-line';
+
+            const angle = (i * 45) + Math.random() * 15;
+            const distance = 80 + Math.random() * 60;
+
+            const x = centerX + Math.cos(angle * Math.PI / 180) * distance;
+            const y = centerY + Math.sin(angle * Math.PI / 180) * distance;
+
+            ray.style.left = `${x}px`;
+            ray.style.top = `${y}px`;
+            ray.style.setProperty('--angle', `${angle}deg`);
+            ray.style.animationDelay = `${Math.random() * 3}s`;
+
+            rayContainer.appendChild(ray);
+        }
     }
+
+    // Yulduzchalar yaratish
+    function createSparkles() {
+        const container = document.querySelector('.contaner_infos');
+        const containerRect = container.getBoundingClientRect();
+
+        for (let i = 0; i < 10; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle-dot';
+
+            const x = Math.random() * containerRect.width;
+            const y = Math.random() * containerRect.height;
+
+            sparkle.style.left = `${x}px`;
+            sparkle.style.top = `${y}px`;
+            sparkle.style.animationDelay = `${Math.random() * 2}s`;
+
+            sparkleContainer.appendChild(sparkle);
+        }
+    }
+
+    // 5. Barcha effektlarni ishga tushirish
+    function initEffects() {
+        createRays();
+        createSparkles();
+
+        // Har 8 soniyada yangi yulduzcha qo'shish
+        setInterval(() => {
+            if (sparkleContainer.children.length < 15) {
+                createSparkles();
+            }
+        }, 8000);
+    }
+
+    // Sayt yuklanganida
+    setTimeout(() => {
+        initEffects();
+
+        // Responsive uchun
+        window.addEventListener('resize', function() {
+            rayContainer.innerHTML = '';
+            sparkleContainer.innerHTML = '';
+            setTimeout(initEffects, 100);
+        });
+    }, 500);
+
+    // Button hover effekti
+    registerBtn.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-5px) scale(1.05)';
+    });
+
+    registerBtn.addEventListener('mouseleave', function() {
+        if (!this.classList.contains('clicked')) {
+            this.style.transform = 'translateY(0) scale(1)';
+        }
+    });
+
+    // Button bosilganda effekt
+    registerBtn.addEventListener('click', function() {
+        this.classList.add('clicked');
+        this.style.transform = 'translateY(-2px) scale(0.98)';
+
+        setTimeout(() => {
+            this.style.transform = 'translateY(-5px) scale(1.05)';
+        }, 150);
+    });
 });
 </script>
-</body>
-</html>
 {% endblock %}
