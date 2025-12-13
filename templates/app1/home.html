@@ -461,13 +461,266 @@
     .column {
         animation: fadeInUp 0.5s ease-out;
     }
+    .contaner_infoj {
+        text-align: center;
+        height: 100%;
+        width: 100%;
+                transition: all 1.3s ease;
+      }
+      .contaner_infos {
+    width: 100%;
+    height: auto;
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.511);
+    border-radius: 10px;
+    padding: 25px;
+    border: 0.1px solid white;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
 
+.contaner_infos::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(13, 202, 240, 0.1), rgba(23, 162, 184, 0.1));
+    z-index: 0;
+}
+
+.contaner_infos:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(13, 202, 240, 0.2);
+}
+
+.contaner_infoh5 {
+    font-family: "Noto Sans", Sans-serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.6;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(45deg, #0d6efd, #0582ab, #0dcaf0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeInUp 1s ease-out forwards;
+    opacity: 0;
+}
+
+/* Gradient text animation effect */
+@keyframes gradientText {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.contaner_infoh5 span {
+    background-size: 200% 200%;
+    animation: gradientText 3s ease infinite;
+}
+
+.box_home_btn {
+    text-align: end;
+    position: relative;
+    z-index: 1;
+}
+
+.box_home_btn a {
+    text-decoration: none;
+    display: inline-block;
+}
+
+.box_home_btn .btn {
+    backdrop-filter: blur(10px);
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.9), rgba(32, 201, 151, 0.9));
+    border: none;
+    border-radius: 8px;
+    padding: 0.85rem 2rem;
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: white;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    animation: fadeInRight 1s ease-out 0.5s forwards;
+    opacity: 0;
+}
+
+.box_home_btn .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
+}
+
+.box_home_btn .btn:hover::before {
+    left: 100%;
+}
+
+.box_home_btn .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+    background: linear-gradient(135deg, rgba(33, 136, 56, 0.9), rgba(26, 161, 121, 0.9));
+}
+
+.box_home_btn .btn:active {
+    transform: translateY(-1px);
+}
+
+.box_home_btn .btn i {
+    margin-right: 8px;
+    font-size: 1rem;
+}
+
+/* Animatsiyalar */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(13, 110, 253, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(13, 110, 253, 0);
+    }
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink {
+    50% {
+        border-color: transparent;
+    }
+}
+
+/* Saytga kirganda paydo bo'ladigan tekst animatsiyasi */
+.typewriter-text {
+    overflow: hidden;
+    border-right: 3px solid #0dcaf0;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .15em;
+    animation:
+        typing 3.5s steps(40, end),
+        blink .75s step-end infinite;
+}
+
+/* Responsive dizayn */
+@media (max-width: 768px) {
+    .contaner_infoh5 {
+        font-size: 1.3rem;
+        text-align: center;
+        animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .box_home_btn {
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+    .box_home_btn .btn {
+        width: 100%;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        animation: fadeInUp 1s ease-out 0.5s forwards;
+    }
+}
+
+@media (max-width: 576px) {
+    .contaner_info {
+        padding: 20px 15px;
+    }
+
+    .contaner_infoh5 {
+        font-size: 1.2rem;
+        line-height: 1.5;
+    }
+
+    .typewriter-text {
+        white-space: normal;
+        border-right: none;
+        animation: fadeInUp 1s ease-out forwards;
+    }
+}
+
+/* JavaScript bilan boshqariladigan animatsiya klassi */
+.text-reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.text-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
   </style>
 </head>
 <body>
 
     <main>
         <!-- Asosiy statistik kartalar -->
+        <div class="contaner_infos" style="margin-bottom: 20px;">
+    <h5 class="contaner_infoh5" id="welcomeText">
+        Sun'iy intellekt va ma'lumotlar qayta ishlash platformamizga xush kelibsiz!
+        Tizimdan to'liq foydalanish uchun ro'yxatdan o'ting.
+    </h5>
+    <div class="box_home_btn">
+        <a href="{% url 'register' %}">
+            <button class="btn btn-success">
+                <i class="fas fa-user-plus me-2"></i>Ro'yxatdan o'tish
+            </button>
+        </a>
+    </div>
+</div>
         <section class="static_contaner_section">
             <!-- Videodarslar -->
             <div class="contaner_info">
@@ -625,6 +878,35 @@
             {% endif %}
         </div>
     </main>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const welcomeText = document.querySelector('.contaner_infoh5');
+
+    // Saytga kirganda animatsiyani boshlash
+    setTimeout(() => {
+        welcomeText.style.animation = 'fadeInUp 1s ease-out forwards';
+
+        // Gradient effekt
+        let gradientPos = 0;
+        const gradientAnimation = setInterval(() => {
+            gradientPos = (gradientPos + 1) % 100;
+            welcomeText.style.backgroundPosition = `${gradientPos}% 50%`;
+        }, 50);
+
+        // 3 soniyadan keyin gradient animatsiyani to'xtatish
+        setTimeout(() => {
+            clearInterval(gradientAnimation);
+        }, 3000);
+
+    }, 300); // 300ms kechikish
+
+    // Tugma uchun pulsatsiya effekti
+    const registerBtn = document.querySelector('.box_home_btn .btn');
+    if (registerBtn) {
+        registerBtn.style.animation = 'pulse 2s infinite 1.5s';
+    }
+});
+</script>
 </body>
 </html>
 {% endblock %}
