@@ -481,9 +481,6 @@
         margin-bottom: 20px;
         position: relative;
         overflow: hidden;
-        box-shadow:
-            0 15px 35px rgba(0, 0, 0, 0.2),
-            inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
 
     .contaner_infos::before {
@@ -520,7 +517,7 @@
         margin-bottom: 1.5rem;
         opacity: 0;
         transform: translateY(30px);
-        animation: fadeInUp 1s ease-out forwards;
+        animation: fadeInUp 15s ease-out forwards;
         text-shadow:
             0 0 10px rgba(255, 255, 255, 0.5),
             0 0 20px rgba(255, 255, 255, 0.3);
@@ -886,6 +883,9 @@
 
 <main>
     <!-- Asosiy kirish yozuvi -->
+    {% if user.is_authenticated %}
+    {% csrf_token %}
+    {% else %}
     <div class="contaner_infos" id="welcomeContainer">
         <!-- Nurlanish effektlari -->
         <div class="text-glow-effect"></div>
@@ -911,7 +911,7 @@
             </a>
         </div>
     </div>
-
+    {% endif %}
     <!-- Asosiy statistik kartalar -->
     <section class="static_contaner_section">
         <!-- Videodarslar -->
