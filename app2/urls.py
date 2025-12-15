@@ -35,4 +35,7 @@ urlpatterns = [
 
     # AJAX yo'llari
     path('run-test/', views.run_test_code, name='run_test'),
+
+    # app2/urls.py ga qo'shing:
+    path('test-debug/', views.test_debug, name='test_debug'),
 ]

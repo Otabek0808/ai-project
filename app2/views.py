@@ -60,8 +60,10 @@ def is_code_admin(user):
     return user.is_staff or user.is_superuser
 
 
-def test_python_code(user_code, test_code):
-    """Foydalanuvchi Python kodini test qilish"""
+def test_python_code(user_code, function_name, test_code):
+    """Foydalanuvchi Python kodini test qilish - To'liq ishlaydigan versiya"""
+    import subprocess, tempfile, os, time, sys, traceback
+
     start_time = time.time()
     result = {
         'status': 'error',
@@ -71,64 +73,87 @@ def test_python_code(user_code, test_code):
         'execution_time': 0
     }
 
-    # XAVFSIZLIK: Taqiqlangan import va funksiyalar
-    BANNED_KEYWORDS = [
-        '__import__', 'eval', 'exec', 'compile', 'open',
-        'os.', 'sys.', 'subprocess.', 'shutil.', 'socket.',
-        'import os', 'import sys', 'import subprocess',
-        'from os', 'from sys', 'from subprocess'
-    ]
+    try:
+        # 1. FOYDALANUVCHI KODIDA FUNKSIYA BORLIGINI TEKSHIRISH
+        user_code_clean = user_code.strip()
 
-    user_code_lower = user_code.lower()
-    for keyword in BANNED_KEYWORDS:
-        if keyword in user_code_lower:
-            result['message'] = f"❌ XAVFSIZLIK: '{keyword}' ishlatish taqiqlangan!"
+        import re
+        pattern = rf'def\s+{function_name}\s*\([^)]*\)\s*:'
+
+        if not re.search(pattern, user_code_clean, re.MULTILINE | re.IGNORECASE):
+            result['message'] = f"""
+❌ XATOLIK: Kodda '{function_name}' funksiya topilmadi!
+
+Siz quyidagicha funksiya yozishingiz kerak:
+def {function_name}(...):
+    # kod
+    return natija
+
+Sizning kodingiz:
+{user_code[:200]}...
+"""
             result['execution_time'] = round(time.time() - start_time, 2)
             return result
 
-    try:
-        # Python uchun test kodi
-        full_code = f"""import sys
-import traceback
+        # 2. KODLARNI TO'G'RI BIRLASHTIRISH
+        # Avval test kodidagi indentatsiya xatolarini to'g'irlash
+        test_code_clean = fix_indentation(test_code)
 
-# Foydalanuvchi kodi
+        full_code = f"""# -*- coding: utf-8 -*-
+# FOYDALANUVCHI KODI
 {user_code}
 
-# Test qismi
-try:
-    {test_code}
-    print("\\n" + "="*50)
-    print("✅ SUCCESS: Barcha testlar muvaffaqiyatli o'tdi!")
-    print("="*50)
-    sys.exit(0)
-except AssertionError as e:
-    print("\\n" + "="*50)
-    print("❌ TEST FAILED:")
-    print(f"   Xato: {{e}}")
-    print("="*50)
-    sys.exit(1)
-except Exception as e:
-    print("\\n" + "="*50)
-    print("⚠️  RUNTIME ERROR:")
-    print(f"   Xato turi: {{type(e).__name__}}")
-    print(f"   Xato xabari: {{e}}")
-    print("\\nStack trace:")
-    traceback.print_exc()
-    print("="*50)
-    sys.exit(1)"""
+# TEST KODI
+import sys
+import traceback
 
-        # Vaqtinchalik fayl yaratish
+def run_all_tests():
+    \"\"\"Testlarni ishga tushirish\"\"\"
+    try:
+        # Testlarni ishga tushirish
+{test_code_clean}
+
+        # Agar bu yerga keldi, testlar muvaffaqiyatli
+        print("\\n" + "="*60)
+        print("✅ SUCCESS: Barcha testlar muvaffaqiyatli o'tdi!")
+        print("="*60)
+        return True
+
+    except AssertionError as e:
+        print("\\n" + "="*60)
+        print("❌ TEST FAILED (AssertionError):")
+        print(f"   Xato: {{e}}")
+        print("="*60)
+        return False
+
+    except Exception as e:
+        print("\\n" + "="*60)
+        print("⚠️  RUNTIME ERROR:")
+        print(f"   Xato turi: {{type(e).__name__}}")
+        print(f"   Xato xabari: {{e}}")
+        print("\\nStack trace:")
+        traceback.print_exc()
+        print("="*60)
+        return False
+
+# DASTURNI ISHGA TUSHIRISH
+if __name__ == "__main__":
+    success = run_all_tests()
+    sys.exit(0 if success else 1)
+"""
+
+        # 3. VAQTINCHALIK FAYL YARATISH
         with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False, encoding='utf-8') as f:
             f.write(full_code)
             temp_file = f.name
 
+        # 4. KODNI ISHGA TUSHIRISH
         try:
-            # Kodni ishga tushirish
             process = subprocess.run(
-                ['python', temp_file],
+                [sys.executable, temp_file],
                 capture_output=True,
                 text=True,
-                timeout=10,
+                timeout=15,
                 encoding='utf-8',
                 errors='replace'
             )
@@ -147,15 +172,13 @@ except Exception as e:
 
         except subprocess.TimeoutExpired:
             result['status'] = 'error'
-            result['message'] = '⏰ Timeout: Kod 10 soniyadan ko\'proq vaqt oldi'
+            result['message'] = '⏰ Timeout: Kod 15 soniyadan ko\'proq vaqt oldi'
         except Exception as e:
             result['status'] = 'error'
             result['message'] = f'System error: {str(e)}'
         finally:
-            # Vaqtinchalik faylni o'chirish
             try:
-                if os.path.exists(temp_file):
-                    os.unlink(temp_file)
+                os.unlink(temp_file)
             except:
                 pass
 
@@ -165,6 +188,63 @@ except Exception as e:
     result['execution_time'] = round(time.time() - start_time, 2)
     return result
 
+
+def fix_indentation(code):
+    """Test kodidagi indentatsiya xatolarini to'g'irlash"""
+    lines = code.split('\n')
+    fixed_lines = []
+
+    for line in lines:
+        stripped = line.lstrip()
+        if stripped:  # Bo'sh emas
+            # try, except, if, def, class dan keyin indent kerak
+            fixed_lines.append('        ' + line)  # 8 ta probel (2 tab)
+        else:
+            fixed_lines.append(line)  # Bo'sh satr
+
+    return '\n'.join(fixed_lines)
+# app2/views.py ga qo'shing
+@login_required
+def test_debug(request):
+    """Test qilishni debag qilish"""
+    if request.method == 'POST':
+        # Formadan ma'lumotlarni olish
+        question_text = request.POST.get('question_text', '')
+        test_code = request.POST.get('test_code', '')
+        user_code = request.POST.get('user_code', '')
+
+        # Test qilish
+        result = test_python_code(user_code, test_code)
+
+        context = {
+            'question_text': question_text,
+            'test_code': test_code,
+            'user_code': user_code,
+            'result': result,
+            'debug_mode': True,
+        }
+        return render(request, 'app2/test_debug.html', context)
+
+    # Boshlang'ich qiymatlar
+    context = {
+        'question_text': 'Ikkita sonni qo\'shuvchi funksiya yozing',
+        'test_code': '''def test_add():
+    # Test 1: Ijobiy sonlar
+    assert add(2, 3) == 5, "2 + 3 = 5 bo'lishi kerak"
+
+    # Test 2: Manfiy sonlar  
+    assert add(-5, 10) == 5, "-5 + 10 = 5 bo'lishi kerak"
+
+    # Test 3: Nol bilan
+    assert add(0, 7) == 7, "0 + 7 = 7 bo'lishi kerak"
+
+    print("✅ Barcha testlar muvaffaqiyatli!")
+
+# Testni ishga tushirish
+test_add()''',
+        'user_code': 'def add(a, b):\n    return a + b',
+    }
+    return render(request, 'app2/test_debug.html', context)
 
 # ========== ASOSIY VIEW FUNKSIYALAR ==========
 
@@ -202,70 +282,52 @@ def code_practice(request):
 
 @login_required
 def practice_question(request, question_id):
-    """Savolni ko'rish va Python kod yozish"""
+    """Savolni ko'rish va kod yozish"""
     question = get_object_or_404(ProgrammingQuestion, id=question_id, is_active=True)
     user_info = get_user_info(request.user)
 
+    # Kod editori uchun boshlang'ich funksiya
+    initial_code = f"def {question.function_name}({question.function_params}):\n    # Yechimni yozing\n    pass"
+
     if request.method == 'POST':
-        form = CodeSubmissionForm(request.POST)
-        if form.is_valid():
-            submission = form.save(commit=False)
-            submission.user = request.user
-            submission.question = question
+        user_code = request.POST.get('code', '')
 
-            # Python kodini test qilish
-            result = test_python_code(
-                user_code=submission.code,
-                test_code=question.test_code
-            )
+        if not user_code.strip():
+            messages.error(request, "Kod kiritilmagan!")
+            return redirect('app2:practice_question', question_id=question_id)
 
-            submission.status = result['status']
-            submission.test_result = result
-            submission.execution_time = result.get('execution_time')
-            submission.save()
+        # Kodni test qilish
+        result = test_python_code(
+            user_code=user_code,
+            function_name=question.function_name,
+            test_code=question.test_code
+        )
 
-            messages.success(request, f"Test natijasi: {result['status'].upper()}")
-            return redirect('app2:submission_result', submission_id=submission.id)
+        # Saqlash
+        submission = CodeSubmission.objects.create(
+            user=request.user,
+            question=question,
+            code=user_code,
+            status=result['status'],
+            test_result=result,
+            execution_time=result.get('execution_time')
+        )
+
+        if result['status'] == 'success':
+            messages.success(request, "✅ Testlar muvaffaqiyatli o'tdi!")
         else:
-            # Agar formada muammo bo'lsa, to'g'ridan-to'g'ri kodni olish
-            code = request.POST.get('code', '')
-            if code:
-                submission = CodeSubmission(
-                    user=request.user,
-                    question=question,
-                    code=code
-                )
+            messages.warning(request, "❌ Testlar o'tmadi")
 
-                result = test_python_code(code, question.test_code)
-                submission.status = result['status']
-                submission.test_result = result
-                submission.execution_time = result.get('execution_time')
-                submission.save()
-
-                messages.success(request, f"Test natijasi: {result['status'].upper()}")
-                return redirect('app2:submission_result', submission_id=submission.id)
-            else:
-                messages.error(request, "Python kodini tekshirib ko'ring!")
-    else:
-        form = CodeSubmissionForm()
-
-    # Oldingi yuborishlar
-    previous_submissions = CodeSubmission.objects.filter(
-        user=request.user,
-        question=question
-    ).order_by('-created_at')[:5]
+        return redirect('app2:submission_result', submission_id=submission.id)
 
     context = {
         'question': question,
-        'form': form,
-        'previous_submissions': previous_submissions,
+        'initial_code': initial_code,
         'is_admin': is_code_admin(request.user),
         'user_info': user_info,
-        'language': 'python',
         'title': f'Python Savol: {question.question_text[:50]}...'
     }
     return render(request, 'app2/practice_question.html', context)
-
 
 @login_required
 def add_question(request):
@@ -430,7 +492,7 @@ def manage_question(request, question_id):
 @require_POST
 @login_required
 def run_test_code(request):
-    """Python kodni test qilish (AJAX)"""
+    """Kodni test qilish (AJAX) - yangi versiya"""
     try:
         data = json.loads(request.body)
         question_id = data.get('question_id')
@@ -439,11 +501,17 @@ def run_test_code(request):
         if not code or not question_id:
             return JsonResponse({
                 'success': False,
-                'message': 'Python kodi yoki savol ID\'si kiritilmagan'
+                'message': 'Kod yoki savol ID\'si kiritilmagan'
             })
 
         question = get_object_or_404(ProgrammingQuestion, id=question_id)
-        result = test_python_code(code, question.test_code)
+
+        # Yangi test funksiyasini chaqirish
+        result = test_python_code(
+            user_code=code,
+            function_name=question.function_name,
+            test_code=question.test_code
+        )
 
         return JsonResponse({
             'success': True,
@@ -455,7 +523,6 @@ def run_test_code(request):
             'success': False,
             'message': str(e)
         })
-
 
 @login_required
 def user_profile(request):

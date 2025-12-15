@@ -1,189 +1,191 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Python Savol {{ question.id }} - Kod Yozish{% endblock %}
+{% block title %}Python Savol - {{ question.function_name }}{% endblock %}
 
 {% block content %}
 <div class="container-fluid py-4">
     <div class="row">
-        <!-- Python savol matni (chap panel) -->
-        <div class="col-lg-4 mb-4">
-            <!-- Python savol kartasi -->
+        <!-- Savol qismi -->
+        <div class="col-lg-5">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 python-header">
                     <h6 class="m-0 font-weight-bold text-white">
                         <i class="fab fa-python me-2"></i>
-                        Python Savol #{{ question.id }}
+                        Python Savol
                     </h6>
                 </div>
                 <div class="card-body">
-                    <div class="mb-3">
-                        <span class="badge
-                            {% if question.difficulty == 'easy' %}bg-success
-                            {% elif question.difficulty == 'medium' %}bg-warning
-                            {% else %}bg-danger{% endif %} me-2">
-                            <i class="fas
-                                {% if question.difficulty == 'easy' %}fa-star
-                                {% elif question.difficulty == 'medium' %}fa-chart-line
-                                {% else %}fa-fire{% endif %} me-1">
-                            </i>
-                            {{ question.get_difficulty_display }}
-                        </span>
-                        <span class="badge bg-primary me-2">
-                            <i class="fab fa-python me-1"></i> Python
-                        </span>
-                        {% if question.created_by == user %}
-                        <span class="badge bg-secondary">
-                            <i class="fas fa-user-check me-1"></i> Siz qo'shgansiz
-                        </span>
-                        {% endif %}
+                    <!-- Savol matni -->
+                    <div class="mb-4">
+                        <h5 class="text-primary mb-3">
+                            <i class="fas fa-question-circle me-2"></i>
+                            Savol
+                        </h5>
+                        <div class="p-3 bg-light rounded border">
+                            {{ question.question_text|linebreaks }}
+                        </div>
                     </div>
 
-                    <div class="question-content mb-4">
-                        <h5 class="font-weight-bold mb-3 text-primary">Savol:</h5>
-                        <div class="bg-light p-4 rounded border-start border-3 border-primary">
-                            <div style="white-space: pre-wrap; line-height: 1.6;">
-                                {{ question.question_text }}
+                    <!-- Funksiya talablari -->
+                    <div class="card border-primary mb-4">
+                        <div class="card-header bg-primary text-white py-2">
+                            <h6 class="mb-0">
+                                <i class="fas fa-code me-2"></i>
+                                Funksiya Talablari
+                            </h6>
+                        </div>
+                        <div class="card-body p-3">
+                            <div class="alert alert-warning">
+                                <h6 class="alert-heading mb-2">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                    MUHIM: Quyidagi funksiyani yozishingiz kerak
+                                </h6>
+                                <div class="bg-dark text-light p-3 rounded font-monospace">
+                                    def {{ question.function_name }}({{ question.function_params }}):
+                                </div>
+                            </div>
+
+                            <div class="mt-3">
+                                <h6 class="text-success mb-2">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    Qoidalar:
+                                </h6>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <i class="fas fa-arrow-right text-primary me-2"></i>
+                                        Funksiya nomi <code>{{ question.function_name }}</code> bo'lishi shart
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-arrow-right text-primary me-2"></i>
+                                        Parametrlar <code>{{ question.function_params }}</code> bo'lishi shart
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-arrow-right text-primary me-2"></i>
+                                        Natijani <code>return</code> bilan qaytaring
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-arrow-right text-primary me-2"></i>
+                                        <code>print()</code> ishlatish shart emas
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Muallif ma'lumotlari -->
-                    <div class="d-flex align-items-center border-top pt-3">
-                        <div class="symbol symbol-40 me-3">
-                            <div class="symbol-label bg-light-primary">
-                                <span class="text-primary fw-bold">
-                                    {{ question.created_by.username|first|upper }}
-                                </span>
-                            </div>
-                        </div>
+                    <!-- Savol ma'lumotlari -->
+                    <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
                         <div>
-                            <div class="fw-bold">{{ question.created_by.username }}</div>
-                            <div class="text-muted small">
-                                <i class="fas fa-calendar-alt me-1"></i>
-                                {{ question.created_at|date:"d.m.Y H:i" }}
-                            </div>
+                            <span class="badge {% if question.difficulty == 'easy' %}bg-success{% elif question.difficulty == 'medium' %}bg-warning{% else %}bg-danger{% endif %} me-2">
+                                {{ question.get_difficulty_display }}
+                            </span>
+                            <span class="badge bg-primary">
+                                <i class="fab fa-python me-1"></i>Python
+                            </span>
+                            {% if question.category %}
+                            <span class="badge bg-info ms-2">
+                                {{ question.category }}
+                            </span>
+                            {% endif %}
+                            <span class="badge bg-secondary ms-2">
+                                {{ question.points }} ball
+                            </span>
                         </div>
+                        <small class="text-muted">
+                            <i class="far fa-clock me-1"></i>
+                            {{ question.created_at|date:"d.m.Y H:i" }}
+                        </small>
                     </div>
                 </div>
             </div>
-
-            <!-- Oldingi Python yuborishlar -->
-            {% if previous_submissions %}
-            <div class="card shadow">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                        <i class="fas fa-history me-2"></i>
-                        Oldingi Yechimlar
-                    </h6>
-                </div>
-                <div class="card-body p-0">
-                    <div class="list-group list-group-flush">
-                        {% for sub in previous_submissions %}
-                        <a href="{% url 'app2:submission_result' sub.id %}"
-                           class="list-group-item list-group-item-action py-3">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <div class="fw-bold small">
-                                        <i class="fas fa-clock me-1 text-muted"></i>
-                                        {{ sub.created_at|date:"H:i" }}
-                                    </div>
-                                    <div class="small text-muted mt-1">
-                                        {{ sub.code|truncatechars:40 }}
-                                    </div>
-                                </div>
-                                <div>
-                                    {% if sub.status == 'success' %}
-                                    <span class="badge bg-success">
-                                        <i class="fas fa-check-circle me-1"></i> Muvaffaqiyatli
-                                    </span>
-                                    {% elif sub.status == 'failed' %}
-                                    <span class="badge bg-danger">
-                                        <i class="fas fa-times-circle me-1"></i> Xato
-                                    </span>
-                                    {% elif sub.status == 'error' %}
-                                    <span class="badge bg-warning text-dark">
-                                        <i class="fas fa-exclamation-triangle me-1"></i> Runtime
-                                    </span>
-                                    {% else %}
-                                    <span class="badge bg-secondary">
-                                        <i class="fas fa-clock me-1"></i> Kutilmoqda
-                                    </span>
-                                    {% endif %}
-                                    {% if sub.execution_time %}
-                                    <div class="small text-muted text-center mt-1">
-                                        <i class="fas fa-stopwatch"></i> {{ sub.execution_time }}s
-                                    </div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </a>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-            {% endif %}
         </div>
 
-        <!-- Python kod editori (o'ng panel) -->
-        <div class="col-lg-8">
-            <div class="card shadow border-0">
-                <div class="card-header py-3 python-header">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h6 class="m-0 font-weight-bold text-white">
-                            <i class="fas fa-code me-2"></i>
-                            Python Kod Editori
-                        </h6>
-                        <span class="badge bg-light text-dark">
-                            Python 3.11+
-                        </span>
-                    </div>
+        <!-- Kod editori -->
+        <div class="col-lg-7">
+            <div class="card shadow h-100">
+                <div class="card-header py-3 bg-success text-white">
+                    <h6 class="m-0 font-weight-bold">
+                        <i class="fas fa-edit me-2"></i>
+                        Python Kod Editori
+                    </h6>
                 </div>
-
-                <div class="card-body">
-                    <form method="post" id="codeForm">
+                <div class="card-body p-0 d-flex flex-column">
+                    <form method="post" id="codeForm" class="d-flex flex-column flex-grow-1">
                         {% csrf_token %}
 
-                        <!-- Python kod editori -->
-                        <div class="mb-3">
-                            <label for="{{ form.code.id_for_label }}" class="form-label fw-bold">
-                                <i class="fab fa-python me-1 text-primary"></i>
-                                Python Kodingizni yozing:
-                            </label>
-                            {{ form.code }}
-                            <div class="form-text text-muted">
-                                Python 3.11+ sintaksisidan foydalaning.
+                        <!-- Funksiya eslatmasi -->
+                        <div class="alert alert-info m-3 mb-0">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-info-circle fa-2x me-3 text-info"></i>
+                                <div>
+                                    <strong>Eslatma:</strong>
+                                    Siz <code class="bg-dark text-light px-2 py-1">{{ question.function_name }}({{ question.function_params }})</code>
+                                    funksiyasini yozishingiz kerak.
+                                </div>
                             </div>
-                            {% if form.code.errors %}
-                            <div class="alert alert-danger small mt-2">
-                                {{ form.code.errors }}
-                            </div>
-                            {% endif %}
                         </div>
 
-                        <!-- Test natijasi (AJAX uchun) -->
-                        <div id="testResult" class="card mb-3 d-none">
-                            <div class="card-header">
-                                <h6 class="m-0 font-weight-bold" id="resultTitle"></h6>
-                            </div>
-                            <div class="card-body">
-                                <pre class="mb-0 bg-dark text-light p-3 rounded" id="resultOutput" style="max-height: 200px; overflow-y: auto;"></pre>
-                                <div id="resultMessage" class="mt-2"></div>
+                        <!-- Kod editori -->
+                        <div class="p-3 flex-grow-1">
+                            <label class="form-label fw-bold mb-2">
+                                <i class="fas fa-code me-2"></i>
+                                Python kodingizni yozing:
+                            </label>
+                            <textarea
+                                name="code"
+                                id="codeEditor"
+                                rows="15"
+                                class="form-control font-monospace"
+                                style="font-size: 14px; min-height: 300px;"
+                                placeholder="Python kodini bu yerga yozing..."
+                            >{{ initial_code }}</textarea>
+
+                            <!-- Kod misoli -->
+                            <div class="mt-3">
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#codeExample">
+                                    <i class="fas fa-eye me-1"></i>Kod misolini ko'rsatish
+                                </button>
+
+                                <div id="codeExample" class="collapse mt-2">
+                                    <div class="card">
+                                        <div class="card-body p-2">
+                                            <pre class="mb-0"><code class="language-python">def {{ question.function_name }}({{ question.function_params }}):
+    """
+    Bu funksiya {{ question.function_name }} deb nomlanishi kerak.
+    Funksiya {{ question.function_params }} parametrlarini qabul qiladi.
+    Natijani return bilan qaytaradi.
+    """
+
+    # YECHIMNI YOZING
+    # Masalan: return a + b  # qo'shish uchun
+    # yoki:    return a * b  # ko'paytirish uchun
+
+    return None  # O'rniga haqiqiy natijani qaytaring</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Tugmalar -->
-                        <div class="d-flex justify-content-between border-top pt-4">
-                            <div>
-
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save me-2"></i>Natijani Ko'rish
-                                </button>
-                            </div>
-                            <div>
-                                <a href="{% url 'app2:code_practice' %}" class="btn btn-outline-primary">
-                                    <i class="fas fa-arrow-left me-2"></i> Orqaga
-                                </a>
+                        <div class="p-3 border-top bg-light">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <button type="button" class="btn btn-outline-info btn-sm" id="formatBtn">
+                                        <i class="fas fa-indent me-1"></i>Format
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm ms-2" id="clearBtn">
+                                        <i class="fas fa-broom me-1"></i>Tozalash
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-sm ms-2" id="testBtn">
+                                        <i class="fas fa-play me-1"></i>Test qilish
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-paper-plane me-1"></i>Yuborish va test qilish
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -194,172 +196,189 @@
 </div>
 {% endblock %}
 
-{% block extra_css %}
-<style>
-.python-header {
-    background: linear-gradient(135deg, #3776AB 0%, #306998 100%);
-}
-
-.symbol {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.475rem;
-}
-
-.symbol-40 {
-    width: 40px;
-    height: 40px;
-}
-
-.symbol-label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
-}
-
-.bg-light-primary {
-    background-color: rgba(55, 118, 171, 0.1) !important;
-}
-
-/* Code editor styling */
-#{{ form.code.id_for_label }} {
-    font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
-    font-size: 14px;
-    line-height: 1.6;
-    min-height: 400px;
-    border: 2px solid #e3e6f0;
-    border-radius: 0.375rem;
-    transition: border-color 0.15s ease-in-out;
-}
-
-#{{ form.code.id_for_label }}:focus {
-    border-color: #3776AB;
-    box-shadow: 0 0 0 0.2rem rgba(55, 118, 171, 0.25);
-}
-
-.list-group-item-action:hover {
-    background-color: rgba(55, 118, 171, 0.05);
-}
-
-.border-start {
-    border-left-width: 3px !important;
-}
-</style>
-{% endblock %}
-
 {% block extra_js %}
 <script>
 $(document).ready(function() {
-    // Form elementini olish
-    const codeTextarea = $('#{{ form.code.id_for_label }}');
+    var editor = $('#codeEditor');
+    var questionFunction = "{{ question.function_name }}";
 
-    // Textarea height adjustment
-    codeTextarea.on('input', function() {
-        this.style.height = 'auto';
-        this.style.height = (this.scrollHeight) + 'px';
-    }).trigger('input');
+    // Format tugmasi
+    $('#formatBtn').click(function() {
+        var code = editor.val();
 
-    // Testni ishga tushirish (AJAX)
-    $('#runTestBtn').click(function() {
-        const code = codeTextarea.val().trim();
-        const csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+        // Python indentatsiya qilish
+        var lines = code.split('\n');
+        var formatted = [];
+        var indent = 0;
+
+        for (var i = 0; i < lines.length; i++) {
+            var line = lines[i].trim();
+
+            if (line === '') {
+                formatted.push('');
+                continue;
+            }
+
+            // Indentni kamaytirish
+            if (line.startsWith('return') || line.startsWith('pass') ||
+                (line.startsWith('#') && i > 0 && lines[i-1].trim().endsWith(':'))) {
+                // Funksiya tanasidagi kod
+                formatted.push('    ' + line);
+            } else if (line.endsWith(':')) {
+                // Yangi blok
+                formatted.push(line);
+            } else {
+                // Oddiy satr
+                formatted.push(line);
+            }
+        }
+
+        editor.val(formatted.join('\n'));
+    });
+
+    // Tozalash tugmasi
+    $('#clearBtn').click(function() {
+        if (confirm('Kodni tozalashni istaysizmi? Barcha yozilgan kod o\'chib ketadi.')) {
+            editor.val('def {{ question.function_name }}({{ question.function_params }}):\n    # Yechimni yozing\n    return None');
+        }
+    });
+
+    // Test qilish tugmasi (AJAX)
+    $('#testBtn').click(function() {
+        var code = editor.val().trim();
 
         if (!code) {
-            alert('Iltimos, Python kodingizni yozing!');
+            showAlert('Xatolik', 'Kod kiritilmagan!', 'error');
             return;
         }
 
-        const btn = $(this);
-        btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i> Tekshirilmoqda...');
+        // Funksiya nomini tekshirish
+        if (code.indexOf('def {{ question.function_name }}') === -1) {
+            showAlert('Xatolik',
+                `Siz '{{ question.function_name }}' funksiyasini yozishingiz kerak!\n\n` +
+                `To'g'ri format: def {{ question.function_name }}({{ question.function_params }}):`,
+                'error');
+            return;
+        }
 
+        // AJAX so'rov
         $.ajax({
-            url: '{% url "app2:run_test_code" %}',
-            type: 'POST',
-            data: JSON.stringify({
+            url: '{% url "app2:run_test" %}',
+            method: 'POST',
+            data: {
+                'code': code,
                 'question_id': {{ question.id }},
-                'code': code
-            }),
-            contentType: 'application/json',
-            headers: {
-                'X-CSRFToken': csrfToken
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            beforeSend: function() {
+                $('#testBtn').html('<i class="fas fa-spinner fa-spin me-1"></i>Test qilinmoqda...');
+                $('#testBtn').prop('disabled', true);
             },
             success: function(response) {
-                const resultCard = $('#testResult');
-                const resultTitle = $('#resultTitle');
-                const resultOutput = $('#resultOutput');
-                const resultMessage = $('#resultMessage');
-
-                resultCard.removeClass('d-none');
-
                 if (response.success) {
-                    const result = response.result;
-
-                    // Natijani ranglarni o'rnatish
-                    if (result.status === 'success') {
-                        resultCard.find('.card-header').removeClass('bg-danger bg-warning').addClass('bg-success');
-                        resultTitle.html('<i class="fas fa-check-circle me-2"></i> Python Test Muvaffaqiyatli!');
-                    } else if (result.status === 'failed') {
-                        resultCard.find('.card-header').removeClass('bg-success bg-warning').addClass('bg-danger');
-                        resultTitle.html('<i class="fas fa-times-circle me-2"></i> Python Test Xato!');
-                    } else {
-                        resultCard.find('.card-header').removeClass('bg-success bg-danger').addClass('bg-warning');
-                        resultTitle.html('<i class="fas fa-exclamation-triangle me-2"></i> Python Runtime Xatolik!');
-                    }
-
-                    // Chiqishni ko'rsatish
-                    resultOutput.text(result.output || 'Hech qanday chiqish yo\'q');
-
-                    // Xabar va vaqt
-                    if (result.message) {
-                        resultMessage.html(`<div class="alert alert-info small">
-                            <i class="fas fa-info-circle me-2"></i>
-                            ${result.message}
-                        </div>`);
-                    } else {
-                        resultMessage.empty();
-                    }
-
-                    // Sahifani pastga skrollash
-                    $('html, body').animate({
-                        scrollTop: resultCard.offset().top - 100
-                    }, 500);
-
+                    showTestResult(response.result);
                 } else {
-                    alert('Xatolik: ' + response.message);
+                    showAlert('Xato', response.message, 'error');
                 }
             },
-            error: function(xhr, status, error) {
-                alert('Server xatosi! Iltimos, qayta urinib ko\'ring.');
+            error: function(xhr) {
+                showAlert('Server xatosi', 'Server bilan bog\'lanishda xatolik', 'error');
             },
             complete: function() {
-                btn.prop('disabled', false).html('<i class="fas fa-play me-2"></i> Testni Ishga Tushirish');
+                $('#testBtn').html('<i class="fas fa-play me-1"></i>Test qilish');
+                $('#testBtn').prop('disabled', false);
             }
         });
     });
 
     // Formani yuborishdan oldin tekshirish
     $('#codeForm').submit(function(e) {
-        const code = codeTextarea.val().trim();
+        var code = editor.val().trim();
 
         if (!code) {
             e.preventDefault();
-            alert('Iltimos, Python kodingizni yozing!');
+            showAlert('Xatolik', 'Kod kiritilmagan!', 'error');
             return false;
         }
 
-        // Kod minimal uzunligi
-        if (code.length < 10) {
+        // Funksiya nomini tekshirish
+        if (code.indexOf('def {{ question.function_name }}') === -1) {
             e.preventDefault();
-            alert('Iltimos, kamida 10 belgidan iborat Python kod yozing!');
+            showAlert('Xatolik',
+                `Siz '{{ question.function_name }}' funksiyasini yozishingiz kerak!\n\n` +
+                `To'g'ri format: def {{ question.function_name }}({{ question.function_params }}):`,
+                'error');
             return false;
         }
 
         return true;
     });
+
+    // Alert ko'rsatish funksiyasi
+    function showAlert(title, message, icon) {
+        Swal.fire({
+            title: title,
+            html: message.replace(/\n/g, '<br>'),
+            icon: icon,
+            confirmButtonText: 'OK'
+        });
+    }
+
+    // Test natijasini ko'rsatish funksiyasi
+    function showTestResult(result) {
+        var icon = 'info';
+        var title = 'Test Natijasi';
+        var statusText = result.status.toUpperCase();
+
+        if (result.status === 'success') {
+            icon = 'success';
+            title = '✅ SUCCESS';
+        } else if (result.status === 'failed') {
+            icon = 'warning';
+            title = '❌ TEST FAILED';
+        } else {
+            icon = 'error';
+            title = '⚠️  ERROR';
+        }
+
+        var html = `
+        <div class="text-start">
+            <div class="mb-3">
+                <strong>Status:</strong>
+                <span class="badge ${result.status === 'success' ? 'bg-success' : result.status === 'failed' ? 'bg-warning' : 'bg-danger'}">
+                    ${statusText}
+                </span>
+            </div>
+
+            <div class="mb-3">
+                <strong>Ish vaqti:</strong> ${result.execution_time} soniya
+            </div>
+
+            ${result.message ? `
+            <div class="mb-3">
+                <strong>Xabar:</strong>
+                <div class="alert alert-info p-2 mt-1">
+                    <pre class="mb-0">${result.message}</pre>
+                </div>
+            </div>` : ''}
+
+            ${result.output ? `
+            <div class="mb-3">
+                <strong>Chiqish:</strong>
+                <div class="bg-dark text-light p-3 rounded mt-1" style="max-height: 200px; overflow-y: auto;">
+                    <pre class="mb-0">${result.output}</pre>
+                </div>
+            </div>` : '<p><em>Hech qanday chiqish yo\'q</em></p>'}
+        </div>`;
+
+        Swal.fire({
+            title: title,
+            html: html,
+            icon: icon,
+            width: 800,
+            confirmButtonText: 'OK'
+        });
+    }
 });
 </script>
 {% endblock %}

@@ -16,42 +16,84 @@ class ProgrammingQuestion(models.Model):
 
     question_text = models.TextField(
         validators=[MinLengthValidator(10)],
-        verbose_name="Savol matni"
+        verbose_name="Savol matni",
+        help_text="Savolning to'liq matnini kiriting"
     )
+
+    function_name = models.CharField(
+        max_length=50,
+        default='solution',
+        verbose_name="Funksiya nomi",
+        help_text="Foydalanuvchi yozishi kerak bo'lgan funksiya nomi (masalan: 'qoshish', 'factorial')"
+    )
+
+    function_params = models.CharField(
+        max_length=200,
+        default='a, b',
+        verbose_name="Funksiya parametrlari",
+        help_text="Funksiya parametrlarini kiriting (masalan: 'a, b', 'n', 'text')"
+    )
+
     test_code = models.TextField(
         validators=[MinLengthValidator(20)],
-        verbose_name="Test kodi (Python)",
-        help_text="Foydalanuvchi Python kodini test qilish uchun test kodi"
+        verbose_name="Python Test Kodi",
+        help_text=f"""Foydalanuvchi funksiyasini test qilish uchun Python kodi.
+Test kodida {function_name}() funksiyasini chaqiring va assert yordamida tekshiring.
+
+MASALAN:
+result = {function_name}(5, 3)
+assert result == 8, f"5 + 3 = 8 bo'lishi kerak, lekin {{result}} qaytdi"
+print("✅ Test muvaffaqiyatli!")"""
     )
+
     language = models.CharField(
         max_length=20,
         default='python',
         verbose_name="Dasturlash tili",
-        editable=False  # Faqat Python, o'zgartirib bo'lmaydi
+        editable=False
     )
+
     difficulty = models.CharField(
         max_length=20,
         choices=DIFFICULTY,
         default='easy',
-        verbose_name="Qiyinchilik"
+        verbose_name="Qiyinchilik darajasi"
     )
+
     created_by = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='programming_questions',
         verbose_name="Yaratgan foydalanuvchi"
     )
+
     created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name="Yaratilgan vaqt"
     )
+
     is_active = models.BooleanField(
         default=True,
         verbose_name="Faol"
     )
 
+    # Yangi maydonlar
+    category = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        verbose_name="Kategoriya",
+        help_text="Savol kategoriyasi (masalan: Matematika, String, Ro'yxat)"
+    )
+
+    points = models.PositiveIntegerField(
+        default=10,
+        verbose_name="Ball",
+        help_text="Savolning ball qiymati"
+    )
+
     def __str__(self):
-        return f"Python Savol {self.id}: {self.question_text[:50]}..."
+        return f"Python Savol {self.id}: {self.function_name}() - {self.question_text[:50]}..."
 
     class Meta:
         ordering = ['-created_at']
@@ -63,6 +105,42 @@ class ProgrammingQuestion(models.Model):
         self.language = 'python'
         super().save(*args, **kwargs)
 
+    def get_initial_code(self):
+        """Foydalanuvchi uchun boshlang'ich kod"""
+        return f"def {self.function_name}({self.function_params}):\n    # Yechimni yozing\n    pass"
+
+    def clean(self):
+        """Modelni validatsiya qilish"""
+        from django.core.exceptions import ValidationError
+
+        # Funksiya nomini tekshirish
+        if not self.function_name.isidentifier():
+            raise ValidationError({
+                'function_name': "Funksiya nomi noto'g'ri. Faqat harf, raqam va _ belgilari bo'lishi kerak."
+            })
+
+        # Test kodida funksiya nomi ishlatilganligini tekshirish (faqat warning sifatida)
+        # Bu required emas, chunki admin keyinroq o'zgartirishi mumkin
+        if self.function_name not in self.test_code:
+            # Faqat ogohlantirish, xato emas
+            pass  # Xatolik chiqarmaymiz
+
+        return super().clean()
+
+    @property
+    def function_signature(self):
+        """Funksiya imzosi"""
+        return f"def {self.function_name}({self.function_params}):"
+
+    @property
+    def difficulty_badge_color(self):
+        """Qiyinchilik darajasi uchun badge rangi"""
+        colors = {
+            'easy': 'success',
+            'medium': 'warning',
+            'hard': 'danger'
+        }
+        return colors.get(self.difficulty, 'secondary')
 
 # ========== KOD YUBORISH MODELI ==========
 class CodeSubmission(models.Model):

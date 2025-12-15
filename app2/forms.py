@@ -2,56 +2,93 @@
 from django import forms
 from .models import ProgrammingQuestion, CodeSubmission
 
+# forms.py
+from django import forms
+from .models import ProgrammingQuestion, CodeSubmission
 
+
+# forms.py
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = ProgrammingQuestion
-        fields = ['question_text', 'test_code', 'difficulty']  # language olib tashlandi
+        fields = [
+            'question_text',
+            'function_name',
+            'function_params',
+            'test_code',
+            'difficulty',
+            'category',
+            'points',
+            'is_active'
+        ]
         widgets = {
             'question_text': forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': 6,
-                'placeholder': 'Python savol matnini batafsil yozing...',
-                'style': 'resize: vertical;'
+                'placeholder': 'Savol matnini kiriting...'
+            }),
+            'function_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'qoshish, factorial, palindrom, ...'
+            }),
+            'function_params': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'a, b yoki n yoki text, lst ...'
             }),
             'test_code': forms.Textarea(attrs={
-                'class': 'form-control python-code',
+                'class': 'form-control',
                 'rows': 10,
-                'style': 'font-family: monospace; resize: vertical;',
-                'placeholder': 'Python test kodini yozing. Misol:\ndef test_factorial():\n    assert factorial(5) == 120\n    print("Barcha testlar o\'tdi!")'
+                'placeholder': f'Test kodini kiriting. {{function_name}}() funksiyasini chaqiring...',
+                'id': 'test_code_field'
             }),
-            'difficulty': forms.Select(attrs={
-                'class': 'form-select'
+            'difficulty': forms.Select(attrs={'class': 'form-select'}),
+            'category': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Matematika, String, Ro\'yxat, ...'
+            }),
+            'points': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'min': 1,
+                'max': 100
+            }),
+            'is_active': forms.CheckboxInput(attrs={
+                'class': 'form-check-input'
             }),
         }
-        labels = {
-            'question_text': 'Savol Matni',
-            'test_code': 'Python Test Kodi',
-            'difficulty': 'Qiyinchilik Darajasi',
-        }
-        help_texts = {
-            'test_code': 'Foydalanuvchi Python kodini tekshirish uchun test funksiyalari',
-            'question_text': 'Python savolni aniq va tushunarli yozing',
-        }
 
-    def clean_test_code(self):
-        """Python test kodini tekshirish"""
-        test_code = self.cleaned_data.get('test_code')
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Placeholder'ni dinamik ravishda o'rnatish
+        self.fields['test_code'].widget.attrs['placeholder'] = \
+            f"Test kodini kiriting. {self.instance.function_name if self.instance.pk else 'function_name'}() funksiyasini chaqiring..."
 
-        if len(test_code.strip()) < 20:
-            raise forms.ValidationError("Test kodi juda qisqa. Kamida 20 belgi bo'lishi kerak.")
-
-        # Python kodini tekshirish (oddiy tekshiruv)
-        required_keywords = ['def', 'assert']
-        test_code_lower = test_code.lower()
-
-        if not any(keyword in test_code_lower for keyword in required_keywords):
+    def clean_function_name(self):
+        """Funksiya nomini validatsiya qilish"""
+        name = self.cleaned_data['function_name'].strip()
+        if not name.isidentifier():
             raise forms.ValidationError(
-                "Test kodida kamida bitta funksiya (def) va test (assert) bo'lishi kerak."
+                "Funksiya nomi noto'g'ri. Faqat harf, raqam va _ belgilari bo'lishi kerak."
             )
+        return name
 
-        return test_code
+    def clean(self):
+        """Formani validatsiya qilish"""
+        cleaned_data = super().clean()
 
+        # Agar funksiya nomi va test kodi bo'lsa
+        function_name = cleaned_data.get('function_name')
+        test_code = cleaned_data.get('test_code')
+
+        if function_name and test_code:
+            # Test kodida funksiya nomi borligini tekshirish
+            if function_name not in test_code:
+                # Xatolikni qo'shamiz, lekin to'xtatmaymiz
+                self.add_error('test_code',
+                               f"Test kodida '{function_name}' funksiyasi chaqirilmagan. "
+                               f"Test kodida {function_name}() funksiyasini chaqiring."
+                               )
+
+        return cleaned_data
 
 class CodeSubmissionForm(forms.ModelForm):
     class Meta:
@@ -59,39 +96,11 @@ class CodeSubmissionForm(forms.ModelForm):
         fields = ['code']
         widgets = {
             'code': forms.Textarea(attrs={
-                'class': 'form-control python-code-editor',
-                'rows': 20,
-                'style': 'font-family: "Monaco", "Courier New", monospace; font-size: 14px; resize: vertical;',
-                'placeholder': 'Python kodingizni bu yerga yozing...',
-                'spellcheck': 'false',
-                'id': 'python-code-editor',
-                'data-language': 'python'
+                'class': 'form-control code-editor',
+                'rows': 15,
+                'placeholder': 'Python kodini yozing...'
             }),
         }
-        labels = {
-            'code': 'Python Kodi',
-        }
-        help_texts = {
-            'code': 'Python dasturlash tilida javob beradigan kodni yozing',
-        }
-
-    def clean_code(self):
-        """Python kodini tekshirish"""
-        code = self.cleaned_data.get('code')
-
-        if len(code.strip()) < 5:
-            raise forms.ValidationError("Kod juda qisqa. Kamida 5 belgi bo'lishi kerak.")
-
-        # Python uchun asosiy sintaksis tekshiruvi
-        python_keywords = ['def', 'import', 'print', 'return', 'if', 'for', 'while']
-        code_lower = code.lower()
-
-        # Agar kod bo'sh yoki faqat comment bo'lsa
-        if code.strip().startswith('#') and len(code.strip()) < 10:
-            raise forms.ValidationError("Iltimos, haqiqiy Python kodi yozing.")
-
-        return code
-
 
 class QuickQuestionForm(forms.Form):
     """Tezkor Python savol qo'shish formasi (modal uchun)"""

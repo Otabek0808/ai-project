@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Python Test Debag{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-bug me-2"></i>
+                        Python Test Debag Sahifasi
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <!-- Savol matni -->
+                        <div class="mb-3">
+                            <label class="form-label">Savol matni:</label>
+                            <textarea name="question_text" class="form-control" rows="3">{{ question_text }}</textarea>
+                        </div>
+                        
+                        <!-- Test kodi -->
+                        <div class="mb-3">
+                            <label class="form-label">Test kodi:</label>
+                            <textarea name="test_code" class="form-control" rows="10">{{ test_code }}</textarea>
+                            <div class="form-text">
+                                <strong>Eslatma:</strong> Test kodida <code>assert</code> yoki <code>print()</code> bo'lishi kerak
+                            </div>
+                        </div>
+                        
+                        <!-- Foydalanuvchi kodi -->
+                        <div class="mb-3">
+                            <label class="form-label">Foydalanuvchi kodi:</label>
+                            <textarea name="user_code" class="form-control" rows="5">{{ user_code }}</textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-play me-2"></i> Testni ishga tushirish
+                        </button>
+                    </form>
+                    
+                    {% if result %}
+                    <hr>
+                    <!-- Natijalar -->
+                    <div class="mt-4">
+                        <h5 class="text-primary">Test natijalari:</h5>
+                        
+                        <!-- Status -->
+                        <div class="alert alert-{% if result.status == 'success' %}success{% elif result.status == 'failed' %}warning{% else %}danger{% endif %}">
+                            <strong>Status:</strong> {{ result.status|upper }}
+                            {% if result.passed %}
+                                <span class="badge bg-success ms-2">PASSED</span>
+                            {% else %}
+                                <span class="badge bg-danger ms-2">FAILED</span>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Xabar -->
+                        {% if result.message %}
+                        <div class="alert alert-info">
+                            <strong>Xabar:</strong><br>
+                            <pre class="mb-0">{{ result.message }}</pre>
+                        </div>
+                        {% endif %}
+                        
+                        <!-- Chiqish -->
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>Kod chiqishi:</strong>
+                                <span class="badge bg-secondary float-end">
+                                    {{ result.execution_time }} soniya
+                                </span>
+                            </div>
+                            <div class="card-body p-0">
+                                <pre class="m-0 p-3 bg-dark text-light">{{ result.output }}</pre>
+                            </div>
+                        </div>
+                        
+                        <!-- DEBUG ma'lumotlar -->
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <strong>DEBUG ma'lumotlar:</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>User kodi:</h6>
+                                        <pre class="bg-light p-2">{{ user_code }}</pre>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Test kodi:</h6>
+                                        <pre class="bg-light p-2">{{ test_code }}</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
