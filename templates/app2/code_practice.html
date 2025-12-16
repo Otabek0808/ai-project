@@ -4,12 +4,347 @@
 {% block title %}Python Code Practice - Python Dasturlash Mashqlari{% endblock %}
 
 {% block content %}
+{% block extra_css %}
+<style>
+    /* Asosiy container uchun */
+    .container-fluid {
+        background: transparent !important;
+    }
+
+    /* Kartalar uchun */
+    .card {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+        backdrop-filter: blur(10px);
+        border: 0.1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* Card header uchun */
+    .python-header {
+        background: linear-gradient(135deg, rgba(55, 118, 171, 0.8) 0%, rgba(48, 105, 152, 0.8) 100%) !important;
+        border-bottom: 3px solid rgba(255, 212, 59, 0.8);
+    }
+
+    /* Card body uchun */
+    .card-body {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+    }
+
+    /* Card footer uchun */
+    .card-footer {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+        border-top: 0.1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* Form elementlari uchun */
+    .form-control,
+    .form-select,
+    .input-group-text,
+    textarea {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* Textarea maxsus stillari */
+    #{{ form.question_text.id_for_label }} {
+        font-size: 16px;
+        line-height: 1.6;
+        border-left: 4px solid rgba(55, 118, 171, 0.8);
+        resize: vertical;
+    }
+
+    #{{ form.test_code.id_for_label }} {
+        font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+        font-size: 14px;
+        border-left: 4px solid rgba(40, 167, 69, 0.8);
+        min-height: 250px;
+        max-height: 500px;
+        resize: vertical;
+    }
+
+    /* Buttonlar uchun */
+    .btn {
+        backdrop-filter: blur(10px);
+    }
+
+    .btn-primary {
+        background-color: rgba(55, 118, 171, 0.8) !important;
+        border-color: rgba(55, 118, 171, 0.5);
+    }
+
+    .btn-outline-secondary {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-outline-danger {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+        border-color: rgba(220, 53, 69, 0.5);
+    }
+
+    .btn-outline-info {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+        border-color: rgba(13, 202, 240, 0.5);
+    }
+
+    /* Badge lar uchun */
+    .badge {
+        backdrop-filter: blur(10px);
+    }
+
+    .bg-primary {
+        background-color: rgba(55, 118, 171, 0.8) !important;
+    }
+
+    .bg-success {
+        background-color: rgba(40, 167, 69, 0.8) !important;
+    }
+
+    .bg-warning {
+        background-color: rgba(255, 193, 7, 0.8) !important;
+    }
+
+    .bg-danger {
+        background-color: rgba(220, 53, 69, 0.8) !important;
+    }
+
+    .bg-info {
+        background-color: rgba(13, 202, 240, 0.8) !important;
+    }
+
+    .bg-light {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+    }
+
+    /* Alertlar uchun */
+    .alert {
+        backdrop-filter: blur(10px);
+    }
+
+    .alert-danger {
+        background-color: rgba(220, 53, 69, 0.1) !important;
+        border-color: rgba(220, 53, 69, 0.3);
+    }
+
+    .alert-info {
+        background-color: rgba(13, 202, 240, 0.1) !important;
+        border-color: rgba(13, 202, 240, 0.3);
+    }
+
+    /* Accordion uchun */
+    .accordion-button {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+        backdrop-filter: blur(10px);
+        border: 0.1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .accordion-button:not(.collapsed) {
+        background-color: rgba(55, 118, 171, 0.1) !important;
+        color: #3776AB;
+    }
+
+    .accordion-button:focus {
+        border-color: rgba(55, 118, 171, 0.5);
+        box-shadow: 0 0 0 0.25rem rgba(55, 118, 171, 0.25);
+    }
+
+    .accordion-body {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+    }
+
+    .accordion-item {
+        background-color: transparent !important;
+        border: 0.1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* Code block uchun */
+    .python-code, pre {
+        background-color: rgba(43, 43, 43, 0.9) !important;
+        backdrop-filter: blur(10px);
+        border: 0.1px solid rgba(255, 255, 255, 0.1);
+        font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+    }
+
+    /* Border left uchun */
+    .border-left-primary {
+        border-left: 4px solid rgba(55, 118, 171, 0.8) !important;
+    }
+
+    /* Modal uchun */
+    .modal-content {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+        backdrop-filter: blur(10px);
+        border: 0.1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .modal-header {
+        background: linear-gradient(135deg, rgba(55, 118, 171, 0.8) 0%, rgba(48, 105, 152, 0.8) 100%) !important;
+        border-bottom: 0.1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* Form text uchun */
+    .form-text {
+        color: rgba(0, 0, 0, 0.6) !important;
+    }
+
+    .form-text code {
+        background-color: rgba(248, 249, 250, 0.7);
+        padding: 2px 6px;
+        border-radius: 3px;
+        border: 1px solid rgba(222, 226, 230, 0.5);
+    }
+
+    /* Difficulty dropdown uchun */
+    #{{ form.difficulty.id_for_label }} option[value="easy"] {
+        color: #28a745;
+        font-weight: 500;
+    }
+
+    #{{ form.difficulty.id_for_label }} option[value="medium"] {
+        color: #ffc107;
+        font-weight: 500;
+    }
+
+    #{{ form.difficulty.id_for_label }} option[value="hard"] {
+        color: #dc3545;
+        font-weight: 500;
+    }
+
+    /* Valid va invalid borderlar */
+    .is-valid {
+        border-color: rgba(40, 167, 69, 0.8) !important;
+        border-left-width: 4px;
+    }
+
+    .is-invalid {
+        border-color: rgba(220, 53, 69, 0.8) !important;
+        border-left-width: 4px;
+    }
+
+    /* Text color lar */
+    .text-primary { color: #3776AB !important; }
+    .text-success { color: #28a745 !important; }
+    .text-warning { color: #ffc107 !important; }
+    .text-danger { color: #dc3545 !important; }
+    .text-info { color: #0dcaf0 !important; }
+    .text-muted { color: rgba(0, 0, 0, 0.6) !important; }
+    .text-white { color: white !important; }
+    .text-white-50 { color: rgba(255, 255, 255, 0.8) !important; }
+
+    /* List uchun */
+    ul {
+        padding-left: 1.2rem;
+    }
+
+    li {
+        margin-bottom: 0.3rem;
+    }
+
+    /* Hover effektlari */
+    .btn:hover {
+        transform: translateY(-1px);
+        transition: all 0.3s ease;
+    }
+
+    .accordion-button:hover {
+        background-color: rgba(255, 255, 255, 0.7) !important;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .d-flex.justify-content-between {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .btn-lg {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        #{{ form.question_text.id_for_label }},
+        #{{ form.test_code.id_for_label }} {
+            min-height: 120px;
+            font-size: 14px;
+        }
+    }
+
+    /* Scrollbar uchun */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: rgba(55, 118, 171, 0.5);
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(55, 118, 171, 0.7);
+    }
+
+    /* Selection color */
+    ::selection {
+        background-color: rgba(55, 118, 171, 0.3);
+        color: white;
+    }
+    .container_code_info{
+        display: flex;
+        gap:10px;
+        margin: 2rem 0;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+    }
+
+    .code_info{
+        display: flex;
+        justify-content: space-between;
+        padding: 15px;
+        background-color: rgba(255, 255, 255, 0.511) !important;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        font-size: 14px;
+    }
+    @media (max-width: 1200px) {
+    .container_code_info{
+    }
+
+    .code_info{
+        font-size: 14px;
+    }
+    }
+
+    @media (max-width: 700px) {
+    .container_code_info{
+        flex-wrap: wrap;
+    }
+
+    .code_info{
+        font-size: 14px;
+    }
+    }
+    @media (max-width: 400px) {
+    .container_code_info{
+    }
+
+    .code_info{
+        font-size: 14px;
+    }
+    .code_info i{
+    }
+    }
+</style>
+{% endblock %}
 <div class="container-fluid py-4">
     <!-- Sahifa sarlavhasi -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
                     <h1 class="h2 text-gray-800">
                         <i class="fab fa-python text-primary me-2"></i>
                         Python Code Practice
@@ -17,24 +352,18 @@
                     <p class="text-muted mb-0">Python dasturlash tilini mashq qiling va kodlaringizni testlang</p>
                 </div>
 
-                {% if is_admin %}
-                <div>
+        {% if is_admin %}
+            <div>
                     <a href="{% url 'app2:add_question' %}" class="btn btn-primary python-btn">
                         <i class="fas fa-plus-circle me-2"></i> Yangi Python Savol
                     </a>
                 </div>
                 {% endif %}
             </div>
-        </div>
-    </div>
 
     <!-- Qidiruv va filtrlash -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="card shadow-sm border-0">
-                <div class="card-body p-4">
-                    <div class="row g-3 align-items-center">
-                        <div class="col-md-5">
+   <div class="row g-3 align-items-center">
+     <div class="col-md-5">
                             <div class="input-group">
                                 <span class="input-group-text bg-light border-end-0">
                                     <i class="fas fa-search text-muted"></i>
@@ -45,7 +374,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+     <div class="col-md-4">
                             <select name="difficulty" class="form-select" id="difficultyFilter">
                                 <option value="">Barcha qiyinchilik darajalari</option>
                                 <option value="easy" {% if difficulty_filter == 'easy' %}selected{% endif %}>Oson</option>
@@ -54,7 +383,7 @@
                             </select>
                         </div>
 
-                        <div class="col-md-3">
+     <div class="col-md-3">
                             <div class="d-flex gap-2">
                                 <button type="button" class="btn btn-primary w-100" onclick="searchQuestions()">
                                     <i class="fas fa-search me-2"></i> Qidirish
@@ -66,23 +395,16 @@
                                 {% endif %}
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+   </div>
 
     <!-- Statistika kartalari -->
-    <div class="row mb-4">
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
+    <div class="container_code_info">
+       <div class="code_info">
+           <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 <i class="fab fa-python me-1"></i> Jami Python Savollar
                             </div>
-                            <div class="h2 mb-0 font-weight-bold text-gray-800">
+                            <div class="mb-0 font-weight-bold ">
                                 {{ total_questions }}
                             </div>
                             <div class="mt-2 mb-0 text-xs">
@@ -91,24 +413,18 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="col-auto">
+           <div class="col-auto">
                             <i class="fab fa-python fa-2x text-primary opacity-25"></i>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+       </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
+       <div class="code_info">
                         <div class="col mr-2">
                             {% with easy_count=questions|dictsortreversed:"difficulty"|dictsort:"difficulty"|first %}
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                 <i class="fas fa-star me-1"></i> Oson Savollar
                             </div>
-                            <div class="h2 mb-0 font-weight-bold text-gray-800">
+                            <div class=" mb-0 font-weight-bold text-gray-800">
                                 {{ questions|dictsort:"difficulty"|dictsortreversed:"difficulty"|first }}
                             </div>
                             {% endwith %}
@@ -120,19 +436,13 @@
                             <i class="fas fa-star fa-2x text-success opacity-25"></i>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
+       <div class="code_info">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                 <i class="fas fa-chart-line me-1"></i> O'rtacha Savollar
                             </div>
-                            <div class="h2 mb-0 font-weight-bold text-gray-800">
+                            <div class=" mb-0 font-weight-bold text-gray-800">
                                 {{ questions|dictsort:"difficulty"|dictsortreversed:"difficulty"|slice:"1:2"|first }}
                             </div>
                             <div class="mt-2 mb-0 text-xs">
@@ -143,19 +453,13 @@
                             <i class="fas fa-chart-line fa-2x text-warning opacity-25"></i>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-danger shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
+       <div class="code_info">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
                                 <i class="fas fa-fire me-1"></i> Qiyin Savollar
                             </div>
-                            <div class="h2 mb-0 font-weight-bold text-gray-800">
+                            <div class="mb-0 font-weight-bold text-gray-800">
                                 {{ questions|dictsort:"difficulty"|dictsortreversed:"difficulty"|slice:"2:3"|first }}
                             </div>
                             <div class="mt-2 mb-0 text-xs">
@@ -166,16 +470,11 @@
                             <i class="fas fa-fire fa-2x text-danger opacity-25"></i>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Python savollar ro'yxati -->
-    <div class="row">
-        <div class="col-12">
-            <div class="card shadow border-0">
-                <div class="card-header py-3 d-flex justify-content-between align-items-center python-header">
+    <div class="card shadow border-0">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center python-header">
                     <div>
                         <h6 class="m-0 font-weight-bold text-white">
                             <i class="fab fa-python me-2"></i>
@@ -194,8 +493,7 @@
                         {% endif %}
                     </div>
                 </div>
-
-                <div class="card-body p-0">
+        <div class="card-body p-0">
                     {% if questions %}
                         <div class="table-responsive">
                             <table class="table table-hover mb-0">
@@ -308,8 +606,8 @@
                     {% endif %}
                 </div>
 
-                {% if questions %}
-                <div class="card-footer bg-light">
+        {% if questions %}
+            <div class="card-footer bg-light">
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <div class="text-muted small">
@@ -326,16 +624,11 @@
                         </div>
                     </div>
                 </div>
-                {% endif %}
-            </div>
-        </div>
+        {% endif %}
     </div>
 
     <!-- Qo'shimcha resurslar -->
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body">
+    <div class="card-body">
                     <h5 class="card-title text-primary mb-4">
                         <i class="fas fa-lightbulb me-2"></i>
                         Python O'rganish Resurslari
@@ -379,87 +672,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 </div>
 {% endblock %}
 
-{% block extra_css %}
-<style>
-.python-header {
-    background: linear-gradient(135deg, #3776AB 0%, #306998 100%);
-    border-bottom: 3px solid #FFD43B;
-}
-
-.python-btn {
-    background: linear-gradient(135deg, #3776AB 0%, #306998 100%);
-    border: none;
-}
-
-.python-btn:hover {
-    background: linear-gradient(135deg, #306998 0%, #265a82 100%);
-}
-
-.symbol {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.475rem;
-}
-
-.symbol-30 {
-    width: 30px;
-    height: 30px;
-}
-
-.symbol-label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
-}
-
-.bg-light-primary {
-    background-color: rgba(55, 118, 171, 0.1) !important;
-}
-
-/* Table styles */
-.table-hover tbody tr:hover {
-    background-color: rgba(55, 118, 171, 0.05);
-}
-
-.table td {
-    vertical-align: middle;
-    padding: 1rem 0.75rem;
-}
-
-.table th {
-    font-weight: 600;
-    color: #6b7280;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
-}
-
-/* Card hover effect */
-.card.border-0.shadow-sm:hover {
-    transform: translateY(-2px);
-    transition: transform 0.2s ease;
-}
-
-/* Search input */
-#searchInput {
-    border-radius: 0.375rem 0 0 0.375rem;
-}
-
-.input-group-text {
-    border-radius: 0.375rem 0 0 0.375rem;
-}
-</style>
-{% endblock %}
 
 {% block extra_js %}
 <script>
@@ -530,5 +745,5 @@ $(document).ready(function() {
         }
     });
 });
-</script>
+</script>>
 {% endblock %}
