@@ -305,17 +305,17 @@ margin: 1rem auto;
                 <i class="fas fa-clock"></i> Sarflangan Vaqt
               </h6>
               <h4 class="text-warning">
-<<<<<<< HEAD
+<!--<<<<<<< HEAD-->
                 {% widthratio time_taken_seconds 60 1 as minutes %}
                 {% with time_int=time_taken_seconds|add:"0" %}
                   {% with seconds=time_int|divisibleby:60|yesno:"0,"|add:"0" %}
                     {{ minutes|floatformat:"0" }} daqiqa {{ seconds }} soniya
                   {% endwith %}
                 {% endwith %}
-=======
-                {% widthratio time_taken_seconds 60 1 as minutes %} {{ minutes }} daqiqa {{ time_taken_seconds|divisibleby:60|yesno:",0" }}
-                soniya
->>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7
+<!--=======-->
+<!--                {% widthratio time_taken_seconds 60 1 as minutes %} {{ minutes }} daqiqa {{ time_taken_seconds|divisibleby:60|yesno:",0" }}-->
+<!--                soniya-->
+<!--&gt;>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7-->
               </h4>
               <small class="text-muted">Testni ishlash uchun sarflangan vaqt</small>
             </div>

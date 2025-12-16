@@ -238,7 +238,7 @@
     backdrop-filter: blur(10px);
     background-color: rgba(5, 130, 171, 0.1);
     border-radius: 10px;
-    border: 1px solid rgba(5, 130, 171, 0.3);
+<!--    border: 1px solid rgba(5, 130, 171, 0.3);-->
     margin-bottom: 15px;
     word-wrap: break-word;
     overflow-wrap: break-word;
@@ -794,12 +794,32 @@
       </button>
     </div>
     <div class="ai-chat-body card-body">
-      <div class="chat-messages-container" id="chat-container">
+      <div class="chat-messages-container" id="chat-container" style="color:black;font-weight:bold;font-size:1.11rem;letter-spacing:0.1rem">
         <!-- Xabarlar shu yerga yuklanadi -->
-        <div class="welcome-message" id="welcome-message">
-          <i class="fas fa-info-circle"></i> Savolingizni bering, men sizga
-          yordam berishga harakat qilaman!
-        </div>
+          {% if user.is_staff %}
+            <div class="welcome-message" id="welcome-message">
+              <i class="fas fa-info-circle"></i> Sizning mutaxasisligingiz bo'yicha talabalarga yana qanday bilimlarni berishni istaysiz?
+                Menga tushunarli tarzda savolingizni kiriting! Men sizga qiziqarli materiallarni taqdim etaman.
+                Marhamat!
+            </div>
+          {% else %}
+            <div class="welcome-message" id="welcome-message">
+              <i class="fas fa-info-circle"></i> Siz yana o'z mutaxasislik faninggizdan nimalarni bilishni istaysiz? Tushunarli tarzda yozing, man sizga yordam beraman!Siz bergan amsalaga har xil o'yinlar yoki metodlarni qo'llab tayyorlayman
+                <!doctype html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport"
+                          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+                    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+                    <title>Document</title>
+                </head>
+                <body>
+                
+                </body>
+                </html>
+            </div>
+          {% endif %}
       </div>
       <div class="chat-tips" style="margin-bottom: 15px;">
         <small>

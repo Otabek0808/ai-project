@@ -229,39 +229,6 @@
     <main>
         <!-- Asosiy statistik kartalar -->
         <section class="static_contaner_section">
-            <!-- Videodarslar -->
-            <div class="contaner_info">
-                <div class="log_num">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file" viewBox="0 0 16 16" style="color: rgb(52, 52, 148)">
-                        <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1"/>
-                    </svg>
-                    <h2>{{ videos_count }}</h2>
-                </div>
-                <p>Videodarslar</p>
-            </div>
-
-            <!-- Testlar -->
-            <div class="contaner_info">
-                <div class="log_num">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16" style="color: green">
-                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>
-                    </svg>
-                    <h2>{{ test_count }}</h2>
-                </div>
-                <p>Umumiy testlar</p>
-            </div>
-
-            <!-- Materiallar -->
-            <div class="contaner_info">
-                <div class="log_num">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-right" viewBox="0 0 16 16" style="color: blueviolet">
-                        <path fill-rule="evenodd" d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708z"/>
-                    </svg>
-                    <h2>{{ documents_count }}</h2>
-                </div>
-                <p>Materiallar</p>
-            </div>
-
             <!-- Foydalanuvchilar -->
             <div class="contaner_info">
                 <div class="log_num">
@@ -272,6 +239,52 @@
                 </div>
                 <p>Foydalanuvchilar soni</p>
             </div>
+            {% if graphic %}
+
+            <!-- Videodarslar -->
+            <div class="contaner_info">
+                <div class="log_num">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file" viewBox="0 0 16 16" style="color: rgb(52, 52, 148)">
+                        <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1"/>
+                    </svg>
+                    <h2>{{ videos_count }}</h2>
+                </div>
+                <p>Aktiv foydalanuvchilar</p>
+            </div>
+            {% endif %}
+
+            <!-- Testlar -->
+            <div class="contaner_info">
+                <div class="log_num">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16" style="color: green">
+                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>
+                    </svg>
+                    <h2>{{ test_count }}</h2>
+                </div>
+                <p>Yuqori natija ko'rsatgan talabalar</p>
+            </div>
+
+<!--             Tavsiya -->
+            <div class="contaner_info">
+                <div class="log_num">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-right" viewBox="0 0 16 16" style="color: blueviolet">
+                        <path fill-rule="evenodd" d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708z"/>
+                    </svg>
+                    {% if user.is_authenticated %}
+                        {% if data.avg_percentage < 50 %}
+                            <h2>O'z ustingizda ishlang</h2>
+                        {% else %}
+                            <h3>Natijagiz yaxshi</h3>
+    <!--                    <h2>{{ documents_count }}</h2>-->
+                        {% endif %}
+                    {% else %}
+                        <p>Natijangiz yo'q!Fanlarni o'zlashtiring va natijangizni bilib oling!</p>
+                    {% endif %}
+                </div>
+<!--                <p>Materiallar</p>-->
+            </div>
+
+
         </section>
 
         <!-- Umumiy statistika -->

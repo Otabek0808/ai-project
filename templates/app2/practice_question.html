@@ -197,10 +197,12 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 $(document).ready(function() {
     var editor = $('#codeEditor');
     var questionFunction = "{{ question.function_name }}";
+    var questionParams = "{{ question.function_params }}";
 
     // Format tugmasi
     $('#formatBtn').click(function() {
@@ -219,28 +221,53 @@ $(document).ready(function() {
                 continue;
             }
 
-            // Indentni kamaytirish
-            if (line.startsWith('return') || line.startsWith('pass') ||
-                (line.startsWith('#') && i > 0 && lines[i-1].trim().endsWith(':'))) {
-                // Funksiya tanasidagi kod
+            // Funksiya tanasi
+            if (line.startsWith('def ' + questionFunction + '(')) {
+                formatted.push(line);
+                indent = 1;
+            }
+            // Return statement
+            else if (line.startsWith('return ')) {
                 formatted.push('    ' + line);
-            } else if (line.endsWith(':')) {
-                // Yangi blok
-                formatted.push(line);
-            } else {
-                // Oddiy satr
-                formatted.push(line);
+            }
+            // Comment
+            else if (line.startsWith('#')) {
+                formatted.push('    ' + line);
+            }
+            // Boshqa kod
+            else {
+                formatted.push('    ' + line);
             }
         }
 
         editor.val(formatted.join('\n'));
     });
 
-    // Tozalash tugmasi
+    // Tozalash tugmasi - YANGILANGAN
     $('#clearBtn').click(function() {
-        if (confirm('Kodni tozalashni istaysizmi? Barcha yozilgan kod o\'chib ketadi.')) {
-            editor.val('def {{ question.function_name }}({{ question.function_params }}):\n    # Yechimni yozing\n    return None');
-        }
+        Swal.fire({
+            title: 'Kodni tozalash',
+            text: 'Barcha yozilgan kod o\'chib ketadi. Davom etishni istaysizmi?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ha, tozalash',
+            cancelButtonText: 'Bekor qilish'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Tozalash
+                var initialCode = `def {{ question.function_name }}({{ question.function_params }}):\n    # Yechimni yozing\n    return None`;
+                editor.val(initialCode);
+
+                // Xabar ko'rsatish
+                Swal.fire(
+                    'Tozalandi!',
+                    'Kod tozalandi. Endi yangi kod yozishingiz mumkin.',
+                    'success'
+                );
+            }
+        });
     });
 
     // Test qilish tugmasi (AJAX)
@@ -248,16 +275,24 @@ $(document).ready(function() {
         var code = editor.val().trim();
 
         if (!code) {
-            showAlert('Xatolik', 'Kod kiritilmagan!', 'error');
+            Swal.fire({
+                icon: 'error',
+                title: 'Xatolik',
+                text: 'Kod kiritilmagan!',
+                confirmButtonText: 'OK'
+            });
             return;
         }
 
         // Funksiya nomini tekshirish
         if (code.indexOf('def {{ question.function_name }}') === -1) {
-            showAlert('Xatolik',
-                `Siz '{{ question.function_name }}' funksiyasini yozishingiz kerak!\n\n` +
-                `To'g'ri format: def {{ question.function_name }}({{ question.function_params }}):`,
-                'error');
+            Swal.fire({
+                icon: 'error',
+                title: 'Xatolik',
+                html: `Siz '<strong>{{ question.function_name }}</strong>' funksiyasini yozishingiz kerak!<br><br>` +
+                      `To'g'ri format: <code>def {{ question.function_name }}({{ question.function_params }})</code>`,
+                confirmButtonText: 'Tushunarli'
+            });
             return;
         }
 
@@ -278,11 +313,21 @@ $(document).ready(function() {
                 if (response.success) {
                     showTestResult(response.result);
                 } else {
-                    showAlert('Xato', response.message, 'error');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Xato',
+                        text: response.message,
+                        confirmButtonText: 'OK'
+                    });
                 }
             },
             error: function(xhr) {
-                showAlert('Server xatosi', 'Server bilan bog\'lanishda xatolik', 'error');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Server xatosi',
+                    text: 'Server bilan bog\'lanishda xatolik',
+                    confirmButtonText: 'OK'
+                });
             },
             complete: function() {
                 $('#testBtn').html('<i class="fas fa-play me-1"></i>Test qilish');
@@ -297,32 +342,30 @@ $(document).ready(function() {
 
         if (!code) {
             e.preventDefault();
-            showAlert('Xatolik', 'Kod kiritilmagan!', 'error');
+            Swal.fire({
+                icon: 'error',
+                title: 'Xatolik',
+                text: 'Kod kiritilmagan!',
+                confirmButtonText: 'OK'
+            });
             return false;
         }
 
         // Funksiya nomini tekshirish
         if (code.indexOf('def {{ question.function_name }}') === -1) {
             e.preventDefault();
-            showAlert('Xatolik',
-                `Siz '{{ question.function_name }}' funksiyasini yozishingiz kerak!\n\n` +
-                `To'g'ri format: def {{ question.function_name }}({{ question.function_params }}):`,
-                'error');
+            Swal.fire({
+                icon: 'error',
+                title: 'Xatolik',
+                html: `Siz '<strong>{{ question.function_name }}</strong>' funksiyasini yozishingiz kerak!<br><br>` +
+                      `To'g'ri format: <code>def {{ question.function_name }}({{ question.function_params }})</code>`,
+                confirmButtonText: 'Tushunarli'
+            });
             return false;
         }
 
         return true;
     });
-
-    // Alert ko'rsatish funksiyasi
-    function showAlert(title, message, icon) {
-        Swal.fire({
-            title: title,
-            html: message.replace(/\n/g, '<br>'),
-            icon: icon,
-            confirmButtonText: 'OK'
-        });
-    }
 
     // Test natijasini ko'rsatish funksiyasi
     function showTestResult(result) {
@@ -379,6 +422,9 @@ $(document).ready(function() {
             confirmButtonText: 'OK'
         });
     }
+
+    // Kod editoriga avtomatik focus
+    editor.focus();
 });
 </script>
 {% endblock %}
