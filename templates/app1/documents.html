@@ -1,5 +1,7 @@
 <!-- templates/app1/documents.html -->
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
 <style>
   .documents_box {
     margin-bottom: 76px;
@@ -593,6 +595,7 @@
     }
   }
 </style>
+
 <div class="documents_box">
   <!-- Sarlavha va admin tugmasi -->
   <div class="row mb-5">
@@ -602,9 +605,9 @@
         id="new_mat"
       >
         <div>
-          <h1>O'quv Materiallari</h1>
+          <h1>{% trans "O'quv Materiallari" %}</h1>
           <p class="lead text-muted">
-            Mutaxassislik fanlari bo'yicha o'quv qo'llanmalar va hujjatlar
+            {% trans "Mutaxassislik fanlari bo'yicha o'quv qo'llanmalar va hujjatlar" %}
           </p>
         </div>
         {% if user.is_staff %}
@@ -612,7 +615,7 @@
           <a href="{% url 'add_document' %}">
             <button>
               <i class="fas fa-plus-circle me-2"></i>
-              Yangi Material
+              {% trans "Yangi Material" %}
             </button>
           </a>
         </div>
@@ -639,21 +642,21 @@
         <div class="card_info">
           <div>
             <h5>{{ subject.document_set.count }}</h5>
-            <small>Material</small>
+            <small>{% trans "Material" %}</small>
           </div>
           <div>
             <h5>{{ subject.test_set.count }}</h5>
-            <small>Test</small>
+            <small>{% trans "Test" %}</small>
           </div>
         </div>
 
         <div class="mat_button">
           <a href="{% url 'subject_documents' subject.id %}">
-            <i class="fas fa-folder-open me-2"></i>Materiallarni Ko'rish
+            <i class="fas fa-folder-open me-2"></i>{% trans "Materiallarni Ko'rish" %}
           </a>
           {% if subject.test_set.exists %}
           <a href="{% url 'tests' %}">
-            <i class="fas fa-play-circle me-2"></i>Testlarni Ko'rish
+            <i class="fas fa-play-circle me-2"></i>{% trans "Testlarni Ko'rish" %}
           </a>
           {% endif %}
         </div>
@@ -664,14 +667,13 @@
       <div class="card text-center py-5">
         <div class="card-body">
           <i class="fas fa-folder-open fa-3x text-muted mb-3"></i>
-          <h4 class="text-muted mb-3">Hozircha fanlar mavjud emas</h4>
+          <h4 class="text-muted mb-3">{% trans "Hozircha fanlar mavjud emas" %}</h4>
           <p class="text-muted">
-            Administrator tomonidan fanlar qo'shilmagani uchun materiallar
-            mavjud emas.
+            {% trans "Administrator tomonidan fanlar qo'shilmagani uchun materiallar mavjud emas." %}
           </p>
           {% if user.is_staff %}
           <a href="/admin/app1/subject/add/" class="btn btn-primary">
-            <i class="fas fa-plus me-2"></i>Birinchi Fanni Yaratish
+            <i class="fas fa-plus me-2"></i>{% trans "Birinchi Fanni Yaratish" %}
           </a>
           {% endif %}
         </div>
@@ -680,5 +682,4 @@
     {% endfor %}
   </div>
 </div>
-
 {% endblock %}

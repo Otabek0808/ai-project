@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 
@@ -470,145 +471,143 @@ width: 100%;
 }
 </style>
 
+
 <div class="col-md-8">
-    <h4 style="margin-bottom: 2rem;">Test Faylini Yuklash</h4>
-            <div class="card shadow">
+    <h4 style="margin-bottom: 2rem;">{% trans "Test Faylini Yuklash" %}</h4>
+    <div class="card shadow">
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
 
-                <div class="card-body">
-                    <form method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
+                <!-- Xatoliklarni ko'rsatish -->
+                {% if form.errors %}
+                <div class="alert alert-danger">
+                    <strong>{% trans "Xatolik!" %}</strong> {% trans "Iltimos, quyidagi xatoliklarni tuzating:" %}
+                    <ul>
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ field.label }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
 
-                        <!-- Xatoliklarni ko'rsatish -->
-                        {% if form.errors %}
-                        <div class="alert alert-danger">
-                            <strong>Xatolik!</strong> Iltimos, quyidagi xatoliklarni tuzating:
-                            <ul>
-                                {% for field in form %}
-                                    {% for error in field.errors %}
-                                        <li>{{ field.label }}: {{ error }}</li>
-                                    {% endfor %}
-                                {% endfor %}
-                                {% for error in form.non_field_errors %}
-                                    <li>{{ error }}</li>
-                                {% endfor %}
-                            </ul>
+                <!-- Fan tanlash -->
+                <div class="mb-3">
+                    <label for="id_subject" class="form-label">{% trans "Fan" %}</label>
+                    {{ form.subject }}
+                </div>
+
+                <!-- Test nomi -->
+                <div class="mb-3">
+                    <label for="id_title" class="form-label">{% trans "Test Nomi" %}</label>
+                    {{ form.title }}
+                </div>
+
+                <!-- Tavsif -->
+                <div class="mb-3">
+                    <label for="id_description" class="form-label">{% trans "Tavsif" %}</label>
+                    {{ form.description }}
+                </div>
+
+                <!-- Test fayli -->
+                <div class="mb-3">
+                    <label for="id_test_file" class="form-label">{% trans "Test Fayli" %}</label>
+                    {{ form.test_file }}
+                    <div class="form-text">
+                        {% trans "Faqat .txt fayllar qabul qilinadi. Yangi format:" %}
+                        <br>
+                        <strong>{% trans "Savol: Savol matni? | Daraja: 2" %}</strong><br>
+                        A) {% trans "Birinchi variant" %}<br>
+                        B) {% trans "Ikkinchi variant" %}<br>
+                        C) {% trans "Uchinchi variant" %}<br>
+                        D) {% trans "To'rtinchi variant" %}<br>
+                        {% trans "Javob: B" %}<br><br>
+                        <strong>{% trans "Daraja:" %}</strong> {% trans "1 (Oson), 2 (O'rtacha), 3 (Qiyin)" %}<br>
+                        {% trans "Savollar orasida bo'sh qator qoldiring." %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Test vaqti -->
+                    <div class="col-md-6 mb-3">
+                        <label for="id_time_limit_minutes" class="form-label">
+                            {% trans "Test Vaqti (daqiqa)" %}
+                        </label>
+                        {{ form.time_limit_minutes }}
+                        {% if form.time_limit_minutes.help_text %}
+                        <div class="form-text">
+                            {{ form.time_limit_minutes.help_text }}
                         </div>
                         {% endif %}
+                    </div>
 
-                        <!-- Fan tanlash -->
-                        <div class="mb-3">
-                            <label for="id_subject" class="form-label">Fan</label>
-                            {{ form.subject }}
+                    <!-- Savollar soni -->
+                    <div class="col-md-6 mb-3">
+                        <label for="id_question_count" class="form-label">
+                            {% trans "Savollar Soni" %}
+                        </label>
+                        {{ form.question_count }}
+                        {% if form.question_count.help_text %}
+                        <div class="form-text">
+                            {{ form.question_count.help_text }}
                         </div>
-
-                        <!-- Test nomi -->
-                        <div class="mb-3">
-                            <label for="id_title" class="form-label">Test Nomi</label>
-                            {{ form.title }}
-                        </div>
-
-                        <!-- Tavsif -->
-                        <div class="mb-3">
-                            <label for="id_description" class="form-label">Tavsif</label>
-                            {{ form.description }}
-                        </div>
-
-                        <!-- Test fayli -->
-                        <div class="mb-3">
-                            <label for="id_test_file" class="form-label">Test Fayli</label>
-                            {{ form.test_file }}
-                            <div class="form-text">
-                                Faqat .txt fayllar qabul qilinadi. Yangi format:
-                                <br>
-                                <strong>Savol: Savol matni? | Daraja: 2</strong><br>
-                                A) Birinchi variant<br>
-                                B) Ikkinchi variant<br>
-                                C) Uchinchi variant<br>
-                                D) To'rtinchi variant<br>
-                                Javob: B<br><br>
-                                <strong>Daraja:</strong> 1 (Oson), 2 (O'rtacha), 3 (Qiyin)<br>
-                                Savollar orasida bo'sh qator qoldiring.
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <!-- Test vaqti -->
-                            <div class="col-md-6 mb-3">
-                                <label for="id_time_limit_minutes" class="form-label">
-                                    Test Vaqti (daqiqa)
-                                </label>
-                                {{ form.time_limit_minutes }}
-                                {% if form.time_limit_minutes.help_text %}
-                                <div class="form-text">
-                                    {{ form.time_limit_minutes.help_text }}
-                                </div>
-                                {% endif %}
-                            </div>
-
-                            <!-- Savollar soni -->
-                            <div class="col-md-6 mb-3">
-                                <label for="id_question_count" class="form-label">
-                                    Savollar Soni
-                                </label>
-                                {{ form.question_count }}
-                                {% if form.question_count.help_text %}
-                                <div class="form-text">
-                                    {{ form.question_count.help_text }}
-                                </div>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-upload me-2"></i>Testni Yuklash
-                            </button>
-                            <a href="{% url 'tests' %}" class="btn btn-secondary">
-                                <i class="fas fa-times me-2"></i>Bekor Qilish
-                            </a>
-                        </div>
-                    </form>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
 
-            <!-- Format namunasi -->
-            <div class="card mt-4">
-                <div class="card-header bg-light">
-                    <h5 class="mb-0">
-                        <i class="fas fa-info-circle me-2"></i>Fayl Format Namunasi
-                    </h5>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-upload me-2"></i>{% trans "Testni Yuklash" %}
+                    </button>
+                    <a href="{% url 'tests' %}" class="btn btn-secondary">
+                        <i class="fas fa-times me-2"></i>{% trans "Bekor Qilish" %}
+                    </a>
                 </div>
-                <div class="card-body">
-                    <pre class="bg-light p-3 border rounded">
-Savol: Python qaysi dasturlash tiliga tegishli? | Daraja: 1
-A) Kompilyatsiya qilinadigan tillar
-B) Interpretatsiya qilinadigan tillar
-C) Assembler tillar
-D) Mashina tillari
-Javob: B
-
-Savol: Django framework qaysi tilda yozilgan? | Daraja: 2
-A) Java
-B) Python
-C) JavaScript
-D) C++
-Javob: B
-
-Savol: Quyidagi kod qanday natija qaytaradi? print(2 ** 3 ** 2) | Daraja: 3
-A) 64
-B) 512
-C) 16
-D) 256
-Javob: B
-                    </pre>
-                    <p class="text-muted mb-0">
-                        <strong>Eslatma:</strong> Har bir savoldan keyin bo'sh qator qoldiring.
-                        Daraja ixtiyoriy (agar ko'rsatilmasa, o'rtacha hisoblanadi).
-                    </p>
-                </div>
-            </div>
+            </form>
         </div>
-<style>
+    </div>
+
+    <!-- Format namunasi -->
+    <div class="card mt-4">
+        <div class="card-header bg-light">
+            <h5 class="mb-0">
+                <i class="fas fa-info-circle me-2"></i>{% trans "Fayl Format Namunasi" %}
+            </h5>
+        </div>
+        <div class="card-body">
+            <pre class="bg-light p-3 border rounded">
+{% trans "Savol: Python qaysi dasturlash tiliga tegishli? | Daraja: 1" %}
+A) {% trans "Kompilyatsiya qilinadigan tillar" %}
+B) {% trans "Interpretatsiya qilinadigan tillar" %}
+C) {% trans "Assembler tillar" %}
+D) {% trans "Mashina tillari" %}
+{% trans "Javob: B" %}
+
+{% trans "Savol: Django framework qaysi tilda yozilgan? | Daraja: 2" %}
+A) {% trans "Java" %}
+B) {% trans "Python" %}
+C) {% trans "JavaScript" %}
+D) {% trans "C++" %}
+{% trans "Javob: B" %}
+
+{% trans "Savol: Quyidagi kod qanday natija qaytaradi? print(2 ** 3 ** 2) | Daraja: 3" %}
+A) {% trans "64" %}
+B) {% trans "512" %}
+C) {% trans "16" %}
+D) {% trans "256" %}
+{% trans "Javob: B" %}
+            </pre>
+            <p class="text-muted mb-0">
+                <strong>{% trans "Eslatma:" %}</strong> {% trans "Har bir savoldan keyin bo'sh qator qoldiring. Daraja ixtiyoriy (agar ko'rsatilmasa, o'rtacha hisoblanadi)." %}
+            </p>
+        </div>
+    </div>
+</div><style>
 .card {
     border-radius: 10px;
     border: none;

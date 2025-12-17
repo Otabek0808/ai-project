@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load i18n %}
 
 {% block title %}Python Savol - {{ question.function_name }}{% endblock %}
 
 {% block content %}
+
 <div class="container-fluid py-4">
     <div class="row">
         <!-- Savol qismi -->
@@ -12,7 +13,7 @@
                 <div class="card-header py-3 python-header">
                     <h6 class="m-0 font-weight-bold text-white">
                         <i class="fab fa-python me-2"></i>
-                        Python Savol
+                        {% trans "Python Savol" %}
                     </h6>
                 </div>
                 <div class="card-body">
@@ -20,7 +21,7 @@
                     <div class="mb-4">
                         <h5 class="text-primary mb-3">
                             <i class="fas fa-question-circle me-2"></i>
-                            Savol
+                            {% trans "Savol" %}
                         </h5>
                         <div class="p-3 bg-light rounded border">
                             {{ question.question_text|linebreaks }}
@@ -32,14 +33,14 @@
                         <div class="card-header bg-primary text-white py-2">
                             <h6 class="mb-0">
                                 <i class="fas fa-code me-2"></i>
-                                Funksiya Talablari
+                                {% trans "Funksiya Talablari" %}
                             </h6>
                         </div>
                         <div class="card-body p-3">
                             <div class="alert alert-warning">
                                 <h6 class="alert-heading mb-2">
                                     <i class="fas fa-exclamation-triangle me-2"></i>
-                                    MUHIM: Quyidagi funksiyani yozishingiz kerak
+                                    {% trans "MUHIM: Quyidagi funksiyani yozishingiz kerak" %}
                                 </h6>
                                 <div class="bg-dark text-light p-3 rounded font-monospace">
                                     def {{ question.function_name }}({{ question.function_params }}):
@@ -49,24 +50,24 @@
                             <div class="mt-3">
                                 <h6 class="text-success mb-2">
                                     <i class="fas fa-check-circle me-2"></i>
-                                    Qoidalar:
+                                    {% trans "Qoidalar:" %}
                                 </h6>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">
                                         <i class="fas fa-arrow-right text-primary me-2"></i>
-                                        Funksiya nomi <code>{{ question.function_name }}</code> bo'lishi shart
+                                        {% blocktrans %}Funksiya nomi <code>{{ question.function_name }}</code> bo'lishi shart{% endblocktrans %}
                                     </li>
                                     <li class="list-group-item">
                                         <i class="fas fa-arrow-right text-primary me-2"></i>
-                                        Parametrlar <code>{{ question.function_params }}</code> bo'lishi shart
+                                        {% blocktrans %}Parametrlar <code>{{ question.function_params }}</code> bo'lishi shart{% endblocktrans %}
                                     </li>
                                     <li class="list-group-item">
                                         <i class="fas fa-arrow-right text-primary me-2"></i>
-                                        Natijani <code>return</code> bilan qaytaring
+                                        {% trans "Natijani <code>return</code> bilan qaytaring" %}
                                     </li>
                                     <li class="list-group-item">
                                         <i class="fas fa-arrow-right text-primary me-2"></i>
-                                        <code>print()</code> ishlatish shart emas
+                                        {% trans "<code>print()</code> ishlatish shart emas" %}
                                     </li>
                                 </ul>
                             </div>
@@ -80,7 +81,7 @@
                                 {{ question.get_difficulty_display }}
                             </span>
                             <span class="badge bg-primary">
-                                <i class="fab fa-python me-1"></i>Python
+                                <i class="fab fa-python me-1"></i>{% trans "Python" %}
                             </span>
                             {% if question.category %}
                             <span class="badge bg-info ms-2">
@@ -88,7 +89,7 @@
                             </span>
                             {% endif %}
                             <span class="badge bg-secondary ms-2">
-                                {{ question.points }} ball
+                                {% blocktrans %}{{ question.points }} ball{% endblocktrans %}
                             </span>
                         </div>
                         <small class="text-muted">
@@ -106,7 +107,7 @@
                 <div class="card-header py-3 bg-success text-white">
                     <h6 class="m-0 font-weight-bold">
                         <i class="fas fa-edit me-2"></i>
-                        Python Kod Editori
+                        {% trans "Python Kod Editori" %}
                     </h6>
                 </div>
                 <div class="card-body p-0 d-flex flex-column">
@@ -118,9 +119,9 @@
                             <div class="d-flex align-items-center">
                                 <i class="fas fa-info-circle fa-2x me-3 text-info"></i>
                                 <div>
-                                    <strong>Eslatma:</strong>
-                                    Siz <code class="bg-dark text-light px-2 py-1">{{ question.function_name }}({{ question.function_params }})</code>
-                                    funksiyasini yozishingiz kerak.
+                                    <strong>{% trans "Eslatma:" %}</strong>
+                                    {% blocktrans %}Siz <code class="bg-dark text-light px-2 py-1">{{ question.function_name }}({{ question.function_params }})</code>
+                                    funksiyasini yozishingiz kerak.{% endblocktrans %}
                                 </div>
                             </div>
                         </div>
@@ -129,7 +130,7 @@
                         <div class="p-3 flex-grow-1">
                             <label class="form-label fw-bold mb-2">
                                 <i class="fas fa-code me-2"></i>
-                                Python kodingizni yozing:
+                                {% trans "Python kodingizni yozing:" %}
                             </label>
                             <textarea
                                 name="code"
@@ -137,13 +138,13 @@
                                 rows="15"
                                 class="form-control font-monospace"
                                 style="font-size: 14px; min-height: 300px;"
-                                placeholder="Python kodini bu yerga yozing..."
+                                placeholder="{% trans "Python kodini bu yerga yozing..." %}"
                             >{{ initial_code }}</textarea>
 
                             <!-- Kod misoli -->
                             <div class="mt-3">
                                 <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#codeExample">
-                                    <i class="fas fa-eye me-1"></i>Kod misolini ko'rsatish
+                                    <i class="fas fa-eye me-1"></i>{% trans "Kod misolini ko'rsatish" %}
                                 </button>
 
                                 <div id="codeExample" class="collapse mt-2">
@@ -172,18 +173,18 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <button type="button" class="btn btn-outline-info btn-sm" id="formatBtn">
-                                        <i class="fas fa-indent me-1"></i>Format
+                                        <i class="fas fa-indent me-1"></i>{% trans "Format" %}
                                     </button>
                                     <button type="button" class="btn btn-outline-secondary btn-sm ms-2" id="clearBtn">
-                                        <i class="fas fa-broom me-1"></i>Tozalash
+                                        <i class="fas fa-broom me-1"></i>{% trans "Tozalash" %}
                                     </button>
                                     <button type="button" class="btn btn-warning btn-sm ms-2" id="testBtn">
-                                        <i class="fas fa-play me-1"></i>Test qilish
+                                        <i class="fas fa-play me-1"></i>{% trans "Test qilish" %}
                                     </button>
                                 </div>
                                 <div>
                                     <button type="submit" class="btn btn-primary">
-                                        <i class="fas fa-paper-plane me-1"></i>Yuborish va test qilish
+                                        <i class="fas fa-paper-plane me-1"></i>{% trans "Yuborish va test qilish" %}
                                     </button>
                                 </div>
                             </div>

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% block content %}
 <style>
   /* Ekran o'lchamlariga mos responsive dizayn */
@@ -567,106 +567,103 @@
   border-top: 4px solid rgba(255, 193, 7, 0.7);
 }
 </style>
-      <div class="user_stats_container">
-           <h4>
-             {{ user.username }} - Test natijalari
-          </h4>
+<div class="user_stats_container">
+  <h4>
+    {{ user.username }} - {% trans "Test results" %}
+  </h4>
 
+  <a href="{% url 'admin_stats' %}" class="btn btn-outline-secondary">
+    <i class="fas fa-arrow-left"></i> {% trans "Back" %}
+  </a>
 
-            <a href="{% url 'admin_stats' %}" class="btn btn-outline-secondary">
-              <i class="fas fa-arrow-left"></i> Orqaga
-            </a>
-        <div class="card-body">
-         <div class="responsive-container">
-  <!-- Grafik qismi -->
-  {% if graphic %}
-  <div class="graphic-section">
-    <h5>Test natijalari grafigi</h5>
-    <img
-      src="data:image/png;base64,{{ graphic }}"
-      alt="Test natijalari grafigi"
-      class="graphic-img"
-    />
-  </div>
-  {% else %}
-  <div class="graphic-section">
-    <h5>Test natijalari</h5>
-    <p>Natijalar soni: {{ test_results.count }} ta</p>
-    <p>Grafik: {{ graphic|yesno:"Mavjud,Mavjud emas" }}</p>
-  </div>
-  {% endif %}
+  <div class="card-body">
+    <div class="responsive-container">
+      <!-- Grafik qismi -->
+      {% if graphic %}
+      <div class="graphic-section">
+        <h5>{% trans "Test results graph" %}</h5>
+        <img
+          src="data:image/png;base64,{{ graphic }}"
+          alt="{% trans 'Test results graph' %}"
+          class="graphic-img"
+        />
+      </div>
+      {% else %}
+      <div class="graphic-section">
+        <h5>{% trans "Test results" %}</h5>
+        <p>{% trans "Number of results" %}: {{ test_results.count }} {% trans "items" %}</p>
+        <p>{% trans "Graph" %}: {{ graphic|yesno:_("Available,Not available") }}</p>
+      </div>
+      {% endif %}
 
-  <!-- Umumiy statistika -->
-  {% if test_results %}
-  <div class="stats-section">
-    <div class="stat-box">
-      <h5 class="card-title">{{ test_results.count }}</h5>
-      <p class="card-text">Jami testlar</p>
-    </div>
-    <div class="stat-box">
-      <h5 class="card-title">{{ best_percentage }}%</h5>
-      <p class="card-text">Eng yaxshi natija</p>
-    </div>
-    <div class="stat-box">
-      <h5 class="card-title">{{ test_results.count }}</h5>
-      <p class="card-text">Testlarni yakunlash</p>
-    </div>
-  </div>
-  {% endif %}
-</div>
-          <!-- Jadval -->
-          <h5 class="mb-3">Batafsil statistika:</h5>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Test nomi</th>
-                  <th>Sana</th>
-                  <th>Ball</th>
-                  <th>Foiz</th>
-                  <th>Holat</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for result in test_results %}
-                <tr>
-                  <td>{{ result.test.title }}</td>
-                  <td>{{ result.completed_at|date:"d.m.Y H:i" }}</td>
-                  <td>{{ result.score }}/{{ result.total_questions }}</td>
-                  <td>
-                    {% with percentage=result.percentage %}
-                    <!-- ✅ METHOD NI CHAQIRISH -->
-                    <span
-                      class="badge {% if percentage >= 80 %}bg-success{% elif percentage >= 60 %}bg-warning{% else %}bg-danger{% endif %}"
-                    >
-                      {{ percentage|floatformat:1 }}%
-                    </span>
-                    {% endwith %}
-                  </td>
-                  <td>
-                    {% with percentage=result.percentage %}
-                    <!-- ✅ METHOD NI CHAQIRISH -->
-                    {% if percentage >= 80 %}
-                    <i class="fas fa-check text-success"></i> A'lo
-                    {% elif percentage >= 60 %}
-                    <i class="fas fa-check text-warning"></i> Yaxshi
-                    {% else %}
-                    <i class="fas fa-times text-danger"></i> Qoniqarsiz
-                    {% endif %}
-                    {% endwith %}
-                  </td>
-                </tr>
-                {% empty %}
-                <tr>
-                  <td colspan="5" class="text-center text-muted">
-                    Hozircha test natijalari mavjud emas
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-
+      <!-- Umumiy statistika -->
+      {% if test_results %}
+      <div class="stats-section">
+        <div class="stat-box">
+          <h5 class="card-title">{{ test_results.count }}</h5>
+          <p class="card-text">{% trans "Total tests" %}</p>
+        </div>
+        <div class="stat-box">
+          <h5 class="card-title">{{ best_percentage }}%</h5>
+          <p class="card-text">{% trans "Best result" %}</p>
+        </div>
+        <div class="stat-box">
+          <h5 class="card-title">{{ test_results.count }}</h5>
+          <p class="card-text">{% trans "Tests completed" %}</p>
         </div>
       </div>
-{% endblock %}
+      {% endif %}
+    </div>
+
+    <!-- Jadval -->
+    <h5 class="mb-3">{% trans "Detailed statistics" %}:</h5>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>{% trans "Test name" %}</th>
+            <th>{% trans "Date" %}</th>
+            <th>{% trans "Score" %}</th>
+            <th>{% trans "Percentage" %}</th>
+            <th>{% trans "Status" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for result in test_results %}
+          <tr>
+            <td>{{ result.test.title }}</td>
+            <td>{{ result.completed_at|date:"d.m.Y H:i" }}</td>
+            <td>{{ result.score }}/{{ result.total_questions }}</td>
+            <td>
+              {% with percentage=result.percentage %}
+              <span
+                class="badge {% if percentage >= 80 %}bg-success{% elif percentage >= 60 %}bg-warning{% else %}bg-danger{% endif %}"
+              >
+                {{ percentage|floatformat:1 }}%
+              </span>
+              {% endwith %}
+            </td>
+            <td>
+              {% with percentage=result.percentage %}
+              {% if percentage >= 80 %}
+              <i class="fas fa-check text-success"></i> {% trans "Excellent" %}
+              {% elif percentage >= 60 %}
+              <i class="fas fa-check text-warning"></i> {% trans "Good" %}
+              {% else %}
+              <i class="fas fa-times text-danger"></i> {% trans "Unsatisfactory" %}
+              {% endif %}
+              {% endwith %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" class="text-center text-muted">
+              {% trans "No test results available yet" %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>{% endblock %}

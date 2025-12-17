@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 
@@ -477,6 +478,7 @@
 }
 </style>
 
+
 <div class="container mt-4">
     <h3 style="font-size: 38px; font-weight: 600;">{{ test.title }}</h3>
 
@@ -484,9 +486,9 @@
         <div class="card-header bg-primary text-white">
             <h3 class="card-title mb-0">{{ test.title }}</h3>
             <p class="mb-0">
-                Vaqt chegarasi: {{ test.time_limit_minutes }} daqiqa | Savollar: {{ total_questions }} ta |
+                {% blocktrans %}Vaqt chegarasi: {{ test.time_limit_minutes }} daqiqa | Savollar: {{ total_questions }} ta |{% endblocktrans %}
                 {% if request.user.is_authenticated %}
-                <small>Savollar sizning darajangizga moslashtirildi</small>
+                <small>{% trans "Savollar sizning darajangizga moslashtirildi" %}</small>
                 {% endif %}
             </p>
         </div>
@@ -494,12 +496,12 @@
         <div class="card-body">
             <!-- Vaqt hisobi -->
             <div class="alert alert-info text-center">
-                <h4 id="timer">Qolgan vaqt: {{ test.time_limit_minutes }}:00</h4>
+                <h4 id="timer">{% trans "Qolgan vaqt:" %} {{ test.time_limit_minutes }}:00</h4>
                 {% if request.user.is_authenticated %}
                 <small class="text-muted">
                     {% with user_level=request.user.usersubjectlevel_set.first %}
                         {% if user_level %}
-                            Sizning darajangiz: {{ user_level.get_difficulty_level_display }}
+                            {% trans "Sizning darajangiz:" %} {{ user_level.get_difficulty_level_display }}
                         {% endif %}
                     {% endwith %}
                 </small>
@@ -514,11 +516,11 @@
                     {% for question in questions %}
                     <div class="card mb-4">
                         <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                            <h5 class="card-title mb-0">Savol {{ forloop.counter }}</h5>
+                            <h5 class="card-title mb-0">{% trans "Savol" %} {{ forloop.counter }}</h5>
                             <span class="badge {% if question.difficulty_level == 1 %}bg-success{% elif question.difficulty_level == 2 %}bg-warning{% else %}bg-danger{% endif %}">
-                                {% if question.difficulty_level == 1 %}Oson
-                                {% elif question.difficulty_level == 2 %}O'rtacha
-                                {% else %}Qiyin
+                                {% if question.difficulty_level == 1 %}{% trans "Oson" %}
+                                {% elif question.difficulty_level == 2 %}{% trans "O'rtacha" %}
+                                {% else %}{% trans "Qiyin" %}
                                 {% endif %}
                             </span>
                         </div>
@@ -544,7 +546,7 @@
                                     {% endfor %}
                                 {% else %}
                                     <div class="alert alert-danger">
-                                        Bu savol uchun javob variantlari mavjud emas!
+                                        {% trans "Bu savol uchun javob variantlari mavjud emas!" %}
                                     </div>
                                 {% endif %}
                             </div>
@@ -553,16 +555,16 @@
                     {% endfor %}
                 {% else %}
                 <div class="alert alert-warning">
-                    Bu testda hozircha savollar mavjud emas.
+                    {% trans "Bu testda hozircha savollar mavjud emas." %}
                 </div>
                 {% endif %}
 
                 <div class="text-center mt-4">
                     <button type="submit" class="btn btn-success btn-lg">
-                        Testni Yakunlash
+                        {% trans "Testni Yakunlash" %}
                     </button>
                     <a href="{% url 'tests' %}" class="btn btn-secondary btn-lg ms-2">
-                        Orqaga
+                        {% trans "Orqaga" %}
                     </a>
                 </div>
             </form>
@@ -575,11 +577,11 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title">Vaqt tugadi</h5>
+                <h5 class="modal-title">{% trans "Vaqt tugadi" %}</h5>
             </div>
             <div class="modal-body text-center">
                 <p class="lead">
-                    Test vaqti tugadi. Javoblaringiz avtomatik ravishda saqlanadi.
+                    {% trans "Test vaqti tugadi. Javoblaringiz avtomatik ravishda saqlanadi." %}
                 </p>
             </div>
         </div>
@@ -591,9 +593,9 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
             {% if questions %}
-                <small>Savollar: <strong><span id="currentQuestion">0</span>/{{ total_questions }}</strong></small>
+                <small>{% trans "Savollar:" %} <strong><span id="currentQuestion">0</span>/{{ total_questions }}</strong></small>
             {% else %}
-                <small>Savollar: <strong>0/0</strong></small>
+                <small>{% trans "Savollar:" %} <strong>0/0</strong></small>
             {% endif %}
             <div class="progress" style="width: 200px; height: 10px">
                 <div class="progress-bar" id="progressBar" style="width: 0%"></div>
@@ -602,7 +604,6 @@
         </div>
     </div>
 </div>
-
 <script>
     // Global o'zgaruvchilar
     let timeRemaining = {{ time_limit_seconds }};

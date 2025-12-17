@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load i18n %}
 
 {% block title %}Mening Python Yuborishlarim{% endblock %}
 
 {% block content %}
+
 <div class="container-fluid py-4">
     <div class="row">
         <div class="col-12">
@@ -12,16 +13,16 @@
                 <div>
                     <h1 class="h2 text-gray-800">
                         <i class="fab fa-python text-primary me-2"></i>
-                        Mening Python Yuborishlarim
+                        {% trans "Mening Python Yuborishlarim" %}
                     </h1>
-                    <p class="text-muted mb-0">Python kod yuborishlar tarixi va statistika</p>
+                    <p class="text-muted mb-0">{% trans "Python kod yuborishlar tarixi va statistika" %}</p>
                 </div>
                 <div class="btn-group">
                     <a href="{% url 'app2:code_practice' %}" class="btn btn-outline-primary">
-                        <i class="fas fa-arrow-left me-2"></i> Python Savollar
+                        <i class="fas fa-arrow-left me-2"></i> {% trans "Python Savollar" %}
                     </a>
                     <a href="{% url 'app2:user_profile' %}" class="btn btn-primary python-btn">
-                        <i class="fas fa-user me-2"></i> Mening Profilim
+                        <i class="fas fa-user me-2"></i> {% trans "Mening Profilim" %}
                     </a>
                 </div>
             </div>
@@ -34,14 +35,14 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        <i class="fab fa-python me-1"></i> Jami Python Yuborishlar
+                                        <i class="fab fa-python me-1"></i> {% trans "Jami Python Yuborishlar" %}
                                     </div>
                                     <div class="h2 mb-0 font-weight-bold text-gray-800">
                                         {{ total }}
                                     </div>
                                     <div class="mt-2 text-muted text-xs">
                                         {% if recent_submissions %}
-                                        <i class="fas fa-clock me-1"></i> So'nggi 7 kun: {{ recent_submissions }}
+                                        <i class="fas fa-clock me-1"></i> {% trans "So'nggi 7 kun:" %} {{ recent_submissions }}
                                         {% endif %}
                                     </div>
                                 </div>
@@ -59,7 +60,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                        <i class="fas fa-check-circle me-1"></i> Muvaffaqiyatli
+                                        <i class="fas fa-check-circle me-1"></i> {% trans "Muvaffaqiyatli" %}
                                     </div>
                                     <div class="h2 mb-0 font-weight-bold text-gray-800">
                                         {{ successful }}
@@ -86,7 +87,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                        <i class="fas fa-chart-line me-1"></i> O'rtacha Ish Vaqti
+                                        <i class="fas fa-chart-line me-1"></i> {% trans "O'rtacha Ish Vaqti" %}
                                     </div>
                                     <div class="h2 mb-0 font-weight-bold text-gray-800">
                                         {% with avg_time=submissions.aggregate_avg=avg_execution_time|default:0 %}
@@ -94,7 +95,7 @@
                                         {% endwith %}
                                     </div>
                                     <div class="mt-2 text-muted text-xs">
-                                        <i class="fas fa-stopwatch me-1"></i> Eng tezi: 0.1s
+                                        <i class="fas fa-stopwatch me-1"></i> {% trans "Eng tezi:" %} 0.1s
                                     </div>
                                 </div>
                                 <div class="col-auto">
@@ -111,18 +112,18 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                        <i class="fas fa-trophy me-1"></i> Python Muvaffaqiyati
+                                        <i class="fas fa-trophy me-1"></i> {% trans "Python Muvaffaqiyati" %}
                                     </div>
                                     <div class="h2 mb-0 font-weight-bold text-gray-800">
                                         {{ success_rate }}%
                                     </div>
                                     <div class="mt-2 text-muted text-xs">
                                         {% if success_rate >= 80 %}
-                                        <span class="text-success">Ajoyib! <i class="fas fa-star"></i></span>
+                                        <span class="text-success">{% trans "Ajoyib!" %} <i class="fas fa-star"></i></span>
                                         {% elif success_rate >= 50 %}
-                                        <span class="text-warning">Yaxshi <i class="fas fa-thumbs-up"></i></span>
+                                        <span class="text-warning">{% trans "Yaxshi" %} <i class="fas fa-thumbs-up"></i></span>
                                         {% else %}
-                                        <span class="text-danger">Mashq qilish kerak</span>
+                                        <span class="text-danger">{% trans "Mashq qilish kerak" %}</span>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -145,23 +146,23 @@
                                     <i class="fas fa-search text-muted"></i>
                                 </span>
                                 <input type="text" name="q" class="form-control border-start-0"
-                                       placeholder="Python savoli bo'yicha qidirish..."
+                                       placeholder="{% trans "Python savoli bo'yicha qidirish..." %}"
                                        value="{{ search_query }}" id="searchInput">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <select class="form-select" id="statusFilter">
-                                <option value="">Barcha holatlar</option>
-                                <option value="success">Muvaffaqiyatli</option>
-                                <option value="failed">Muvaffaqiyatsiz</option>
-                                <option value="error">Xatolik</option>
-                                <option value="pending">Kutilmoqda</option>
+                                <option value="">{% trans "Barcha holatlar" %}</option>
+                                <option value="success">{% trans "Muvaffaqiyatli" %}</option>
+                                <option value="failed">{% trans "Muvaffaqiyatsiz" %}</option>
+                                <option value="error">{% trans "Xatolik" %}</option>
+                                <option value="pending">{% trans "Kutilmoqda" %}</option>
                             </select>
                         </div>
                         <div class="col-md-3">
                             <div class="d-flex gap-2">
                                 <button type="button" class="btn btn-primary w-100" onclick="filterSubmissions()">
-                                    <i class="fas fa-filter me-2"></i> Filtrlash
+                                    <i class="fas fa-filter me-2"></i> {% trans "Filtrlash" %}
                                 </button>
                                 {% if search_query %}
                                 <a href="{% url 'app2:submission_history' %}" class="btn btn-outline-secondary">
@@ -181,16 +182,16 @@
                         <div>
                             <h6 class="m-0 font-weight-bold text-white">
                                 <i class="fas fa-history me-2"></i>
-                                Python Yuborishlar Tarixi
+                                {% trans "Python Yuborishlar Tarixi" %}
                             </h6>
-                            <small class="text-white-50">Oxirgi yuborishlar yuqorida ko'rsatilgan</small>
+                            <small class="text-white-50">{% trans "Oxirgi yuborishlar yuqorida ko'rsatilgan" %}</small>
                         </div>
                         <div class="d-flex align-items-center gap-2">
                             <span class="badge bg-light text-dark">
-                                <i class="fab fa-python me-1"></i> {{ submissions|length }} ta yuborish
+                                <i class="fab fa-python me-1"></i> {% blocktrans count counter=submissions|length %}{{ counter }} ta yuborish{% plural %}{{ counter }} ta yuborish{% endblocktrans %}
                             </span>
                             <button type="button" class="btn btn-sm btn-light" onclick="exportToCSV()">
-                                <i class="fas fa-download me-1"></i> Eksport
+                                <i class="fas fa-download me-1"></i> {% trans "Eksport" %}
                             </button>
                         </div>
                     </div>
@@ -202,12 +203,12 @@
                             <table class="table table-hover mb-0" id="pythonSubmissionsTable">
                                 <thead class="bg-light">
                                     <tr>
-                                        <th style="width: 60px;">ID</th>
-                                        <th>Python Savol</th>
-                                        <th style="width: 120px;">Holat</th>
-                                        <th style="width: 120px;">Vaqt</th>
-                                        <th style="width: 100px;">Ishlash Vaqti</th>
-                                        <th style="width: 120px;">Harakatlar</th>
+                                        <th style="width: 60px;">{% trans "ID" %}</th>
+                                        <th>{% trans "Python Savol" %}</th>
+                                        <th style="width: 120px;">{% trans "Holat" %}</th>
+                                        <th style="width: 120px;">{% trans "Vaqt" %}</th>
+                                        <th style="width: 100px;">{% trans "Ishlash Vaqti" %}</th>
+                                        <th style="width: 120px;">{% trans "Harakatlar" %}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -231,7 +232,7 @@
                                                     </span>
                                                     <span class="badge bg-secondary">
                                                         <i class="fas fa-code me-1"></i>
-                                                        {{ submission.question.submissions.count }} urinish
+                                                        {% blocktrans count counter=submission.question.submissions.count %}{{ counter }} urinish{% plural %}{{ counter }} urinish{% endblocktrans %}
                                                     </span>
                                                 </div>
                                             </div>
@@ -239,19 +240,19 @@
                                         <td>
                                             {% if submission.status == 'success' %}
                                             <span class="badge bg-success p-2">
-                                                <i class="fas fa-check-circle me-1"></i> Muvaffaqiyatli
+                                                <i class="fas fa-check-circle me-1"></i> {% trans "Muvaffaqiyatli" %}
                                             </span>
                                             {% elif submission.status == 'failed' %}
                                             <span class="badge bg-danger p-2">
-                                                <i class="fas fa-times-circle me-1"></i> Xato
+                                                <i class="fas fa-times-circle me-1"></i> {% trans "Xato" %}
                                             </span>
                                             {% elif submission.status == 'error' %}
                                             <span class="badge bg-warning text-dark p-2">
-                                                <i class="fas fa-exclamation-triangle me-1"></i> Runtime
+                                                <i class="fas fa-exclamation-triangle me-1"></i> {% trans "Runtime" %}
                                             </span>
                                             {% else %}
                                             <span class="badge bg-secondary p-2">
-                                                <i class="fas fa-clock me-1"></i> Kutilmoqda
+                                                <i class="fas fa-clock me-1"></i> {% trans "Kutilmoqda" %}
                                             </span>
                                             {% endif %}
                                         </td>
@@ -270,11 +271,11 @@
                                                 <div>
                                                     <div class="fw-bold">{{ submission.execution_time }}s</div>
                                                     {% if submission.execution_time > 5 %}
-                                                    <div class="small text-danger">Uzoq</div>
+                                                    <div class="small text-danger">{% trans "Uzoq" %}</div>
                                                     {% elif submission.execution_time > 2 %}
-                                                    <div class="small text-warning">O'rtacha</div>
+                                                    <div class="small text-warning">{% trans "O'rtacha" %}</div>
                                                     {% else %}
-                                                    <div class="small text-success">Tez</div>
+                                                    <div class="small text-success">{% trans "Tez" %}</div>
                                                     {% endif %}
                                                 </div>
                                             </div>
@@ -285,16 +286,16 @@
                                         <td>
                                             <div class="btn-group btn-group-sm">
                                                 <a href="{% url 'app2:submission_result' submission.id %}"
-                                                   class="btn btn-primary" title="Natijani ko'rish" data-bs-toggle="tooltip">
-                                                    <i class="fas fa-eye"></i> Ko'rish
+                                                   class="btn btn-primary" title="{% trans "Natijani ko'rish" %}" data-bs-toggle="tooltip">
+                                                    <i class="fas fa-eye"></i> {% trans "Ko'rish" %}
                                                 </a>
                                                 <a href="{% url 'app2:practice_question' submission.question.id %}"
-                                                   class="btn btn-outline-success" title="Qayta urinish" data-bs-toggle="tooltip">
+                                                   class="btn btn-outline-success" title="{% trans "Qayta urinish" %}" data-bs-toggle="tooltip">
                                                     <i class="fas fa-redo"></i>
                                                 </a>
                                                 <button type="button" class="btn btn-outline-info"
                                                         onclick="copyCode('{{ submission.code|escapejs }}')"
-                                                        title="Kodni nusxalash" data-bs-toggle="tooltip">
+                                                        title="{% trans "Kodni nusxalash" %}" data-bs-toggle="tooltip">
                                                     <i class="fas fa-copy"></i>
                                                 </button>
                                             </div>
@@ -309,21 +310,21 @@
                             <div class="mb-4">
                                 <i class="fab fa-python fa-4x text-muted opacity-25"></i>
                             </div>
-                            <h5 class="text-muted mb-3">Python yuborishlar topilmadi</h5>
+                            <h5 class="text-muted mb-3">{% trans "Python yuborishlar topilmadi" %}</h5>
                             <p class="text-muted mb-4">
                                 {% if search_query %}
-                                    "{{ search_query }}" so'rovi bo'yicha hech narsa topilmadi.
+                                    {% blocktrans %}"{{ search_query }}" so'rovi bo'yicha hech narsa topilmadi.{% endblocktrans %}
                                 {% else %}
-                                    Hozircha hech qanday Python kod yubormagansiz.
+                                    {% trans "Hozircha hech qanday Python kod yubormagansiz." %}
                                 {% endif %}
                             </p>
                             <div class="d-flex justify-content-center gap-3">
                                 <a href="{% url 'app2:code_practice' %}" class="btn btn-primary">
-                                    <i class="fas fa-play me-2"></i> Python Savollarni Ishlash
+                                    <i class="fas fa-play me-2"></i> {% trans "Python Savollarni Ishlash" %}
                                 </a>
                                 {% if search_query %}
                                 <a href="{% url 'app2:submission_history' %}" class="btn btn-outline-secondary">
-                                    <i class="fas fa-times me-2"></i> Qidiruvni Tozalash
+                                    <i class="fas fa-times me-2"></i> {% trans "Qidiruvni Tozalash" %}
                                 </a>
                                 {% endif %}
                             </div>
@@ -337,7 +338,7 @@
                         <div class="col-md-6">
                             <div class="text-muted small">
                                 <i class="fab fa-python me-1"></i>
-                                {{ total }} ta Python yuborish • {{ success_rate }}% muvaffaqiyat
+                                {% blocktrans %}{{ total }} ta Python yuborish • {{ success_rate }}% muvaffaqiyat{% endblocktrans %}
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -399,7 +400,7 @@
                         <div class="card-header py-3 bg-primary text-white">
                             <h6 class="m-0 font-weight-bold">
                                 <i class="fas fa-chart-bar me-2"></i>
-                                Eng Ko'p Urinilgan Python Savollar
+                                {% trans "Eng Ko'p Urinilgan Python Savollar" %}
                             </h6>
                         </div>
                         <div class="card-body">
@@ -410,7 +411,7 @@
                                         <div>
                                             <div class="fw-bold">{{ item.question__question_text|truncatewords:5 }}</div>
                                             <div class="small text-muted">
-                                                {{ item.count }} ta urinish
+                                                {% blocktrans count counter=item.count %}{{ item.count }} ta urinish{% plural %}{{ item.count }} ta urinish{% endblocktrans %}
                                             </div>
                                         </div>
                                         <div class="text-end">
@@ -431,31 +432,31 @@
                         <div class="card-header py-3 bg-success text-white">
                             <h6 class="m-0 font-weight-bold">
                                 <i class="fas fa-award me-2"></i>
-                                Python Statistikangiz
+                                {% trans "Python Statistikangiz" %}
                             </h6>
                         </div>
                         <div class="card-body">
                             <div class="row text-center">
                                 <div class="col-6 mb-3">
                                     <div class="display-6 text-primary">{{ successful }}</div>
-                                    <div class="small text-muted">Muvaffaqiyatli</div>
+                                    <div class="small text-muted">{% trans "Muvaffaqiyatli" %}</div>
                                 </div>
                                 <div class="col-6 mb-3">
                                     <div class="display-6 text-danger">{{ total|add:"-"|add:successful }}</div>
-                                    <div class="small text-muted">Muvaffaqiyatsiz</div>
+                                    <div class="small text-muted">{% trans "Muvaffaqiyatsiz" %}</div>
                                 </div>
                                 <div class="col-6">
                                     <div class="display-6 text-info">{{ recent_submissions }}</div>
-                                    <div class="small text-muted">So'nggi 7 kun</div>
+                                    <div class="small text-muted">{% trans "So'nggi 7 kun" %}</div>
                                 </div>
                                 <div class="col-6">
                                     <div class="display-6 text-warning">{{ success_rate }}%</div>
-                                    <div class="small text-muted">Muvaffaqiyat</div>
+                                    <div class="small text-muted">{% trans "Muvaffaqiyat" %}</div>
                                 </div>
                             </div>
                             <div class="text-center mt-3">
                                 <a href="{% url 'app2:leaderboard' %}" class="btn btn-outline-primary btn-sm">
-                                    <i class="fas fa-ranking-star me-2"></i> Reytingda ko'rish
+                                    <i class="fas fa-ranking-star me-2"></i> {% trans "Reytingda ko'rish" %}
                                 </a>
                             </div>
                         </div>
@@ -465,8 +466,7 @@
             {% endif %}
         </div>
     </div>
-</div>
-{% endblock %}
+</div>{% endblock %}
 
 {% block extra_css %}
 <style>

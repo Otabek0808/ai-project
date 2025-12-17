@@ -294,6 +294,8 @@
         color: white;
     }
 </style>
+{% load i18n %}
+
 <div class="container-fluid py-4">
     <div class="row justify-content-center">
         <div class="col-lg-10">
@@ -301,7 +303,7 @@
                 <div class="card-header py-3 python-header">
                     <h6 class="m-0 font-weight-bold text-white">
                         <i class="fab fa-python me-2"></i>
-                        Yangi Python Savol Qo'shish
+                        {% trans "Yangi Python Savol Qo'shish" %}
                     </h6>
                 </div>
 
@@ -313,13 +315,13 @@
                         <div class="mb-4">
                             <label for="{{ form.function_name.id_for_label }}" class="form-label fw-bold">
                                 <i class="fas fa-cog text-primary me-1"></i>
-                                Funksiya Nomi
+                                {% trans "Funksiya Nomi" %}
                                 <span class="text-danger">*</span>
                             </label>
                             {{ form.function_name }}
                             <div class="form-text text-muted">
-                                Foydalanuvchi yozishi kerak bo'lgan funksiya nomi.
-                                <strong>Misol:</strong> <code>qoshish</code>, <code>kopaytma</code>, <code>faktorial</code>
+                                {% trans "Foydalanuvchi yozishi kerak bo'lgan funksiya nomi." %}
+                                <strong>{% trans "Misol:" %}</strong> <code>qoshish</code>, <code>kopaytma</code>, <code>faktorial</code>
                             </div>
                             {% if form.function_name.errors %}
                             <div class="alert alert-danger small mt-1 p-2">
@@ -333,13 +335,13 @@
                         <div class="mb-4">
                             <label for="{{ form.function_params.id_for_label }}" class="form-label fw-bold">
                                 <i class="fas fa-sliders-h text-info me-1"></i>
-                                Funksiya Parametrlari
+                                {% trans "Funksiya Parametrlari" %}
                                 <span class="text-danger">*</span>
                             </label>
                             {{ form.function_params }}
                             <div class="form-text text-muted">
-                                Funksiya qabul qiladigan parametrlar.
-                                <strong>Misol:</strong> <code>a, b</code> yoki <code>n</code> yoki <code>text</code>
+                                {% trans "Funksiya qabul qiladigan parametrlar." %}
+                                <strong>{% trans "Misol:" %}</strong> <code>a, b</code> {% trans "yoki" %} <code>n</code> {% trans "yoki" %} <code>text</code>
                             </div>
                         </div>
 
@@ -347,12 +349,12 @@
                         <div class="mb-4">
                             <label for="{{ form.question_text.id_for_label }}" class="form-label fw-bold">
                                 <i class="fas fa-question-circle text-primary me-1"></i>
-                                Savol Matni
+                                {% trans "Savol Matni" %}
                                 <span class="text-danger">*</span>
                             </label>
                             {{ form.question_text }}
                             <div class="form-text text-muted">
-                                Savolning to'liq matnini yozing.
+                                {% trans "Savolning to'liq matnini yozing." %}
                             </div>
                             {% if form.question_text.errors %}
                             <div class="alert alert-danger small mt-1 p-2">
@@ -366,7 +368,7 @@
                         <div class="mb-4">
                             <label for="{{ form.test_code.id_for_label }}" class="form-label fw-bold">
                                 <i class="fas fa-code text-success me-1"></i>
-                                Python Test Kodi
+                                {% trans "Python Test Kodi" %}
                                 <span class="text-danger">*</span>
                                 <span class="badge bg-warning ms-2" id="functionNameBadge">
                                     {{ form.function_name.value|default:"function" }}()
@@ -374,12 +376,12 @@
                             </label>
                             {{ form.test_code }}
                             <div class="form-text text-muted">
-                                <p><strong>Eslatma:</strong> Test kodida <code id="functionNameCode">function_name()</code> funksiyasini chaqiring!</p>
+                                <p><strong>{% trans "Eslatma:" %}</strong> {% trans "Test kodida" %} <code id="functionNameCode">function_name()</code> {% trans "funksiyasini chaqiring!" %}</p>
 
                                 <div class="alert alert-info">
                                     <h6 class="alert-heading mb-2">
                                         <i class="fas fa-lightbulb me-2"></i>
-                                        Test kodi namunasi:
+                                        {% trans "Test kodi namunasi:" %}
                                     </h6>
                                     <pre class="mb-0" id="testCodeExample"><code># Test 1: Oddiy holat
 result = function_name(5, 3)
@@ -406,7 +408,7 @@ print("✅ Barcha testlar muvaffaqiyatli!")</code></pre>
                                 <div class="mb-3">
                                     <label for="{{ form.difficulty.id_for_label }}" class="form-label fw-bold">
                                         <i class="fas fa-chart-line text-warning me-1"></i>
-                                        Qiyinchilik
+                                        {% trans "Qiyinchilik" %}
                                     </label>
                                     {{ form.difficulty }}
                                 </div>
@@ -415,11 +417,11 @@ print("✅ Barcha testlar muvaffaqiyatli!")</code></pre>
                                 <div class="mb-3">
                                     <label for="{{ form.category.id_for_label }}" class="form-label fw-bold">
                                         <i class="fas fa-tag text-info me-1"></i>
-                                        Kategoriya
+                                        {% trans "Kategoriya" %}
                                     </label>
                                     {{ form.category }}
                                     <div class="form-text">
-                                        Masalan: Matematika, String, Ro'yxat
+                                        {% trans "Masalan: Matematika, String, Ro'yxat" %}
                                     </div>
                                 </div>
                             </div>
@@ -427,7 +429,7 @@ print("✅ Barcha testlar muvaffaqiyatli!")</code></pre>
                                 <div class="mb-3">
                                     <label for="{{ form.points.id_for_label }}" class="form-label fw-bold">
                                         <i class="fas fa-star text-warning me-1"></i>
-                                        Ball
+                                        {% trans "Ball" %}
                                     </label>
                                     {{ form.points }}
                                 </div>
@@ -438,18 +440,18 @@ print("✅ Barcha testlar muvaffaqiyatli!")</code></pre>
                         <div class="d-flex justify-content-between align-items-center border-top pt-4">
                             <div>
                                 <button type="submit" class="btn btn-primary btn-lg px-4">
-                                    <i class="fas fa-save me-2"></i> Python Savolni Saqlash
+                                    <i class="fas fa-save me-2"></i> {% trans "Python Savolni Saqlash" %}
                                 </button>
                                 <button type="button" class="btn btn-outline-info" id="previewBtn">
-                                    <i class="fas fa-eye me-2"></i> Ko'rib Chiqish
+                                    <i class="fas fa-eye me-2"></i> {% trans "Ko'rib Chiqish" %}
                                 </button>
                             </div>
                             <div>
                                 <a href="{% url 'app2:code_practice' %}" class="btn btn-outline-secondary">
-                                    <i class="fas fa-times me-2"></i> Bekor Qilish
+                                    <i class="fas fa-times me-2"></i> {% trans "Bekor Qilish" %}
                                 </a>
                                 <button type="reset" class="btn btn-outline-danger ms-2">
-                                    <i class="fas fa-undo me-2"></i> Tozalash
+                                    <i class="fas fa-undo me-2"></i> {% trans "Tozalash" %}
                                 </button>
                             </div>
                         </div>
@@ -462,7 +464,7 @@ print("✅ Barcha testlar muvaffaqiyatli!")</code></pre>
                         <div class="col-md-6">
                             <h6 class="text-success">
                                 <i class="fas fa-check-circle me-2"></i>
-                                To'g'ri test kodi namunasi:
+                                {% trans "To'g'ri test kodi namunasi:" %}
                             </h6>
                             <div class="bg-dark text-light p-3 rounded small">
                                 <pre><code id="correctExample"># Funksiya nomi: qoshish
@@ -481,14 +483,14 @@ print("Test muvaffaqiyatli!")</code></pre>
                         <div class="col-md-6">
                             <h6 class="text-primary">
                                 <i class="fas fa-lightbulb me-2"></i>
-                                Maslahatlar:
+                                {% trans "Maslahatlar:" %}
                             </h6>
                             <ul class="small">
-                                <li>Funksiya nomini aniq belgilang</li>
-                                <li>Test kodida shu funksiyani chaqiring</li>
-                                <li>Kamida 3-4 ta test bo'lsin</li>
-                                <li>Turli xil holatlarni tekshiring</li>
-                                <li>Xato xabarlari tushunarli bo'lsin</li>
+                                <li>{% trans "Funksiya nomini aniq belgilang" %}</li>
+                                <li>{% trans "Test kodida shu funksiyani chaqiring" %}</li>
+                                <li>{% trans "Kamida 3-4 ta test bo'lsin" %}</li>
+                                <li>{% trans "Turli xil holatlarni tekshiring" %}</li>
+                                <li>{% trans "Xato xabarlari tushunarli bo'lsin" %}</li>
                             </ul>
                         </div>
                     </div>

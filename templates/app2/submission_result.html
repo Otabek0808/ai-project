@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load i18n %}
 
 {% block title %}Python Test Natijasi - {{ submission.id }}{% endblock %}
 
 {% block content %}
+
 <div class="container-fluid py-4">
     <div class="row">
         <div class="col-lg-10 mx-auto">
@@ -14,18 +15,18 @@
                         <div>
                             <h6 class="m-0 font-weight-bold text-white">
                                 <i class="fab fa-python me-2"></i>
-                                Python Test Natijasi #{{ submission.id }}
+                                {% trans "Python Test Natijasi #" %}{{ submission.id }}
                             </h6>
-                            <small class="text-white-50">Python kodingizning test natijasi</small>
+                            <small class="text-white-50">{% trans "Python kodingizning test natijasi" %}</small>
                         </div>
                         <div class="btn-group">
                             <a href="{% url 'app2:practice_question' submission.question.id %}"
                                class="btn btn-sm btn-light">
-                                <i class="fas fa-redo me-2"></i> Qayta Urinish
+                                <i class="fas fa-redo me-2"></i> {% trans "Qayta Urinish" %}
                             </a>
                             <a href="{% url 'app2:submission_history' %}"
                                class="btn btn-sm btn-outline-light">
-                                <i class="fas fa-history me-2"></i> Tarix
+                                <i class="fas fa-history me-2"></i> {% trans "Tarix" %}
                             </a>
                         </div>
                     </div>
@@ -49,17 +50,17 @@
                             <div class="flex-grow-1">
                                 <h4 class="alert-heading mb-2">
                                     {% if submission.status == 'success' %}
-                                        <i class="fas fa-trophy me-2"></i> Python Test Muvaffaqiyatli!
+                                        <i class="fas fa-trophy me-2"></i> {% trans "Python Test Muvaffaqiyatli!" %}
                                     {% elif submission.status == 'failed' %}
-                                        <i class="fas fa-times-circle me-2"></i> Python Test Xato!
+                                        <i class="fas fa-times-circle me-2"></i> {% trans "Python Test Xato!" %}
                                     {% else %}
-                                        <i class="fas fa-exclamation-triangle me-2"></i> Python Runtime Xatolik!
+                                        <i class="fas fa-exclamation-triangle me-2"></i> {% trans "Python Runtime Xatolik!" %}
                                     {% endif %}
                                 </h4>
                                 <div class="row">
                                     <div class="col-md-8">
                                         <p class="mb-2">
-                                            <strong>Python Savol:</strong>
+                                            <strong>{% trans "Python Savol:" %}</strong>
                                             <a href="{% url 'app2:practice_question' submission.question.id %}"
                                                class="text-decoration-none">
                                                 {{ submission.question.question_text|truncatewords:15 }}
@@ -73,7 +74,7 @@
                                                 {{ submission.question.get_difficulty_display }}
                                             </span>
                                             <span class="badge bg-primary me-2">
-                                                <i class="fab fa-python me-1"></i> Python
+                                                <i class="fab fa-python me-1"></i> {% trans "Python" %}
                                             </span>
                                             <span class="text-muted">
                                                 <i class="fas fa-calendar-alt me-1"></i>
@@ -90,7 +91,7 @@
                                             {% endif %}
                                         </div>
                                         <div class="small text-muted">
-                                            <i class="fas fa-stopwatch me-1"></i> Ish vaqti
+                                            <i class="fas fa-stopwatch me-1"></i> {% trans "Ish vaqti" %}
                                         </div>
                                     </div>
                                 </div>
@@ -106,7 +107,7 @@
                                 <div class="card-header bg-primary text-white">
                                     <h6 class="m-0 font-weight-bold">
                                         <i class="fas fa-terminal me-2"></i>
-                                        Python Dastur Chiqishi
+                                        {% trans "Python Dastur Chiqishi" %}
                                     </h6>
                                 </div>
                                 <div class="card-body p-0">
@@ -123,15 +124,15 @@
 {{ submission.test_result.output }}</pre>
                                         <button type="button" class="btn btn-sm btn-outline-light position-absolute"
                                                 style="top: 10px; right: 10px;"
-                                                onclick="copyOutput()" title="Nusxalash">
+                                                onclick="copyOutput()" title="{% trans "Nusxalash" %}">
                                             <i class="fas fa-copy"></i>
                                         </button>
                                     </div>
                                     {% else %}
                                     <div class="p-5 text-center text-muted">
                                         <i class="fas fa-code fa-3x mb-3 opacity-25"></i>
-                                        <p class="mb-0">Hech qanday chiqish yo'q</p>
-                                        <small class="text-muted">Python dastur hech narsa chop etmagan</small>
+                                        <p class="mb-0">{% trans "Hech qanday chiqish yo'q" %}</p>
+                                        <small class="text-muted">{% trans "Python dastur hech narsa chop etmagan" %}</small>
                                     </div>
                                     {% endif %}
                                 </div>
@@ -153,16 +154,16 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <h6 class="m-0 font-weight-bold">
                                     <i class="fab fa-python me-2"></i>
-                                    Sizning Python Kodingiz
+                                    {% trans "Sizning Python Kodingiz" %}
                                 </h6>
                                 <div class="btn-group btn-group-sm">
                                     <button type="button" class="btn btn-outline-light" onclick="copyCode()"
-                                            title="Kodni nusxalash">
-                                        <i class="fas fa-copy"></i> Nusxalash
+                                            title="{% trans "Kodni nusxalash" %}">
+                                        <i class="fas fa-copy"></i> {% trans "Nusxalash" %}
                                     </button>
                                     <button type="button" class="btn btn-outline-light" onclick="toggleLineNumbers()"
-                                            title="Qator raqamlarini ko'rsatish/yashirish">
-                                        <i class="fas fa-list-ol"></i> Qatorlar
+                                            title="{% trans "Qator raqamlarini ko'rsatish/yashirish" %}">
+                                        <i class="fas fa-list-ol"></i> {% trans "Qatorlar" %}
                                     </button>
                                 </div>
                             </div>
@@ -190,7 +191,7 @@
                         <div class="card-header bg-light">
                             <h6 class="m-0 font-weight-bold text-danger">
                                 <i class="fas fa-bug me-2"></i>
-                                Python Xatolarini Tahlil Qilish
+                                {% trans "Python Xatolarini Tahlil Qilish" %}
                             </h6>
                         </div>
                         <div class="card-body">
@@ -198,40 +199,40 @@
                                 <div class="col-md-6">
                                     <h6 class="text-primary mb-3">
                                         <i class="fas fa-search me-2"></i>
-                                        Tekshirishlar
+                                        {% trans "Tekshirishlar" %}
                                     </h6>
                                     <ul class="list-unstyled">
                                         <li class="mb-2">
                                             <i class="fas {% if 'assert' in submission.code %}fa-check-circle text-success{% else %}fa-times-circle text-danger{% endif %} me-2"></i>
-                                            assert funksiyasi ishlatilganmi?
+                                            {% trans "assert funksiyasi ishlatilganmi?" %}
                                         </li>
                                         <li class="mb-2">
                                             <i class="fas {% if 'print' in submission.code %}fa-check-circle text-success{% else %}fa-times-circle text-danger{% endif %} me-2"></i>
-                                            print() funksiyasi borligini tekshiring
+                                            {% trans "print() funksiyasi borligini tekshiring" %}
                                         </li>
                                         <li class="mb-2">
                                             <i class="fas {% if 'def ' in submission.code %}fa-check-circle text-success{% else %}fa-times-circle text-danger{% endif %} me-2"></i>
-                                            Asosiy funksiya mavjudligi
+                                            {% trans "Asosiy funksiya mavjudligi" %}
                                         </li>
                                         <li>
                                             <i class="fas {% if 'return' in submission.code or 'print' in submission.code %}fa-check-circle text-success{% else %}fa-times-circle text-danger{% endif %} me-2"></i>
-                                            Natijani qaytarish yoki chop etish
+                                            {% trans "Natijani qaytarish yoki chop etish" %}
                                         </li>
                                     </ul>
                                 </div>
                                 <div class="col-md-6">
                                     <h6 class="text-primary mb-3">
                                         <i class="fas fa-lightbulb me-2"></i>
-                                        Maslahatlar
+                                        {% trans "Maslahatlar" %}
                                     </h6>
                                     <div class="alert alert-info">
                                         <i class="fas fa-info-circle me-2"></i>
-                                        <strong>Python uchun maslahatlar:</strong>
+                                        <strong>{% trans "Python uchun maslahatlar:" %}</strong>
                                         <ul class="mt-2 mb-0">
-                                            <li>Funksiya nomi to'g'ri yozilganligini tekshiring</li>
-                                            <li>Indentatsiya (4 probel) to'g'ri bajarilganligini tekshiring</li>
-                                            <li>Xatolarni try/except bloklari orqali ushlang</li>
-                                            <li>Test holatlarini to'liq qamrab oling</li>
+                                            <li>{% trans "Funksiya nomi to'g'ri yozilganligini tekshiring" %}</li>
+                                            <li>{% trans "Indentatsiya (4 probel) to'g'ri bajarilganligini tekshiring" %}</li>
+                                            <li>{% trans "Xatolarni try/except bloklari orqali ushlang" %}</li>
+                                            <li>{% trans "Test holatlarini to'liq qamrab oling" %}</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -246,11 +247,11 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <a href="{% url 'app2:code_practice' %}" class="btn btn-outline-primary">
-                                <i class="fas fa-list me-2"></i> Boshqa Python Savollar
+                                <i class="fas fa-list me-2"></i> {% trans "Boshqa Python Savollar" %}
                             </a>
                             <a href="{% url 'app2:practice_question' submission.question.id %}"
                                class="btn btn-primary ms-2">
-                                <i class="fas fa-redo me-2"></i> Python Kodni Qayta Ishlash
+                                <i class="fas fa-redo me-2"></i> {% trans "Python Kodni Qayta Ishlash" %}
                             </a>
                         </div>
                         <div class="d-flex align-items-center">
@@ -277,7 +278,7 @@
                 <div class="card-header bg-info text-white">
                     <h6 class="m-0 font-weight-bold">
                         <i class="fas fa-lightbulb me-2"></i>
-                        O'xshash Python Savollar
+                        {% trans "O'xshash Python Savollar" %}
                     </h6>
                 </div>
                 <div class="card-body">
@@ -303,7 +304,7 @@
                                     </h6>
                                     <div class="d-flex justify-content-between align-items-center mt-3">
                                         <span class="badge bg-primary">
-                                            <i class="fab fa-python me-1"></i> Python
+                                            <i class="fab fa-python me-1"></i> {% trans "Python" %}
                                         </span>
                                         <a href="{% url 'app2:practice_question' question.id %}"
                                            class="btn btn-sm btn-outline-primary">
@@ -317,7 +318,7 @@
                         <div class="col-12">
                             <div class="text-center py-4">
                                 <i class="fab fa-python fa-2x text-muted opacity-25 mb-3"></i>
-                                <p class="text-muted">Hozircha o'xshash Python savollar mavjud emas</p>
+                                <p class="text-muted">{% trans "Hozircha o'xshash Python savollar mavjud emas" %}</p>
                             </div>
                         </div>
                         {% endfor %}
@@ -326,8 +327,7 @@
             </div>
         </div>
     </div>
-</div>
-{% endblock %}
+</div>{% endblock %}
 
 {% block extra_css %}
 <style>

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 <style>
@@ -259,137 +260,131 @@ margin: 1rem auto;
     scroll-margin-top: 20px;
   }
 </style>
-      <div class="result_test_container">
 
-          <h3 >Test Natijasi</h3>
-        <div class="result_test_body">
-          <!-- Test ma'lumotlari -->
-          <h4 class="text-primary">{{ test.title }}</h4>
-          {% if test.description %}
-          <p class="text-muted">{{ test.description }}</p>
-          {% endif %}
+<div class="result_test_container">
+    <h3>{% trans "Test Natijasi" %}</h3>
+    <div class="result_test_body">
+        <!-- Test ma'lumotlari -->
+        <h4 class="text-primary">{{ test.title }}</h4>
+        {% if test.description %}
+        <p class="text-muted">{{ test.description }}</p>
+        {% endif %}
 
-          <!-- Asosiy natija -->
-          <div class="row mt-4">
+        <!-- Asosiy natija -->
+        <div class="row mt-4">
             <div class="col-md-6 mb-3">
-              <div class="card border-success">
-                <div class="card-body">
-                  <h6 class="card-title text-success">
-                    <i class="fas fa-check-circle"></i> To'g'ri Javoblar
-                  </h6>
-                  <h2 class="text-success">
-                    {{ score }}/{{ total_questions }}
-                  </h2>
-                  <small class="text-muted">Savollar soni</small>
+                <div class="card border-success">
+                    <div class="card-body">
+                        <h6 class="card-title text-success">
+                            <i class="fas fa-check-circle"></i> {% trans "To'g'ri Javoblar" %}
+                        </h6>
+                        <h2 class="text-success">
+                            {{ score }}/{{ total_questions }}
+                        </h2>
+                        <small class="text-muted">{% trans "Savollar soni" %}</small>
+                    </div>
                 </div>
-              </div>
             </div>
             <div class="col-md-6 mb-3">
-              <div class="card border-info">
-                <div class="card-body">
-                  <h6 class="card-title text-info">
-                    <i class="fas fa-percentage"></i> Foiz
-                  </h6>
-                  <h2 class="text-info">{{ percentage|floatformat:1 }}%</h2>
-                  <small class="text-muted">Umumiy natija</small>
+                <div class="card border-info">
+                    <div class="card-body">
+                        <h6 class="card-title text-info">
+                            <i class="fas fa-percentage"></i> {% trans "Foiz" %}
+                        </h6>
+                        <h2 class="text-info">{{ percentage|floatformat:1 }}%</h2>
+                        <small class="text-muted">{% trans "Umumiy natija" %}</small>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
+        </div>
 
-          <!-- Vaqt ma'lumotlari - SODDALASHTIRILGAN VERSIYA -->
-          {% if time_taken_seconds %}
-          <div class="card border-warning mt-3">
+        <!-- Vaqt ma'lumotlari - SODDALASHTIRILGAN VERSIYA -->
+        {% if time_taken_seconds %}
+        <div class="card border-warning mt-3">
             <div class="card-body">
-              <h6 class="card-title text-warning">
-                <i class="fas fa-clock"></i> Sarflangan Vaqt
-              </h6>
-              <h4 class="text-warning">
-<!--<<<<<<< HEAD-->
-                {% widthratio time_taken_seconds 60 1 as minutes %}
-                {% with time_int=time_taken_seconds|add:"0" %}
-                  {% with seconds=time_int|divisibleby:60|yesno:"0,"|add:"0" %}
-                    {{ minutes|floatformat:"0" }} daqiqa {{ seconds }} soniya
-                  {% endwith %}
-                {% endwith %}
-<!--=======-->
-<!--                {% widthratio time_taken_seconds 60 1 as minutes %} {{ minutes }} daqiqa {{ time_taken_seconds|divisibleby:60|yesno:",0" }}-->
-<!--                soniya-->
-<!--&gt;>>>>>> 6cc274833d03b53cbbe1b2cb46c6515424525ff7-->
-              </h4>
-              <small class="text-muted">Testni ishlash uchun sarflangan vaqt</small>
+                <h6 class="card-title text-warning">
+                    <i class="fas fa-clock"></i> {% trans "Sarflangan Vaqt" %}
+                </h6>
+                <h4 class="text-warning">
+                    {% widthratio time_taken_seconds 60 1 as minutes %}
+                    {% with time_int=time_taken_seconds|add:"0" %}
+                        {% with seconds=time_int|divisibleby:60|yesno:"0,"|add:"0" %}
+                            {{ minutes|floatformat:"0" }} {% trans "daqiqa" %} {{ seconds }} {% trans "soniya" %}
+                        {% endwith %}
+                    {% endwith %}
+                </h4>
+                <small class="text-muted">{% trans "Testni ishlash uchun sarflangan vaqt" %}</small>
             </div>
-          </div>
-          {% endif %}
+        </div>
+        {% endif %}
 
-          <!-- Baholash -->
-          <div class="mt-4 p-3 rounded
+        <!-- Baholash -->
+        <div class="mt-4 p-3 rounded
             {% if percentage >= 90 %}bg-success text-white
             {% elif percentage >= 70 %}bg-info text-white
             {% elif percentage >= 50 %}bg-warning
             {% else %}bg-danger text-white{% endif %}">
             <h5>
-              {% if percentage >= 90 %}
-                <i class="fas fa-star"></i> A'lo! Juda yaxshi!
-              {% elif percentage >= 70 %}
-                <i class="fas fa-thumbs-up"></i> Yaxshi!
-              {% elif percentage >= 50 %}
-                <i class="fas fa-check"></i> Qoniqarli
-              {% else %}
-                <i class="fas fa-redo"></i> Qaytadan o'rganib chiqing
-              {% endif %}
+                {% if percentage >= 90 %}
+                    <i class="fas fa-star"></i> {% trans "A'lo! Juda yaxshi!" %}
+                {% elif percentage >= 70 %}
+                    <i class="fas fa-thumbs-up"></i> {% trans "Yaxshi!" %}
+                {% elif percentage >= 50 %}
+                    <i class="fas fa-check"></i> {% trans "Qoniqarli" %}
+                {% else %}
+                    <i class="fas fa-redo"></i> {% trans "Qaytadan o'rganib chiqing" %}
+                {% endif %}
             </h5>
             <p class="mb-0">
-              {% if percentage >= 90 %}
-                Siz bu mavzuni mukammal o'zlashtirgansiz!
-              {% elif percentage >= 70 %}
-                Yaxshi natija, lekin yana mashq qilish foydali bo'ladi.
-              {% elif percentage >= 50 %}
-                O'rtacha natija, mavzuni qaytadan ko'rib chiqing.
-              {% else %}
-                Mavzuni qaytadan o'rganib chiqishingiz kerak.
-              {% endif %}
+                {% if percentage >= 90 %}
+                    {% trans "Siz bu mavzuni mukammal o'zlashtirgansiz!" %}
+                {% elif percentage >= 70 %}
+                    {% trans "Yaxshi natija, lekin yana mashq qilish foydali bo'ladi." %}
+                {% elif percentage >= 50 %}
+                    {% trans "O'rtacha natija, mavzuni qaytadan ko'rib chiqing." %}
+                {% else %}
+                    {% trans "Mavzuni qaytadan o'rganib chiqishingiz kerak." %}
+                {% endif %}
             </p>
-          </div>
+        </div>
 
-          <!-- Harakatlar -->
-          <div class="mt-4 d-grid gap-2 d-md-flex justify-content-center">
+        <!-- Harakatlar -->
+        <div class="mt-4 d-grid gap-2 d-md-flex justify-content-center">
             <a href="{% url 'tests' %}" class="btn btn-primary me-2">
-              <i class="fas fa-list"></i> Boshqa Testlar
+                <i class="fas fa-list"></i> {% trans "Boshqa Testlar" %}
             </a>
             <a href="{% url 'take_test' test.id %}" class="btn btn-success">
-              <i class="fas fa-redo"></i> Qayta Urinish
+                <i class="fas fa-redo"></i> {% trans "Qayta Urinish" %}
             </a>
-          </div>
+        </div>
 
-          <!-- Progress bar -->
-          <div class="mt-4">
+        <!-- Progress bar -->
+        <div class="mt-4">
             <div class="d-flex justify-content-between mb-1">
-              <small>0%</small>
-              <small>50%</small>
-              <small>100%</small>
+                <small>0%</small>
+                <small>50%</small>
+                <small>100%</small>
             </div>
             <div class="progress" style="height: 10px">
-              <div
-                class="progress-bar
-                {% if percentage >= 90 %}bg-success
-                {% elif percentage >= 70 %}bg-info
-                {% elif percentage >= 50 %}bg-warning
-                {% else %}bg-danger{% endif %}"
-                role="progressbar"
-                style="width: {{ percentage }}%;"
-                aria-valuenow="{{ percentage }}"
-                aria-valuemin="0"
-                aria-valuemax="100"
-              >
-                {{ percentage|floatformat:1 }}%
-              </div>
+                <div
+                    class="progress-bar
+                    {% if percentage >= 90 %}bg-success
+                    {% elif percentage >= 70 %}bg-info
+                    {% elif percentage >= 50 %}bg-warning
+                    {% else %}bg-danger{% endif %}"
+                    role="progressbar"
+                    style="width: {{ percentage }}%;"
+                    aria-valuenow="{{ percentage }}"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                >
+                    {{ percentage|floatformat:1 }}%
+                </div>
             </div>
-          </div>
         </div>
-        <div class="result_test_footer">
-          <small>Test {{ test.uploaded_at|date:"d.m.Y H:i" }} da yuklangan</small>
-        </div>
-      </div>
-
+    </div>
+    <div class="result_test_footer">
+        <small>{% trans "Test" %} {{ test.uploaded_at|date:"d.m.Y H:i" }} {% trans "da yuklangan" %}</small>
+    </div>
+</div>
 {% endblock %}
