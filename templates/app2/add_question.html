@@ -4,6 +4,296 @@
 {% block title %}Python Yangi Savol Qo'shish{% endblock %}
 
 {% block content %}
+<style>
+    /* Asosiy container uchun */
+    .container-fluid {
+        background: transparent !important;
+    }
+
+    /* Kartalar uchun */
+    .card {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+        backdrop-filter: blur(10px);
+        border: 0.1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* Card header uchun */
+    .python-header {
+        background: linear-gradient(135deg, rgba(55, 118, 171, 0.8) 0%, rgba(48, 105, 152, 0.8) 100%) !important;
+        border-bottom: 3px solid rgba(255, 212, 59, 0.8);
+    }
+
+    /* Card body uchun */
+    .card-body {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+    }
+
+    /* Card footer uchun */
+    .card-footer {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+        border-top: 0.1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* Form elementlari uchun */
+    .form-control,
+    .form-select,
+    .input-group-text,
+    textarea {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+        backdrop-filter: blur(10px);
+        border: 0.1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* Textarea maxsus stillari */
+    #{{ form.question_text.id_for_label }} {
+        font-size: 16px;
+        line-height: 1.6;
+        border-left: 4px solid rgba(55, 118, 171, 0.8);
+        min-height: 150px;
+        max-height: 400px;
+        resize: vertical;
+    }
+
+    #{{ form.test_code.id_for_label }} {
+        font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+        font-size: 14px;
+        border-left: 4px solid rgba(40, 167, 69, 0.8);
+        min-height: 250px;
+        max-height: 500px;
+        resize: vertical;
+    }
+
+    /* Buttonlar uchun */
+    .btn {
+        backdrop-filter: blur(10px);
+    }
+
+    .btn-primary {
+        background-color: rgba(55, 118, 171, 0.8) !important;
+        border-color: rgba(55, 118, 171, 0.5);
+    }
+
+    .btn-outline-secondary {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-outline-danger {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+        border-color: rgba(220, 53, 69, 0.5);
+    }
+
+    .btn-outline-info {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+        border-color: rgba(13, 202, 240, 0.5);
+    }
+
+    /* Badge lar uchun */
+    .badge {
+        backdrop-filter: blur(10px);
+    }
+
+    .bg-primary {
+        background-color: rgba(55, 118, 171, 0.8) !important;
+    }
+
+    .bg-success {
+        background-color: rgba(40, 167, 69, 0.8) !important;
+    }
+
+    .bg-warning {
+        background-color: rgba(255, 193, 7, 0.8) !important;
+    }
+
+    .bg-danger {
+        background-color: rgba(220, 53, 69, 0.8) !important;
+    }
+
+    .bg-info {
+        background-color: rgba(13, 202, 240, 0.8) !important;
+    }
+
+    .bg-light {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+    }
+
+    /* Alertlar uchun */
+    .alert {
+        backdrop-filter: blur(10px);
+    }
+
+    .alert-danger {
+        background-color: rgba(220, 53, 69, 0.1) !important;
+        border-color: rgba(220, 53, 69, 0.3);
+    }
+
+    .alert-info {
+        background-color: rgba(13, 202, 240, 0.1) !important;
+        border-color: rgba(13, 202, 240, 0.3);
+    }
+
+    /* Accordion uchun */
+    .accordion-button {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+        backdrop-filter: blur(10px);
+        border: 0.1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .accordion-button:not(.collapsed) {
+        background-color: rgba(55, 118, 171, 0.1) !important;
+        color: #3776AB;
+    }
+
+    .accordion-button:focus {
+        border-color: rgba(55, 118, 171, 0.5);
+        box-shadow: 0 0 0 0.25rem rgba(55, 118, 171, 0.25);
+    }
+
+    .accordion-body {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+    }
+
+    .accordion-item {
+        background-color: transparent !important;
+        border: 0.1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* Code block uchun */
+    .python-code, pre {
+        background-color: rgba(43, 43, 43, 0.9) !important;
+        backdrop-filter: blur(10px);
+        border: 0.1px solid rgba(255, 255, 255, 0.1);
+        font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+    }
+
+    /* Border left uchun */
+    .border-left-primary {
+        border-left: 4px solid rgba(55, 118, 171, 0.8) !important;
+    }
+
+    /* Modal uchun */
+    .modal-content {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+        backdrop-filter: blur(10px);
+        border: 0.1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .modal-header {
+        background: linear-gradient(135deg, rgba(55, 118, 171, 0.8) 0%, rgba(48, 105, 152, 0.8) 100%) !important;
+        border-bottom: 0.1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* Form text uchun */
+    .form-text {
+        color: rgba(0, 0, 0, 0.6) !important;
+    }
+
+    .form-text code {
+        background-color: rgba(248, 249, 250, 0.7);
+        padding: 2px 6px;
+        border-radius: 3px;
+        border: 1px solid rgba(222, 226, 230, 0.5);
+    }
+
+    /* Difficulty dropdown uchun */
+    #{{ form.difficulty.id_for_label }} option[value="easy"] {
+        color: #28a745;
+        font-weight: 500;
+    }
+
+    #{{ form.difficulty.id_for_label }} option[value="medium"] {
+        color: #ffc107;
+        font-weight: 500;
+    }
+
+    #{{ form.difficulty.id_for_label }} option[value="hard"] {
+        color: #dc3545;
+        font-weight: 500;
+    }
+
+    /* Valid va invalid borderlar */
+    .is-valid {
+        border-color: rgba(40, 167, 69, 0.8) !important;
+        border-left-width: 4px;
+    }
+
+    .is-invalid {
+        border-color: rgba(220, 53, 69, 0.8) !important;
+        border-left-width: 4px;
+    }
+
+    /* Text color lar */
+    .text-primary { color: #3776AB !important; }
+    .text-success { color: #28a745 !important; }
+    .text-warning { color: #ffc107 !important; }
+    .text-danger { color: #dc3545 !important; }
+    .text-info { color: #0dcaf0 !important; }
+    .text-muted { color: rgba(0, 0, 0, 0.6) !important; }
+    .text-white { color: white !important; }
+    .text-white-50 { color: rgba(255, 255, 255, 0.8) !important; }
+
+    /* List uchun */
+    ul {
+        padding-left: 1.2rem;
+    }
+
+    li {
+        margin-bottom: 0.3rem;
+    }
+
+    /* Hover effektlari */
+    .btn:hover {
+        transform: translateY(-1px);
+        transition: all 0.3s ease;
+    }
+
+    .accordion-button:hover {
+        background-color: rgba(255, 255, 255, 0.7) !important;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .d-flex.justify-content-between {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .btn-lg {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        #{{ form.question_text.id_for_label }},
+        #{{ form.test_code.id_for_label }} {
+            min-height: 120px;
+            font-size: 14px;
+        }
+    }
+
+    /* Scrollbar uchun */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: rgba(55, 118, 171, 0.5);
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(55, 118, 171, 0.7);
+    }
+
+    /* Selection color */
+    ::selection {
+        background-color: rgba(55, 118, 171, 0.3);
+        color: white;
+    }
+</style>
 <div class="container-fluid py-4">
     <div class="row justify-content-center">
         <div class="col-lg-10">

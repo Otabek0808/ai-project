@@ -5,20 +5,19 @@
     <meta property="og:title" content="AI Project" />
     <meta
       property="og:description"
-      content="AI Project haqida qisqacha ma'lumot"
+      content="Sun'iy intellekt sohasiga qiziquvchilar uchun kuchli platforma"
     />
     <meta
       property="og:image"
       content="https://ai-project-1fhu.onrender.com/static/img/preview.png"
     />
-    <meta property="og:url" content="https://ai-project-1fhu.onrender.com/" />
+    <meta property="og:url" content="https://ai-teach.uz/" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IT Ta'lim Portali</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-      <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       rel="stylesheet"
@@ -35,13 +34,185 @@
       body {
         min-height: 100vh;
         overflow-x: hidden;
+        background: linear-gradient(to right, #87ceeb, #87ceeb, #f2d8e2);
       }
+
       h4 {
         font-size: 32px;
         font-weight: bold;
       }
+
       h6 {
         font-weight: bold;
+      }
+
+      body h1 {
+        font-weight: 1000;
+      }
+
+      /* Yuklanish animatsiyasi uchun CSS */
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to right, #87ceeb, #87ceeb, #f2d8e2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        opacity: 1;
+        transition: opacity 0.5s ease;
+      }
+
+      .cube-loader-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .cube-loader {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        transform-style: preserve-3d;
+        transform: rotateX(-30deg);
+        animation: cubeRotate 4s linear infinite;
+      }
+
+      @keyframes cubeRotate {
+        0% {
+          transform: rotateX(-30deg) rotateY(0deg);
+        }
+        100% {
+          transform: rotateX(-30deg) rotateY(360deg);
+        }
+      }
+
+      .cube-wrapper {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+      }
+
+      .cube-span {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          151deg,
+          hsl(0, 48%, 42%) 0%,
+          hsl(0, 53%, 58%) 45.6%,
+          hsl(0, 64%, 57%) 54%,
+          hsl(0, 91%, 63%) 63.4%,
+          hsl(0, 93%, 95%) 73.7%,
+          hsl(0, 94%, 63%) 86.2%,
+          hsl(0, 96%, 66%) 96.3%,
+          hsl(0, 96%, 54%) 99%,
+          hsl(0, 99%, 58%) 100%
+        );
+        transform: rotateY(calc(90deg * var(--i))) translateZ(50px);
+        transform-style: preserve-3d;
+      }
+
+      .cube-top {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background: hsl(339, 3.13%, 25.1%);
+        transform: rotateX(90deg) translateZ(50px);
+        transform-style: preserve-3d;
+      }
+
+      .cube-top::before {
+        content: "";
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background: hsl(0, 93%, 68%);
+        transform: translateZ(-120px);
+        filter: blur(20px);
+        box-shadow: 0 0 20px rgba(255, 69, 0, 0.3),
+          0 0 40px rgba(255, 69, 0, 0.4), 0 0 60px rgba(255, 69, 0, 0.5),
+          0 0 80px rgba(255, 69, 0, 0.6);
+      }
+
+      .loading-text {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        animation: textPulse 1.5s ease-in-out infinite;
+      }
+
+      @keyframes textPulse {
+        0%,
+        100% {
+          opacity: 0.7;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.05);
+        }
+      }
+
+      /* Kichik ekranlar uchun moslashuv */
+      @media (max-width: 768px) {
+        .cube-loader {
+          width: 70px;
+          height: 70px;
+        }
+
+        .cube-span {
+          transform: rotateY(calc(90deg * var(--i))) translateZ(35px);
+        }
+
+        .cube-top {
+          width: 70px;
+          height: 70px;
+          transform: rotateX(90deg) translateZ(35px);
+        }
+
+        .cube-top::before {
+          width: 70px;
+          height: 70px;
+          transform: translateZ(-85px);
+        }
+
+        .loading-text {
+          font-size: 1.2rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .cube-loader {
+          width: 50px;
+          height: 50px;
+        }
+
+        .cube-span {
+          transform: rotateY(calc(90deg * var(--i))) translateZ(25px);
+        }
+
+        .cube-top {
+          width: 50px;
+          height: 50px;
+          transform: rotateX(90deg) translateZ(25px);
+        }
+
+        .cube-top::before {
+          width: 50px;
+          height: 50px;
+          transform: translateZ(-60px);
+        }
+
+        .loading-text {
+          font-size: 1rem;
+        }
       }
 
       /* Container box */
@@ -50,10 +221,6 @@
         min-height: 100vh;
         width: 100%;
         position: relative;
-        background: linear-gradient(to right, #87ceeb, #87ceeb, #f2d8e2);
-      }
-      body h1 {
-        font-weight: 1000;
       }
 
       /* Menu qismi */
@@ -106,7 +273,10 @@
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         background: rgba(255, 255, 255, 0.3);
       }
-
+      .menu article a button:active{
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        background: rgba(255, 255, 255, 0.3);
+      }
       .menu article a button svg,
       .menu article a button i {
         width: 20px;
@@ -265,11 +435,7 @@
         flex-shrink: 0;
       }
 
-      /* Content styles */
-
       /* MEDIA QUERIES */
-
-      /* 1225px */
       @media (max-width: 1225px) {
         .list_btn_box a button {
           width: 140px;
@@ -289,7 +455,6 @@
         }
       }
 
-      /* 1115px */
       @media (max-width: 1115px) {
         .logo svg {
           width: 38px;
@@ -314,7 +479,6 @@
         }
       }
 
-      /* 1001px - Tablet view */
       @media (max-width: 1001px) {
         .menu {
           width: 220px;
@@ -354,6 +518,7 @@
         #listBtn.active {
           display: flex;
         }
+
         .logo svg {
           position: fixed;
           top: 15px;
@@ -363,7 +528,6 @@
         }
       }
 
-      /* 830px */
       @media (max-width: 830px) {
         .logo svg {
           width: 40px;
@@ -375,7 +539,6 @@
         }
       }
 
-      /* 710px */
       @media (max-width: 710px) {
         .logo svg {
           border-radius: 4px;
@@ -408,7 +571,6 @@
         }
       }
 
-      /* 620px */
       @media (max-width: 620px) {
         .logo svg {
           padding: 4px;
@@ -435,7 +597,6 @@
         }
       }
 
-      /* 480px - Mobile */
       @media (max-width: 480px) {
         .logo svg {
           padding: 3px;
@@ -460,204 +621,247 @@
           min-width: 120px;
         }
       }
+      .menu_logo {
+        width: auto;
+        max-height: 40px;
+        text-align: center;
+      }
+      .menu_logo img {
+        width: 100px;
+        height: 100px;
+      }
+      .logo-container {
+        width: 100px;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .glavniy_logo {
+        width: 100%;
+      }
+      .glavniy_logo img {
+        width: 120px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
     </style>
   </head>
   <body>
+    <!-- Yuklanish animatsiyasi -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="cube-loader-container">
+        <div class="cube-loader">
+          <div class="cube-top"></div>
+          <div class="cube-wrapper">
+            <span style="--i: 0" class="cube-span"></span>
+            <span style="--i: 1" class="cube-span"></span>
+            <span style="--i: 2" class="cube-span"></span>
+            <span style="--i: 3" class="cube-span"></span>
+          </div>
+        </div>
+        <div class="loading-text">Yuklanmoqda...</div>
+      </div>
+    </div>
+
     <section class="contaner_box">
       <div class="menu" id="menu_box">
+        <div class="glavniy_logo">
+          <img src="./img/logo/logo50.png" alt="no photo" />
+        </div>
         <article id="menuBtn">
-  <!-- Home/Boshqaruv paneli (Eski) -->
-  <a href="{% url 'home' %}">
-    <button id="menu_button">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-person-fill"
-        viewBox="0 0 16 16"
-      >
-        <path
-          d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"
-        />
-      </svg>
-      Boshqaruv paneli
-    </button>
-  </a>
-             <a href="{% url 'about' %}">
-    <button id="menu_button">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-info-circle"
-        viewBox="0 0 16 16"
-      >
-        <path
-          d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
-        />
-        <path
-          d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"
-        />
-      </svg>
-      Biz haqimizda
-    </button>
-  </a>
-  <!-- Staff/Admin uchun linklar -->
-  {% if user.is_staff %}
+          <!-- Home/Boshqaruv paneli -->
+          <a href="{% url 'home' %}">
+            <button id="menu_button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-person-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"
+                />
+              </svg>
+              Boshqaruv paneli
+            </button>
+          </a>
 
-    <a href="{% url 'add_subject' %}">
-      <button>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-database" viewBox="0 0 16 16">
-          <path d="M4.318 2.687C5.234 2.271 6.536 2 8 2s2.766.27 3.682.687C12.644 3.125 13 3.627 13 4c0 .374-.356.875-1.318 1.313C10.766 5.729 9.464 6 8 6s-2.766-.27-3.682-.687C3.356 4.875 3 4.373 3 4c0-.374.356-.875 1.318-1.313M13 5.698V7c0 .374-.356.875-1.318 1.313C10.766 8.729 9.464 9 8 9s-2.766-.27-3.682-.687C3.356 7.875 3 7.373 3 7V5.698c.271.202.58.378.904.525C4.978 6.711 6.427 7 8 7s3.022-.289 4.096-.777A5 5 0 0 0 13 5.698M14 4c0-1.007-.875-1.755-1.904-2.223C11.022 1.289 9.573 1 8 1s-3.022.289-4.096.777C2.875 2.245 2 2.993 2 4v9c0 1.007.875 1.755 1.904 2.223C4.978 15.71 6.427 16 8 16s3.022-.289 4.096-.777C13.125 14.755 14 14.007 14 13zm-1 4.698V10c0 .374-.356.875-1.318 1.313C10.766 11.729 9.464 12 8 12s-2.766-.27-3.682-.687C3.356 10.875 3 10.373 3 10V8.698c.271.202.58.378.904.525C4.978 9.71 6.427 10 8 10s3.022-.289 4.096-.777A5 5 0 0 0 13 8.698m0 3V13c0 .374-.356.875-1.318 1.313C10.766 14.729 9.464 15 8 15s-2.766-.27-3.682-.687C3.356 13.875 3 13.373 3 13v-1.302c.271.202.58.378.904.525C4.978 12.71 6.427 13 8 13s3.022-.289 4.096-.777c.324-.147.633-.323.904-.525"/>
-        </svg>
-        Fan Yaratish
-      </button>
-    </a>
-  {% endif %}
-  <a href="{% url 'documents' %}">
-    <button id="menu_button">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-file-earmark-pdf"
-        viewBox="0 0 16 16"
-      >
-        <path
-          d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"
-        />
-        <path
-          d="M4.603 14.087a.8.8 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.7 7.7 0 0 1 1.482-.645 20 20 0 0 0 1.062-2.227 7.3 7.3 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538.007.188-.012.396-.047.614-.084.51-.27 1.134-.52 1.794a11 11 0 0 0 .98 1.686 5.8 5.8 0 0 1 1.334.05c.364.066.734.195.96.465.12.144.193.32.2.518.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416.86.86 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.7 5.7 0 0 1-.911-.95 11.7 11.7 0 0 0-1.997.406 11.3 11.3 0 0 1-1.02 1.51c-.292.35-.609.656-.927.787a.8.8 0 0 1-.58.029m1.379-1.901q-.25.115-.459.238c-.328.194-.541.383-.647.547-.094.145-.096.25-.04.361q.016.032.026.044l.035-.012c.137-.056.355-.235.635-.572a8 8 0 0 0 .45-.606m1.64-1.33a13 13 0 0 1 1.01-.193 12 12 0 0 1-.51-.858 21 21 0 0 1-.5 1.05zm2.446.45q.226.245.435.41c.24.19.407.253.498.256a.1.1 0 0 0 .07-.015.3.3 0 0 0 .094-.125.44.44 0 0 0 .059-.2.1.1 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a4 4 0 0 0-.612-.053zM8.078 7.8a7 7 0 0 0 .2-.828q.046-.282.038-.465a.6.6 0 0 0-.032-.198.5.5 0 0 0-.145.04c-.087.035-.158.106-.196.283-.04.192-.03.469.046.822q.036.167.09.346z"
-        />
-      </svg>
-      Fan materiallari
-    </button>
-  </a>
+          <!-- Code Practice linki -->
+          <a href="{% url 'app2:code_practice' %}">
+            <button id="menu_button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-code-slash"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0m6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0"
+                />
+              </svg>
+              Code Practice
+            </button>
+          </a>
 
-  <!-- ========== YANGI QO'SHILGAN LINKLAR ========== -->
+          <!-- Code Admin linki (faqat staff/admin uchun) -->
+          {% if user.is_staff %}
+          <a href="{% url 'app2:admin_panel' %}">
+            <button id="menu_button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-gear-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"
+                />
+              </svg>
+              Code Admin
+            </button>
+          </a>
+          {% endif %}
 
-  <!-- 1. Code Practice linki -->
-  <a href="{% url 'app2:code_practice' %}">
-    <button id="menu_button">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-code-slash"
-        viewBox="0 0 16 16"
-      >
-        <path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0m6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0"/>
-      </svg>
-      Code Practice
-    </button>
-  </a>
+          <!-- ESKI LINKLAR -->
+          <a href="{% url 'about' %}">
+            <button id="menu_button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-info-circle"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
+                />
+                <path
+                  d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"
+                />
+              </svg>
+              Biz haqimizda
+            </button>
+          </a>
+          {% if user.is_staff %}
 
-  <!-- 2. Code Admin linki (faqat staff/admin uchun) -->
-  {% if user.is_staff %}
-    <a href="{% url 'app2:admin_panel' %}">
-      <button id="menu_button">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          class="bi bi-gear-fill"
-          viewBox="0 0 16 16"
-        >
-          <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
-        </svg>
-        Code Admin
-      </button>
-    </a>
-  {% endif %}
-  <!-- ========== YANGI QO'SHILGAN LINKLAR TUGADI ========== -->
+          <a href="{% url 'documents' %}">
+            <button id="menu_button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-file-earmark-pdf"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"
+                />
+                <path
+                  d="M4.603 14.087a.8.8 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.7 7.7 0 0 1 1.482-.645 20 20 0 0 0 1.062-2.227 7.3 7.3 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538.007.188-.012.396-.047.614-.084.51-.27 1.134-.52 1.794a11 11 0 0 0 .98 1.686 5.8 5.8 0 0 1 1.334.05c.364.066.734.195.96.465.12.144.193.32.2.518.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416.86.86 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.7 5.7 0 0 1-.911-.95 11.7 11.7 0 0 0-1.997.406 11.3 11.3 0 0 1-1.02 1.51c-.292.35-.609.656-.927.787a.8.8 0 0 1-.58.029m1.379-1.901q-.25.115-.459.238c-.328.194-.541.383-.647.547-.094.145-.096.25-.04.361q.016.032.026.044l.035-.012c.137-.056.355-.235.635-.572a8 8 0 0 0 .45-.606m1.64-1.33a13 13 0 0 1 1.01-.193 12 12 0 0 1-.51-.858 21 21 0 0 1-.5 1.05zm2.446.45q.226.245.435.41c.24.19.407.253.498.256a.1.1 0 0 0 .07-.015.3.3 0 0 0 .094-.125.44.44 0 0 0 .059-.2.1.1 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a4 4 0 0 0-.612-.053zM8.078 7.8a7 7 0 0 0 .2-.828q.046-.282.038-.465a.6.6 0 0 0-.032-.198.5.5 0 0 0-.145.04c-.087.035-.158.106-.196.283-.04.192-.03.469.046.822q.036.167.09.346z"
+                />
+              </svg>
+              Fan materiallari
+            </button>
+          </a>
+          <a href="{% url 'add_subject' %}">
+            <button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-database"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M4.318 2.687C5.234 2.271 6.536 2 8 2s2.766.27 3.682.687C12.644 3.125 13 3.627 13 4c0 .374-.356.875-1.318 1.313C10.766 5.729 9.464 6 8 6s-2.766-.27-3.682-.687C3.356 4.875 3 4.373 3 4c0-.374.356-.875 1.318-1.313M13 5.698V7c0 .374-.356.875-1.318 1.313C10.766 8.729 9.464 9 8 9s-2.766-.27-3.682-.687C3.356 7.875 3 7.373 3 7V5.698c.271.202.58.378.904.525C4.978 6.711 6.427 7 8 7s3.022-.289 4.096-.777A5 5 0 0 0 13 5.698M14 4c0-1.007-.875-1.755-1.904-2.223C11.022 1.289 9.573 1 8 1s-3.022.289-4.096.777C2.875 2.245 2 2.993 2 4v9c0 1.007.875 1.755 1.904 2.223C4.978 15.71 6.427 16 8 16s3.022-.289 4.096-.777C13.125 14.755 14 14.007 14 13zm-1 4.698V10c0 .374-.356.875-1.318 1.313C10.766 11.729 9.464 12 8 12s-2.766-.27-3.682-.687C3.356 10.875 3 10.373 3 10V8.698c.271.202.58.378.904.525C4.978 9.71 6.427 10 8 10s3.022-.289 4.096-.777A5 5 0 0 0 13 8.698m0 3V13c0 .374-.356.875-1.318 1.313C10.766 14.729 9.464 15 8 15s-2.766-.27-3.682-.687C3.356 13.875 3 13.373 3 13v-1.302c.271.202.58.378.904.525C4.978 12.71 6.427 13 8 13s3.022-.289 4.096-.777c.324-.147.633-.323.904-.525"
+                />
+              </svg>
+              Fan Yaratish
+            </button>
+          </a>
+          <a href="{% url 'admin_stats' %}">
+            <button><i class="fas fa-chart-bar"></i> Statistika</button>
+          </a>
 
-  <!-- ESKI LINKLAR (o'zgarmagan) -->
+          {% endif %}
 
+          <a href="{% url 'video_lessons' %}">
+            <button id="menu_button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-camera-video"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1z"
+                />
+              </svg>
+              Video darslar
+            </button>
+          </a>
 
-  <a href="{% url 'video_lessons' %}">
-    <button id="menu_button">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-camera-video"
-        viewBox="0 0 16 16"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1z"
-        />
-      </svg>
-      Video darslar
-    </button>
-  </a>
+          <a href="{% url 'tests' %}">
+            <button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-card-checklist"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"
+                />
+                <path
+                  d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"
+                />
+              </svg>
+              Testlar
+            </button>
+          </a>
 
-  <a href="{% url 'tests' %}">
-    <button>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-card-checklist"
-        viewBox="0 0 16 16"
-      >
-        <path
-          d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"
-        />
-        <path
-          d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"
-        />
-      </svg>
-      Testlar
-    </button>
-  </a>
+          <!-- Staff/Admin uchun linklar -->
 
-<!--  &lt;!&ndash; Staff/Admin uchun linklar &ndash;&gt;-->
-  {% if user.is_staff %}
-    <a href="{% url 'admin_stats' %}">
-      <button><i class="fas fa-chart-bar"></i> Statistika</button>
-    </a>
-
-<!--    <a href="{% url 'add_subject' %}">-->
-<!--      <button>-->
-<!--        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-database" viewBox="0 0 16 16">-->
-<!--          <path d="M4.318 2.687C5.234 2.271 6.536 2 8 2s2.766.27 3.682.687C12.644 3.125 13 3.627 13 4c0 .374-.356.875-1.318 1.313C10.766 5.729 9.464 6 8 6s-2.766-.27-3.682-.687C3.356 4.875 3 4.373 3 4c0-.374.356-.875 1.318-1.313M13 5.698V7c0 .374-.356.875-1.318 1.313C10.766 8.729 9.464 9 8 9s-2.766-.27-3.682-.687C3.356 7.875 3 7.373 3 7V5.698c.271.202.58.378.904.525C4.978 6.711 6.427 7 8 7s3.022-.289 4.096-.777A5 5 0 0 0 13 5.698M14 4c0-1.007-.875-1.755-1.904-2.223C11.022 1.289 9.573 1 8 1s-3.022.289-4.096.777C2.875 2.245 2 2.993 2 4v9c0 1.007.875 1.755 1.904 2.223C4.978 15.71 6.427 16 8 16s3.022-.289 4.096-.777C13.125 14.755 14 14.007 14 13zm-1 4.698V10c0 .374-.356.875-1.318 1.313C10.766 11.729 9.464 12 8 12s-2.766-.27-3.682-.687C3.356 10.875 3 10.373 3 10V8.698c.271.202.58.378.904.525C4.978 9.71 6.427 10 8 10s3.022-.289 4.096-.777A5 5 0 0 0 13 8.698m0 3V13c0 .374-.356.875-1.318 1.313C10.766 14.729 9.464 15 8 15s-2.766-.27-3.682-.687C3.356 13.875 3 13.373 3 13v-1.302c.271.202.58.378.904.525C4.978 12.71 6.427 13 8 13s3.022-.289 4.096-.777c.324-.147.633-.323.904-.525"/>-->
-<!--        </svg>-->
-<!--        Fan Yaratish-->
-<!--      </button>-->
-<!--    </a>-->
-<!--  {% endif %}-->
-
-  <!-- AI Chat -->
-  <a href="{% url 'ai_chat' %}">
-    <button>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-robot"
-        viewBox="0 0 16 16"
-      >
-        <path
-          d="M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5M3 8.062C3 6.76 4.235 5.765 5.53 5.886a26.6 26.6 0 0 0 4.94 0C11.765 5.765 13 6.76 13 8.062v1.157a.93.93 0 0 1-.765.935c-.845.147-2.34.346-4.235.346s-3.39-.2-4.235-.346A.93.93 0 0 1 3 9.219zm4.542-.827a.25.25 0 0 0-.217.068l-.92.9a25 25 0 0 1-1.871-.183.25.25 0 0 0-.068.495c.55.076 1.232.149 2.02.193a.25.25 0 0 0 .189-.071l.754-.736.847 1.71a.25.25 0 0 0 .404.062l.932-.97a25 25 0 0 0 1.922-.188.25.25 0 0 0-.068-.495c-.538.074-1.207.145-1.98.189a.25.25 0 0 0-.166.076l-.754.785-.842-1.7a.25.25 0 0 0-.182-.135"
-        />
-        <path
-          d="M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2zM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5"
-        />
-      </svg>
-      AI muallim
-    </button>
-  </a>
-</article>
+          <!-- AI Chat -->
+          <a href="{% url 'ai_chat' %}">
+            <button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-robot"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5M3 8.062C3 6.76 4.235 5.765 5.53 5.886a26.6 26.6 0 0 0 4.94 0C11.765 5.765 13 6.76 13 8.062v1.157a.93.93 0 0 1-.765.935c-.845.147-2.34.346-4.235.346s-3.39-.2-4.235-.346A.93.93 0 0 1 3 9.219zm4.542-.827a.25.25 0 0 0-.217.068l-.92.9a25 25 0 0 1-1.871-.183.25.25 0 0 0-.068.495c.55.076 1.232.149 2.02.193a.25.25 0 0 0 .189-.071l.754-.736.847 1.71a.25.25 0 0 0 .404.062l.932-.97a25 25 0 0 0 1.922-.188.25.25 0 0 0-.068-.495c-.538.074-1.207.145-1.98.189a.25.25 0 0 0-.166.076l-.754.785-.842-1.7a.25.25 0 0 0-.182-.135"
+                />
+                <path
+                  d="M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2zM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5"
+                />
+              </svg>
+              AI chat
+            </button>
+          </a>
+        </article>
       </div>
+
       <section class="hed_main" id="hedMain">
         <header id="heaDer">
           <section class="section_header">
@@ -720,7 +924,6 @@
                     <p id="imgBtn">Chiqish</p>
                   </button>
                 </form>
-
                 {% else %}
                 <!-- kirish -->
                 <a href="{% url 'register' %}">
@@ -778,7 +981,7 @@
         </header>
         <main>
           {% block content %}
-          <!-- CONTENT BLOCK - Bu yerda sizning yangi dizayningiz bo'ladi -->
+          <!-- CONTENT BLOCK - Bu yerda sizning asl kontentingiz bo'ladi -->
           {% endblock %}
         </main>
       </section>
@@ -786,6 +989,80 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+      // Yuklanish animatsiyasi boshqaruvi - YANGILANGAN VERSIYA
+      let loadingTimeout;
+      const loadingOverlay = document.getElementById("loadingOverlay");
+      const MAX_WAIT_TIME = 2000; // 1 soniya
+
+      // Sahifa yuklanishi boshlangan vaqti
+      const pageLoadStartTime = Date.now();
+
+      // Sahifa yuklanishini kuzatish
+      window.addEventListener("load", function () {
+        const loadTime = Date.now() - pageLoadStartTime;
+
+        // Agar yuklanish 1 soniyadan oshsa, animatsiyani ko'rsatish
+        if (loadTime > MAX_WAIT_TIME) {
+          showLoadingAnimation();
+
+          // Animatsiyani 2 soniya ko'rsatish
+          setTimeout(() => {
+            hideLoadingAnimation();
+          }, 2000);
+        } else {
+          // Tez yuklangan, animatsiyani ko'rsatmaymiz
+          hideLoadingAnimation();
+        }
+      });
+
+      // DOMContentLoaded bo'lganda ham tekshiramiz
+      document.addEventListener("DOMContentLoaded", function () {
+        // Agar DOM tez yuklansa va hali window.load bo'lmagan bo'lsa
+        const domLoadTime = Date.now() - pageLoadStartTime;
+
+        if (domLoadTime > MAX_WAIT_TIME && !window.loaded) {
+          showLoadingAnimation();
+        }
+      });
+
+      // Animatsiyani ko'rsatish funksiyasi
+      function showLoadingAnimation() {
+        if (loadingOverlay) {
+          loadingOverlay.classList.add("active");
+          loadingOverlay.style.display = "flex";
+
+          // CSS transition uchun kichik kechikish
+          setTimeout(() => {
+            loadingOverlay.style.opacity = "1";
+          }, 10);
+        }
+      }
+
+      // Animatsiyani yashirish funksiyasi
+      function hideLoadingAnimation() {
+        if (loadingOverlay) {
+          loadingOverlay.style.opacity = "0";
+
+          // Transition tugagach elementni yashirish
+          setTimeout(() => {
+            loadingOverlay.classList.remove("active");
+            loadingOverlay.style.display = "none";
+          }, 500);
+        }
+      }
+
+      // Agar sahifa yuklanishi juda uzoq davom etsa (10 soniyadan oshsa)
+      const safetyTimeout = setTimeout(() => {
+        hideLoadingAnimation();
+      }, 10000); // 10 soniya - xavfsizlik timeout
+
+      // Agar animatsiya ko'rsatilgan bo'lsa, ularni tozalash
+      window.addEventListener("load", function () {
+        clearTimeout(safetyTimeout);
+        window.loaded = true;
+      });
+
+      // ... (sizning boshqa JavaScript kodlaringiz bir xil qoladi) ...
       // DOM elementlarini tanlab olamiz
       const menuIcon = document.getElementById("menu");
       const menuBox = document.getElementById("menu_box");
@@ -830,10 +1107,8 @@
         e.stopPropagation();
 
         if (!isListBtnOpen) {
-          // ListBtn ni gorizontal yo'nalishda ochish (qisqarish/kengayish animatsiyasi)
           openListBtnHorizontally();
         } else {
-          // ListBtn ni gorizontal yo'nalishda yopish
           closeListBtnHorizontally();
         }
 
@@ -842,23 +1117,19 @@
 
       // Gorizontal yo'nalishda ListBtn ni ochish
       function openListBtnHorizontally() {
-        // Avval elementni ko'rsatamiz
         listBtn.style.display = "flex";
         listBtn.classList.add("active");
 
-        // Kenglikni 0 dan boshlab animatsiya
         listBtn.style.width = "0";
         listBtn.style.overflow = "hidden";
         listBtn.style.transition = "width 0.3s ease, opacity 0.3s ease";
         listBtn.style.opacity = "0";
 
-        // 10ms dan keyin kenglikni o'zgartiramiz
         setTimeout(() => {
           const targetWidth = getListBtnWidth();
           listBtn.style.width = targetWidth + "px";
           listBtn.style.opacity = "1";
 
-          // Animatsiya tugagach overflow ni tiklash
           setTimeout(() => {
             listBtn.style.overflow = "visible";
           }, 300);
@@ -867,12 +1138,10 @@
 
       // Gorizontal yo'nalishda ListBtn ni yopish
       function closeListBtnHorizontally() {
-        // Kenglikni 0 ga qisqartirish animatsiyasi
         listBtn.style.width = "0";
         listBtn.style.opacity = "0";
         listBtn.style.overflow = "hidden";
 
-        // Animatsiya tugagach elementni yashirish
         setTimeout(() => {
           listBtn.style.display = "none";
           listBtn.classList.remove("active");
@@ -884,17 +1153,17 @@
         const width = window.innerWidth;
 
         if (width < 480) {
-          return 140; // Kichik mobil
+          return 140;
         } else if (width < 620) {
-          return 160; // Mobil
+          return 160;
         } else if (width < 699) {
-          return 180; // Katta mobil
+          return 180;
         } else if (width < 1001) {
-          return 200; // Tablet
+          return 200;
         } else if (width < 1115) {
-          return 320; // Kichik noutbuk
+          return 320;
         } else {
-          return 340; // Katta ekran
+          return 340;
         }
       }
 
@@ -902,13 +1171,11 @@
       function adjustListBtnPosition() {
         const width = window.innerWidth;
 
-        // Gorizontal joylashuv
         listBtn.style.flexDirection = "row";
         listBtn.style.alignItems = "center";
         listBtn.style.justifyContent = "center";
 
         if (width < 620) {
-          // Kichik ekranlarda pastga joylash
           listBtn.style.top = "50px";
           listBtn.style.right = "10px";
           listBtn.style.flexWrap = "nowrap";
@@ -919,9 +1186,8 @@
         } else if (width < 1001) {
           listBtn.style.top = "60px";
           listBtn.style.right = "20px";
-          listBtn.style.flexWrap = "wrap"; // Agar joy yetmasa qatorga tushadi
+          listBtn.style.flexWrap = "wrap";
         } else {
-          // Katta ekranlarda proflaga yaqin
           listBtn.style.top = "65px";
           listBtn.style.right = "0";
           listBtn.style.flexWrap = "nowrap";
@@ -930,7 +1196,6 @@
 
       // Sahifaning boshqa joyiga bosilganda ListBtn yopilishi
       document.addEventListener("click", (e) => {
-        // Agar profil rasmi yoki listBtn ichiga bosilmasa
         if (!e.target.closest(".profil_img") && !e.target.closest("#listBtn")) {
           if (isListBtnOpen) {
             closeListBtnHorizontally();
@@ -938,7 +1203,6 @@
           }
         }
 
-        // 1001px dan kichik ekranlarda menyuni yopish
         if (
           window.innerWidth < 1001 &&
           !e.target.closest(".menu") &&
@@ -956,7 +1220,6 @@
       function updateElementsForScreenSize() {
         const width = window.innerWidth;
 
-        // list_btn_box ni ko'rsatish/yashirish (navbatdagi tugmalar)
         if (listBtnBox) {
           if (width < 1001) {
             listBtnBox.style.display = "none";
@@ -965,7 +1228,6 @@
           }
         }
 
-        // Foydalanuvchi ismini ko'rsatish/yashirish
         if (userSpan) {
           if (width < 1001) {
             userSpan.style.display = "none";
@@ -974,14 +1236,11 @@
           }
         }
 
-        // Menu ikonkasi joylashuvi
         if (menuIcon) {
           if (width < 1001) {
-            // Kichik ekranlarda fixed position
             menuIcon.style.position = "fixed";
             menuIcon.style.zIndex = "101";
 
-            // Ekran o'lchamiga qarab top va left qiymatlari
             if (width < 480) {
               menuIcon.style.top = "10px";
               menuIcon.style.left = "10px";
@@ -1004,7 +1263,6 @@
               menuIcon.style.height = "35px";
             }
           } else {
-            // Katta ekranlarda relative position
             menuIcon.style.position = "relative";
             menuIcon.style.top = "auto";
             menuIcon.style.left = "auto";
@@ -1014,12 +1272,10 @@
           }
         }
 
-        // 1001px dan katta ekranlarda menyu holatini tiklash
         if (width >= 1001) {
           isMenuOpen = localStorage.getItem("menuOpen") === "true";
           updateMenuState();
         } else {
-          // Kichik ekranlarda menyu yopiq bo'ladi
           if (isMenuOpen) {
             isMenuOpen = false;
             updateMenuState();
@@ -1027,7 +1283,6 @@
           }
         }
 
-        // ListBtn holatini yangilash
         if (isListBtnOpen) {
           adjustListBtnPosition();
           const currentWidth = parseInt(listBtn.style.width) || 0;
@@ -1043,7 +1298,6 @@
       function handleResize() {
         updateElementsForScreenSize();
 
-        // Agar listBtn ochiq bo'lsa, uni yangilash
         if (isListBtnOpen) {
           adjustListBtnPosition();
           const targetWidth = getListBtnWidth();
@@ -1055,12 +1309,10 @@
       window.addEventListener("load", function () {
         handleResize();
 
-        // ListBtn ni dastlab yashirilgan holatda boshlash
         listBtn.style.display = "none";
         listBtn.classList.remove("active");
         isListBtnOpen = false;
 
-        // CSS transition sozlamalari
         listBtn.style.transition = "width 0.3s ease, opacity 0.3s ease";
       });
 
@@ -1107,9 +1359,7 @@
         if (menuButtons.length > 0) {
           menuButtons.forEach((button) => {
             button.addEventListener("click", function () {
-              // Barcha tugmalardan active klassini olib tashlash
               menuButtons.forEach((btn) => btn.classList.remove("active"));
-              // Bosilgan tugmaga active klassini qo'shish
               this.classList.add("active");
             });
           });
@@ -1118,7 +1368,5 @@
     </script>
 
     {% block scripts %}{% endblock %}
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
   </body>
 </html>

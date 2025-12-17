@@ -2,27 +2,489 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="mb-0"><i class="fas fa-sign-in-alt"></i> Tizimga kirish</h4>
-                </div>
-                <div class="card-body">
-                    <form method="post">
-                        {% csrf_token %}
-                        {{ form|crispy }}
-                        <button type="submit" class="btn btn-primary w-100 mt-3">
-                            <i class="fas fa-sign-in-alt"></i> Kirish
-                        </button>
-                    </form>
-                    <div class="text-center mt-3">
-                        <p>Hisobingiz yo'qmi? <a href="{% url 'register' %}">Ro'yxatdan o'ting</a></p>
+<style>
+/* Asosiy konteyner uchun */
+.container-fluid {
+    min-height: 100vh;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(248, 249, 250, 0.8) 100%);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.container-fluid::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%230d6efd" fill-opacity="0.05" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat;
+    background-size: cover;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+/* Kartalar uchun stillar */
+.card {
+    backdrop-filter: blur(15px);
+    background-color: rgba(255, 255, 255, 0.311);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    width: 75%;
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    border-color: rgba(13, 110, 253, 0.2);
+}
+.card-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+    padding: 2rem 1.5rem;
+    backdrop-filter: blur(10px);
+    background-color: rgba(5, 130, 171, 0.8) !important;
+}
+
+
+.card-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), transparent);
+    z-index: 0;
+}
+
+.card-header h4 {
+    position: relative;
+    z-index: 1;
+    color: white;
+    font-weight: 600;
+    font-size: 1.8rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.card-body {
+    padding: 2.5rem;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Form elementlari - crispy forms uchun moslashtirilgan */
+.form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+label {
+    font-weight: 500;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.form-control {
+    backdrop-filter: blur(5px);
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(13, 110, 253, 0.2);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    font-size: 1rem;
+    color: #2c3e50;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    width: 100%;
+}
+
+.form-control:focus {
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.9);
+    border-color: rgba(13, 110, 253, 0.5);
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+    transform: translateY(-1px);
+}
+
+/* Input xatolari uchun */
+.invalid-feedback {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 0.5rem;
+    color: #dc3545 !important;
+    font-size: 0.85rem;
+    padding: 5px 10px;
+    background-color: rgba(220, 53, 69, 0.05);
+    border-radius: 5px;
+    border-left: 3px solid #dc3545;
+}
+
+.is-invalid {
+    border-color: rgba(220, 53, 69, 0.5) !important;
+    background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.is-invalid:focus {
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.15) !important;
+}
+
+/* Tugmalar */
+.btn {
+    backdrop-filter: blur(10px);
+    border: none;
+    border-radius: 8px;
+    padding: 0.85rem 2rem;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, rgba(13, 110, 253, 0.9), rgba(5, 130, 171, 0.9));
+    color: white;
+    box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, rgba(10, 88, 202, 0.9), rgba(4, 104, 137, 0.9));
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(13, 110, 253, 0.4);
+    color: white;
+}
+
+/* Havolalar */
+a {
+    color: #0d6efd;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    text-decoration: none;
+    padding-bottom: 2px;
+}
+
+a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #0d6efd;
+    transition: width 0.3s ease;
+}
+
+a:hover {
+    color: #0b5ed7;
+    text-decoration: none;
+}
+
+a:hover::after {
+    width: 100%;
+}
+
+/* Text markazlash */
+.text-center {
+    text-align: center;
+}
+
+.mt-3 {
+    margin-top: 1rem !important;
+}
+
+/* Crispy forms uchun qo'shimcha stillar */
+.asteriskField {
+    color: #dc3545;
+    margin-left: 3px;
+}
+
+/* Alert xabarlari */
+.alert {
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.alert-dismissible .btn-close {
+    background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+}
+
+/* Parol ko'rsatish/yashirish tugmasi */
+.password-toggle-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(13, 110, 253, 0.1);
+    border: 1px solid rgba(13, 110, 253, 0.3);
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    color: #0d6efd;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+}
+
+.password-toggle-btn:hover {
+    background: rgba(13, 110, 253, 0.2);
+    border-color: rgba(13, 110, 253, 0.5);
+}
+
+.password-toggle-btn i {
+    font-size: 0.9rem;
+}
+
+/* Parol inputlari uchun padding */
+#id_password {
+    padding-right: 50px !important;
+}
+
+/* Ikonkalar */
+.fas {
+    vertical-align: middle;
+}
+
+/* Animatsiyalar */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(13, 110, 253, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(13, 110, 253, 0);
+    }
+}
+
+.btn-primary {
+    animation: pulse 2s infinite;
+}
+
+/* Responsive dizayn */
+@media (max-width: 768px) {
+    .card {
+        width: 95%;
+        max-width: 95%;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .card-header {
+        padding: 1.5rem;
+    }
+
+    .card-header h4 {
+        font-size: 1.5rem;
+    }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .container-fluid {
+        padding: 1rem;
+    }
+
+    .card {
+        margin-top: 1rem;
+        width: 100%;
+    }
+
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    .card-header {
+        padding: 1.25rem;
+    }
+
+    .form-control {
+        padding: 0.75rem;
+        font-size: 0.95rem;
+    }
+
+    .card-header h4 {
+        font-size: 1.4rem;
+    }
+
+    .password-toggle-btn {
+        padding: 4px 8px;
+        font-size: 0.75rem;
+        height: 28px;
+        min-width: 35px;
+    }
+
+    #id_password {
+        padding-right: 45px !important;
+    }
+}
+</style>
+
+<div class="card">
+        <div class="card-header">
+            <h4 class="mb-0"><i class="fas fa-sign-in-alt"></i> Tizimga kirish</h4>
+        </div>
+        <div class="card-body">
+            <!-- Xabarlarni ko'rsatish -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
-                </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary w-100 mt-3">
+                    <i class="fas fa-sign-in-alt"></i> Kirish
+                </button>
+            </form>
+            <div class="text-center mt-3">
+                <p>Hisobingiz yo'qmi? <a href="{% url 'register' %}">Ro'yxatdan o'ting</a></p>
             </div>
         </div>
     </div>
-</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Form validation enhancement
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+
+    // Parol ko'rsatish/yashirish funksiyasi
+    const passwordInput = document.querySelector('#id_password');
+
+    if (passwordInput) {
+        // Form grouppa wrapper qo'shish
+        const container = passwordInput.parentElement;
+        const wrapper = document.createElement('div');
+        wrapper.className = 'password-toggle-wrapper';
+
+        // Inputni wrapper ichiga o'tkazish
+        container.insertBefore(wrapper, passwordInput);
+        wrapper.appendChild(passwordInput);
+
+        // Tugma yaratish
+        const toggleButton = document.createElement('button');
+        toggleButton.type = 'button';
+        toggleButton.className = 'password-toggle-btn';
+        toggleButton.setAttribute('aria-label', 'Parolni ko\'rsatish/yashirish');
+        toggleButton.innerHTML = '<i class="fas fa-eye"></i>';
+
+        // Tugmani wrapper ichiga qo'shish
+        wrapper.appendChild(toggleButton);
+
+        // Tugma bosilganda
+        toggleButton.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            // Ikonkani o'zgartirish
+            const icon = this.querySelector('i');
+            if (type === 'password') {
+                icon.className = 'fas fa-eye';
+                this.setAttribute('title', 'Parolni ko\'rsatish');
+            } else {
+                icon.className = 'fas fa-eye-slash';
+                this.setAttribute('title', 'Parolni yashirish');
+            }
+        });
+
+        // Hover uchun title qo'shish
+        toggleButton.setAttribute('title', 'Parolni ko\'rsatish');
+    }
+
+    // Real-time validation
+    const inputs = form.querySelectorAll('.form-control');
+    inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            if (this.value.trim() !== '') {
+                this.classList.add('filled');
+            } else {
+                this.classList.remove('filled');
+            }
+        });
+
+        input.addEventListener('input', function() {
+            if (this.value.length > 0) {
+                this.classList.remove('is-invalid');
+            }
+        });
+    });
+});
+</script>
 {% endblock %}
