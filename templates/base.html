@@ -223,20 +223,22 @@
         position: relative;
       }
 
-      /* Menu qismi */
+      /* Menu qismi - YANGILANGAN */
       .menu {
         width: 220px;
         height: 100vh;
-        backdrop-filter: blur(10px);
-        background-color: rgba(226, 237, 236, 0.664);
-        border-right: 1px solid #ffffff;
+        backdrop-filter: blur(100px);
         position: fixed;
         left: 0;
         top: 0;
-        z-index: 90;
+        z-index: 999;
         overflow-y: auto;
         transition: transform 0.5s ease;
         transform: translateX(-100%);
+        box-shadow: 5px 0 2px rgba(0, 0, 0, 0.3);
+
+        background-color: rgba(255, 255, 255, 0.511);
+          border-right: 1px solid white;
       }
 
       .menu.show {
@@ -269,32 +271,42 @@
         text-align: left;
       }
 
+      /* MENYU TUGMALARI HOLATLARI - YANGILANGAN */
       .menu article a button:hover {
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        background: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.4);
+        transform: translateX(5px);
       }
-      .menu article a button:active{
+
+      .menu article a button:active,
+      .menu article a button.active {
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        background: rgba(255, 255, 255, 0.3);
+        background: rgba(5, 130, 171, 0.4);
+        color: white;
+        transform: translateX(5px);
       }
+
+      .menu article a button:active svg,
+      .menu article a button.active svg {
+        color: white;
+      }
+
       .menu article a button svg,
       .menu article a button i {
         width: 20px;
         height: 20px;
         flex-shrink: 0;
+        color: rgb(20, 33, 119);
+        transition: color 0.3s ease;
       }
 
-      /* Asosiy content */
+      /* Asosiy content - YANGILANGAN */
       .hed_main {
         flex: 1;
         padding: 20px;
-        transition: margin-left 0.5s ease;
+        transition: none; /* margin-left o'zgarmasligi uchun */
         width: 100%;
         min-height: 100vh;
-      }
-
-      .hed_main.menu-open {
-        margin-left: 220px;
       }
 
       /* Header qismi */
@@ -318,6 +330,7 @@
         align-items: center;
       }
 
+      /* LOGO SVG - YANGILANGAN */
       .logo svg {
         width: 50px;
         height: 50px;
@@ -327,6 +340,8 @@
         border-radius: 10px;
         padding: 10px;
         transition: all 0.5s ease;
+        position: relative; /* Position o'zgarmas qilib qo'ydim */
+        z-index: 1001;
       }
 
       .logo svg:hover {
@@ -435,7 +450,83 @@
         flex-shrink: 0;
       }
 
+      /* Menu logosi */
+      .menu_logo {
+        width: auto;
+        max-height: 40px;
+        text-align: center;
+      }
+
+      .menu_logo img {
+        width: 100px;
+        height: 100px;
+      }
+
+      .logo-container {
+        width: 100px;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .glavniy_logo {
+        width: 100%;
+        position: relative;
+        padding-top: 20px;
+      }
+
+      .glavniy_logo img {
+        width: 120px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+
+      /* BACK BUTTON STILLARI - YANGILANGAN */
+      .glavniy_logo svg {
+        position: absolute;
+        right: 10px;
+        width: 35px;
+        height: 35px;
+        top: 40px;
+        border: none;
+
+        background: #0dcaf0;
+        cursor: pointer;
+        border-radius: 7px;
+        padding: 2px;
+        transition: all 0.3s ease;
+        z-index: 1000;
+        color: white;
+      }
+
+      .glavniy_logo svg:hover {
+        background: rgba(13, 202, 240, 0.2);
+        transform: scale(0.9);
+        opacity: 0.9;
+          color: #2c3e50;
+      }
+
       /* MEDIA QUERIES */
+
+      /* Kichik ekranlar uchun menyu tugmasi joylashuvi */
+      @media (max-width: 1001px) {
+        .logo svg {
+          position: relative; /* Fixed emas, relative qilib qo'ydim */
+          top: auto;
+          left: auto;
+          z-index: 1001;
+          background-color: rgba(255, 255, 255, 0.95);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Asosiy kontentni surish uchun margin-left o'rnatilmaydi */
+        .hed_main {
+          margin-left: 0;
+        }
+      }
+
       @media (max-width: 1225px) {
         .list_btn_box a button {
           width: 140px;
@@ -480,17 +571,6 @@
       }
 
       @media (max-width: 1001px) {
-        .menu {
-          width: 220px;
-          z-index: 100;
-          backdrop-filter: blur(100px);
-          background-color: rgba(220, 232, 232, 0.884);
-        }
-
-        .hed_main.menu-open {
-          margin-left: 0;
-        }
-
         .list_btn_box {
           display: none;
           backdrop-filter: blur(100px);
@@ -519,12 +599,12 @@
           display: flex;
         }
 
-        .logo svg {
-          position: fixed;
-          top: 15px;
-          left: 15px;
-          z-index: 101;
-          background-color: rgba(255, 255, 255, 0.9);
+        /* Back tugmasi kichik ekranlarda joylashuvi */
+        .glavniy_logo svg {
+          top: 35px;
+          right: 5px;
+          width: 30px;
+          height: 30px;
         }
       }
 
@@ -536,6 +616,13 @@
 
         .hed_main {
           padding: 15px;
+        }
+
+        .glavniy_logo svg {
+          top: 32px;
+          right: 5px;
+          width: 28px;
+          height: 28px;
         }
       }
 
@@ -569,6 +656,13 @@
           right: 5px;
           min-width: 160px;
         }
+
+        .glavniy_logo svg {
+          top: 30px;
+          right: 5px;
+          width: 26px;
+          height: 26px;
+        }
       }
 
       @media (max-width: 620px) {
@@ -595,6 +689,13 @@
           font-size: 12px;
           padding: 0 10px;
         }
+
+        .glavniy_logo svg {
+          top: 28px;
+          right: 5px;
+          width: 35px;
+          height: 35px;
+        }
       }
 
       @media (max-width: 480px) {
@@ -620,31 +721,13 @@
           top: 35px;
           min-width: 120px;
         }
-      }
-      .menu_logo {
-        width: auto;
-        max-height: 40px;
-        text-align: center;
-      }
-      .menu_logo img {
-        width: 100px;
-        height: 100px;
-      }
-      .logo-container {
-        width: 100px;
-        height: 100px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .glavniy_logo {
-        width: 100%;
-      }
-      .glavniy_logo img {
-        width: 120px;
-        height: auto;
-        display: block;
-        margin: 0 auto;
+
+        .glavniy_logo svg {
+          top: 25px;
+          right: 3px;
+          width: 35px;
+          height: 35px;
+        }
       }
     </style>
   </head>
@@ -668,12 +751,17 @@
     <section class="contaner_box">
       <div class="menu" id="menu_box">
         <div class="glavniy_logo">
-          <img src="./img/logo/logo50.png" alt="no photo" />
+            <a>
+                <img src="./img/logo/logo50.png" alt="no photo" />
+            </a>
+            <svg id="back_btn" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"/>
+            </svg>
         </div>
         <article id="menuBtn">
           <!-- Home/Boshqaruv paneli -->
           <a href="{% url 'home' %}">
-            <button id="menu_button">
+            <button id="menu_button" class="menu-button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -692,7 +780,7 @@
 
           <!-- Code Practice linki -->
           <a href="{% url 'app2:code_practice' %}">
-            <button id="menu_button">
+            <button id="menu_button" class="menu-button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -712,7 +800,7 @@
           <!-- Code Admin linki (faqat staff/admin uchun) -->
           {% if user.is_staff %}
           <a href="{% url 'app2:admin_panel' %}">
-            <button id="menu_button">
+            <button id="menu_button" class="menu-button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -732,7 +820,7 @@
 
           <!-- ESKI LINKLAR -->
           <a href="{% url 'about' %}">
-            <button id="menu_button">
+            <button id="menu_button" class="menu-button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -754,7 +842,7 @@
           {% if user.is_staff %}
 
           <a href="{% url 'documents' %}">
-            <button id="menu_button">
+            <button id="menu_button" class="menu-button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -774,7 +862,7 @@
             </button>
           </a>
           <a href="{% url 'add_subject' %}">
-            <button>
+            <button class="menu-button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -791,13 +879,13 @@
             </button>
           </a>
           <a href="{% url 'admin_stats' %}">
-            <button><i class="fas fa-chart-bar"></i> Statistika</button>
+            <button class="menu-button"><i class="fas fa-chart-bar"></i> Statistika</button>
           </a>
 
           {% endif %}
 
           <a href="{% url 'video_lessons' %}">
-            <button id="menu_button">
+            <button id="menu_button" class="menu-button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -816,7 +904,7 @@
           </a>
 
           <a href="{% url 'tests' %}">
-            <button>
+            <button class="menu-button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -836,11 +924,9 @@
             </button>
           </a>
 
-          <!-- Staff/Admin uchun linklar -->
-
           <!-- AI Chat -->
           <a href="{% url 'ai_chat' %}">
-            <button>
+            <button class="menu-button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -958,7 +1044,7 @@
                     >
                       <path
                         fill-rule="evenodd"
-                        d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"
+                        d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v-2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"
                       />
                       <path
                         fill-rule="evenodd"
@@ -989,10 +1075,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      // Yuklanish animatsiyasi boshqaruvi - YANGILANGAN VERSIYA
+      // Yuklanish animatsiyasi boshqaruvi
       let loadingTimeout;
       const loadingOverlay = document.getElementById("loadingOverlay");
-      const MAX_WAIT_TIME = 2000; // 1 soniya
+      const MAX_WAIT_TIME = 2000; // 2 soniya
 
       // Sahifa yuklanishi boshlangan vaqti
       const pageLoadStartTime = Date.now();
@@ -1001,7 +1087,7 @@
       window.addEventListener("load", function () {
         const loadTime = Date.now() - pageLoadStartTime;
 
-        // Agar yuklanish 1 soniyadan oshsa, animatsiyani ko'rsatish
+        // Agar yuklanish 2 soniyadan oshsa, animatsiyani ko'rsatish
         if (loadTime > MAX_WAIT_TIME) {
           showLoadingAnimation();
 
@@ -1062,7 +1148,6 @@
         window.loaded = true;
       });
 
-      // ... (sizning boshqa JavaScript kodlaringiz bir xil qoladi) ...
       // DOM elementlarini tanlab olamiz
       const menuIcon = document.getElementById("menu");
       const menuBox = document.getElementById("menu_box");
@@ -1071,6 +1156,7 @@
       const listBtn = document.getElementById("listBtn");
       const userSpan = document.querySelector(".profil_img span");
       const listBtnBox = document.querySelector(".list_btn_box");
+      const backBtn = document.getElementById("back_btn");
 
       // Menuni ochish/yopish holati
       let isMenuOpen = localStorage.getItem("menuOpen") === "true";
@@ -1090,18 +1176,26 @@
         localStorage.setItem("menuOpen", isMenuOpen);
       });
 
+      // Back tugmasi bosilganda (menyu yopish)
+      if (backBtn) {
+        backBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          isMenuOpen = false;
+          updateMenuState();
+          localStorage.setItem("menuOpen", "false");
+        });
+      }
+
       // Menu holatini yangilash funksiyasi
       function updateMenuState() {
         if (isMenuOpen) {
           menuBox.classList.add("show");
-          hedMain.classList.add("menu-open");
         } else {
           menuBox.classList.remove("show");
-          hedMain.classList.remove("menu-open");
         }
       }
 
-      // Profil rasmi bosilganda - gorizontal qisqarish/kengayish
+      // Profil rasmi bosilganda
       loginBtn.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -1113,6 +1207,32 @@
         }
 
         isListBtnOpen = !isListBtnOpen;
+      });
+
+      // SAHIFANING HAR QANDAY JOYI BOSILGANDA
+      document.addEventListener("click", function(event) {
+        const menu = document.getElementById("menu_box");
+        const profileImg = document.querySelector(".profil_img");
+        const menuIcon = document.getElementById("menu");
+
+        // Agar bosilgan joy menyu yoki menyu tugmasi yoki profil rasmi bo'lmasa
+        if (!menu.contains(event.target) &&
+            !menuIcon.contains(event.target) &&
+            !profileImg.contains(event.target)) {
+
+          // Menyu ochiq bo'lsa yopish
+          if (isMenuOpen) {
+            isMenuOpen = false;
+            updateMenuState();
+            localStorage.setItem("menuOpen", "false");
+          }
+
+          // ListBtn ochiq bo'lsa yopish
+          if (isListBtnOpen) {
+            closeListBtnHorizontally();
+            isListBtnOpen = false;
+          }
+        }
       });
 
       // Gorizontal yo'nalishda ListBtn ni ochish
@@ -1194,28 +1314,6 @@
         }
       }
 
-      // Sahifaning boshqa joyiga bosilganda ListBtn yopilishi
-      document.addEventListener("click", (e) => {
-        if (!e.target.closest(".profil_img") && !e.target.closest("#listBtn")) {
-          if (isListBtnOpen) {
-            closeListBtnHorizontally();
-            isListBtnOpen = false;
-          }
-        }
-
-        if (
-          window.innerWidth < 1001 &&
-          !e.target.closest(".menu") &&
-          e.target !== menuIcon
-        ) {
-          if (isMenuOpen) {
-            isMenuOpen = false;
-            updateMenuState();
-            localStorage.setItem("menuOpen", "false");
-          }
-        }
-      });
-
       // Ekran o'lchamiga mos elementlarni sozlash
       function updateElementsForScreenSize() {
         const width = window.innerWidth;
@@ -1237,38 +1335,32 @@
         }
 
         if (menuIcon) {
-          if (width < 1001) {
-            menuIcon.style.position = "fixed";
-            menuIcon.style.zIndex = "101";
+          // Logo SVG har doim relative positionda qoladi
+          menuIcon.style.position = "relative";
+          menuIcon.style.top = "auto";
+          menuIcon.style.left = "auto";
+          menuIcon.style.zIndex = "100";
 
-            if (width < 480) {
-              menuIcon.style.top = "10px";
-              menuIcon.style.left = "10px";
-              menuIcon.style.width = "25px";
-              menuIcon.style.height = "25px";
-            } else if (width < 620) {
-              menuIcon.style.top = "12px";
-              menuIcon.style.left = "12px";
-              menuIcon.style.width = "28px";
-              menuIcon.style.height = "28px";
-            } else if (width < 710) {
-              menuIcon.style.top = "15px";
-              menuIcon.style.left = "15px";
-              menuIcon.style.width = "30px";
-              menuIcon.style.height = "30px";
-            } else {
-              menuIcon.style.top = "15px";
-              menuIcon.style.left = "15px";
-              menuIcon.style.width = "35px";
-              menuIcon.style.height = "35px";
-            }
+          if (width < 480) {
+            menuIcon.style.width = "25px";
+            menuIcon.style.height = "25px";
+            menuIcon.style.padding = "3px";
+          } else if (width < 620) {
+            menuIcon.style.width = "28px";
+            menuIcon.style.height = "28px";
+            menuIcon.style.padding = "4px";
+          } else if (width < 710) {
+            menuIcon.style.width = "30px";
+            menuIcon.style.height = "30px";
+            menuIcon.style.padding = "6px";
+          } else if (width < 1001) {
+            menuIcon.style.width = "35px";
+            menuIcon.style.height = "35px";
+            menuIcon.style.padding = "8px";
           } else {
-            menuIcon.style.position = "relative";
-            menuIcon.style.top = "auto";
-            menuIcon.style.left = "auto";
             menuIcon.style.width = "50px";
             menuIcon.style.height = "50px";
-            menuIcon.style.zIndex = "100";
+            menuIcon.style.padding = "10px";
           }
         }
 
@@ -1340,6 +1432,10 @@
 
       if (loginBtn) {
         loginBtn.style.cursor = "pointer";
+      }
+
+      if (backBtn) {
+        backBtn.style.cursor = "pointer";
       }
 
       // Bootstrap tooltip uchun
