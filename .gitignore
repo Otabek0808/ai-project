@@ -13,16 +13,6 @@ db.sqlite3-journal
 !.env.example
 .env.local
 .env.production
-
-# Media files
-/media/
-!/media/.gitkeep
-
-# Static files (collected)
-/staticfiles/
-!/staticfiles/.gitkeep
-
-# IDE files
 .vscode/
 .idea/
 *.swp
@@ -101,22 +91,6 @@ django.log
 .tmp/
 temp/
 
-# Project specific (o'z loyihangizga qo'shing)
-/test_files/
-!/test_files/.gitkeep
-/documents/
-!/documents/.gitkeep
-
-# PyCharm
-.idea/
-*.iws
-
-# VS Code
-.vscode/
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
 
 # macOS
 .AppleDouble
@@ -136,16 +110,6 @@ Desktop.ini
 
 # Session files
 *.session
-
-# Package files
-*.7z
-*.dmg
-*.gz
-*.iso
-*.jar
-*.rar
-*.tar
-*.zip
 
 # Database files (except SQLite agar boshqa DB ishlatmasangiz)
 *.mdb
