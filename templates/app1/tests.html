@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 
@@ -560,211 +561,198 @@
 {% endblock %}
 
 <div style="display: flex; align-items: center; justify-content: space-between;">
-
-        <div>
-            <h1 class="display-5 fw-bold text-dark mb-3">Testlar</h1>
+    <div>
+        <h1 class="display-5 fw-bold text-dark mb-3">{% trans "Testlar" %}</h1>
         <p class="lead text-muted">
-          Bilimingizni sinab ko'ring va o'zingizni sinovdan o'tkazing
+            {% trans "Bilimingizni sinab ko'ring va o'zingizni sinovdan o'tkazing" %}
         </p>
-        </div>
-
-    {% if user.is_staff %}
-          <a href="{% url 'upload_test_file' %}" class="btn btn-info">
-            <i class="fas fa-upload me-2"></i>Fayl Yuklash
-          </a>
-    {% endif %}
-</div>
-  <div class="test-container">
-    <!-- Sarlavha -->
-
-    <div class="row mb-4">
-      <div >
-
-        {% if user.is_authenticated %}
-        <div class="alert alert-info d-inline-block">
-          <small>
-            <i class="fas fa-info-circle me-1"></i>
-            Savollar sizning oldingi natijalaringizga qarab moslashtiriladi
-          </small>
-        </div>
-        {% endif %}
-
-      </div>
     </div>
 
-    <!-- Admin paneli - TEPADA -->
+    {% if user.is_staff %}
+    <a href="{% url 'upload_test_file' %}" class="btn btn-info">
+        <i class="fas fa-upload me-2"></i>{% trans "Fayl Yuklash" %}
+    </a>
+    {% endif %}
+</div>
+
+<div class="test-container">
+    <div class="row mb-4">
+        <div>
+            {% if user.is_authenticated %}
+            <div class="alert alert-info d-inline-block">
+                <small>
+                    <i class="fas fa-info-circle me-1"></i>
+                    {% trans "Savollar sizning oldingi natijalaringizga qarab moslashtiriladi" %}
+                </small>
+            </div>
+            {% endif %}
+        </div>
+    </div>
 
     <!-- Fanlar va testlar -->
     {% for subject in subjects %}
     <div class="row mb-4">
-      <div class="col-12">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h3 class="text-primary mb-0">
-            <i class="fas fa-book me-2"></i>{{ subject.name }}
-
-          </h3>
-          <div>
-            <span class="badge bg-primary fs-6 me-2">
-              {{ subject.test_set.count }} ta test
-            </span>
-            {% if user.is_authenticated %}
-              {% for user_level in user.usersubjectlevel_set.all %}
-                {% if user_level.subject == subject %}
-                  <span class="badge bg-info fs-6">
-                    Daraja: {{ user_level.get_difficulty_level_display }}
-                  </span>
-                {% endif %}
-              {% endfor %}
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="text-primary mb-0">
+                    <i class="fas fa-book me-2"></i>{{ subject.name }}
+                </h3>
+                <div>
+                    <span class="badge bg-primary fs-6 me-2">
+                        {% blocktrans count counter=subject.test_set.count %}{{ subject.test_set.count }} ta test{% plural %}{{ subject.test_set.count }} ta test{% endblocktrans %}
+                    </span>
+                    {% if user.is_authenticated %}
+                    {% for user_level in user.usersubjectlevel_set.all %}
+                        {% if user_level.subject == subject %}
+                        <span class="badge bg-info fs-6">
+                            {% trans "Daraja:" %} {{ user_level.get_difficulty_level_display }}
+                        </span>
+                        {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            {% if subject.description %}
+            <p class="text-muted mb-0">{{ subject.description }}</p>
             {% endif %}
-          </div>
         </div>
-        {% if subject.description %}
-        <p class="text-muted mb-0">{{ subject.description }}</p>
-        {% endif %}
-      </div>
     </div>
 
     <div class="row mb-5">
-      {% for test in subject.test_set.all %}
-      <div class="col-xl-4 col-md-6 mb-4" >
-        <div  class="test_info_style"  >
-          <div class="card-header border-bottom-0 pb-0" >
-            <div class="d-flex justify-content-between align-items-start">
-              <h5 class="card-title text-dark mb-2">{{ test.title }}</h5>
-              <span class="badge {% if test.is_active %}bg-success{% else %}bg-secondary{% endif %}">
-                {% if test.is_active %}
-                  <i class="fas fa-play-circle"></i> Faol
-                {% else %}
-                  <i class="fas fa-pause-circle"></i> Nofaol
-                {% endif %}
-              </span>
-            </div>
-          </div>
-
-          <div class="card-body pt-0">
-            <!-- Test ma'lumotlari -->
-            <div class="row text-center test-stats">
-              <div class="col-3">
-                <div class="border-end">
-                  <small class="text-muted d-block">Savollar</small>
-                  <strong class="text-primary">{{ test.question_count }}</strong>
-                </div>
-              </div>
-              <div class="col-3">
-                <div class="border-end">
-                  <small class="text-muted d-block">Vaqt</small>
-                  <strong class="text-warning">{{ test.time_limit_minutes }} daq</strong>
-                </div>
-              </div>
-              <div class="col-3">
-                <div class="border-end">
-                  <small class="text-muted d-block">Urinishlar</small>
-                  <strong class="text-info">{{ test.testresult_set.count }}</strong>
-                </div>
-              </div>
-              <div class="col-3">
-                <small class="text-muted d-block">Mavjud</small>
-                <strong class="text-success">{{ test.questions.count }}</strong>
-              </div>
-            </div>
-
-            <!-- Qiyinlik darajasi taqsimoti -->
-            <div class="mb-3">
-              <small class="text-muted d-block mb-1">Savollar darajasi:</small>
-              <div class="d-flex align-items-center">
-                {% with questions=test.questions.all %}
-                  {% if questions %}
-                    {% comment %}
-                    Darajalarni hisoblash - aslida modelda difficulty_level maydoniga qarab hisoblash kerak
-                    Bu misolda taxminiy qiymatlar ko'rsatilgan
-                    {% endcomment %}
-                    {% with easy_count=questions|length medium_count=questions|length hard_count=questions|length %}
-                    <div class="progress flex-grow-1" style="height: 8px">
-                      <div class="progress-bar bg-success" style="width: 33%" title="Oson"></div>
-                      <div class="progress-bar bg-warning" style="width: 34%" title="O'rtacha"></div>
-                      <div class="progress-bar bg-danger" style="width: 33%" title="Qiyin"></div>
+        {% for test in subject.test_set.all %}
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="test_info_style">
+                <div class="card-header border-bottom-0 pb-0">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <h5 class="card-title text-dark mb-2">{{ test.title }}</h5>
+                        <span class="badge {% if test.is_active %}bg-success{% else %}bg-secondary{% endif %}">
+                            {% if test.is_active %}
+                            <i class="fas fa-play-circle"></i> {% trans "Faol" %}
+                            {% else %}
+                            <i class="fas fa-pause-circle"></i> {% trans "Nofaol" %}
+                            {% endif %}
+                        </span>
                     </div>
-                    {% endwith %}
-                  {% else %}
-                    <div class="progress flex-grow-1" style="height: 8px">
-                      <div class="progress-bar bg-secondary" style="width: 100%"></div>
-                    </div>
-                  {% endif %}
-                {% endwith %}
-              </div>
-              <div class="d-flex justify-content-between mt-1">
-                <small class="text-success">Oson</small>
-                <small class="text-warning">O'rtacha</small>
-                <small class="text-danger">Qiyin</small>
-              </div>
-            </div>
-          </div>
+                </div>
 
-          <div class="card-footer border-top-0 pt-0">
-            <div class="d-grid">
-              {% if test.is_active %}
-                {% if user.is_authenticated %}
-                  <a href="{% url 'take_test' test.id %}" class="btn btn-primary">
-                    <i class="fas fa-play me-2"></i>
-                    {% for user_level in user.usersubjectlevel_set.all %}
-                      {% if user_level.subject == subject %}
-                        Testni Davom Ettirish
-                      {% endif %}
-                    {% empty %}
-                      Testni Boshlash
-                    {% endfor %}
-                  </a>
-                {% else %}
-                  <a href="{% url 'login' %}?next={% url 'take_test' test.id %}" class="btn btn-outline-primary">
-                    <i class="fas fa-sign-in-alt me-2"></i>Testni Boshlash
-                  </a>
-                {% endif %}
-              {% else %}
-                <button class="btn btn-secondary" disabled>
-                  <i class="fas fa-ban me-2"></i>Test Nofaol
-                </button>
-              {% endif %}
-            </div>
-            {% if user.is_authenticated %}
-              <div class="text-center mt-2">
-                <small class="text-muted">
-                  {% for result in test.testresult_set.all %}
-                    {% if result.user == user and forloop.last %}
-                      Oxirgi natija: {{ result.score }}/{{ result.total_questions }} ({{ result.percentage|floatformat:1 }}%)
+                <div class="card-body pt-0">
+                    <!-- Test ma'lumotlari -->
+                    <div class="row text-center test-stats">
+                        <div class="col-3">
+                            <div class="border-end">
+                                <small class="text-muted d-block">{% trans "Savollar" %}</small>
+                                <strong class="text-primary">{{ test.question_count }}</strong>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="border-end">
+                                <small class="text-muted d-block">{% trans "Vaqt" %}</small>
+                                <strong class="text-warning">{{ test.time_limit_minutes }} {% trans "daq" %}</strong>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="border-end">
+                                <small class="text-muted d-block">{% trans "Urinishlar" %}</small>
+                                <strong class="text-info">{{ test.testresult_set.count }}</strong>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <small class="text-muted d-block">{% trans "Mavjud" %}</small>
+                            <strong class="text-success">{{ test.questions.count }}</strong>
+                        </div>
+                    </div>
+
+                    <!-- Qiyinlik darajasi taqsimoti -->
+                    <div class="mb-3">
+                        <small class="text-muted d-block mb-1">{% trans "Savollar darajasi:" %}</small>
+                        <div class="d-flex align-items-center">
+                            {% with questions=test.questions.all %}
+                            {% if questions %}
+                            <div class="progress flex-grow-1" style="height: 8px">
+                                <div class="progress-bar bg-success" style="width: 33%" title="{% trans "Oson" %}"></div>
+                                <div class="progress-bar bg-warning" style="width: 34%" title="{% trans "O'rtacha" %}"></div>
+                                <div class="progress-bar bg-danger" style="width: 33%" title="{% trans "Qiyin" %}"></div>
+                            </div>
+                            {% else %}
+                            <div class="progress flex-grow-1" style="height: 8px">
+                                <div class="progress-bar bg-secondary" style="width: 100%"></div>
+                            </div>
+                            {% endif %}
+                            {% endwith %}
+                        </div>
+                        <div class="d-flex justify-content-between mt-1">
+                            <small class="text-success">{% trans "Oson" %}</small>
+                            <small class="text-warning">{% trans "O'rtacha" %}</small>
+                            <small class="text-danger">{% trans "Qiyin" %}</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer border-top-0 pt-0">
+                    <div class="d-grid">
+                        {% if test.is_active %}
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'take_test' test.id %}" class="btn btn-primary">
+                            <i class="fas fa-play me-2"></i>
+                            {% for user_level in user.usersubjectlevel_set.all %}
+                            {% if user_level.subject == subject %}
+                            {% trans "Testni Davom Ettirish" %}
+                            {% endif %}
+                            {% empty %}
+                            {% trans "Testni Boshlash" %}
+                            {% endfor %}
+                        </a>
+                        {% else %}
+                        <a href="{% url 'login' %}?next={% url 'take_test' test.id %}" class="btn btn-outline-primary">
+                            <i class="fas fa-sign-in-alt me-2"></i>{% trans "Testni Boshlash" %}
+                        </a>
+                        {% endif %}
+                        {% else %}
+                        <button class="btn btn-secondary" disabled>
+                            <i class="fas fa-ban me-2"></i>{% trans "Test Nofaol" %}
+                        </button>
+                        {% endif %}
+                    </div>
+                    {% if user.is_authenticated %}
+                    <div class="text-center mt-2">
+                        <small class="text-muted">
+                            {% for result in test.testresult_set.all %}
+                            {% if result.user == user and forloop.last %}
+                            {% trans "Oxirgi natija:" %} {{ result.score }}/{{ result.total_questions }} ({{ result.percentage|floatformat:1 }}%)
+                            {% endif %}
+                            {% endfor %}
+                        </small>
+                    </div>
                     {% endif %}
-                  {% endfor %}
-                </small>
-              </div>
-            {% endif %}
-          </div>
+                </div>
+            </div>
         </div>
-      </div>
-      {% empty %}
-      <div class="col-12">
-        <div class="alert alert-info text-center">
-          <i class="fas fa-info-circle me-2"></i>
-          "{{ subject.name }}" fanida hozircha testlar mavjud emas.
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                <i class="fas fa-info-circle me-2"></i>
+                {% blocktrans %}"{{ subject.name }}" fanida hozircha testlar mavjud emas.{% endblocktrans %}
+            </div>
         </div>
-      </div>
-      {% endfor %}
+        {% endfor %}
     </div>
     {% empty %}
     <div class="col-12">
-      <div class="alert alert-warning text-center py-4">
-        <i class="fas fa-exclamation-triangle fa-2x mb-3"></i>
-        <h4>Hozircha fanlar mavjud emas</h4>
-        <p class="mb-0">
-          Administrator tomonidan fanlar qo'shilmagani uchun testlar mavjud emas.
-        </p>
-        {% if user.is_staff %}
-        <div class="mt-3">
-          <a href="{% url 'add_subject' %}" class="btn btn-warning">
-            <i class="fas fa-plus me-2"></i>Birinchi fanni yaratish
-          </a>
+        <div class="alert alert-warning text-center py-4">
+            <i class="fas fa-exclamation-triangle fa-2x mb-3"></i>
+            <h4>{% trans "Hozircha fanlar mavjud emas" %}</h4>
+            <p class="mb-0">
+                {% trans "Administrator tomonidan fanlar qo'shilmagani uchun testlar mavjud emas." %}
+            </p>
+            {% if user.is_staff %}
+            <div class="mt-3">
+                <a href="{% url 'add_subject' %}" class="btn btn-warning">
+                    <i class="fas fa-plus me-2"></i>{% trans "Birinchi fanni yaratish" %}
+                </a>
+            </div>
+            {% endif %}
         </div>
-        {% endif %}
-      </div>
     </div>
     {% endfor %}
-  </div>
+</div>
 {% endblock %}

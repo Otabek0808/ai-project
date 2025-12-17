@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
 <style>
 
 
@@ -785,12 +787,13 @@
   }
 </style>
 
-     <main>
+
+<main>
   <div class="ai-chat-card">
     <div class="ai-chat-header card-header text-white d-flex justify-content-between align-items-center">
-      <h4 class="mb-0"><i class="fas fa-robot"></i> AI Chat Bot</h4>
+      <h4 class="mb-0"><i class="fas fa-robot"></i> {% trans "AI Chat Bot" %}</h4>
       <button id="clear-history" class="clear-history-btn">
-        <i class="fas fa-trash-alt"></i> Tarixni tozalash
+        <i class="fas fa-trash-alt"></i> {% trans "Tarixni tozalash" %}
       </button>
     </div>
     <div class="ai-chat-body card-body">
@@ -798,33 +801,17 @@
         <!-- Xabarlar shu yerga yuklanadi -->
           {% if user.is_staff %}
             <div class="welcome-message" id="welcome-message">
-              <i class="fas fa-info-circle"></i> Sizning mutaxasisligingiz bo'yicha talabalarga yana qanday bilimlarni berishni istaysiz?
-                Menga tushunarli tarzda savolingizni kiriting! Men sizga qiziqarli materiallarni taqdim etaman.
-                Marhamat!
+              <i class="fas fa-info-circle"></i> {% trans "Sizning mutaxasisligingiz bo'yicha talabalarga yana qanday bilimlarni berishni istaysiz? Menga tushunarli tarzda savolingizni kiriting! Men sizga qiziqarli materiallarni taqdim etaman. Marhamat!" %}
             </div>
           {% else %}
             <div class="welcome-message" id="welcome-message">
-              <i class="fas fa-info-circle"></i> Siz yana o'z mutaxasislik faninggizdan nimalarni bilishni istaysiz? Tushunarli tarzda yozing, man sizga yordam beraman!Siz bergan amsalaga har xil o'yinlar yoki metodlarni qo'llab tayyorlayman
-                <!doctype html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport"
-                          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-                    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-                    <title>Document</title>
-                </head>
-                <body>
-                
-                </body>
-                </html>
+              <i class="fas fa-info-circle"></i> {% trans "Siz yana o'z mutaxasislik faninggizdan nimalarni bilishni istaysiz? Tushunarli tarzda yozing, man sizga yordam beraman! Siz bergan amsalaga har xil o'yinlar yoki metodlarni qo'llab tayyorlayman" %}
             </div>
           {% endif %}
       </div>
       <div class="chat-tips" style="margin-bottom: 15px;">
         <small>
-          <i class="fas fa-lightbulb"></i> Maslahat: Dasturlash, Python,
-          Django, HTML, CSS, JavaScript haqida savol bering.
+          <i class="fas fa-lightbulb"></i> {% trans "Maslahat: Dasturlash, Python, Django, HTML, CSS, JavaScript haqida savol bering." %}
         </small>
       </div>
 
@@ -835,19 +822,18 @@
             type="text"
             id="user-input"
             class="form-control"
-            placeholder="Savolingizni yozing..."
+            placeholder="{% trans "Savolingizni yozing..." %}"
             required
             autocomplete="off"
           />
           <button type="submit" class="chat-submit-btn">
-            <i class="fas fa-paper-plane"></i> Yuborish
+            <i class="fas fa-paper-plane"></i> {% trans "Yuborish" %}
           </button>
         </div>
       </form>
     </div>
   </div>
-</main>
-{% endblock %}
+</main>{% endblock %}
 
 {% block scripts %}
 <script>

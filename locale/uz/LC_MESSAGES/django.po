@@ -1,0 +1,1962 @@
+#: .\config\settings.py:136
+msgid "Uzbek"
+msgstr ""
+
+#: .\config\settings.py:137
+msgid "Russian"
+msgstr ""
+
+#: .\config\settings.py:138
+msgid "English"
+msgstr ""
+
+#: .\templates\app1\add_document.html:280
+#: .\templates\app1\subject_documents.html:459
+msgid "Yangi Material Qo'shish"
+msgstr ""
+
+#: .\templates\app1\add_document.html:297
+#: .\templates\app1\upload_test_file.html:501
+msgid "Fan"
+msgstr ""
+
+#: .\templates\app1\add_document.html:314
+msgid "Material Nomi"
+msgstr ""
+
+#: .\templates\app1\add_document.html:315
+msgid "Material nomini kiriting"
+msgstr ""
+
+#: .\templates\app1\add_document.html:319
+#: .\templates\app1\upload_test_file.html:513
+msgid "Tavsif"
+msgstr ""
+
+#: .\templates\app1\add_document.html:320
+msgid "Material haqida qisqacha ma'lumot"
+msgstr ""
+
+#: .\templates\app1\add_document.html:324
+msgid "Fayl Tanlash"
+msgstr ""
+
+#: .\templates\app1\add_document.html:326
+msgid "PDF yoki Word formatidagi faylni yuklang"
+msgstr ""
+
+#: .\templates\app1\add_document.html:329
+msgid "Yuklash"
+msgstr ""
+
+#: .\templates\app1\add_document.html:330 .\templates\app1\add_video.html:434
+#: .\templates\app2\admin_panel.html:602
+msgid "Bekor qilish"
+msgstr ""
+
+#: .\templates\app1\add_subject.html:442
+msgid "Yangi Fan Qo'shish"
+msgstr ""
+
+#: .\templates\app1\add_subject.html:447
+msgid "Yangi fan yaratish va uni testlar ro'yxatiga qo'shish"
+msgstr ""
+
+#: .\templates\app1\add_subject.html:454
+msgid "Fan Nomi"
+msgstr ""
+
+#: .\templates\app1\add_subject.html:460
+msgid "Masalan: Matematika, Fizika, Dasturlash..."
+msgstr ""
+
+#: .\templates\app1\add_subject.html:471
+msgid "Fan nomi aniq va tushunarli bo'lishi kerak"
+msgstr ""
+
+#: .\templates\app1\add_subject.html:478
+msgid "Fan Tavsifi"
+msgstr ""
+
+#: .\templates\app1\add_subject.html:484
+msgid "Fan haqida qisqacha tavsif... (ixtiyoriy)"
+msgstr ""
+
+#: .\templates\app1\add_subject.html:493
+msgid ""
+"Fan haqida qisqacha ma'lumot. Bu foydalanuvchilarga fan mazmunini "
+"tushunishga yordam beradi."
+msgstr ""
+
+#: .\templates\app1\add_subject.html:513
+msgid "Ortga Qaytish"
+msgstr ""
+
+#: .\templates\app1\add_subject.html:516
+msgid "Fanni Saqlash"
+msgstr ""
+
+#: .\templates\app1\add_subject.html:529
+msgid "Yordam"
+msgstr ""
+
+#: .\templates\app1\add_subject.html:535
+msgid "Fan nomini tanlashda:"
+msgstr ""
+
+#: .\templates\app1\add_subject.html:537
+msgid "Aniq va qisqa nom tanlang"
+msgstr ""
+
+#: .\templates\app1\add_subject.html:538
+msgid "O'quv rejasiga mos kelishi kerak"
+msgstr ""
+
+#: .\templates\app1\add_subject.html:539
+msgid "Tushunarli va oddiy bo'lsin"
+msgstr ""
+
+#: .\templates\app1\add_subject.html:543
+msgid "Tavsif yozishda:"
+msgstr ""
+
+#: .\templates\app1\add_subject.html:545
+msgid "Qisqa va mazmunli bo'lsin"
+msgstr ""
+
+#: .\templates\app1\add_subject.html:546
+msgid "Asosiy mavzularni qamrab olsin"
+msgstr ""
+
+#: .\templates\app1\add_subject.html:547
+msgid "Foydalanuvchiga yo'naltiruvchi bo'lsin"
+msgstr ""
+
+#: .\templates\app1\add_video.html:418 .\templates\app1\video_lessons.html:65
+#: .\templates\app1\video_lessons.html:110
+msgid "Yangi Video Qo'shish"
+msgstr ""
+
+#: .\templates\app1\add_video.html:433
+msgid "Qo'shish"
+msgstr ""
+
+#: .\templates\app1\admin_stats.html:414
+msgid "Foydalanuvchilar statistikasi"
+msgstr ""
+
+#: .\templates\app1\admin_stats.html:424 .\templates\app2\admin_panel.html:309
+#: .\templates\app2\admin_panel.html:420 .\templates\app2\user_profile.html:46
+msgid "Foydalanuvchi"
+msgstr ""
+
+#: .\templates\app1\admin_stats.html:425
+msgid "Ism Familiya"
+msgstr ""
+
+#: .\templates\app1\admin_stats.html:426
+#: .\templates\app1\user_profile_detail.html:464
+#: .\templates\app2\user_profile.html:60
+msgid "Guruh"
+msgstr ""
+
+#: .\templates\app1\admin_stats.html:427
+#: .\templates\app1\user_profile_detail.html:474
+#: .\templates\app2\admin_panel.html:421
+msgid "Email"
+msgstr ""
+
+#: .\templates\app1\admin_stats.html:428
+#: .\templates\app1\user_profile_detail.html:478
+msgid "Ro'yxatdan o'tgan sana"
+msgstr ""
+
+#: .\templates\app1\admin_stats.html:429
+msgid "Testlar soni"
+msgstr ""
+
+#: .\templates\app1\admin_stats.html:430
+msgid "O'rtacha ball"
+msgstr ""
+
+#: .\templates\app1\admin_stats.html:431
+#: .\templates\app2\code_practice.html:259
+#: .\templates\app2\submission_history.html:211
+msgid "Harakatlar"
+msgstr ""
+
+#: .\templates\app1\admin_stats.html:445
+#: .\templates\app1\user_profile_detail.html:469
+msgid "Kiritilmagan"
+msgstr ""
+
+#: .\templates\app1\admin_stats.html:474 .\templates\app2\admin_panel.html:536
+#: .\templates\base.html:884
+msgid "Statistika"
+msgstr ""
+
+#: .\templates\app1\admin_stats.html:477 .\templates\base.html:979
+msgid "Profil"
+msgstr ""
+
+#: .\templates\app1\admin_stats.html:487
+msgid "Hozircha foydalanuvchilar mavjud emas"
+msgstr ""
+
+#: .\templates\app1\admin_stats.html:488
+msgid ""
+"Foydalanuvchilar ro'yxatdan o'tgandan so'ng ularning statistikasi bu yerda "
+"ko'rinadi"
+msgstr ""
+
+#: .\templates\app1\ai_chat.html:794
+msgid "AI Chat Bot"
+msgstr ""
+
+#: .\templates\app1\ai_chat.html:796
+msgid "Tarixni tozalash"
+msgstr ""
+
+#: .\templates\app1\ai_chat.html:804
+msgid ""
+"Sizning mutaxasisligingiz bo'yicha talabalarga yana qanday bilimlarni "
+"berishni istaysiz? Menga tushunarli tarzda savolingizni kiriting! Men sizga "
+"qiziqarli materiallarni taqdim etaman. Marhamat!"
+msgstr ""
+
+#: .\templates\app1\ai_chat.html:808
+msgid ""
+"Siz yana o'z mutaxasislik faninggizdan nimalarni bilishni istaysiz? "
+"Tushunarli tarzda yozing, man sizga yordam beraman! Siz bergan amsalaga har "
+"xil o'yinlar yoki metodlarni qo'llab tayyorlayman"
+msgstr ""
+
+#: .\templates\app1\ai_chat.html:814
+msgid ""
+"Maslahat: Dasturlash, Python, Django, HTML, CSS, JavaScript haqida savol "
+"bering."
+msgstr ""
+
+#: .\templates\app1\ai_chat.html:825
+msgid "Savolingizni yozing..."
+msgstr ""
+
+#: .\templates\app1\ai_chat.html:830
+msgid "Yuborish"
+msgstr ""
+
+#: .\templates\app1\documents.html:608
+msgid "O'quv Materiallari"
+msgstr ""
+
+#: .\templates\app1\documents.html:610
+msgid "Mutaxassislik fanlari bo'yicha o'quv qo'llanmalar va hujjatlar"
+msgstr ""
+
+#: .\templates\app1\documents.html:618
+msgid "Yangi Material"
+msgstr ""
+
+#: .\templates\app1\documents.html:645
+msgid "Material"
+msgstr ""
+
+#: .\templates\app1\documents.html:649 .\templates\app1\test_result.html:387
+msgid "Test"
+msgstr ""
+
+#: .\templates\app1\documents.html:655
+msgid "Materiallarni Ko'rish"
+msgstr ""
+
+#: .\templates\app1\documents.html:659
+msgid "Testlarni Ko'rish"
+msgstr ""
+
+#: .\templates\app1\documents.html:670 .\templates\app1\tests.html:743
+msgid "Hozircha fanlar mavjud emas"
+msgstr ""
+
+#: .\templates\app1\documents.html:672
+msgid ""
+"Administrator tomonidan fanlar qo'shilmagani uchun materiallar mavjud emas."
+msgstr ""
+
+#: .\templates\app1\documents.html:676
+msgid "Birinchi Fanni Yaratish"
+msgstr ""
+
+#: .\templates\app1\home.html:836
+msgid ""
+"Sun'iy intellekt va ma'lumotlar qayta ishlash platformamizga xush kelibsiz!"
+msgstr ""
+
+#: .\templates\app1\home.html:839
+msgid "Tizimdan to'liq foydalanish uchun ro'yxatdan o'ting."
+msgstr ""
+
+#: .\templates\app1\home.html:847 .\templates\base.html:1001
+msgid "Ro'yxatdan o'tish"
+msgstr ""
+
+#: .\templates\app1\home.html:864
+msgid "Videodarslar"
+msgstr ""
+
+#: .\templates\app1\home.html:875
+msgid "Umumiy testlar"
+msgstr ""
+
+#: .\templates\app1\home.html:888
+msgid "Past natija"
+msgstr ""
+
+#: .\templates\app1\home.html:890
+msgid "Yaxshi natija"
+msgstr ""
+
+#: .\templates\app1\home.html:903
+msgid "Foydalanuvchilar soni"
+msgstr ""
+
+#: .\templates\app1\home.html:912
+msgid "Jami fanlar"
+msgstr ""
+
+#: .\templates\app1\home.html:918
+msgid "O'rtacha o'zlashtirish"
+msgstr ""
+
+#: .\templates\app1\home.html:923
+msgid "O'zlashtirilgan fanlar"
+msgstr ""
+
+#: .\templates\app1\home.html:931
+msgid " Fanlar statistikasi"
+msgstr ""
+
+#: .\templates\app1\home.html:939
+#, python-format
+msgid "Yaxshi (80-100%%)"
+msgstr ""
+
+#: .\templates\app1\home.html:943
+#, python-format
+msgid "O'rtacha (60-79%%)"
+msgstr ""
+
+#: .\templates\app1\home.html:947
+#, python-format
+msgid "Qoniqarsiz (0-59%%)"
+msgstr ""
+
+#: .\templates\app1\home.html:953
+msgid "Statistika grafigi mavjud emas"
+msgstr ""
+
+#: .\templates\app1\home.html:962
+msgid "Fanlar bo'yicha materiallar"
+msgstr ""
+
+#: .\templates\app1\home.html:969
+#, python-format
+msgid "%(data.videos)s video"
+msgid_plural "%(data.videos)s video"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\templates\app1\home.html:970
+#, python-format
+msgid "%(data.documents)s material"
+msgid_plural "%(data.documents)s material"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\templates\app1\home.html:971
+#, python-format
+msgid "%(data.tests)s test"
+msgid_plural "%(data.tests)s test"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\templates\app1\home.html:985 .\templates\app1\home.html:1009
+msgid "O'zlashtirish darajasi"
+msgstr ""
+
+#: .\templates\app1\home.html:1011
+msgid "Tizimga kiring va test topshiring"
+msgstr ""
+
+#: .\templates\app1\home.html:1012
+msgid "Tizimga kirish"
+msgstr ""
+
+#: .\templates\app1\subject_documents.html:357
+msgid "Barcha Fanlarga Qaytish"
+msgstr ""
+
+#: .\templates\app1\subject_documents.html:378
+#, python-format
+msgid "%(documents.count)s ta material"
+msgid_plural "%(documents.count)s ta material"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\templates\app1\subject_documents.html:424
+msgid "Yuklab Olish"
+msgstr ""
+
+#: .\templates\app1\subject_documents.html:429
+#: .\templates\app2\admin_panel.html:253
+#: .\templates\app2\submission_history.html:290
+msgid "Ko'rish"
+msgstr ""
+
+#: .\templates\app1\subject_documents.html:440
+msgid "Hozircha materiallar mavjud emas"
+msgstr ""
+
+#: .\templates\app1\subject_documents.html:441
+msgid "Ushbu fanda hozircha o'quv materiallari mavjud emas."
+msgstr ""
+
+#: .\templates\app1\subject_documents.html:444
+msgid "Birinchi Materialni Qo'shish"
+msgstr ""
+
+#: .\templates\app1\subject_documents.html:462
+msgid "Ushbu Fan uchun Material Qo'shish"
+msgstr ""
+
+#: .\templates\app1\take_test.html:489
+#, python-format
+msgid ""
+"Vaqt chegarasi: %(test.time_limit_minutes)s daqiqa | Savollar: "
+"%(total_questions)s ta |"
+msgstr ""
+
+#: .\templates\app1\take_test.html:491
+msgid "Savollar sizning darajangizga moslashtirildi"
+msgstr ""
+
+#: .\templates\app1\take_test.html:499
+msgid "Qolgan vaqt:"
+msgstr ""
+
+#: .\templates\app1\take_test.html:504
+msgid "Sizning darajangiz:"
+msgstr ""
+
+#: .\templates\app1\take_test.html:519
+#: .\templates\app2\practice_question.html:24
+msgid "Savol"
+msgstr ""
+
+#: .\templates\app1\take_test.html:521 .\templates\app1\tests.html:672
+#: .\templates\app1\tests.html:684 .\templates\app2\code_practice.html:135
+msgid "Oson"
+msgstr ""
+
+#: .\templates\app1\take_test.html:522 .\templates\app1\tests.html:673
+#: .\templates\app1\tests.html:685 .\templates\app2\code_practice.html:136
+#: .\templates\app2\submission_history.html:276
+msgid "O'rtacha"
+msgstr ""
+
+#: .\templates\app1\take_test.html:523 .\templates\app1\tests.html:674
+#: .\templates\app1\tests.html:686 .\templates\app2\code_practice.html:137
+msgid "Qiyin"
+msgstr ""
+
+#: .\templates\app1\take_test.html:549
+msgid "Bu savol uchun javob variantlari mavjud emas!"
+msgstr ""
+
+#: .\templates\app1\take_test.html:558
+msgid "Bu testda hozircha savollar mavjud emas."
+msgstr ""
+
+#: .\templates\app1\take_test.html:564
+msgid "Testni Yakunlash"
+msgstr ""
+
+#: .\templates\app1\take_test.html:567
+#: .\templates\app1\user_profile_detail.html:435
+msgid "Orqaga"
+msgstr ""
+
+#: .\templates\app1\take_test.html:580
+msgid "Vaqt tugadi"
+msgstr ""
+
+#: .\templates\app1\take_test.html:584
+msgid "Test vaqti tugadi. Javoblaringiz avtomatik ravishda saqlanadi."
+msgstr ""
+
+#: .\templates\app1\take_test.html:596 .\templates\app1\take_test.html:598
+msgid "Savollar:"
+msgstr ""
+
+#: .\templates\app1\test_result.html:265
+msgid "Test Natijasi"
+msgstr ""
+
+#: .\templates\app1\test_result.html:279
+msgid "To'g'ri Javoblar"
+msgstr ""
+
+#: .\templates\app1\test_result.html:284
+msgid "Savollar soni"
+msgstr ""
+
+#: .\templates\app1\test_result.html:292
+#: .\templates\app1\user_profile_detail.html:505
+msgid "Foiz"
+msgstr ""
+
+#: .\templates\app1\test_result.html:295
+msgid "Umumiy natija"
+msgstr ""
+
+#: .\templates\app1\test_result.html:306
+msgid "Sarflangan Vaqt"
+msgstr ""
+
+#: .\templates\app1\test_result.html:312
+msgid "daqiqa"
+msgstr ""
+
+#: .\templates\app1\test_result.html:312
+msgid "soniya"
+msgstr ""
+
+#: .\templates\app1\test_result.html:316
+msgid "Testni ishlash uchun sarflangan vaqt"
+msgstr ""
+
+#: .\templates\app1\test_result.html:329
+msgid "A'lo! Juda yaxshi!"
+msgstr ""
+
+#: .\templates\app1\test_result.html:331
+msgid "Yaxshi!"
+msgstr ""
+
+#: .\templates\app1\test_result.html:333
+msgid "Qoniqarli"
+msgstr ""
+
+#: .\templates\app1\test_result.html:335
+msgid "Qaytadan o'rganib chiqing"
+msgstr ""
+
+#: .\templates\app1\test_result.html:340
+msgid "Siz bu mavzuni mukammal o'zlashtirgansiz!"
+msgstr ""
+
+#: .\templates\app1\test_result.html:342
+msgid "Yaxshi natija, lekin yana mashq qilish foydali bo'ladi."
+msgstr ""
+
+#: .\templates\app1\test_result.html:344
+msgid "O'rtacha natija, mavzuni qaytadan ko'rib chiqing."
+msgstr ""
+
+#: .\templates\app1\test_result.html:346
+msgid "Mavzuni qaytadan o'rganib chiqishingiz kerak."
+msgstr ""
+
+#: .\templates\app1\test_result.html:354
+msgid "Boshqa Testlar"
+msgstr ""
+
+#: .\templates\app1\test_result.html:357
+#: .\templates\app2\submission_result.html:25
+msgid "Qayta Urinish"
+msgstr ""
+
+#: .\templates\app1\test_result.html:387
+msgid "da yuklangan"
+msgstr ""
+
+#: .\templates\app1\tests.html:565 .\templates\base.html:903
+msgid "Testlar"
+msgstr ""
+
+#: .\templates\app1\tests.html:567
+msgid "Bilimingizni sinab ko'ring va o'zingizni sinovdan o'tkazing"
+msgstr ""
+
+#: .\templates\app1\tests.html:573
+msgid "Fayl Yuklash"
+msgstr ""
+
+#: .\templates\app1\tests.html:585
+msgid "Savollar sizning oldingi natijalaringizga qarab moslashtiriladi"
+msgstr ""
+
+#: .\templates\app1\tests.html:602
+#, python-format
+msgid "%(subject.test_set.count)s ta test"
+msgid_plural "%(subject.test_set.count)s ta test"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\templates\app1\tests.html:608 .\templates\app1\upload_test_file.html:530
+msgid "Daraja:"
+msgstr ""
+
+#: .\templates\app1\tests.html:630 .\templates\app2\admin_panel.html:237
+#: .\templates\app2\admin_panel.html:487 .\templates\app2\admin_panel.html:525
+msgid "Faol"
+msgstr ""
+
+#: .\templates\app1\tests.html:632 .\templates\app2\admin_panel.html:241
+msgid "Nofaol"
+msgstr ""
+
+#: .\templates\app1\tests.html:643
+msgid "Savollar"
+msgstr ""
+
+#: .\templates\app1\tests.html:649 .\templates\app2\admin_panel.html:312
+#: .\templates\app2\submission_history.html:209
+msgid "Vaqt"
+msgstr ""
+
+#: .\templates\app1\tests.html:650
+msgid "daq"
+msgstr ""
+
+#: .\templates\app1\tests.html:655 .\templates\app2\user_profile.html:284
+msgid "Urinishlar"
+msgstr ""
+
+#: .\templates\app1\tests.html:660
+msgid "Mavjud"
+msgstr ""
+
+#: .\templates\app1\tests.html:667
+msgid "Savollar darajasi:"
+msgstr ""
+
+#: .\templates\app1\tests.html:699
+msgid "Testni Davom Ettirish"
+msgstr ""
+
+#: .\templates\app1\tests.html:702 .\templates\app1\tests.html:707
+msgid "Testni Boshlash"
+msgstr ""
+
+#: .\templates\app1\tests.html:712
+msgid "Test Nofaol"
+msgstr ""
+
+#: .\templates\app1\tests.html:721
+msgid "Oxirgi natija:"
+msgstr ""
+
+#: .\templates\app1\tests.html:734
+#, python-format
+msgid "\"%(subject.name)s\" fanida hozircha testlar mavjud emas."
+msgstr ""
+
+#: .\templates\app1\tests.html:745
+msgid "Administrator tomonidan fanlar qo'shilmagani uchun testlar mavjud emas."
+msgstr ""
+
+#: .\templates\app1\tests.html:750
+msgid "Birinchi fanni yaratish"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:476
+msgid "Test Faylini Yuklash"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:485
+msgid "Xatolik!"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:485
+msgid "Iltimos, quyidagi xatoliklarni tuzating:"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:507
+msgid "Test Nomi"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:519
+msgid "Test Fayli"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:522
+msgid "Faqat .txt fayllar qabul qilinadi. Yangi format:"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:524
+msgid "Savol: Savol matni? | Daraja: 2"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:525
+msgid "Birinchi variant"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:526
+msgid "Ikkinchi variant"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:527
+msgid "Uchinchi variant"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:528
+msgid "To'rtinchi variant"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:529
+#: .\templates\app1\upload_test_file.html:589
+#: .\templates\app1\upload_test_file.html:596
+#: .\templates\app1\upload_test_file.html:603
+msgid "Javob: B"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:530
+msgid "1 (Oson), 2 (O'rtacha), 3 (Qiyin)"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:531
+msgid "Savollar orasida bo'sh qator qoldiring."
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:539
+msgid "Test Vaqti (daqiqa)"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:552
+msgid "Savollar Soni"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:565
+msgid "Testni Yuklash"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:568
+#: .\templates\app2\add_question.html:451
+msgid "Bekor Qilish"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:579
+msgid "Fayl Format Namunasi"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:584
+msgid "Savol: Python qaysi dasturlash tiliga tegishli? | Daraja: 1"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:585
+msgid "Kompilyatsiya qilinadigan tillar"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:586
+msgid "Interpretatsiya qilinadigan tillar"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:587
+msgid "Assembler tillar"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:588
+msgid "Mashina tillari"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:591
+msgid "Savol: Django framework qaysi tilda yozilgan? | Daraja: 2"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:592
+msgid "Java"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:593
+#: .\templates\app2\admin_panel.html:100
+#: .\templates\app2\practice_question.html:84
+#: .\templates\app2\submission_result.html:77
+#: .\templates\app2\submission_result.html:307
+msgid "Python"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:594
+msgid "JavaScript"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:595
+msgid "C++"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:598
+msgid ""
+"Savol: Quyidagi kod qanday natija qaytaradi? print(2 ** 3 ** 2) | Daraja: 3"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:599
+msgid "64"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:600
+msgid "512"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:601
+msgid "16"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:602
+msgid "256"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:606
+#: .\templates\app2\add_question.html:379 .\templates\app2\admin_panel.html:592
+#: .\templates\app2\practice_question.html:122
+msgid "Eslatma:"
+msgstr ""
+
+#: .\templates\app1\upload_test_file.html:606
+msgid ""
+"Har bir savoldan keyin bo'sh qator qoldiring. Daraja ixtiyoriy (agar "
+"ko'rsatilmasa, o'rtacha hisoblanadi)."
+msgstr ""
+
+#: .\templates\app1\user_profile_detail.html:431
+msgid "Foydalanuvchi profili"
+msgstr ""
+
+#: .\templates\app1\user_profile_detail.html:442
+msgid "Admin ko'rinishi"
+msgstr ""
+
+#: .\templates\app1\user_profile_detail.html:450
+msgid "Foydalanuvchi nomi"
+msgstr ""
+
+#: .\templates\app1\user_profile_detail.html:454
+msgid "Ism"
+msgstr ""
+
+#: .\templates\app1\user_profile_detail.html:458
+msgid "Familiya"
+msgstr ""
+
+#: .\templates\app1\user_profile_detail.html:483
+msgid "Batafsil statistika"
+msgstr ""
+
+#: .\templates\app1\user_profile_detail.html:486
+msgid "Ro'yxatga qaytish"
+msgstr ""
+
+#: .\templates\app1\user_profile_detail.html:495
+msgid "Test natijalari"
+msgstr ""
+
+#: .\templates\app1\user_profile_detail.html:502
+msgid "Test nomi"
+msgstr ""
+
+#: .\templates\app1\user_profile_detail.html:503
+#: .\templates\app2\admin_panel.html:180
+msgid "Sana"
+msgstr ""
+
+#: .\templates\app1\user_profile_detail.html:504
+#: .\templates\app2\add_question.html:432
+msgid "Ball"
+msgstr ""
+
+#: .\templates\app1\user_profile_detail.html:506
+#: .\templates\app2\admin_panel.html:179 .\templates\app2\admin_panel.html:311
+#: .\templates\app2\admin_panel.html:425
+#: .\templates\app2\submission_history.html:208
+msgid "Holat"
+msgstr ""
+
+#: .\templates\app1\user_profile_detail.html:522
+msgid "A'lo"
+msgstr ""
+
+#: .\templates\app1\user_profile_detail.html:524
+#: .\templates\app2\submission_history.html:124
+msgid "Yaxshi"
+msgstr ""
+
+#: .\templates\app1\user_profile_detail.html:526
+msgid "Qoniqarsiz"
+msgstr ""
+
+#: .\templates\app1\user_profile_detail.html:540
+msgid "Jami testlar"
+msgstr ""
+
+#: .\templates\app1\user_profile_detail.html:554
+msgid "Oxirgi kirish"
+msgstr ""
+
+#: .\templates\app1\user_profile_detail.html:568
+msgid "Oxirgi test"
+msgstr ""
+
+#: .\templates\app1\user_profile_detail.html:576
+msgid "Bu foydalanuvchi hali test ishlamagan"
+msgstr ""
+
+#: .\templates\app1\user_stats.html:908 .\templates\app1\user_stats.html:929
+msgid "Test results"
+msgstr ""
+
+#: .\templates\app1\user_stats.html:912
+msgid "Back"
+msgstr ""
+
+#: .\templates\app1\user_stats.html:920 .\templates\app1\user_stats.html:923
+msgid "Test results graph"
+msgstr ""
+
+#: .\templates\app1\user_stats.html:930
+msgid "Number of results"
+msgstr ""
+
+#: .\templates\app1\user_stats.html:930
+msgid "items"
+msgstr ""
+
+#: .\templates\app1\user_stats.html:931
+msgid "Graph"
+msgstr ""
+
+#: .\templates\app1\user_stats.html:931
+msgid "Available,Not available"
+msgstr ""
+
+#: .\templates\app1\user_stats.html:940
+msgid "Total tests"
+msgstr ""
+
+#: .\templates\app1\user_stats.html:944
+msgid "Best result"
+msgstr ""
+
+#: .\templates\app1\user_stats.html:948
+msgid "Tests completed"
+msgstr ""
+
+#: .\templates\app1\user_stats.html:955
+msgid "Detailed statistics"
+msgstr ""
+
+#: .\templates\app1\user_stats.html:960
+msgid "Test name"
+msgstr ""
+
+#: .\templates\app1\user_stats.html:961
+msgid "Date"
+msgstr ""
+
+#: .\templates\app1\user_stats.html:962
+msgid "Score"
+msgstr ""
+
+#: .\templates\app1\user_stats.html:963
+msgid "Percentage"
+msgstr ""
+
+#: .\templates\app1\user_stats.html:964
+msgid "Status"
+msgstr ""
+
+#: .\templates\app1\user_stats.html:985
+msgid "Excellent"
+msgstr ""
+
+#: .\templates\app1\user_stats.html:987
+msgid "Good"
+msgstr ""
+
+#: .\templates\app1\user_stats.html:989
+msgid "Unsatisfactory"
+msgstr ""
+
+#: .\templates\app1\user_stats.html:997
+msgid "No test results available yet"
+msgstr ""
+
+#: .\templates\app1\video_lessons.html:57
+msgid "Video Darslar"
+msgstr ""
+
+#: .\templates\app1\video_lessons.html:59
+msgid "YouTube platformasidagi tushunarli va sifatli video darslar"
+msgstr ""
+
+#: .\templates\app1\video_lessons.html:94
+msgid "Hozircha video darslar mavjud emas."
+msgstr ""
+
+#: .\templates\app1\video_lessons.html:102
+msgid "Admin uchun ma'lumot"
+msgstr ""
+
+#: .\templates\app1\video_lessons.html:107
+msgid ""
+"Hozircha video darslar mavjud emas. Yangi video qo'shish uchun tugmani "
+"bosing:"
+msgstr ""
+
+#: .\templates\app2\add_question.html:306
+msgid "Yangi Python Savol Qo'shish"
+msgstr ""
+
+#: .\templates\app2\add_question.html:318
+msgid "Funksiya Nomi"
+msgstr ""
+
+#: .\templates\app2\add_question.html:323
+msgid "Foydalanuvchi yozishi kerak bo'lgan funksiya nomi."
+msgstr ""
+
+#: .\templates\app2\add_question.html:324
+#: .\templates\app2\add_question.html:344
+msgid "Misol:"
+msgstr ""
+
+#: .\templates\app2\add_question.html:338
+msgid "Funksiya Parametrlari"
+msgstr ""
+
+#: .\templates\app2\add_question.html:343
+msgid "Funksiya qabul qiladigan parametrlar."
+msgstr ""
+
+#: .\templates\app2\add_question.html:344
+msgid "yoki"
+msgstr ""
+
+#: .\templates\app2\add_question.html:352
+msgid "Savol Matni"
+msgstr ""
+
+#: .\templates\app2\add_question.html:357
+msgid "Savolning to'liq matnini yozing."
+msgstr ""
+
+#: .\templates\app2\add_question.html:371
+msgid "Python Test Kodi"
+msgstr ""
+
+#: .\templates\app2\add_question.html:379
+msgid "Test kodida"
+msgstr ""
+
+#: .\templates\app2\add_question.html:379
+msgid "funksiyasini chaqiring!"
+msgstr ""
+
+#: .\templates\app2\add_question.html:384
+msgid "Test kodi namunasi:"
+msgstr ""
+
+#: .\templates\app2\add_question.html:411 .\templates\app2\admin_panel.html:176
+#: .\templates\app2\code_practice.html:256
+msgid "Qiyinchilik"
+msgstr ""
+
+#: .\templates\app2\add_question.html:420
+msgid "Kategoriya"
+msgstr ""
+
+#: .\templates\app2\add_question.html:424
+msgid "Masalan: Matematika, String, Ro'yxat"
+msgstr ""
+
+#: .\templates\app2\add_question.html:443
+msgid "Python Savolni Saqlash"
+msgstr ""
+
+#: .\templates\app2\add_question.html:446
+msgid "Ko'rib Chiqish"
+msgstr ""
+
+#: .\templates\app2\add_question.html:454
+#: .\templates\app2\practice_question.html:179
+msgid "Tozalash"
+msgstr ""
+
+#: .\templates\app2\add_question.html:467
+msgid "To'g'ri test kodi namunasi:"
+msgstr ""
+
+#: .\templates\app2\add_question.html:486
+msgid "Maslahatlar:"
+msgstr ""
+
+#: .\templates\app2\add_question.html:489
+msgid "Funksiya nomini aniq belgilang"
+msgstr ""
+
+#: .\templates\app2\add_question.html:490
+msgid "Test kodida shu funksiyani chaqiring"
+msgstr ""
+
+#: .\templates\app2\add_question.html:491
+msgid "Kamida 3-4 ta test bo'lsin"
+msgstr ""
+
+#: .\templates\app2\add_question.html:492
+msgid "Turli xil holatlarni tekshiring"
+msgstr ""
+
+#: .\templates\app2\add_question.html:493
+msgid "Xato xabarlari tushunarli bo'lsin"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:15
+msgid "Python Admin Panel"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:17
+msgid "Python Code Compiler boshqaruvi"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:21 .\templates\app2\code_practice.html:110
+msgid "Yangi Python Savol"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:37 .\templates\app2\code_practice.html:163
+msgid "Jami Python Savollar"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:44
+msgid "faol"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:47
+msgid "nofaol"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:65 .\templates\app2\admin_panel.html:160
+#: .\templates\app2\admin_panel.html:422
+msgid "Python Yuborishlar"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:72
+msgid "muvaffaqiyatli"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:75
+msgid "xato"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:93
+msgid "Foydalanuvchilar"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:102
+msgid "Bugun:"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:119
+#: .\templates\app2\submission_history.html:115
+msgid "Python Muvaffaqiyati"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:154
+#: .\templates\app2\submission_history.html:22
+msgid "Python Savollar"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:174 .\templates\app2\admin_panel.html:308
+#: .\templates\app2\admin_panel.html:419
+#: .\templates\app2\code_practice.html:254
+#: .\templates\app2\submission_history.html:206
+msgid "ID"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:175 .\templates\app2\admin_panel.html:310
+#: .\templates\app2\code_practice.html:255
+#: .\templates\app2\practice_question.html:16
+#: .\templates\app2\submission_history.html:207
+#: .\templates\app2\user_profile.html:283
+msgid "Python Savol"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:177
+#: .\templates\app2\code_practice.html:257
+msgid "Muallif"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:178
+#: .\templates\app2\code_practice.html:258
+msgid "Yechimlar"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:181
+msgid "Amallar"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:259
+msgid "Holatni o'zgartirish"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:269 .\templates\app2\admin_panel.html:608
+msgid "O'chirish"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:280
+msgid "Hech qanday Python savol topilmadi"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:282
+msgid "Birinchi savolni qo'shing"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:298
+msgid "So'nggi Python Yuborishlar"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:301
+msgid "Jami:"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:313
+msgid "Ishlash vaqti"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:314
+msgid "Natija"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:356
+#: .\templates\app2\submission_history.html:63
+#: .\templates\app2\submission_history.html:156
+#: .\templates\app2\submission_history.html:243
+#: .\templates\app2\submission_history.html:442
+#: .\templates\app2\user_profile.html:128
+#: .\templates\app2\user_profile.html:209
+#: .\templates\app2\user_profile.html:243
+msgid "Muvaffaqiyatli"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:360
+#: .\templates\app2\submission_history.html:247
+msgid "Xato"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:364
+#: .\templates\app2\submission_history.html:251
+msgid "Runtime"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:368
+#: .\templates\app2\submission_history.html:159
+#: .\templates\app2\submission_history.html:255
+msgid "Kutilmoqda"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:393
+#: .\templates\app2\submission_history.html:289
+msgid "Natijani ko'rish"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:403
+msgid "Hech qanday Python yuborish topilmadi"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:423
+#: .\templates\app2\submission_history.html:454
+#: .\templates\app2\user_profile.html:144
+#: .\templates\app2\user_profile.html:285
+msgid "Muvaffaqiyat"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:424
+msgid "Ro'yxatdan"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:483
+msgid "Admin"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:491
+msgid "Yangi"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:502
+msgid "Hech qanday foydalanuvchi topilmadi"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:520
+msgid "Python Platformasi"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:528
+msgid "Test muhiti"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:529
+msgid "Secure"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:540
+msgid "O'rtacha muvaffaqiyat"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:548
+msgid "O'rtacha yechim vaqti"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:560
+msgid "Sozlamalar"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:564
+msgid "Platforma"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:567
+msgid "Python Docs"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:585
+msgid "Python Savolni o'chirish"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:592
+msgid "Bu amalni qaytarib bo'lmaydi!"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:594
+msgid "nomli Python savolini o'chirishni istaysizmi?"
+msgstr ""
+
+#: .\templates\app2\admin_panel.html:597
+msgid "Savol bilan birga unga bog'langan barcha yuborishlar ham o'chiriladi."
+msgstr ""
+
+#: .\templates\app2\code_practice.html:102
+msgid "Python Code Practice"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:104
+msgid "Python dasturlash tilini mashq qiling va kodlaringizni testlang"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:126
+msgid "Python savollar bo'yicha qidirish..."
+msgstr ""
+
+#: .\templates\app2\code_practice.html:134
+msgid "Barcha qiyinchilik darajalari"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:145
+msgid "Qidirish"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:178
+msgid "Oson Savollar"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:195
+msgid "O'rtacha Savollar"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:212
+msgid "Qiyin Savollar"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:232
+msgid "Python Dasturlash Mashqlari"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:234
+msgid "Har bir savol uchun kod yozing va testlang"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:238
+#, python-format
+msgid "%(counter)s ta savol"
+msgid_plural "%(counter)s ta savol"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\templates\app2\code_practice.html:242
+msgid "Mening Savollarim"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:317
+msgid "Ishlash"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:337
+msgid "Python savollar topilmadi"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:340
+#: .\templates\app2\submission_history.html:316
+#, python-format
+msgid "\"%(search_query)s\" so'rovi bo'yicha hech narsa topilmadi."
+msgstr ""
+
+#: .\templates\app2\code_practice.html:342
+msgid "Hozircha Python savollar mavjud emas."
+msgstr ""
+
+#: .\templates\app2\code_practice.html:348
+msgid "Birinchi Python Savolni Qo'shing"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:353
+msgid "Filtrlarni Tozalash"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:367
+#, python-format
+msgid "%(total_questions)s ta Python savol mavjud"
+msgid_plural "%(total_questions)s ta Python savol mavjud"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\templates\app2\code_practice.html:373
+msgid "Python Documentation"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:386
+msgid "Python O'rganish Resurslari"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:393
+#: .\templates\app2\user_profile.html:158
+msgid "Python Asoslari"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:394
+msgid "Print, input, o'zgaruvchilar, operatorlar"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:402
+msgid "Control Flow"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:403
+msgid "if/else, for/while tsikllari, funksiyalar"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:411
+msgid "Ma'lumot Turlari"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:412
+msgid "List, tuple, dict, set va ular bilan ishlash"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:420
+msgid "Advanced Python"
+msgstr ""
+
+#: .\templates\app2\code_practice.html:421
+msgid "OOP, decoratorlar, generatorlar, exception handling"
+msgstr ""
+
+#: .\templates\app2\practice_question.html:36
+msgid "Funksiya Talablari"
+msgstr ""
+
+#: .\templates\app2\practice_question.html:43
+msgid "MUHIM: Quyidagi funksiyani yozishingiz kerak"
+msgstr ""
+
+#: .\templates\app2\practice_question.html:53
+msgid "Qoidalar:"
+msgstr ""
+
+#: .\templates\app2\practice_question.html:58
+#, python-format
+msgid "Funksiya nomi <code>%(question.function_name)s</code> bo'lishi shart"
+msgstr ""
+
+#: .\templates\app2\practice_question.html:62
+#, python-format
+msgid "Parametrlar <code>%(question.function_params)s</code> bo'lishi shart"
+msgstr ""
+
+#: .\templates\app2\practice_question.html:66
+msgid "Natijani <code>return</code> bilan qaytaring"
+msgstr ""
+
+#: .\templates\app2\practice_question.html:70
+msgid "<code>print()</code> ishlatish shart emas"
+msgstr ""
+
+#: .\templates\app2\practice_question.html:92
+#, python-format
+msgid "%(question.points)s ball"
+msgstr ""
+
+#: .\templates\app2\practice_question.html:110
+msgid "Python Kod Editori"
+msgstr ""
+
+#: .\templates\app2\practice_question.html:123
+#, python-format
+msgid ""
+"Siz <code class=\"bg-dark text-light px-2 "
+"py-1\">%(question.function_name)s(%(question.function_params)s)</code>\n"
+"                                    funksiyasini yozishingiz kerak."
+msgstr ""
+
+#: .\templates\app2\practice_question.html:133
+msgid "Python kodingizni yozing:"
+msgstr ""
+
+#: .\templates\app2\practice_question.html:141
+msgid "Python kodini bu yerga yozing..."
+msgstr ""
+
+#: .\templates\app2\practice_question.html:147
+msgid "Kod misolini ko'rsatish"
+msgstr ""
+
+#: .\templates\app2\practice_question.html:176
+msgid "Format"
+msgstr ""
+
+#: .\templates\app2\practice_question.html:182
+msgid "Test qilish"
+msgstr ""
+
+#: .\templates\app2\practice_question.html:187
+msgid "Yuborish va test qilish"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:16
+msgid "Mening Python Yuborishlarim"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:18
+msgid "Python kod yuborishlar tarixi va statistika"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:25
+msgid "Mening Profilim"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:38
+msgid "Jami Python Yuborishlar"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:45
+msgid "So'nggi 7 kun:"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:90
+msgid "O'rtacha Ish Vaqti"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:98
+msgid "Eng tezi:"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:122
+msgid "Ajoyib!"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:126
+msgid "Mashq qilish kerak"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:149
+msgid "Python savoli bo'yicha qidirish..."
+msgstr ""
+
+#: .\templates\app2\submission_history.html:155
+msgid "Barcha holatlar"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:157
+#: .\templates\app2\submission_history.html:446
+msgid "Muvaffaqiyatsiz"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:158
+msgid "Xatolik"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:165
+msgid "Filtrlash"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:185
+msgid "Python Yuborishlar Tarixi"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:187
+msgid "Oxirgi yuborishlar yuqorida ko'rsatilgan"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:191
+#, python-format
+msgid "%(counter)s ta yuborish"
+msgid_plural "%(counter)s ta yuborish"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\templates\app2\submission_history.html:194
+msgid "Eksport"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:210
+msgid "Ishlash Vaqti"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:235
+#, python-format
+msgid "%(counter)s urinish"
+msgid_plural "%(counter)s urinish"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\templates\app2\submission_history.html:274
+msgid "Uzoq"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:278
+msgid "Tez"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:293
+msgid "Qayta urinish"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:298
+#: .\templates\app2\submission_result.html:161
+msgid "Kodni nusxalash"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:313
+msgid "Python yuborishlar topilmadi"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:318
+msgid "Hozircha hech qanday Python kod yubormagansiz."
+msgstr ""
+
+#: .\templates\app2\submission_history.html:323
+msgid "Python Savollarni Ishlash"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:327
+msgid "Qidiruvni Tozalash"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:341
+#, python-format
+msgid "%(total)s ta Python yuborish  %(success_rate)s%% muvaffaqiyat"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:403
+#: .\templates\app2\user_profile.html:274
+msgid "Eng Ko'p Urinilgan Python Savollar"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:414
+#, python-format
+msgid "%(item.count)s ta urinish"
+msgid_plural "%(item.count)s ta urinish"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\templates\app2\submission_history.html:435
+msgid "Python Statistikangiz"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:450
+msgid "So'nggi 7 kun"
+msgstr ""
+
+#: .\templates\app2\submission_history.html:459
+msgid "Reytingda ko'rish"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:18
+msgid "Python Test Natijasi #"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:20
+msgid "Python kodingizning test natijasi"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:29
+msgid "Tarix"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:53
+msgid "Python Test Muvaffaqiyatli!"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:55
+msgid "Python Test Xato!"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:57
+msgid "Python Runtime Xatolik!"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:63
+msgid "Python Savol:"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:94
+msgid "Ish vaqti"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:110
+msgid "Python Dastur Chiqishi"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:127
+#: .\templates\app2\submission_result.html:162
+msgid "Nusxalash"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:134
+msgid "Hech qanday chiqish yo'q"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:135
+msgid "Python dastur hech narsa chop etmagan"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:157
+msgid "Sizning Python Kodingiz"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:165
+msgid "Qator raqamlarini ko'rsatish/yashirish"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:166
+msgid "Qatorlar"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:194
+msgid "Python Xatolarini Tahlil Qilish"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:202
+msgid "Tekshirishlar"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:207
+msgid "assert funksiyasi ishlatilganmi?"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:211
+msgid "print() funksiyasi borligini tekshiring"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:215
+msgid "Asosiy funksiya mavjudligi"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:219
+msgid "Natijani qaytarish yoki chop etish"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:226
+msgid "Maslahatlar"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:230
+msgid "Python uchun maslahatlar:"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:232
+msgid "Funksiya nomi to'g'ri yozilganligini tekshiring"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:233
+msgid "Indentatsiya (4 probel) to'g'ri bajarilganligini tekshiring"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:234
+msgid "Xatolarni try/except bloklari orqali ushlang"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:235
+msgid "Test holatlarini to'liq qamrab oling"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:250
+msgid "Boshqa Python Savollar"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:254
+msgid "Python Kodni Qayta Ishlash"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:281
+msgid "O'xshash Python Savollar"
+msgstr ""
+
+#: .\templates\app2\submission_result.html:321
+msgid "Hozircha o'xshash Python savollar mavjud emas"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:28
+msgid "Python Developer"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:32
+msgid "Python Admin"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:41
+msgid "Python Profil Ma'lumotlari"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:72
+msgid "Telefon"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:83
+msgid "Ro'yxatdan o'tgan"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:89 .\templates\app2\user_profile.html:378
+msgid "oldin"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:97
+msgid "Bio"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:111
+msgid "Python Statistika"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:120
+#: .\templates\app2\user_profile.html:234
+msgid "Python Yuborish"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:136
+#: .\templates\app2\user_profile.html:261
+msgid "7 kunlik"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:154
+msgid "Python Ko'nikmalar"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:167
+msgid "Dastur Logikasi"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:176
+msgid "Test Yozish"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:195
+msgid "Python Muvaffaqiyat Darajasi"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:198
+msgid "ta oxirgi 7 kun"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:215
+#: .\templates\app2\user_profile.html:252
+msgid "Xatolar"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:223
+msgid "Umumiy muvaffaqiyat"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:335
+msgid "Hozircha Python savollariga urinishlar yo'q"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:337
+msgid "Birinchi Python Savolni Ishlash"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:349
+msgid "Oxirgi Python Faollik"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:388
+msgid "vaqt"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:399
+msgid "Hozircha Python faollik yo'q"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:401
+msgid "Python Kod Yozishni Boshlash"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:409
+msgid "Barcha Python Yuborishlarni Ko'rish"
+msgstr ""
+
+#: .\templates\app2\user_profile.html:412
+msgid "Python Reytingda Ko'rish"
+msgstr ""
+
+#: .\templates\base.html:813
+msgid "Yuklanmoqda..."
+msgstr ""
+
+#: .\templates\base.html:829
+msgid "Boshqaruv paneli"
+msgstr ""
+
+#: .\templates\base.html:839
+msgid "Code Practice"
+msgstr ""
+
+#: .\templates\base.html:850
+msgid "Code Admin"
+msgstr ""
+
+#: .\templates\base.html:862
+msgid "Biz haqimizda"
+msgstr ""
+
+#: .\templates\base.html:872
+msgid "Fan materiallari"
+msgstr ""
+
+#: .\templates\base.html:880
+msgid "Fan Yaratish"
+msgstr ""
+
+#: .\templates\base.html:893
+msgid "Video darslar"
+msgstr ""
+
+#: .\templates\base.html:914
+msgid "AI chat"
+msgstr ""
+
+#: .\templates\base.html:948
+msgid "Til"
+msgstr ""
+
+#: .\templates\base.html:990
+msgid "Chiqish"
+msgstr ""
+
+#: .\templates\base.html:1011
+msgid "Kirish"
+msgstr ""

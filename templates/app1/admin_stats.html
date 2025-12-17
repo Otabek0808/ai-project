@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 <style>
@@ -407,9 +408,10 @@
     }
 </style>
 
+
 <div class="admin-stats-container">
     <!-- Sarlavha -->
-        <h1> Foydalanuvchilar statistikasi</h1>
+    <h1>{% trans "Foydalanuvchilar statistikasi" %}</h1>
 
     <!-- Asosiy karta -->
     <div class="stats-card">
@@ -419,14 +421,14 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Foydalanuvchi</th>
-                            <th>Ism Familiya</th>
-                            <th>Guruh</th>
-                            <th>Email</th>
-                            <th>Ro'yxatdan o'tgan sana</th>
-                            <th>Testlar soni</th>
-                            <th>O'rtacha ball</th>
-                            <th>Harakatlar</th>
+                            <th>{% trans "Foydalanuvchi" %}</th>
+                            <th>{% trans "Ism Familiya" %}</th>
+                            <th>{% trans "Guruh" %}</th>
+                            <th>{% trans "Email" %}</th>
+                            <th>{% trans "Ro'yxatdan o'tgan sana" %}</th>
+                            <th>{% trans "Testlar soni" %}</th>
+                            <th>{% trans "O'rtacha ball" %}</th>
+                            <th>{% trans "Harakatlar" %}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -440,7 +442,7 @@
                                         {{ user.userprofile.first_name }} {{ user.userprofile.last_name }}
                                     </a>
                                 {% else %}
-                                    <span class="text-muted">Kiritilmagan</span>
+                                    <span class="text-muted">{% trans "Kiritilmagan" %}</span>
                                 {% endif %}
                             </td>
                             <td>
@@ -469,10 +471,10 @@
                             <td>
                                 <div class="action-buttons">
                                     <a href="{% url 'user_stats' user.id %}" class="action-btn stats">
-                                        <i class="fas fa-chart-line"></i> Statistika
+                                        <i class="fas fa-chart-line"></i> {% trans "Statistika" %}
                                     </a>
                                     <a href="{% url 'user_profile_detail' user.id %}" class="action-btn profile">
-                                        <i class="fas fa-user"></i> Profil
+                                        <i class="fas fa-user"></i> {% trans "Profil" %}
                                     </a>
                                 </div>
                             </td>
@@ -482,8 +484,8 @@
                             <td colspan="9">
                                 <div class="empty-users">
                                     <i class="fas fa-user-slash"></i>
-                                    <h5>Hozircha foydalanuvchilar mavjud emas</h5>
-                                    <p>Foydalanuvchilar ro'yxatdan o'tgandan so'ng ularning statistikasi bu yerda ko'rinadi</p>
+                                    <h5>{% trans "Hozircha foydalanuvchilar mavjud emas" %}</h5>
+                                    <p>{% trans "Foydalanuvchilar ro'yxatdan o'tgandan so'ng ularning statistikasi bu yerda ko'rinadi" %}</p>
                                 </div>
                             </td>
                         </tr>

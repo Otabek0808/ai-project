@@ -4,6 +4,8 @@
 {% block title %}Mening Python Profilim - {{ user_info.full_name }}{% endblock %}
 
 {% block content %}
+{% load i18n %}
+
 <div class="container-fluid py-4">
     <div class="row">
         <!-- Python profil ma'lumotlari -->
@@ -23,11 +25,11 @@
                         {{ user_info.full_name }}
                     </h3>
                     <p class="text-white-50 mb-0">
-                        <i class="fab fa-python me-2"></i>Python Developer
+                        <i class="fab fa-python me-2"></i>{% trans "Python Developer" %}
                     </p>
                     {% if is_admin %}
                     <span class="badge bg-danger mt-2">
-                        <i class="fas fa-user-shield me-1"></i> Python Admin
+                        <i class="fas fa-user-shield me-1"></i> {% trans "Python Admin" %}
                     </span>
                     {% endif %}
                 </div>
@@ -36,12 +38,12 @@
                 <div class="card-body">
                     <h5 class="font-weight-bold text-primary mb-4">
                         <i class="fas fa-id-card me-2"></i>
-                        Python Profil Ma'lumotlari
+                        {% trans "Python Profil Ma'lumotlari" %}
                     </h5>
 
                     <div class="mb-4">
                         <label class="small text-muted mb-2 d-flex align-items-center">
-                            <i class="fas fa-user me-2"></i> Foydalanuvchi
+                            <i class="fas fa-user me-2"></i> {% trans "Foydalanuvchi" %}
                         </label>
                         <div class="d-flex align-items-center">
                             <i class="fab fa-python text-primary me-3"></i>
@@ -55,7 +57,7 @@
                     {% if user_info.group %}
                     <div class="mb-4">
                         <label class="small text-muted mb-2 d-flex align-items-center">
-                            <i class="fas fa-users me-2"></i> Guruh
+                            <i class="fas fa-users me-2"></i> {% trans "Guruh" %}
                         </label>
                         <div class="d-flex align-items-center">
                             <i class="fas fa-graduation-cap text-success me-3"></i>
@@ -67,7 +69,7 @@
                     {% if user_info.phone %}
                     <div class="mb-4">
                         <label class="small text-muted mb-2 d-flex align-items-center">
-                            <i class="fas fa-phone me-2"></i> Telefon
+                            <i class="fas fa-phone me-2"></i> {% trans "Telefon" %}
                         </label>
                         <div class="d-flex align-items-center">
                             <i class="fas fa-mobile-alt text-info me-3"></i>
@@ -78,13 +80,13 @@
 
                     <div class="mb-4">
                         <label class="small text-muted mb-2 d-flex align-items-center">
-                            <i class="fas fa-calendar-alt me-2"></i> Ro'yxatdan o'tgan
+                            <i class="fas fa-calendar-alt me-2"></i> {% trans "Ro'yxatdan o'tgan" %}
                         </label>
                         <div class="d-flex align-items-center">
                             <i class="fas fa-sign-in-alt text-warning me-3"></i>
                             <div>
                                 <div class="fw-bold">{{ request.user.date_joined|date:"d.m.Y" }}</div>
-                                <div class="small text-muted">{{ request.user.date_joined|timesince }} oldin</div>
+                                <div class="small text-muted">{{ request.user.date_joined|timesince }} {% trans "oldin" %}</div>
                             </div>
                         </div>
                     </div>
@@ -92,7 +94,7 @@
                     {% if user_info.bio %}
                     <div class="mb-4">
                         <label class="small text-muted mb-2 d-flex align-items-center">
-                            <i class="fas fa-info-circle me-2"></i> Bio
+                            <i class="fas fa-info-circle me-2"></i> {% trans "Bio" %}
                         </label>
                         <div class="bg-light p-3 rounded">
                             <i class="fas fa-quote-left text-muted me-2"></i>
@@ -106,7 +108,7 @@
                     <!-- Python statistika -->
                     <h5 class="font-weight-bold text-primary mb-3">
                         <i class="fab fa-python me-2"></i>
-                        Python Statistika
+                        {% trans "Python Statistika" %}
                     </h5>
 
                     <div class="row text-center">
@@ -115,7 +117,7 @@
                                 {{ total_submissions }}
                             </div>
                             <div class="small text-muted">
-                                <i class="fas fa-code me-1"></i> Python Yuborish
+                                <i class="fas fa-code me-1"></i> {% trans "Python Yuborish" %}
                             </div>
                         </div>
                         <div class="col-6 mb-3">
@@ -123,7 +125,7 @@
                                 {{ successful_submissions }}
                             </div>
                             <div class="small text-muted">
-                                <i class="fas fa-check-circle me-1"></i> Muvaffaqiyatli
+                                <i class="fas fa-check-circle me-1"></i> {% trans "Muvaffaqiyatli" %}
                             </div>
                         </div>
                         <div class="col-6">
@@ -131,7 +133,7 @@
                                 {{ recent_submissions }}
                             </div>
                             <div class="small text-muted">
-                                <i class="fas fa-clock me-1"></i> 7 kunlik
+                                <i class="fas fa-clock me-1"></i> {% trans "7 kunlik" %}
                             </div>
                         </div>
                         <div class="col-6">
@@ -139,7 +141,7 @@
                                 {{ success_rate }}%
                             </div>
                             <div class="small text-muted">
-                                <i class="fas fa-chart-line me-1"></i> Muvaffaqiyat
+                                <i class="fas fa-chart-line me-1"></i> {% trans "Muvaffaqiyat" %}
                             </div>
                         </div>
                     </div>
@@ -149,11 +151,11 @@
                 <div class="card-footer bg-light">
                     <h6 class="font-weight-bold text-primary mb-3">
                         <i class="fas fa-chart-bar me-2"></i>
-                        Python Ko'nikmalar
+                        {% trans "Python Ko'nikmalar" %}
                     </h6>
                     <div class="mb-3">
                         <div class="d-flex justify-content-between small mb-1">
-                            <span>Python Asoslari</span>
+                            <span>{% trans "Python Asoslari" %}</span>
                             <span>{{ success_rate|add:"20"|divisibleby:100|yesno:"100,"|default:"80" }}%</span>
                         </div>
                         <div class="progress" style="height: 8px;">
@@ -162,7 +164,7 @@
                     </div>
                     <div class="mb-3">
                         <div class="d-flex justify-content-between small mb-1">
-                            <span>Dastur Logikasi</span>
+                            <span>{% trans "Dastur Logikasi" %}</span>
                             <span>{{ success_rate|add:"10"|divisibleby:100|yesno:"100,"|default:"70" }}%</span>
                         </div>
                         <div class="progress" style="height: 8px;">
@@ -171,7 +173,7 @@
                     </div>
                     <div>
                         <div class="d-flex justify-content-between small mb-1">
-                            <span>Test Yozish</span>
+                            <span>{% trans "Test Yozish" %}</span>
                             <span>{{ success_rate }}%</span>
                         </div>
                         <div class="progress" style="height: 8px;">
@@ -190,10 +192,10 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h6 class="m-0 font-weight-bold text-white">
                             <i class="fab fa-python me-2"></i>
-                            Python Muvaffaqiyat Darajasi
+                            {% trans "Python Muvaffaqiyat Darajasi" %}
                         </h6>
                         <span class="badge bg-light text-dark">
-                            <i class="fas fa-fire me-1"></i> {{ recent_submissions }} ta oxirgi 7 kun
+                            <i class="fas fa-fire me-1"></i> {{ recent_submissions }} {% trans "ta oxirgi 7 kun" %}
                         </span>
                     </div>
                 </div>
@@ -204,13 +206,13 @@
                                 <div class="progress-bar bg-success fw-bold" role="progressbar"
                                      style="width: {{ success_rate }}%; border-radius: 20px 0 0 20px;"
                                      aria-valuenow="{{ success_rate }}" aria-valuemin="0" aria-valuemax="100">
-                                    {{ success_rate }}% Muvaffaqiyatli
+                                    {{ success_rate }}% {% trans "Muvaffaqiyatli" %}
                                 </div>
                                 <div class="progress-bar bg-danger fw-bold" role="progressbar"
                                      style="width: {{ 100|add:"-"|add:success_rate }}%; border-radius: 0 20px 20px 0;"
                                      aria-valuenow="{{ 100|add:"-"|add:success_rate }}"
                                      aria-valuemin="0" aria-valuemax="100">
-                                    {{ 100|add:"-"|add:success_rate }}% Xatolar
+                                    {{ 100|add:"-"|add:success_rate }}% {% trans "Xatolar" %}
                                 </div>
                             </div>
                         </div>
@@ -218,7 +220,7 @@
                             <div class="display-5 fw-bold text-primary">
                                 {{ success_rate }}%
                             </div>
-                            <div class="small text-muted">Umumiy muvaffaqiyat</div>
+                            <div class="small text-muted">{% trans "Umumiy muvaffaqiyat" %}</div>
                         </div>
                     </div>
 
@@ -229,7 +231,7 @@
                                 <div class="card-body text-center">
                                     <i class="fab fa-python fa-2x text-primary mb-3"></i>
                                     <div class="h2 fw-bold text-primary">{{ total_submissions }}</div>
-                                    <div class="small text-muted">Python Yuborish</div>
+                                    <div class="small text-muted">{% trans "Python Yuborish" %}</div>
                                 </div>
                             </div>
                         </div>
@@ -238,7 +240,7 @@
                                 <div class="card-body text-center">
                                     <i class="fas fa-check-circle fa-2x text-success mb-3"></i>
                                     <div class="h2 fw-bold text-success">{{ successful_submissions }}</div>
-                                    <div class="small text-muted">Muvaffaqiyatli</div>
+                                    <div class="small text-muted">{% trans "Muvaffaqiyatli" %}</div>
                                 </div>
                             </div>
                         </div>
@@ -247,7 +249,7 @@
                                 <div class="card-body text-center">
                                     <i class="fas fa-times-circle fa-2x text-danger mb-3"></i>
                                     <div class="h2 fw-bold text-danger">{{ total_submissions|add:"-"|add:successful_submissions }}</div>
-                                    <div class="small text-muted">Xatolar</div>
+                                    <div class="small text-muted">{% trans "Xatolar" %}</div>
                                 </div>
                             </div>
                         </div>
@@ -256,7 +258,7 @@
                                 <div class="card-body text-center">
                                     <i class="fas fa-stopwatch fa-2x text-warning mb-3"></i>
                                     <div class="h2 fw-bold text-warning">{{ recent_submissions }}</div>
-                                    <div class="small text-muted">7 kunlik</div>
+                                    <div class="small text-muted">{% trans "7 kunlik" %}</div>
                                 </div>
                             </div>
                         </div>
@@ -269,7 +271,7 @@
                 <div class="card-header py-3 bg-primary text-white">
                     <h6 class="m-0 font-weight-bold">
                         <i class="fas fa-star me-2"></i>
-                        Eng Ko'p Urinilgan Python Savollar
+                        {% trans "Eng Ko'p Urinilgan Python Savollar" %}
                     </h6>
                 </div>
                 <div class="card-body">
@@ -278,9 +280,9 @@
                             <table class="table table-hover">
                                 <thead class="bg-light">
                                     <tr>
-                                        <th>Python Savol</th>
-                                        <th style="width: 100px;">Urinishlar</th>
-                                        <th style="width: 100px;">Muvaffaqiyat</th>
+                                        <th>{% trans "Python Savol" %}</th>
+                                        <th style="width: 100px;">{% trans "Urinishlar" %}</th>
+                                        <th style="width: 100px;">{% trans "Muvaffaqiyat" %}</th>
                                         <th style="width: 80px;"></th>
                                     </tr>
                                 </thead>
@@ -330,9 +332,9 @@
                     {% else %}
                         <div class="text-center py-4">
                             <i class="fab fa-python fa-3x text-muted opacity-25 mb-3"></i>
-                            <p class="text-muted">Hozircha Python savollariga urinishlar yo'q</p>
+                            <p class="text-muted">{% trans "Hozircha Python savollariga urinishlar yo'q" %}</p>
                             <a href="{% url 'app2:code_practice' %}" class="btn btn-primary">
-                                <i class="fas fa-play me-2"></i> Birinchi Python Savolni Ishlash
+                                <i class="fas fa-play me-2"></i> {% trans "Birinchi Python Savolni Ishlash" %}
                             </a>
                         </div>
                     {% endif %}
@@ -344,7 +346,7 @@
                 <div class="card-header py-3 bg-success text-white">
                     <h6 class="m-0 font-weight-bold">
                         <i class="fas fa-history me-2"></i>
-                        Oxirgi Python Faollik
+                        {% trans "Oxirgi Python Faollik" %}
                     </h6>
                 </div>
                 <div class="card-body p-0">
@@ -373,7 +375,7 @@
                                                         {{ submission.question.get_difficulty_display }}
                                                     </span>
                                                     <span class="text-muted">
-                                                        {{ submission.created_at|timesince }} oldin
+                                                        {{ submission.created_at|timesince }} {% trans "oldin" %}
                                                     </span>
                                                 </div>
                                             </div>
@@ -383,7 +385,7 @@
                                         {% if submission.execution_time %}
                                         <div class="fw-bold text-primary">{{ submission.execution_time }}s</div>
                                         <div class="small text-muted">
-                                            <i class="fas fa-stopwatch"></i> vaqt
+                                            <i class="fas fa-stopwatch"></i> {% trans "vaqt" %}
                                         </div>
                                         {% endif %}
                                     </div>
@@ -394,9 +396,9 @@
                     {% else %}
                         <div class="text-center py-5">
                             <i class="fas fa-code fa-3x text-muted opacity-25 mb-3"></i>
-                            <p class="text-muted">Hozircha Python faollik yo'q</p>
+                            <p class="text-muted">{% trans "Hozircha Python faollik yo'q" %}</p>
                             <a href="{% url 'app2:code_practice' %}" class="btn btn-success">
-                                <i class="fas fa-play me-2"></i> Python Kod Yozishni Boshlash
+                                <i class="fas fa-play me-2"></i> {% trans "Python Kod Yozishni Boshlash" %}
                             </a>
                         </div>
                     {% endif %}
@@ -404,10 +406,10 @@
                 <div class="card-footer bg-light">
                     <div class="text-center">
                         <a href="{% url 'app2:submission_history' %}" class="btn btn-outline-primary">
-                            <i class="fas fa-list me-2"></i> Barcha Python Yuborishlarni Ko'rish
+                            <i class="fas fa-list me-2"></i> {% trans "Barcha Python Yuborishlarni Ko'rish" %}
                         </a>
                         <a href="{% url 'app2:leaderboard' %}" class="btn btn-outline-success ms-2">
-                            <i class="fas fa-trophy me-2"></i> Python Reytingda Ko'rish
+                            <i class="fas fa-trophy me-2"></i> {% trans "Python Reytingda Ko'rish" %}
                         </a>
                     </div>
                 </div>

@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
 <style>
   .video_container {
     width: 100%;
@@ -52,15 +54,15 @@
   <!-- Sarlavha va admin tugmasi -->
   <div class="video_header">
     <div>
-      <h1 class="display-5 fw-bold">Video Darslar</h1>
+      <h1 class="display-5 fw-bold">{% trans "Video Darslar" %}</h1>
       <p class="text-muted">
-        YouTube platformasidagi tushunarli va sifatli video darslar
+        {% trans "YouTube platformasidagi tushunarli va sifatli video darslar" %}
       </p>
     </div>
     {% if user.is_staff %}
     <div>
       <a href="{% url 'add_video' %}" class="btn btn-success me-2">
-        <i class="fas fa-plus-circle me-1"></i> Yangi Video Qo'shish
+        <i class="fas fa-plus-circle me-1"></i> {% trans "Yangi Video Qo'shish" %}
       </a>
     </div>
     {% endif %}
@@ -89,7 +91,7 @@
     {% endfor %}
   </div>
   {% else %}
-  <div class="alert alert-info">Hozircha video darslar mavjud emas.</div>
+  <div class="alert alert-info">{% trans "Hozircha video darslar mavjud emas." %}</div>
   {% endif %}
 
   <!-- Admin uchun qo'shimcha ma'lumot -->
@@ -97,17 +99,16 @@
   <div class="card mt-4 border-warning">
     <div class="card-header bg-warning text-dark">
       <h5 class="mb-0">
-        <i class="fas fa-info-circle me-2"></i>Admin uchun ma'lumot
+        <i class="fas fa-info-circle me-2"></i>{% trans "Admin uchun ma'lumot" %}
       </h5>
     </div>
     <div class="card-body">
       <p>
-        Hozircha video darslar mavjud emas. Yangi video qo'shish uchun tugmani
-        bosing:
+        {% trans "Hozircha video darslar mavjud emas. Yangi video qo'shish uchun tugmani bosing:" %}
       </p>
-      <a href="{% url 'add_video' %}" class="btn btn-success"
-        ><i class="fas fa-plus me-1"></i> Yangi Video Qo'shish</a
-      >
+      <a href="{% url 'add_video' %}" class="btn btn-success">
+        <i class="fas fa-plus me-1"></i> {% trans "Yangi Video Qo'shish" %}
+      </a>
     </div>
   </div>
   {% endif %}

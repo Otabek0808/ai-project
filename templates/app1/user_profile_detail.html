@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 <style>
@@ -425,163 +426,157 @@
     animation: fadeIn 0.5s ease-out;
   }
 </style>
+
 <div class="col-lg-10">
-                <h4>Foydalanuvchi profili
-                            </h4>
-                <!-- Orqaga qaytish tugmasi -->
-                <div class="mb-4">
-                    <a href="{% url 'admin_stats' %}" class="btn btn-outline-secondary">
-                        <i class="fas fa-arrow-left me-2"></i> Orqaga
-                    </a>
-                </div>
+    <h4>{% trans "Foydalanuvchi profili" %}</h4>
+    <!-- Orqaga qaytish tugmasi -->
+    <div class="mb-4">
+        <a href="{% url 'admin_stats' %}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> {% trans "Orqaga" %}
+        </a>
+    </div>
 
-                <div class="user_profile_body">
-                    <div class="card-header">
-                        <span class="badge bg-light text-primary fs-6">
-                                Admin ko'rinishi
-                            </span>
+    <div class="user_profile_body">
+        <div class="card-header">
+            <span class="badge bg-light text-primary fs-6">
+                {% trans "Admin ko'rinishi" %}
+            </span>
+        </div>
+        <div class="card-body p-4">
+            <!-- Asosiy ma'lumotlar -->
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <h6 class="text-muted mb-2">{% trans "Foydalanuvchi nomi" %}</h6>
+                        <p class="fs-5">{{ profile_user.username }}</p>
                     </div>
-                    <div class="card-body p-4">
-                        <!-- Asosiy ma'lumotlar -->
-                        <div class="row mb-5">
-                            <div class="col-md-6">
-                                <div class="mb-4">
-                                    <h6 class="text-muted mb-2">Foydalanuvchi nomi</h6>
-                                    <p class="fs-5">{{ profile_user.username }}</p>
-                                </div>
-                                <div class="mb-4">
-                                    <h6 class="text-muted mb-2">Ism</h6>
-                                    <p class="fs-5">{{ user_profile.first_name|default:"Kiritilmagan" }}</p>
-                                </div>
-                                <div class="mb-4">
-                                    <h6 class="text-muted mb-2">Familiya</h6>
-                                    <p class="fs-5">{{ user_profile.last_name|default:"Kiritilmagan" }}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-4">
-                                    <h6 class="text-muted mb-2">Guruh</h6>
-                                    <p class="fs-5">
-                                        {% if user_profile.group %}
-                                            <span class="badge bg-success fs-6">{{ user_profile.group }}</span>
-                                        {% else %}
-                                            <span class="text-muted">Kiritilmagan</span>
-                                        {% endif %}
-                                    </p>
-                                </div>
-                                <div class="mb-4">
-                                    <h6 class="text-muted mb-2">Email</h6>
-                                    <p class="fs-5">{{ profile_user.email|default:"Kiritilmagan" }}</p>
-                                </div>
-                                <div class="mb-4">
-                                    <h6 class="text-muted mb-2">Ro'yxatdan o'tgan sana</h6>
-                                    <p class="fs-5">{{ profile_user.date_joined|date:"d.m.Y H:i" }}</p>
-                                </div>
-                                <div class="mt-5 text-center">
-                            <a href="{% url 'user_stats' profile_user.id %}" class="btn btn-primary me-2">
-                                <i class="fas fa-chart-line me-2"></i> Batafsil statistika
-                            </a>
-                            <a href="{% url 'admin_stats' %}" class="btn btn-outline-secondary">
-                                <i class="fas fa-list me-2"></i> Ro'yxatga qaytish
-                            </a>
-                        </div>
-                            </div>
-                            <!-- Harakatlar -->
-
-                        </div>
-
-                        <!-- Test natijalari -->
-                        <div class="mt-5">
-                            <h5 class="mb-4 border-bottom pb-2">
-                                <i class="fas fa-chart-bar me-2"></i>Test natijalari
-                            </h5>
-
-                            {% if test_results %}
-
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Test nomi</th>
-                                            <th>Sana</th>
-                                            <th>Ball</th>
-                                            <th>Foiz</th>
-                                            <th>Holat</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for result in test_results %}
-                                        <tr>
-                                            <td>{{ result.test.title }}</td>
-                                            <td>{{ result.completed_at|date:"d.m.Y H:i" }}</td>
-                                            <td>{{ result.score }}/{{ result.total_questions }}</td>
-                                            <td>
-                                                <span class="badge {% if result.percentage >= 80 %}bg-success{% elif result.percentage >= 60 %}bg-warning{% else %}bg-danger{% endif %}">
-                                                    {{ result.percentage|floatformat:1 }}%
-                                                </span>
-                                            </td>
-                                            <td>
-                                                {% if result.percentage >= 80 %}
-                                                    <i class="fas fa-check text-success"></i> A'lo
-                                                {% elif result.percentage >= 60 %}
-                                                    <i class="fas fa-check text-warning"></i> Yaxshi
-                                                {% else %}
-                                                    <i class="fas fa-times text-danger"></i> Qoniqarsiz
-                                                {% endif %}
-                                            </td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-
-                            <!-- Statistik ma'lumotlar -->
-                            <div class="row mt-4">
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-success text-white text-center">
-                                        <div class="card-body py-3">
-                                            <h4 class="mb-0">{{ test_results.count }}</h4>
-                                            <small>Jami testlar</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-primary text-white text-center">
-                                        <div class="card-body py-3">
-                                            <h4 class="mb-0">
-                                                {% if profile_user.last_login %}
-                                                    {{ profile_user.last_login|date:"d.m.Y" }}
-                                                {% else %}
-                                                    -
-                                                {% endif %}
-                                            </h4>
-                                            <small>Oxirgi kirish</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="card bg-info text-white text-center">
-                                        <div class="card-body py-3">
-                                            <h4 class="mb-0">
-                                                {% if test_results %}
-                                                    {{ test_results.0.completed_at|date:"d.m.Y" }}
-                                                {% else %}
-                                                    -
-                                                {% endif %}
-                                            </h4>
-                                            <small>Oxirgi test</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="mb-4">
+                        <h6 class="text-muted mb-2">{% trans "Ism" %}</h6>
+                        <p class="fs-5">{{ user_profile.first_name|default:"Kiritilmagan" }}</p>
+                    </div>
+                    <div class="mb-4">
+                        <h6 class="text-muted mb-2">{% trans "Familiya" %}</h6>
+                        <p class="fs-5">{{ user_profile.last_name|default:"Kiritilmagan" }}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <h6 class="text-muted mb-2">{% trans "Guruh" %}</h6>
+                        <p class="fs-5">
+                            {% if user_profile.group %}
+                                <span class="badge bg-success fs-6">{{ user_profile.group }}</span>
                             {% else %}
-                            <div class="alert alert-info text-center">
-                                <i class="fas fa-info-circle me-2"></i>
-                                Bu foydalanuvchi hali test ishlamagan
-                            </div>
+                                <span class="text-muted">{% trans "Kiritilmagan" %}</span>
                             {% endif %}
-                        </div>
-
-
+                        </p>
+                    </div>
+                    <div class="mb-4">
+                        <h6 class="text-muted mb-2">{% trans "Email" %}</h6>
+                        <p class="fs-5">{{ profile_user.email|default:"Kiritilmagan" }}</p>
+                    </div>
+                    <div class="mb-4">
+                        <h6 class="text-muted mb-2">{% trans "Ro'yxatdan o'tgan sana" %}</h6>
+                        <p class="fs-5">{{ profile_user.date_joined|date:"d.m.Y H:i" }}</p>
+                    </div>
+                    <div class="mt-5 text-center">
+                        <a href="{% url 'user_stats' profile_user.id %}" class="btn btn-primary me-2">
+                            <i class="fas fa-chart-line me-2"></i> {% trans "Batafsil statistika" %}
+                        </a>
+                        <a href="{% url 'admin_stats' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-list me-2"></i> {% trans "Ro'yxatga qaytish" %}
+                        </a>
                     </div>
                 </div>
             </div>
-{% endblock %}
+
+            <!-- Test natijalari -->
+            <div class="mt-5">
+                <h5 class="mb-4 border-bottom pb-2">
+                    <i class="fas fa-chart-bar me-2"></i>{% trans "Test natijalari" %}
+                </h5>
+
+                {% if test_results %}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Test nomi" %}</th>
+                                <th>{% trans "Sana" %}</th>
+                                <th>{% trans "Ball" %}</th>
+                                <th>{% trans "Foiz" %}</th>
+                                <th>{% trans "Holat" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for result in test_results %}
+                            <tr>
+                                <td>{{ result.test.title }}</td>
+                                <td>{{ result.completed_at|date:"d.m.Y H:i" }}</td>
+                                <td>{{ result.score }}/{{ result.total_questions }}</td>
+                                <td>
+                                    <span class="badge {% if result.percentage >= 80 %}bg-success{% elif result.percentage >= 60 %}bg-warning{% else %}bg-danger{% endif %}">
+                                        {{ result.percentage|floatformat:1 }}%
+                                    </span>
+                                </td>
+                                <td>
+                                    {% if result.percentage >= 80 %}
+                                        <i class="fas fa-check text-success"></i> {% trans "A'lo" %}
+                                    {% elif result.percentage >= 60 %}
+                                        <i class="fas fa-check text-warning"></i> {% trans "Yaxshi" %}
+                                    {% else %}
+                                        <i class="fas fa-times text-danger"></i> {% trans "Qoniqarsiz" %}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <!-- Statistik ma'lumotlar -->
+                    <div class="row mt-4">
+                        <div class="col-md-4 mb-3">
+                            <div class="card bg-success text-white text-center">
+                                <div class="card-body py-3">
+                                    <h4 class="mb-0">{{ test_results.count }}</h4>
+                                    <small>{% trans "Jami testlar" %}</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card bg-primary text-white text-center">
+                                <div class="card-body py-3">
+                                    <h4 class="mb-0">
+                                        {% if profile_user.last_login %}
+                                            {{ profile_user.last_login|date:"d.m.Y" }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </h4>
+                                    <small>{% trans "Oxirgi kirish" %}</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card bg-info text-white text-center">
+                                <div class="card-body py-3">
+                                    <h4 class="mb-0">
+                                        {% if test_results %}
+                                            {{ test_results.0.completed_at|date:"d.m.Y" }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </h4>
+                                    <small>{% trans "Oxirgi test" %}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                <div class="alert alert-info text-center">
+                    <i class="fas fa-info-circle me-2"></i>
+                    {% trans "Bu foydalanuvchi hali test ishlamagan" %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>{% endblock %}
