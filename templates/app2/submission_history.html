@@ -633,6 +633,7 @@
         color: rgba(220, 53, 69, 0.8) !important;
     }
 </style>
+
 <div class="container-fluid py-4">
     <div class="row">
         <div class="col-12">
@@ -718,9 +719,11 @@
                                         <i class="fas fa-chart-line me-1"></i> {% trans "O'rtacha Ish Vaqti" %}
                                     </div>
                                     <div class="h2 mb-0 font-weight-bold text-gray-800">
-                                        {% with avg_time=submissions.aggregate_avg=avg_execution_time|default:0 %}
-                                            {{ avg_time|floatformat:2 }}s
-                                        {% endwith %}
+                                        {% if avg_execution_time %}
+                                            {{ avg_execution_time|floatformat:2 }}s
+                                        {% else %}
+                                            0.00s
+                                        {% endif %}
                                     </div>
                                     <div class="mt-2 text-muted text-xs">
                                         <i class="fas fa-stopwatch me-1"></i> {% trans "Eng tezi:" %} 0.1s
@@ -781,10 +784,10 @@
                         <div class="col-md-3">
                             <select class="form-select" id="statusFilter">
                                 <option value="">{% trans "Barcha holatlar" %}</option>
-                                <option value="success">{% trans "Muvaffaqiyatli" %}</option>
-                                <option value="failed">{% trans "Muvaffaqiyatsiz" %}</option>
-                                <option value="error">{% trans "Xatolik" %}</option>
-                                <option value="pending">{% trans "Kutilmoqda" %}</option>
+                                <option value="success" {% if request.GET.status == 'success' %}selected{% endif %}>{% trans "Muvaffaqiyatli" %}</option>
+                                <option value="failed" {% if request.GET.status == 'failed' %}selected{% endif %}>{% trans "Muvaffaqiyatsiz" %}</option>
+                                <option value="error" {% if request.GET.status == 'error' %}selected{% endif %}>{% trans "Xatolik" %}</option>
+                                <option value="pending" {% if request.GET.status == 'pending' %}selected{% endif %}>{% trans "Kutilmoqda" %}</option>
                             </select>
                         </div>
                         <div class="col-md-3">
@@ -792,7 +795,7 @@
                                 <button type="button" class="btn btn-primary w-100" onclick="filterSubmissions()">
                                     <i class="fas fa-filter me-2"></i> {% trans "Filtrlash" %}
                                 </button>
-                                {% if search_query %}
+                                {% if search_query or request.GET.status %}
                                 <a href="{% url 'app2:submission_history' %}" class="btn btn-outline-secondary">
                                     <i class="fas fa-times"></i>
                                 </a>
@@ -842,8 +845,8 @@
                                 <tbody>
                                     {% for submission in submissions %}
                                     <tr class="align-middle {% cycle '' 'bg-light' %}">
-                                        <td class="fw-bold text-primary">#{{ submission.id }}</td>
-                                        <td>
+                                        <td class="fw-bold text-primary" data-label="ID">#{{ submission.id }}</td>
+                                        <td data-label="Python Savol">
                                             <div>
                                                 <h6 class="mb-1">
                                                     <a href="{% url 'app2:practice_question' submission.question.id %}"
@@ -865,7 +868,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>
+                                        <td data-label="Holat">
                                             {% if submission.status == 'success' %}
                                             <span class="badge bg-success p-2">
                                                 <i class="fas fa-check-circle me-1"></i> {% trans "Muvaffaqiyatli" %}
@@ -884,7 +887,7 @@
                                             </span>
                                             {% endif %}
                                         </td>
-                                        <td>
+                                        <td data-label="Vaqt">
                                             <div class="small fw-bold">
                                                 {{ submission.created_at|date:"H:i" }}
                                             </div>
@@ -892,7 +895,7 @@
                                                 {{ submission.created_at|date:"d.m.Y" }}
                                             </div>
                                         </td>
-                                        <td>
+                                        <td data-label="Ishlash Vaqti">
                                             {% if submission.execution_time %}
                                             <div class="d-flex align-items-center">
                                                 <i class="fas fa-stopwatch text-info me-2"></i>
@@ -911,7 +914,7 @@
                                             <span class="text-muted">-</span>
                                             {% endif %}
                                         </td>
-                                        <td>
+                                        <td data-label="Harakatlar">
                                             <div class="btn-group btn-group-sm">
                                                 <a href="{% url 'app2:submission_result' submission.id %}"
                                                    class="btn btn-primary" title="{% trans "Natijani ko'rish" %}" data-bs-toggle="tooltip">
@@ -976,12 +979,12 @@
                                 <ul class="pagination justify-content-end mb-0">
                                     {% if submissions.has_previous %}
                                     <li class="page-item">
-                                        <a class="page-link" href="?page=1{% if search_query %}&q={{ search_query }}{% endif %}">
+                                        <a class="page-link" href="?page=1{% if search_query %}&q={{ search_query }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}">
                                             <i class="fas fa-angle-double-left"></i>
                                         </a>
                                     </li>
                                     <li class="page-item">
-                                        <a class="page-link" href="?page={{ submissions.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}">
+                                        <a class="page-link" href="?page={{ submissions.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}">
                                             <i class="fas fa-angle-left"></i>
                                         </a>
                                     </li>
@@ -994,19 +997,19 @@
                                         </li>
                                         {% elif num > submissions.number|add:'-3' and num < submissions.number|add:'3' %}
                                         <li class="page-item">
-                                            <a class="page-link" href="?page={{ num }}{% if search_query %}&q={{ search_query }}{% endif %}">{{ num }}</a>
+                                            <a class="page-link" href="?page={{ num }}{% if search_query %}&q={{ search_query }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}">{{ num }}</a>
                                         </li>
                                         {% endif %}
                                     {% endfor %}
 
                                     {% if submissions.has_next %}
                                     <li class="page-item">
-                                        <a class="page-link" href="?page={{ submissions.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}">
+                                        <a class="page-link" href="?page={{ submissions.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}">
                                             <i class="fas fa-angle-right"></i>
                                         </a>
                                     </li>
                                     <li class="page-item">
-                                        <a class="page-link" href="?page={{ submissions.paginator.num_pages }}{% if search_query %}&q={{ search_query }}{% endif %}">
+                                        <a class="page-link" href="?page={{ submissions.paginator.num_pages }}{% if search_query %}&q={{ search_query }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}">
                                             <i class="fas fa-angle-double-right"></i>
                                         </a>
                                     </li>
@@ -1043,7 +1046,7 @@
                                             </div>
                                         </div>
                                         <div class="text-end">
-                                            <a href="{% url 'app2:practice_question' question_id %}" class="btn btn-sm btn-outline-primary">
+                                            <a href="{% url 'app2:practice_question' item.question_id %}" class="btn btn-sm btn-outline-primary">
                                                 <i class="fas fa-play"></i>
                                             </a>
                                         </div>
@@ -1161,8 +1164,8 @@ function exportToCSV() {
                 const id = $(this).find('td').eq(0).text().trim();
                 const question = $(this).find('td').eq(1).find('h6').text().trim();
                 const status = $(this).find('td').eq(2).text().trim();
-                const time = $(this).find('td').eq(3).text().trim();
-                const execTime = $(this).find('td').eq(4).text().trim();
+                const time = $(this).find('td').eq(3).text().trim().replace('\n', ' ');
+                const execTime = $(this).find('td').eq(4).find('.fw-bold').text().trim() || '-';
 
                 csv += `"${id}","${question}","${status}","${time}","${execTime}"\n`;
             });
