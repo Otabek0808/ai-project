@@ -2,7 +2,8 @@
 {% load i18n %}
 {% block title %}Python Code Practice - Python Dasturlash Mashqlari{% endblock %}
 
-{% block extra_css %}
+
+{% block content %}
 <style>
     /* Asosiy container uchun */
     .container-fluid {
@@ -89,15 +90,850 @@
             min-width: 100%;
         }
     }
-</style>
-{% endblock %}
+    .h_container_practise{
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+    }
+    @media (max-width: 640px) {
 
-{% block content %}
+    .h_container_practise{
+        flex-direction: column;
+    }
+        .btn_box_plus{
+            text-align: end;
+        }
+    }
+    @media (max-width: 350px) {
+       .btn_box_plus {
+            text-align:start ;
+        }
+    }
+    .quek_plus{
+        margin: 2rem 0;
+     }
+    .plus_box{
+        display: flex;
+        gap: 10px;
+        width: 100%;
+        margin-top: 1.8rem;
+        justify-content: space-between;
+    }
+.box_info_quek{
+        width: 100%;
+        height: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.511);
+        border-radius: 10px;
+        padding: 25px;
+        border: 0.1px solid white;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+@media (max-width: 990px) {
+  .plus_box{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+  }
+
+
+}
+
+@media (max-width: 500px) {
+  .plus_box{
+      display: grid;
+      grid-template-columns: 1fr;
+  }
+.box_info_quek{
+    text-align: center;
+}
+
+}
+
+/* Qidiruv va filtrlash uchun maxsus CSS */
+.search-filter-container {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.search-filter-wrapper {
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.8) 0%,
+        rgba(255, 255, 255, 0.6) 100%);
+    backdrop-filter: blur(15px);
+    border-radius: 15px;
+    padding: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Qidiruv inputi uchun */
+.input-group {
+    transition: all 0.3s ease;
+}
+
+.input-group-text {
+    background: linear-gradient(135deg,
+        rgba(55, 118, 171, 0.9) 0%,
+        rgba(48, 105, 152, 0.9) 100%) !important;
+    border: none;
+    color: white !important;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.input-group:hover .input-group-text {
+    transform: scale(1.05);
+}
+
+.form-control {
+    border: 2px solid rgba(255, 255, 255, 0.4) !important;
+    transition: all 0.3s ease;
+    padding: 12px 15px;
+    font-size: 1rem;
+}
+
+.form-control:focus {
+    border-color: rgba(55, 118, 171, 0.6) !important;
+    box-shadow: 0 0 0 0.25rem rgba(55, 118, 171, 0.25) !important;
+    transform: translateY(-2px);
+}
+
+/* Form select uchun maxsus animatsiya */
+.form-select {
+    position: relative;
+    border: 2px solid rgba(255, 255, 255, 0.4) !important;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 12px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%233776AB' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 16px 12px;
+    padding-right: 40px;
+    overflow: hidden;
+}
+
+.form-select:focus {
+    border-color: rgba(55, 118, 171, 0.6) !important;
+    box-shadow: 0 0 0 0.25rem rgba(55, 118, 171, 0.25) !important;
+    transform: translateY(-2px);
+}
+
+/* Optionlar uchun animatsiya */
+.form-select option {
+    background: rgba(255, 255, 255, 0.9);
+    color: #2c3e50;
+    padding: 12px;
+    margin: 5px 0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    transform-origin: center;
+}
+
+.form-select option:hover {
+    background: linear-gradient(135deg,
+        rgba(55, 118, 171, 0.2) 0%,
+        rgba(255, 212, 59, 0.2) 100%);
+    transform: scale(1.02);
+    color: #3776AB;
+}
+
+.form-select option:checked {
+    background: linear-gradient(135deg,
+        rgba(55, 118, 171, 0.9) 0%,
+        rgba(48, 105, 152, 0.9) 100%);
+    color: white;
+    font-weight: 600;
+}
+
+/* Tugmalar uchun */
+.search-btn {
+    background: linear-gradient(135deg,
+        rgba(55, 118, 171, 0.9) 0%,
+        rgba(48, 105, 152, 0.9) 100%) !important;
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 12px 25px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.search-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent);
+    transition: 0.5s;
+}
+
+.search-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(55, 118, 171, 0.3);
+}
+
+.search-btn:hover::before {
+    left: 100%;
+}
+
+.clear-btn {
+    background: rgba(255, 255, 255, 0.8) !important;
+    border: 2px solid rgba(108, 117, 125, 0.3) !important;
+    color: #6c757d;
+    font-weight: 600;
+    padding: 12px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.clear-btn:hover {
+    background: white !important;
+    border-color: #dc3545 !important;
+    color: #dc3545;
+    transform: translateY(-2px) rotate(15deg);
+    box-shadow: 0 8px 15px rgba(220, 53, 69, 0.2);
+}
+
+/* Python savollar jadvali uchun maxsus CSS stil */
+
+/* Kartaning asosiy konteyneri */
+.python-card {
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.8) 0%,
+        rgba(255, 255, 255, 0.6) 100%);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.python-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg,
+        #3776AB 0%,
+        #FFD43B 50%,
+        #3776AB 100%);
+    background-size: 200% 100%;
+    animation: python-gradient 3s linear infinite;
+}
+
+@keyframes python-gradient {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Kartaning header qismi */
+.python-header {
+    background: linear-gradient(135deg,
+        rgba(55, 118, 171, 0.9) 0%,
+        rgba(48, 105, 152, 0.9) 100%) !important;
+    border-bottom: 3px solid rgba(255, 212, 59, 0.8);
+    padding: 25px 30px !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.python-header::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.5) 50%,
+        transparent 100%);
+}
+
+.python-header h6 {
+    color: white !important;
+    font-size: 1.6rem !important;
+    font-weight: 800 !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin-bottom: 8px !important;
+}
+
+.python-header .text-white-50 {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+/* Savollar soni badge */
+.python-count-badge {
+    background: rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(10px);
+    color: white !important;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 10px 20px !important;
+    border-radius: 30px !important;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/* Jadval konteyneri */
+.table-responsive {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 0 0 20px 20px;
+    overflow: hidden;
+}
+
+/* Jadval sarlavhasi */
+.table thead {
+    background: linear-gradient(135deg,
+        rgba(55, 118, 171, 0.15) 0%,
+        rgba(255, 212, 59, 0.15) 100%);
+    backdrop-filter: blur(10px);
+}
+
+.table th {
+    color: #2c3e50;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    padding: 20px;
+    border-bottom: 3px solid rgba(55, 118, 171, 0.3);
+    position: relative;
+}
+
+.table th::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 20%;
+    height: 60%;
+    width: 2px;
+    background: linear-gradient(180deg,
+        transparent 0%,
+        rgba(55, 118, 171, 0.2) 50%,
+        transparent 100%);
+}
+
+.table th:last-child::after {
+    display: none;
+}
+
+/* Jadval satrlari */
+.table tbody tr {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+.table tbody tr::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg,
+        transparent 0%,
+        rgba(55, 118, 171, 0) 100%);
+    transition: all 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background: linear-gradient(90deg,
+        rgba(55, 118, 171, 0.05) 0%,
+        rgba(255, 212, 59, 0.05) 100%) !important;
+    transform: translateX(8px);
+}
+
+.table tbody tr:hover::before {
+    background: linear-gradient(180deg,
+        rgba(55, 118, 171, 0.8) 0%,
+        rgba(255, 212, 59, 0.8) 100%);
+}
+
+/* Juft va toq satrlar */
+.table tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.table tbody tr:nth-child(odd) {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+/* Jadval kataklari */
+.table td {
+    padding: 18px 20px;
+    color: #495057;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    vertical-align: middle;
+}
+
+.table tr:hover td {
+    color: #2c3e50;
+}
+
+/* ID ustuni */
+.table td:first-child {
+    color: #3776AB;
+    font-weight: 700;
+    font-size: 1.1rem;
+    position: relative;
+}
+
+/* Savol nomi ustuni */
+.question-title-link {
+    color: #2c3e50;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: block;
+    line-height: 1.4;
+}
+
+.question-title-link:hover {
+    color: #3776AB;
+    transform: translateX(5px);
+}
+
+.question-date {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+/* Qiyinchilik badge */
+.difficulty-badge {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 100px;
+    justify-content: center;
+}
+
+.bg-success {
+    background: linear-gradient(135deg,
+        rgba(40, 167, 69, 0.9) 0%,
+        rgba(32, 201, 151, 0.9) 100%) !important;
+    color: white;
+    border: 2px solid rgba(40, 167, 69, 0.3);
+}
+
+.bg-warning {
+    background: linear-gradient(135deg,
+        rgba(255, 193, 7, 0.9) 0%,
+        rgba(253, 126, 20, 0.9) 100%) !important;
+    color: #333;
+    border: 2px solid rgba(255, 193, 7, 0.3);
+}
+
+.bg-danger {
+    background: linear-gradient(135deg,
+        rgba(220, 53, 69, 0.9) 0%,
+        rgba(187, 45, 59, 0.9) 100%) !important;
+    color: white;
+    border: 2px solid rgba(220, 53, 69, 0.3);
+}
+
+/* Muallif ustuni */
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    background: linear-gradient(135deg,
+        rgba(55, 118, 171, 0.9) 0%,
+        rgba(255, 212, 59, 0.9) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 10px rgba(55, 118, 171, 0.3);
+}
+
+.user-name {
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Yechimlar badge */
+.submissions-badge {
+    background: linear-gradient(135deg,
+        rgba(108, 117, 125, 0.9) 0%,
+        rgba(73, 80, 87, 0.9) 100%) !important;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    border: 2px solid rgba(108, 117, 125, 0.3);
+}
+
+/* Harakatlar tugmalari */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-practice {
+    background: linear-gradient(135deg,
+        rgba(55, 118, 171, 0.9) 0%,
+        rgba(48, 105, 152, 0.9) 100%) !important;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+}
+
+.btn-practice:hover {
+    background: linear-gradient(135deg,
+        rgba(48, 105, 152, 0.9) 0%,
+        rgba(55, 118, 171, 0.9) 100%) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(55, 118, 171, 0.4);
+    color: white;
+}
+
+.btn-manage {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border: 2px solid #dee2e6;
+    color: #6c757d;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.btn-manage:hover {
+    background: white !important;
+    border-color: #3776AB;
+    color: #3776AB;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Bo'sh holat */
+.empty-state {
+    padding: 60px 30px;
+    text-align: center;
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.8) 0%,
+        rgba(255, 255, 255, 0.6) 100%);
+}
+
+.empty-icon {
+    font-size: 4rem;
+    color: #dee2e6;
+    margin-bottom: 20px;
+    opacity: 0.5;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.1); }
+}
+
+.empty-title {
+    color: #6c757d;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.empty-text {
+    color: #adb5bd;
+    max-width: 400px;
+    margin: 0 auto 20px;
+    line-height: 1.6;
+}
+
+.empty-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* Card footer */
+.card-footer {
+    background: linear-gradient(135deg,
+        rgba(248, 249, 250, 0.8) 0%,
+        rgba(233, 236, 239, 0.8) 100%) !important;
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 20px 30px !important;
+    border-radius: 0 0 20px 20px;
+}
+
+.footer-info {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.footer-info i {
+    color: #3776AB;
+}
+
+.btn-docs {
+    background: linear-gradient(135deg,
+        rgba(25, 135, 84, 0.9) 0%,
+        rgba(21, 115, 71, 0.9) 100%) !important;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+}
+
+.btn-docs:hover {
+    background: linear-gradient(135deg,
+        rgba(21, 115, 71, 0.9) 0%,
+        rgba(25, 135, 84, 0.9) 100%) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(25, 135, 84, 0.4);
+    color: white;
+}
+
+/* Jadval animatsiyalari */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.table tbody tr {
+    animation: slideIn 0.5s ease-out forwards;
+    animation-delay: calc(var(--row-index, 0) * 0.05s);
+    opacity: 0;
+}
+
+/* Responsive dizayn */
+@media (max-width: 1200px) {
+    .python-card {
+        border-radius: 18px;
+    }
+
+    .python-header {
+        padding: 20px 25px !important;
+    }
+
+    .python-header h6 {
+        font-size: 1.4rem !important;
+    }
+
+    .table th,
+    .table td {
+        padding: 15px 18px;
+    }
+}
+
+@media (max-width: 992px) {
+    .python-card {
+        border-radius: 16px;
+    }
+
+    .python-header {
+        padding: 18px 22px !important;
+    }
+
+    .python-header h6 {
+        font-size: 1.3rem !important;
+    }
+
+    .table-responsive {
+        border-radius: 0 0 16px 16px;
+    }
+
+    .table th,
+    .table td {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+    }
+
+    .difficulty-badge {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        min-width: 90px;
+    }
+}
+
+@media (max-width: 768px) {
+    .python-card {
+        border-radius: 14px;
+        margin-bottom: 20px;
+    }
+
+    .python-header {
+        padding: 15px 20px !important;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .python-header h6 {
+        font-size: 1.2rem !important;
+    }
+
+    .python-count-badge {
+        padding: 8px 16px !important;
+        font-size: 0.9rem;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+        border-radius: 0 0 14px 14px;
+    }
+
+    .table {
+        min-width: 700px;
+    }
+
+    .table th,
+    .table td {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+
+    .user-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 0.85rem;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .btn-practice,
+    .btn-manage {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+
+    .empty-state {
+        padding: 40px 20px;
+    }
+
+    .empty-icon {
+        font-size: 3rem;
+    }
+
+    .empty-title {
+        font-size: 1.1rem;
+    }
+
+    .empty-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card-footer {
+        padding: 15px 20px !important;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .python-card {
+        border-radius: 12px;
+    }
+
+    .python-header h6 {
+        font-size: 1.1rem !important;
+    }
+
+    .python-count-badge {
+        padding: 6px 12px !important;
+        font-size: 0.8rem;
+    }
+
+    .empty-icon {
+        font-size: 2.5rem;
+    }
+
+    .empty-title {
+        font-size: 1rem;
+    }
+
+    .empty-text {
+        font-size: 0.9rem;
+    }
+}
+
+/* Maxsus scrollbar */
+.table-responsive::-webkit-scrollbar {
+    height: 8px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg,
+        rgba(55, 118, 171, 0.8) 0%,
+        rgba(255, 212, 59, 0.8) 100%);
+    border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg,
+        rgba(55, 118, 171, 0.9) 0%,
+        rgba(255, 212, 59, 0.9) 100%);
+}
+</style>
+
 <div class="container-fluid py-4">
     <!-- Sahifa sarlavhasi -->
     <div class="row mb-4">
         <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="h_container_practise">
                 <div>
                     <h1 class="h2 text-gray-800">
                         <i class="fab fa-python text-primary me-2"></i>
@@ -107,7 +943,7 @@
                 </div>
 
                 {% if is_admin %}
-                <div>
+                <div class="btn_box_plus">
                     <a href="{% url 'app2:add_question' %}" class="btn btn-primary python-btn">
                         <i class="fas fa-plus-circle me-2"></i> {% trans "Yangi Python Savol" %}
                     </a>
@@ -118,53 +954,49 @@
     </div>
 
     <!-- Qidiruv va filtrlash FORM ichida -->
-    <form method="GET" action="{% url 'app2:code_practice' %}" id="searchForm" class="mb-4">
-        <div class="row">
-            <div class="col-12">
-                <div class="card shadow-sm border-0">
-                    <div class="card-body p-4">
-                        <div class="row g-3 align-items-center">
-                            <!-- Qidiruv inputi -->
-                            <div class="col-md-5">
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light border-end-0">
-                                        <i class="fas fa-search text-muted"></i>
-                                    </span>
-                                    <input type="text" name="q" class="form-control border-start-0"
-                                           placeholder="{% trans "Python savollar bo'yicha qidirish..." %}"
-                                           value="{{ search_query }}" id="searchInput">
-                                </div>
-                            </div>
+    <div class="search-filter-container">
+        <div class="search-filter-wrapper">
+            <form method="GET" action="{% url 'app2:code_practice' %}" id="searchForm">
+                <div class="row g-3 align-items-center">
+                    <!-- Qidiruv inputi -->
+                    <div class="col-md-5">
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0">
+                                <i class="fas fa-search text-muted"></i>
+                            </span>
+                            <input type="text" name="q" class="form-control border-start-0"
+                                   placeholder="{% trans "Python savollar bo'yicha qidirish..." %}"
+                                   value="{{ search_query }}" id="searchInput">
+                        </div>
+                    </div>
 
-                            <!-- Difficulty filter -->
-                            <div class="col-md-4">
-                                <select name="difficulty" class="form-select" id="difficultyFilter">
-                                    <option value="">{% trans "Barcha qiyinchilik darajalari" %}</option>
-                                    <option value="easy" {% if difficulty_filter == 'easy' %}selected{% endif %}>{% trans "Oson" %}</option>
-                                    <option value="medium" {% if difficulty_filter == 'medium' %}selected{% endif %}>{% trans "O'rtacha" %}</option>
-                                    <option value="hard" {% if difficulty_filter == 'hard' %}selected{% endif %}>{% trans "Qiyin" %}</option>
-                                </select>
-                            </div>
+                    <!-- Difficulty filter -->
+                    <div class="col-md-4">
+                        <select name="difficulty" class="form-select" id="difficultyFilter">
+                            <option value="">{% trans "Barcha qiyinchilik darajalari" %}</option>
+                            <option value="easy" {% if difficulty_filter == 'easy' %}selected{% endif %}>{% trans "Oson" %}</option>
+                            <option value="medium" {% if difficulty_filter == 'medium' %}selected{% endif %}>{% trans "O'rtacha" %}</option>
+                            <option value="hard" {% if difficulty_filter == 'hard' %}selected{% endif %}>{% trans "Qiyin" %}</option>
+                        </select>
+                    </div>
 
-                            <!-- Tugmalar -->
-                            <div class="col-md-3">
-                                <div class="d-flex gap-2">
-                                    <button type="submit" class="btn btn-primary w-100">
-                                        <i class="fas fa-search me-2"></i> {% trans "Qidirish" %}
-                                    </button>
-                                    {% if search_query or difficulty_filter %}
-                                    <a href="{% url 'app2:code_practice' %}" class="btn btn-outline-secondary">
-                                        <i class="fas fa-times"></i>
-                                    </a>
-                                    {% endif %}
-                                </div>
-                            </div>
+                    <!-- Tugmalar -->
+                    <div class="col-md-3">
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn search-btn w-100">
+                                <i class="fas fa-search me-2"></i> {% trans "Qidirish" %}
+                            </button>
+                            {% if search_query or difficulty_filter %}
+                            <a href="{% url 'app2:code_practice' %}" class="btn clear-btn">
+                                <i class="fas fa-times"></i>
+                            </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
-    </form>
+    </div>
 
     <!-- Statistika kartalari -->
     <div class="container_code_info">
@@ -227,220 +1059,185 @@
     </div>
 
     <!-- Python savollar ro'yxati -->
-    <div class="row">
-        <div class="col-12">
-            <div class="card shadow border-0">
-                <div class="card-header py-3 d-flex justify-content-between align-items-center python-header">
-                    <div>
-                        <h6 class="m-0 font-weight-bold text-white">
-                            <i class="fab fa-python me-2"></i>
-                            {% trans "Python Dasturlash Mashqlari" %}
-                        </h6>
-                        <small class="text-white-50">{% trans "Har bir savol uchun kod yozing va testlang" %}</small>
+    <div class="python-card">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center python-header">
+            <div>
+                <h6 class="m-0 font-weight-bold text-white">
+                    <i class="fab fa-python me-2"></i>
+                    {% trans "Python Dasturlash Mashqlari" %}
+                </h6>
+                <small class="text-white-50">{% trans "Har bir savol uchun kod yozing va testlang" %}</small>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <span class="python-count-badge">
+                    <i class="fab fa-python me-1"></i> {% blocktrans count counter=questions|length %}{{ counter }} ta savol{% plural %}{{ counter }} ta savol{% endblocktrans %}
+                </span>
+            </div>
+        </div>
+
+        <div class="card-body p-0">
+            {% if questions %}
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="bg-light">
+                            <tr>
+                                <th>{% trans "ID" %}</th>
+                                <th>{% trans "Python Savol" %}</th>
+                                <th>{% trans "Qiyinchilik" %}</th>
+                                <th>{% trans "Muallif" %}</th>
+                                <th>{% trans "Yechimlar" %}</th>
+                                <th>{% trans "Harakatlar" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for question in questions %}
+                            <tr class="align-middle" style="--row-index: {{ forloop.counter }}">
+                                <td class="fw-bold text-primary">#{{ question.id }}</td>
+                                <td>
+                                    <div>
+                                        <h6 class="mb-1">
+                                            <a href="{% url 'app2:practice_question' question.id %}"
+                                               class="question-title-link">
+                                                {{ question.question_text|truncatewords:20 }}
+                                            </a>
+                                        </h6>
+                                        <div class="small text-muted question-date">
+                                            <i class="fas fa-calendar-alt me-1"></i>
+                                            {{ question.created_at|date:"d.m.Y" }}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge difficulty-badge
+                                        {% if question.difficulty == 'easy' %}bg-success
+                                        {% elif question.difficulty == 'medium' %}bg-warning
+                                        {% else %}bg-danger{% endif %}">
+                                        <i class="fas
+                                            {% if question.difficulty == 'easy' %}fa-star
+                                            {% elif question.difficulty == 'medium' %}fa-chart-line
+                                            {% else %}fa-fire{% endif %} me-1">
+                                        </i>
+                                        {{ question.get_difficulty_display }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="user-avatar me-2">
+                                            <span class="fw-bold">
+                                                {{ question.created_by.username|first|upper }}
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <div class="user-name">{{ question.created_by.username }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge submissions-badge">
+                                        <i class="fas fa-code me-1"></i>
+                                        {{ question.submissions.count }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <a href="{% url 'app2:practice_question' question.id %}"
+                                           class="btn btn-practice" title="{% trans 'Ishlash' %}" data-bs-toggle="tooltip">
+                                            <i class="fas fa-play"></i> {% trans "Ishlash" %}
+                                        </a>
+                                        {% if is_admin %}
+                                        <a href="{% url 'app2:manage_question' question.id %}"
+                                           class="btn btn-manage" title="{% trans 'Boshqarish' %}" data-bs-toggle="tooltip">
+                                            <i class="fas fa-cog"></i>
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <div class="mb-4">
+                        <i class="fab fa-python fa-4x empty-icon"></i>
                     </div>
-                    <div class="d-flex align-items-center gap-2">
-                        <span class="badge bg-light text-dark">
-                            <i class="fab fa-python me-1"></i> {% blocktrans count counter=questions|length %}{{ counter }} ta savol{% plural %}{{ counter }} ta savol{% endblocktrans %}
-                        </span>
+                    <h5 class="empty-title">{% trans "Python savollar topilmadi" %}</h5>
+                    <p class="empty-text">
+                        {% if search_query %}
+                            {% blocktrans %}"{{ search_query }}" so'rovi bo'yicha hech narsa topilmadi.{% endblocktrans %}
+                        {% else %}
+                            {% trans "Hozircha Python savollar mavjud emas." %}
+                        {% endif %}
+                    </p>
+                    <div class="empty-actions">
                         {% if is_admin %}
-                        <a href="{% url 'app2:my_questions' %}" class="btn btn-sm btn-light">
-                            <i class="fas fa-list me-1"></i> {% trans "Mening Savollarim" %}
+                        <a href="{% url 'app2:add_question' %}" class="btn btn-primary">
+                            <i class="fas fa-plus-circle me-2"></i> {% trans "Birinchi Python Savolni Qo'shing" %}
+                        </a>
+                        {% endif %}
+                        {% if search_query or difficulty_filter %}
+                        <a href="{% url 'app2:code_practice' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-times me-2"></i> {% trans "Filtrlarni Tozalash" %}
                         </a>
                         {% endif %}
                     </div>
                 </div>
+            {% endif %}
+        </div>
 
-                <div class="card-body p-0">
-                    {% if questions %}
-                        <div class="table-responsive">
-                            <table class="table table-hover mb-0">
-                                <thead class="bg-light">
-                                    <tr>
-                                        <th style="width: 50px;">{% trans "ID" %}</th>
-                                        <th>{% trans "Python Savol" %}</th>
-                                        <th style="width: 100px;">{% trans "Qiyinchilik" %}</th>
-                                        <th style="width: 120px;">{% trans "Muallif" %}</th>
-                                        <th style="width: 100px;">{% trans "Yechimlar" %}</th>
-                                        <th style="width: 120px;">{% trans "Harakatlar" %}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for question in questions %}
-                                    <tr class="align-middle">
-                                        <td class="fw-bold text-primary">#{{ question.id }}</td>
-                                        <td>
-                                            <div>
-                                                <h6 class="mb-1">
-                                                    <a href="{% url 'app2:practice_question' question.id %}"
-                                                       class="text-dark text-hover-primary">
-                                                        {{ question.question_text|truncatewords:20 }}
-                                                    </a>
-                                                </h6>
-                                                <div class="small text-muted">
-                                                    <i class="fas fa-calendar-alt me-1"></i>
-                                                    {{ question.created_at|date:"d.m.Y" }}
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span class="badge
-                                                {% if question.difficulty == 'easy' %}bg-success
-                                                {% elif question.difficulty == 'medium' %}bg-warning
-                                                {% else %}bg-danger{% endif %}">
-                                                <i class="fas
-                                                    {% if question.difficulty == 'easy' %}fa-star
-                                                    {% elif question.difficulty == 'medium' %}fa-chart-line
-                                                    {% else %}fa-fire{% endif %} me-1">
-                                                </i>
-                                                {{ question.get_difficulty_display }}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="symbol symbol-30 me-2">
-                                                    <div class="symbol-label bg-light-primary">
-                                                        <span class="text-primary fw-bold">
-                                                            {{ question.created_by.username|first|upper }}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div class="fw-bold small">{{ question.created_by.username }}</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-secondary">
-                                                <i class="fas fa-code me-1"></i>
-                                                {{ question.submissions.count }}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <div class="btn-group btn-group-sm">
-                                                <a href="{% url 'app2:practice_question' question.id %}"
-                                                   class="btn btn-primary" title="{% trans 'Ishlash' %}" data-bs-toggle="tooltip">
-                                                    <i class="fas fa-play"></i> {% trans "Ishlash" %}
-                                                </a>
-                                                {% if is_admin %}
-                                                <a href="{% url 'app2:manage_question' question.id %}"
-                                                   class="btn btn-outline-secondary" title="{% trans 'Boshqarish' %}" data-bs-toggle="tooltip">
-                                                    <i class="fas fa-cog"></i>
-                                                </a>
-                                                {% endif %}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    {% else %}
-                        <div class="text-center py-5">
-                            <div class="mb-4">
-                                <i class="fab fa-python fa-4x text-muted opacity-25"></i>
-                            </div>
-                            <h5 class="text-muted mb-3">{% trans "Python savollar topilmadi" %}</h5>
-                            <p class="text-muted mb-4">
-                                {% if search_query %}
-                                    {% blocktrans %}"{{ search_query }}" so'rovi bo'yicha hech narsa topilmadi.{% endblocktrans %}
-                                {% else %}
-                                    {% trans "Hozircha Python savollar mavjud emas." %}
-                                {% endif %}
-                            </p>
-                            <div class="d-flex justify-content-center gap-3">
-                                {% if is_admin %}
-                                <a href="{% url 'app2:add_question' %}" class="btn btn-primary">
-                                    <i class="fas fa-plus-circle me-2"></i> {% trans "Birinchi Python Savolni Qo'shing" %}
-                                </a>
-                                {% endif %}
-                                {% if search_query or difficulty_filter %}
-                                <a href="{% url 'app2:code_practice' %}" class="btn btn-outline-secondary">
-                                    <i class="fas fa-times me-2"></i> {% trans "Filtrlarni Tozalash" %}
-                                </a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    {% endif %}
-                </div>
-
-                {% if questions %}
-                <div class="card-footer bg-light">
-                    <div class="row align-items-center">
-                        <div class="col-md-6">
-                            <div class="text-muted small">
-                                <i class="fab fa-python me-1"></i>
-                                {% blocktrans count counter=total_questions %}{{ total_questions }} ta Python savol mavjud{% plural %}{{ total_questions }} ta Python savol mavjud{% endblocktrans %}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="d-flex justify-content-end align-items-center gap-2">
-                                <a href="{% url 'app2:documentation' %}" class="btn btn-sm btn-outline-info">
-                                    <i class="fas fa-book me-1"></i> {% trans "Python Documentation" %}
-                                </a>
-                            </div>
-                        </div>
+        {% if questions %}
+        <div class="card-footer">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="text-muted small footer-info">
+                        <i class="fab fa-python me-1"></i>
+                        {% blocktrans count counter=total_questions %}{{ total_questions }} ta Python savol mavjud{% plural %}{{ total_questions }} ta Python savol mavjud{% endblocktrans %}
                     </div>
                 </div>
-                {% endif %}
+                <div class="col-md-6">
+                    <div class="d-flex justify-content-end align-items-center gap-2">
+                        <a href="{% url 'app2:documentation' %}" class="btn btn-docs">
+                            <i class="fas fa-book me-1"></i> {% trans "Python Documentation" %}
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
+        {% endif %}
     </div>
 
     <!-- Qo'shimcha resurslar -->
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title text-primary mb-4">
-                        <i class="fas fa-lightbulb me-2"></i>
-                        {% trans "Python O'rganish Resurslari" %}
-                    </h5>
-                    <div class="row">
-                        <div class="col-md-3 mb-3">
-                            <div class="card h-100 border-0 bg-light">
-                                <div class="card-body text-center">
-                                    <i class="fab fa-python fa-2x text-primary mb-3"></i>
-                                    <h6 class="card-title">{% trans "Python Asoslari" %}</h6>
-                                    <p class="card-text small text-muted">{% trans "Print, input, o'zgaruvchilar, operatorlar" %}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <div class="card h-100 border-0 bg-light">
-                                <div class="card-body text-center">
-                                    <i class="fas fa-code fa-2x text-success mb-3"></i>
-                                    <h6 class="card-title">{% trans "Control Flow" %}</h6>
-                                    <p class="card-text small text-muted">{% trans "if/else, for/while tsikllari, funksiyalar" %}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <div class="card h-100 border-0 bg-light">
-                                <div class="card-body text-center">
-                                    <i class="fas fa-list fa-2x text-warning mb-3"></i>
-                                    <h6 class="card-title">{% trans "Ma'lumot Turlari" %}</h6>
-                                    <p class="card-text small text-muted">{% trans "List, tuple, dict, set va ular bilan ishlash" %}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <div class="card h-100 border-0 bg-light">
-                                <div class="card-body text-center">
-                                    <i class="fas fa-cogs fa-2x text-danger mb-3"></i>
-                                    <h6 class="card-title">{% trans "Advanced Python" %}</h6>
-                                    <p class="card-text small text-muted">{% trans "OOP, decoratorlar, generatorlar, exception handling" %}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="quek_plus">
+        <h5>
+            <i class="fas fa-lightbulb me-2"></i>
+            {% trans "Python O'rganish Resurslari" %}
+        </h5>
+        <div class="plus_box">
+            <div class="box_info_quek">
+                <i class="fab fa-python fa-2x text-primary mb-3"></i>
+                <h6 class="card-title">{% trans "Python Asoslari" %}</h6>
+                <p class="card-text small text-muted">{% trans "Print, input, o'zgaruvchilar, operatorlar" %}</p>
+            </div>
+            <div class="box_info_quek">
+                <i class="fas fa-code fa-2x text-success mb-3"></i>
+                <h6 class="card-title">{% trans "Control Flow" %}</h6>
+                <p class="card-text small text-muted">{% trans "if/else, for/while tsikllari, funksiyalar" %}</p>
+            </div>
+            <div class="box_info_quek">
+                <i class="fas fa-list fa-2x text-warning mb-3"></i>
+                <h6 class="card-title">{% trans "Ma'lumot Turlari" %}</h6>
+                <p class="card-text small text-muted">{% trans "List, tuple, dict, set va ular bilan ishlash" %}</p>
+            </div>
+            <div class="box_info_quek">
+                <i class="fas fa-cogs fa-2x text-danger mb-3"></i>
+                <h6 class="card-title">{% trans "Advanced Python" %}</h6>
+                <p class="card-text small text-muted">{% trans "OOP, decoratorlar, generatorlar, exception handling" %}</p>
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
 
-{% block extra_js %}
 <script>
 $(document).ready(function() {
     // Tooltip'ni faollashtirish
@@ -486,6 +1283,75 @@ $(document).ready(function() {
             }, 500);
         }
     });
+
+    // Form select uchun maxsus animatsiya
+    const difficultySelect = document.getElementById('difficultyFilter');
+    if (difficultySelect) {
+        difficultySelect.addEventListener('focus', function() {
+            this.style.transform = 'scale(1.02)';
+            this.style.boxShadow = '0 10px 25px rgba(55, 118, 171, 0.3)';
+        });
+
+        difficultySelect.addEventListener('blur', function() {
+            this.style.transform = 'scale(1)';
+            this.style.boxShadow = 'none';
+        });
+
+        difficultySelect.addEventListener('change', function() {
+            // Selekt o'zgarganda animatsiya
+            this.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 200);
+        });
+
+        // Mouse hover uchun
+        difficultySelect.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px)';
+            this.style.transition = 'transform 0.3s ease';
+        });
+
+        difficultySelect.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    }
+
+    // Input guruh uchun hover effekt
+    const inputGroup = document.querySelector('.input-group');
+    if (inputGroup) {
+        inputGroup.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px)';
+            this.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.1)';
+        });
+
+        inputGroup.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = 'none';
+        });
+    }
+
+    // Tugmalar uchun hover effekt
+    const searchBtn = document.querySelector('.search-btn');
+    if (searchBtn) {
+        searchBtn.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-3px) scale(1.05)';
+        });
+
+        searchBtn.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    }
+
+    const clearBtn = document.querySelector('.clear-btn');
+    if (clearBtn) {
+        clearBtn.addEventListener('mouseenter', function() {
+            this.style.transform = 'rotate(5deg) translateY(-2px)';
+        });
+
+        clearBtn.addEventListener('mouseleave', function() {
+            this.style.transform = 'rotate(0) translateY(0)';
+        });
+    }
 });
 </script>
 {% endblock %}
