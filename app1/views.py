@@ -15,6 +15,9 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 from users.models import UserProfile
+from django.conf import settings
+import os
+
 
 
 def home(request):
@@ -310,48 +313,152 @@ def add_video(request):
 
 
 # -------------------- AI YORDAMCHI --------------------
+# views.py - CSRF va localization bilan ishlaydigan versiya
+import json
+import requests
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt, csrf_protect, ensure_csrf_cookie
+from django.shortcuts import render
+import logging
 
+logger = logging.getLogger(__name__)
+
+
+@csrf_exempt  # CSRF dan ozod qilish
 def ai_chat(request):
-    """AI chatbot"""
+    """AI chatbot - localization bilan ishlaydi"""
     if request.method == 'POST':
         try:
-            data = json.loads(request.body)
-            user_message = data.get('message', '')
-            response = simple_ai_response(user_message)
-            return JsonResponse({'response': response})
-        except Exception:
-            return JsonResponse({'response': 'Xatolik yuz berdi'})
+            # JSON ma'lumotlarni olish
+            if request.content_type == 'application/json':
+                data = json.loads(request.body.decode('utf-8'))
+            else:
+                data = request.POST
+
+            user_message = data.get('message', '').strip()
+
+            if not user_message:
+                return JsonResponse({
+                    'success': False,
+                    'response': 'Xabar matni kiritilmagan',
+                    'type': 'error'
+                })
+
+            # DEBUG: Terminalga chiqarish
+            print(f"📩 Foydalanuvchi xabari: {user_message}")
+
+            # API kalit
+            api_key = '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'
+
+            # OpenAI API ga so'rov
+            url = "https://api.openai.com/v1/chat/completions"
+            headers = {
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json"
+            }
+
+            payload = {
+                "model": "gpt-3.5-turbo",
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": """Siz foydali IT va dasturlash yordamchisisiz. 
+                        Javoblaringiz aniq, tushunarli va amaliy bo'lsin.
+                        O'zbek tilida javob bering.
+                        Agar kod namunalari kerak bo'lsa, to'liq va izohli kod yozing.
+                        Murojaat qilishda "siz" deb murojaat qiling."""
+                    },
+                    {"role": "user", "content": user_message}
+                ],
+                "max_tokens": 500,
+                "temperature": 0.7
+            }
+
+            # So'rov yuborish
+            response = requests.post(url, headers=headers, json=payload, timeout=30)
+
+            # DEBUG: API javobi
+            print(f"🔧 API Status: {response.status_code}")
+
+            if response.status_code == 200:
+                result = response.json()
+                ai_response = result['choices'][0]['message']['content']
+
+                print(f"✅ AI javobi: {ai_response[:100]}...")
+
+                return JsonResponse({
+                    'success': True,
+                    'response': ai_response,
+                    'type': 'ai'
+                })
+            else:
+                logger.error(f"API error: {response.status_code} - {response.text}")
+                print(f"❌ API xatosi: {response.status_code} - {response.text[:200]}")
+
+                # Offline javob
+                offline_response = get_offline_response(user_message)
+                return JsonResponse({
+                    'success': True,
+                    'response': offline_response,
+                    'type': 'offline',
+                    'note': 'API xatosi'
+                })
+
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            print(f"🔥 Xatolik: {e}")
+
+            # Offline javob
+            offline_response = get_offline_response(user_message)
+            return JsonResponse({
+                'success': True,
+                'response': offline_response,
+                'type': 'offline',
+                'note': str(e)[:100]
+            })
+
+    # GET so'rovi
+    print("📄 GET so'rovi keldi, HTML sahifa yuborilmoqda...")
     return render(request, 'app1/ai_chat.html')
 
 
-def simple_ai_response(message):
-    """AI javob generatori"""
+def get_offline_response(message):
+    """Offline rejimda javob berish"""
+    message_lower = message.lower().strip()
+
     responses = {
-        'salom': 'Salom! IT va dasturlash haqida savollaringiz bo\'lsa, javob berishga harakat qilaman.',
-        'dasturlash': 'Dasturlash - bu kompyuterga turli vazifalarni bajarish uchun ko\'rsatmalar berish san\'ati.',
-        'python': 'Python - bu oddiy va kuchli dasturlash tili.',
-        'django': 'Django - Python da yozilgan yuqori darajadagi veb-freymvork.',
-        'html': 'HTML - veb-sahifalar strukturasi uchun asosiy til.',
-        'css': 'CSS - veb-sahifalarning dizaynini boshqarish uchun til.',
-        'javascript': 'JavaScript - veb-sahifalarga interaktivlik qo\'shish uchun dasturlash tili.',
-        'java': 'Java - "bir marta yoz, hamma joyda ishlat" tamoyiliga asoslangan til.',
-        'sql': 'SQL - Ma\'lumotlar bazasiga so\'rovlar yuborish va ma\'lumotlarni boshqarish uchun til.',
-        'algorithm': 'Algoritm - muammoni hal qilish uchun ketma-ket amallar to\'plami.',
-        'yordam': 'Python, Django, HTML, CSS, JavaScript, Java, SQL va algoritmlar haqida yordam bera olaman.',
-        'rahmat': 'Rahmat! Agar boshqa savollaringiz bo\'lsa, bemalol so\'rang.'
+        'salom': 'Salom! Dasturlash haqida qanday savolingiz bor? Men sizga yordam berishdan xursandman! 🚀',
+        'python': 'Python - kuchli va oson dasturlash tili. Web, AI, data analysis uchun ajoyib.',
+        'django': 'Django - Python uchun mukammal web framework. Tez va xavfsiz ilovalar yaratish uchun.',
+        'html': 'HTML - web sahifalar strukturasi. <h1> sarlavha, <p> paragraf kabi teglar.',
+        'css': 'CSS - web dizayn. Ranglar, shriftlar, joylashuvni boshqarish.',
+        'javascript': 'JavaScript - web interaktivligi. Brauzerda ishlaydigan dasturlash tili.',
+        'java': 'Java - kuchli va platformadan mustaqil til. Mobil va korporativ dasturlar.',
+        'sql': 'SQL - ma\'lumotlar bazasi so\'rovlari. SELECT, INSERT, UPDATE, DELETE.',
+        'yordam': 'Python, Django, Web, SQL haqida yordam bera olaman. Qaysi mavzu?',
+        'rahmat': 'Rahmat! Yana savollaringiz bo\'lsa, so\'rang. 😊',
+        'salom': 'Salom! Qanday yordam bera olishim mumkin? 🚀',
+        'dasturlash': 'Dasturlash - bu kompyuterga topshiriqlarni bajarishni o\'rgatish. Python bilan boshlash tavsiya etiladi!',
     }
 
-    message_lower = message.lower()
+    # To'g'ridan-to'g'ri mos kelish
+    if message_lower in responses:
+        return responses[message_lower]
+
+    # Kalit so'zlarni qidirish
     for key in responses:
         if key in message_lower:
             return responses[key]
 
-    if '?' in message_lower:
-        return "Qiziq savol! Men hali bu mavzuda yetarlicha ma'lumotga ega emasman."
+    # Standart javob
+    return '''💡 **Men sizga quyidagi mavzularda yordam bera olaman:**
 
-    return "Kechirasiz, men hali bu savolga to'liq javob bera olmayman."
+• **Python** - dasturlash asoslari
+• **Django** - web ilovalar
+• **Web** - HTML, CSS, JavaScript
+• **SQL** - ma\'lumotlar bazasi
 
-
+Savolingizni batafsilroq yozing! 🚀'''
 # -------------------- TEST TIZIMI --------------------
 
 def tests(request):

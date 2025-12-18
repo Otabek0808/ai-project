@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>🤖 AI Testlar</h2>
+
+{% if tests %}
+    <ul>
+        {% for ai in ai_tests %}
+            <h3>{{ ai.test.title }}</h3>
+            Fan: {{ ai.subject.name }}<br>
+            Savollar: {{ ai.question_count }} ta<br>
+
+            <a href="{% url 'start_test' ai.test.id %}">
+                <button>Boshlash</button>
+            </a>
+            <hr>
+        {% endfor %}
+
+    </ul>
+{% else %}
+    <p>Hozircha AI testlar mavjud emas.</p>
+{% endif %}
+{% endblock %}

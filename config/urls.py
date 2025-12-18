@@ -16,6 +16,8 @@ urlpatterns += i18n_patterns(
     path('', include('app1.urls'), name='app1'),
     path('users/', include('users.urls'), name='users'),
     path('code/', include('app2.urls'), name='code'),
+    path('ai-tests/', include('ai_tests.urls')),
+
     # prefix_default_language=False,  # BU NI O'CHIRIB TASHLANG
 )
 
