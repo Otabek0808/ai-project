@@ -4,6 +4,489 @@
 {% block title %}Loyiha Haqida - Code Compiler{% endblock %}
 
 {% block content %}
+    {% block extra_css %}
+<style>
+    /* Asosiy container uchun */
+    .container-fluid {
+        background: transparent !important;
+    }
+
+    /* Card uchun umumiy stillar */
+    .card {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+        backdrop-filter: blur(10px);
+        border: 0.1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .card-header {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 1.25rem 1.5rem;
+    }
+
+    .card-body {
+        background-color: rgba(255, 255, 255, 0.511) !important;
+        padding: 2rem;
+    }
+
+    /* Card header ranglari */
+    .card-header.bg-primary {
+        background: linear-gradient(135deg, rgba(55, 118, 171, 0.9), rgba(48, 105, 152, 0.9)) !important;
+    }
+
+    .card-header.bg-primary.text-white {
+        color: white !important;
+    }
+
+    /* Text colors */
+    .text-primary {
+        color: rgba(55, 118, 171, 0.9) !important;
+    }
+
+    .text-success {
+        color: rgba(40, 167, 69, 0.9) !important;
+    }
+
+    .text-warning {
+        color: rgba(255, 193, 7, 0.9) !important;
+    }
+
+    .text-danger {
+        color: rgba(220, 53, 69, 0.9) !important;
+    }
+
+    .text-info {
+        color: rgba(23, 162, 184, 0.9) !important;
+    }
+
+    .text-gray-800 {
+        color: #2c3e50 !important;
+    }
+
+    .text-muted {
+        color: rgba(108, 117, 125, 0.8) !important;
+    }
+
+    /* Display iconlar */
+    .display-1, .display-4 {
+        opacity: 0.9;
+    }
+
+    /* Rounded circle container */
+    .rounded-circle {
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(5px);
+    }
+
+    .bg-primary.bg-opacity-10 {
+        background-color: rgba(55, 118, 171, 0.1) !important;
+    }
+
+    .bg-success.bg-opacity-10 {
+        background-color: rgba(40, 167, 69, 0.1) !important;
+    }
+
+    .bg-info.bg-opacity-10 {
+        background-color: rgba(23, 162, 184, 0.1) !important;
+    }
+
+    /* Buttonlar */
+    .btn-primary {
+        background: linear-gradient(135deg, rgba(55, 118, 171, 0.9), rgba(48, 105, 152, 0.9));
+        border: none;
+        color: white;
+        transition: all 0.3s ease;
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, rgba(48, 105, 152, 0.9), rgba(41, 92, 127, 0.9));
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(55, 118, 171, 0.3);
+        color: white;
+    }
+
+    .btn-outline-primary {
+        border-color: rgba(55, 118, 171, 0.5);
+        color: rgba(55, 118, 171, 0.9);
+        background-color: rgba(255, 255, 255, 0.3);
+        transition: all 0.3s ease;
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: rgba(55, 118, 171, 0.9);
+        border-color: rgba(55, 118, 171, 0.9);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(55, 118, 171, 0.2);
+    }
+
+    .btn-lg {
+        padding: 0.875rem 2rem;
+        font-size: 1.125rem;
+    }
+
+    /* Icon colors */
+    .bi {
+        vertical-align: middle;
+    }
+
+    .bi-code-square {
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .bi-laptop {
+        color: rgba(55, 118, 171, 0.9);
+    }
+
+    .bi-pencil-square {
+        color: rgba(55, 118, 171, 0.9);
+    }
+
+    .bi-play-circle {
+        color: rgba(40, 167, 69, 0.9);
+    }
+
+    .bi-graph-up {
+        color: rgba(23, 162, 184, 0.9);
+    }
+
+    .bi-check-circle {
+        color: rgba(55, 118, 171, 0.9);
+    }
+
+    .bi-star {
+        color: rgba(55, 118, 171, 0.9);
+    }
+
+    .bi-check {
+        color: rgba(40, 167, 69, 0.9);
+    }
+
+    .bi-translate {
+        color: rgba(55, 118, 171, 0.9);
+    }
+
+    .bi-filetype-py {
+        color: rgba(55, 118, 171, 0.9);
+    }
+
+    .bi-filetype-js {
+        color: rgba(255, 193, 7, 0.9);
+    }
+
+    .bi-filetype-java {
+        color: rgba(220, 53, 69, 0.9);
+    }
+
+    .bi-filetype-c {
+        color: rgba(23, 162, 184, 0.9);
+    }
+
+    .bi-people {
+        color: rgba(55, 118, 171, 0.9);
+    }
+
+    .bi-book {
+        color: rgba(55, 118, 171, 0.9);
+    }
+
+    /* Language cards */
+    .border.rounded {
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        background-color: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .border.rounded:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-color: rgba(55, 118, 171, 0.2) !important;
+    }
+
+    /* List unstyled */
+    .list-unstyled li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .list-unstyled li:last-child {
+        border-bottom: none;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-header {
+            padding: 1rem 1.25rem;
+        }
+
+        .display-1 {
+            font-size: 3.5rem;
+        }
+
+        .display-4 {
+            font-size: 2.5rem;
+        }
+
+        .rounded-circle {
+            width: 60px !important;
+            height: 60px !important;
+        }
+
+        .btn-lg {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-lg.ms-2 {
+            margin-left: 0 !important;
+        }
+
+        .col-md-3.mb-4 {
+            margin-bottom: 1rem !important;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .container-fluid {
+            padding: 15px !important;
+        }
+
+        .card-body {
+            padding: 1.25rem;
+        }
+
+        .h3, .h4, .h5, .h6 {
+            font-size: 1.25rem;
+        }
+
+        .display-1 {
+            font-size: 2.5rem;
+        }
+
+        .p-4 {
+            padding: 1rem !important;
+        }
+
+        .row .col-md-4 {
+            margin-bottom: 1.5rem;
+        }
+
+        .text-center .btn-lg {
+            display: block;
+            margin: 0.5rem 0;
+        }
+    }
+
+    /* Animationlar */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .card {
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    .rounded-circle {
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    /* Hover effektlar */
+    a.text-hover-primary:hover {
+        color: rgba(55, 118, 171, 0.9) !important;
+        text-decoration: underline;
+    }
+
+    /* Custom backgrounds */
+    .bg-opacity-10 {
+        opacity: 0.1;
+    }
+
+    /* Font weights */
+    .font-weight-bold {
+        font-weight: 600 !important;
+    }
+
+    /* Margin va padding */
+    .mb-5 {
+        margin-bottom: 3rem !important;
+    }
+
+    .mt-5 {
+        margin-top: 3rem !important;
+    }
+
+    /* Section spacing */
+    .row.mb-5 {
+        margin-bottom: 3rem !important;
+    }
+
+    /* Text alignment */
+    .text-center p {
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Card header gradient */
+    .card-header:not(.bg-primary) {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.6));
+    }
+
+    /* Icon wrapper */
+    .rounded-circle.d-inline-flex {
+        transition: transform 0.3s ease;
+    }
+
+    .rounded-circle.d-inline-flex:hover {
+        transform: scale(1.1);
+    }
+
+    /* Language icon hover */
+    .border.rounded .display-4 {
+        transition: transform 0.3s ease;
+    }
+
+    .border.rounded:hover .display-4 {
+        transform: scale(1.1);
+    }
+
+    /* List icon animation */
+    .bi-check {
+        transition: transform 0.2s ease;
+    }
+
+    .list-unstyled li:hover .bi-check {
+        transform: scale(1.2);
+    }
+
+    /* Progress bar uchun */
+    .progress {
+        background-color: rgba(0, 0, 0, 0.05);
+        border-radius: 10px;
+        height: 8px;
+        backdrop-filter: blur(10px);
+    }
+
+    .progress-bar {
+        border-radius: 10px;
+        background: linear-gradient(90deg, rgba(55, 118, 171, 0.9), rgba(48, 105, 152, 0.9));
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Shadow efektlar */
+    .shadow {
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+    }
+
+    /* Border radius */
+    .border.rounded {
+        border-radius: 10px !important;
+    }
+
+    /* Gradient text */
+    .text-gradient {
+        background: linear-gradient(135deg, #3776AB, #FFD43B);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    /* Loading state */
+    .loading {
+        position: relative;
+        pointer-events: none;
+        opacity: 0.7;
+    }
+
+    .loading::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        margin: -10px 0 0 -10px;
+        border: 2px solid rgba(55, 118, 171, 0.3);
+        border-top-color: rgba(55, 118, 171, 0.9);
+        border-radius: 50%;
+        animation: spin 0.6s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    /* Tooltip customization */
+    [data-bs-toggle="tooltip"] {
+        cursor: pointer;
+    }
+
+    /* Custom scrollbar */
+    .card-body::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .card-body::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 3px;
+    }
+
+    .card-body::-webkit-scrollbar-thumb {
+        background: rgba(55, 118, 171, 0.5);
+        border-radius: 3px;
+    }
+
+    .card-body::-webkit-scrollbar-thumb:hover {
+        background: rgba(55, 118, 171, 0.7);
+    }
+
+    /* Responsive typography */
+    @media (max-width: 992px) {
+        .h1 { font-size: 2rem; }
+        .h2 { font-size: 1.75rem; }
+        .h3 { font-size: 1.5rem; }
+        .h4 { font-size: 1.25rem; }
+        .h5 { font-size: 1.125rem; }
+        .h6 { font-size: 1rem; }
+    }
+
+    /* Card column gutters */
+    .row > [class*='col-'] {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Last card margin */
+    .card:last-child {
+        margin-bottom: 0;
+    }
+</style>
+{% endblock %}
 <div class="container-fluid py-4">
     <div class="row justify-content-center">
         <div class="col-lg-10">
