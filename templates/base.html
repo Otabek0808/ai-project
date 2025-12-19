@@ -25,7 +25,8 @@
     min-height: 100vh;
     overflow-x: hidden;
     background: linear-gradient(to right, #87ceeb, #87ceeb, #f2d8e2);
-      margin-bottom: 4rem;
+      margin-bottom: 3rem;
+       margin-top: 4rem;
   }
 
   h4 {
@@ -444,7 +445,6 @@
   }
 
   .menu article {
-    margin-top: 100px;
     margin-bottom: 60px;
     padding: 0 20px;
   }
@@ -474,7 +474,7 @@
     background: rgba(255, 255, 255, 0.3);
   }
 
-  .menu article a button:active {
+  .menu article a button:not(.active):hover {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     background: rgba(255, 255, 255, 0.3);
   }
@@ -506,14 +506,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    width: 97%;
     height: auto;
     padding: 10px 0;
+
+      position: fixed;
+        top: 0;
+      right: 5px;
+      z-index: 100;
   }
 
   .logo {
     display: flex;
     align-items: center;
+      gap:10px;
   }
 
   .logo svg {
@@ -527,9 +533,14 @@
     transition: all 0.5s ease;
   }
 
+
   .logo svg:hover {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     transform: scale(1.05);
+  }
+  .logo img{
+    width: 120px;
+    height: auto;
   }
 
   .plot {
@@ -574,13 +585,32 @@
     font-size: 16px;
     font-weight: 500;
   }
+    .list_btn_box {
+      display: none;
+      backdrop-filter: blur(100px);
+      background-color: rgba(0, 0, 0, 0.221);
+
+    }
+
+    .profil_img span {
+      display: none;
+    }
+
+    #listBtn {
+      position: absolute;
+      z-index: 100;
+      border-radius: 10px;
+      padding: 10px;
+      gap: 8px;
+      top: 60px;
+      right: -10px;
+    }
+
 
   .list_btn_box {
-    display: flex;
-    align-items: center;
     gap: 8px;
-    height: 50px;
     padding: 0 15px;
+    height: auto;
   }
 
   .list_btn_box a {
@@ -609,7 +639,7 @@
     align-items: center;
     gap: 10px;
     width: auto;
-    min-width: 100px;
+    min-width: 120px;
     height: 40px;
     cursor: pointer;
     backdrop-filter: blur(100px);
@@ -656,7 +686,6 @@
   .logo-container {
     width: 100px;
     height: 100px;
-    display: flex;
     justify-content: center;
     align-items: center;
   }
@@ -669,7 +698,7 @@
     width: 120px;
     height: auto;
     display: block;
-    margin: 0 auto;
+      margin-left: 20px;
   }
 
   /* MEDIA QUERIES */
@@ -725,9 +754,11 @@
       height: 38px;
       padding: 8px;
     }
-
+.logo img{
+    width: 90px;
+    height: auto;
+  }
     .menu article {
-      margin-top: 95px;
       margin-bottom: 48px;
       padding: 0 15px;
     }
@@ -745,9 +776,6 @@
 
   @media (max-width: 1001px) {
     .list_btn_box {
-      display: none;
-      backdrop-filter: blur(100px);
-      background-color: rgba(0, 0, 0, 0.221);
       width: 80px;
       height: auto;
     }
@@ -768,9 +796,7 @@
       right: -10px;
     }
 
-    #listBtn.active {
-      display: flex;
-    }
+
 
     .language-switcher {
       margin-right: 8px;
@@ -816,7 +842,6 @@
     }
 
     .menu article {
-      margin-top: 70px;
       padding: 0 10px;
     }
 
@@ -920,7 +945,7 @@
       right: 0px;
       width: 35px;
       height: 35px;
-      top:30px;
+      top:40px;
       border: none;
       cursor: pointer;
       border-radius: 7px;
@@ -978,8 +1003,8 @@
     <!-- Sidebar menu -->
     <div class="menu" id="menu_box">
         <div class="glavniy_logo">
-            <a>
-                <img src="./img/logo/logo50.png" alt="no photo" />
+            <a href="{% url 'home' %}">
+                <img src="../media/images/Copilot_20251219_102515.png" alt="no photo" />
             </a>
             <svg id="back_btn" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"/>
@@ -1102,6 +1127,9 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" id="menu">
                         <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
                     </svg>
+                    <a href="{% url 'home' %}">
+                        <img src="../media/images/Copilot_20251219_102515.png" alt="no photo" />
+                    </a>
                 </div>
 
                 <div class="plot">
@@ -1387,7 +1415,7 @@
     function showLoadingAnimation() {
         if (loadingOverlay) {
             loadingOverlay.classList.add("active");
-            loadingOverlay.style.display = "flex";
+            loadingOverlay.style.display = "block";
 
             // CSS transition uchun kichik kechikish
             setTimeout(() => {
