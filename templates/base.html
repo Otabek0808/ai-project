@@ -8,7 +8,7 @@
     <meta property="og:description" content="Sun'iy intellekt sohasiga qiziquvchilar uchun kuchli platforma" />
     <meta property="og:image" content="https://ai-project-1fhu.onrender.com/static/img/preview.png" />
     <meta property="og:url" content="https://ai-teach.uz/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>IT Ta'lim Portali</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -26,7 +26,6 @@
     overflow-x: hidden;
     background: linear-gradient(to right, #87ceeb, #87ceeb, #f2d8e2);
       margin-bottom: 3rem;
-       margin-top: 4rem;
   }
 
   h4 {
@@ -356,72 +355,133 @@
     font-size: 12px;
   }
 
+  /* Iconkalar uchun RESPONSIVE STYLE - YANGILANGAN */
+  .icon-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .icon-item {
+    flex: 0 0 auto;
+    text-align: center;
+    min-width: 80px;
+    transition: transform 0.3s ease;
+  }
+
+  .icon-item img {
+    width: 100%;
+    max-width: 80px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .icon-item img:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .icon-name {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* list_btn_box uchun RESPONSIVE STYLE - YANGILANGAN */
   .list_btn_box {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 8px;
-    height: 50px;
-    padding: 0 15px;
+    gap: 12px;
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+    max-width: 500px;
   }
 
-  .list_btn_box a {
-    text-decoration: none;
+  .list_btn_box a,
+  .list_btn_box form {
+    width: 100%;
+    max-width: 300px;
+
+      text-decoration: none;
   }
 
-  .list_btn_box a button {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: auto;
-    min-width: 120px;
-    height: 40px;
-    cursor: pointer;
-    backdrop-filter: blur(100px);
-    background-color: rgba(207, 223, 229, 0.85);
-    border-radius: 10px;
-    transition: 0.3s ease;
-    color: rgb(0, 0, 0);
-    border: none;
-    padding: 0 15px;
-    color: white;
-  }
-
+  .list_btn_box a button,
   .list_btn_box form button {
     display: flex;
     align-items: center;
-    gap: 10px;
-    width: auto;
-    min-width: 100px;
+    justify-content: center;
+     gap:10px;
+    width: 100%;
     height: 40px;
     cursor: pointer;
     backdrop-filter: blur(100px);
-    background-color: rgba(5, 130, 171, 0.511);
-    border-radius: 10px;
-    transition: 0.3s ease;
-    color: rgb(20, 33, 119);
+    background-color: rgba(7, 63, 80, 0.8);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    color: white;
     border: none;
-    padding: 0 15px;
-      color: white;
+    padding: 15px;
+    gap: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
   .list_btn_box button:hover {
-    transform: scale(0.97);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    opacity: 0.7;
+    transform: scale(0.98);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    background-color: rgba(120, 181, 201, 0.9);
   }
 
   .list_btn_box a button p,
   .list_btn_box form button p {
-    color: rgb(0, 0, 0);
+    color: white;
     font-size: 14px;
-    margin-top: 0;
+    margin: 0;
+    text-align: center;
+    font-weight: 500;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
   }
 
-  .list_btn_box svg {
-    width: 18px;
-    height: 18px;
+  .list_btn_box svg,
+  .list_btn_box i {
+    width: 24px;
+    height: 24px;
     flex-shrink: 0;
+    font-size: 1.2rem;
+  }
+
+  .profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: auto;
+    padding: 20px;
+    width: 100%;
+  }
+
+  .profile-img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    object-fit: cover;
+    aspect-ratio: 1/1;
   }
 
   /* Menu qismi - YANGILANGAN */
@@ -498,28 +558,30 @@
   /* Header qismi */
   header {
     width: 100%;
-    height: auto;
-    margin-bottom: 20px;
+    margin: 0 auto;
+    height: 4rem;
   }
 
   .section_header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 97%;
-    height: auto;
-    padding: 10px 0;
-
-      position: fixed;
-        top: 0;
-      right: 5px;
-      z-index: 100;
+    width: 100%;
+    height: 4.6rem;
+    backdrop-filter: blur(100px);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    padding: 10px 20px;
+    box-sizing: border-box;
+      border-bottom: 1px solid white;
   }
 
   .logo {
     display: flex;
     align-items: center;
-      gap:10px;
+    gap: 10px;
   }
 
   .logo svg {
@@ -533,22 +595,22 @@
     transition: all 0.5s ease;
   }
 
-
   .logo svg:hover {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     transform: scale(1.05);
   }
-  .logo img{
-    width: 120px;
+
+  .logo img {
+    width: 90px;
     height: auto;
+    max-width: 100%;
   }
 
   .plot {
-    width: 40%;
+    width: auto;
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     align-items: center;
-    gap: 10px;
   }
 
   .profil_img {
@@ -567,6 +629,7 @@
     transition: 0.3s ease;
     cursor: pointer;
     object-fit: cover;
+    aspect-ratio: 1/1;
   }
 
   .profil_img img:hover {
@@ -585,93 +648,7 @@
     font-size: 16px;
     font-weight: 500;
   }
-    .list_btn_box {
-      display: none;
-      backdrop-filter: blur(100px);
-      background-color: rgba(0, 0, 0, 0.221);
 
-    }
-
-    .profil_img span {
-      display: none;
-    }
-
-    #listBtn {
-      position: absolute;
-      z-index: 100;
-      border-radius: 10px;
-      padding: 10px;
-      gap: 8px;
-      top: 60px;
-      right: -10px;
-    }
-
-
-  .list_btn_box {
-    gap: 8px;
-    padding: 0 15px;
-    height: auto;
-  }
-
-  .list_btn_box a {
-    text-decoration: none;
-  }
-
-  .list_btn_box a button {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: auto;
-    min-width: 120px;
-    height: 40px;
-    cursor: pointer;
-    backdrop-filter: blur(100px);
-    background-color: rgba(5, 130, 171, 0.511);
-    border-radius: 10px;
-    transition: 0.3s ease;
-    color: white;
-    border: none;
-    padding: 0 15px;
-  }
-
-  .list_btn_box form button {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: auto;
-    min-width: 120px;
-    height: 40px;
-    cursor: pointer;
-    backdrop-filter: blur(100px);
-    background-color: rgba(5, 130, 171, 0.511);
-    border-radius: 10px;
-    transition: 0.3s ease;
-    color: white;
-    border: none;
-    padding: 0 15px;
-  }
-
-  .list_btn_box button:hover {
-    transform: scale(0.97);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    opacity: 0.7;
-  }
-
-  .list_btn_box a button p,
-  .list_btn_box form button p {
-    color: white;
-    font-size: 14px;
-    margin-top: 0;
-    white-space: nowrap;
-  }
-
-  .list_btn_box svg {
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
-  }
-
-  /* Menu logosi */
   .menu_logo {
     width: auto;
     max-height: 40px;
@@ -695,13 +672,95 @@
   }
 
   .glavniy_logo img {
-    width: 120px;
+    width: 90px;
     height: auto;
     display: block;
-      margin-left: 20px;
+    margin-left:34px;
   }
 
-  /* MEDIA QUERIES */
+  /* RESPONSIVE MEDIA QUERIES */
+
+  /* Katta ekranlar (desktop) */
+  @media (min-width: 1200px) {
+    .icon-item {
+      min-width: 100px;
+    }
+
+    .icon-item img {
+      max-width: 100px;
+    }
+
+    .list_btn_box {
+      max-width: 400px;
+    }
+  }
+
+  /* Planshetlar (tablet) */
+  @media (max-width: 992px) {
+    .icon-item {
+      min-width: 90px;
+    }
+
+    .icon-item img {
+      max-width: 90px;
+    }
+
+    .icon-name {
+      font-size: 13px;
+    }
+
+    .list_btn_box {
+      max-width: 350px;
+    }
+
+    .profile-img {
+      max-width: 180px;
+    }
+  }
+
+  /* Kichik planshetlar */
+  @media (max-width: 768px) {
+    .icon-container {
+      gap: 15px;
+      padding: 15px;
+    }
+
+    .icon-item {
+      min-width: 80px;
+    }
+
+    .icon-item img {
+      max-width: 80px;
+    }
+
+    .icon-name {
+      font-size: 12px;
+    }
+
+    .list_btn_box {
+      max-width: 320px;
+      padding: 12px;
+    }
+
+    .list_btn_box a button,
+    .list_btn_box form button {
+      min-height: 70px;
+      padding: 12px;
+    }
+
+    .list_btn_box a button p,
+    .list_btn_box form button p {
+      font-size: 13px;
+    }
+
+    .profile-img {
+      max-width: 160px;
+    }
+
+    .section_header {
+      padding: 10px 15px;
+    }
+  }
 
   /* Kichik ekranlar uchun menyu tugmasi joylashuvi */
   @media (max-width: 1001px) {
@@ -713,6 +772,7 @@
     /* Asosiy kontentni surish uchun margin-left o'rnatilmaydi */
     .hed_main {
       margin-left: 0;
+      padding-top: 70px;
     }
 
     .language-switcher {
@@ -727,198 +787,143 @@
     .language-dropdown {
       min-width: 160px;
     }
-  }
 
-  @media (max-width: 1225px) {
-    .list_btn_box a button {
-      width: 140px;
-      height: 38px;
-      padding: 0 10px;
+    .icon-container {
+      gap: 12px;
+      padding: 12px;
     }
 
+    .icon-item {
+      min-width: 70px;
+    }
+
+    .icon-item img {
+      max-width: 70px;
+    }
+
+    .icon-name {
+      font-size: 11px;
+    }
+
+    .list_btn_box {
+      max-width: 300px;
+      padding: 10px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .icon-container {
+      gap: 10px;
+      padding: 10px;
+    }
+
+    .icon-item {
+      min-width: 60px;
+    }
+
+    .icon-item img {
+      max-width: 60px;
+    }
+
+    .icon-name {
+      font-size: 10px;
+      margin-top: 5px;
+    }
+
+    .list_btn_box {
+      max-width: 280px;
+      padding: 8px;
+      gap: 10px;
+    }
+
+    .list_btn_box a button,
     .list_btn_box form button {
-      width: 110px;
-      height: 38px;
-      padding: 0 10px;
+      min-height: 65px;
+      padding: 10px;
+      gap: 6px;
     }
 
     .list_btn_box a button p,
     .list_btn_box form button p {
       font-size: 12px;
     }
-  }
 
-  @media (max-width: 1115px) {
+    .list_btn_box svg,
+    .list_btn_box i {
+      width: 20px;
+      height: 20px;
+      font-size: 1rem;
+    }
+
+    .profile-img {
+      max-width: 140px;
+    }
+
+    .section_header {
+      padding: 8px 12px;
+    }
+
+    .logo img {
+      width: 70px;
+    }
+
     .logo svg {
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       padding: 8px;
-    }
-.logo img{
-    width: 90px;
-    height: auto;
-  }
-    .menu article {
-      margin-bottom: 48px;
-      padding: 0 15px;
-    }
-
-    .menu article a button {
-      font-size: 15px;
-      padding: 10px 12px;
-      gap: 12px;
-    }
-
-    .profil_img span {
-      font-size: 15px;
-    }
-  }
-
-  @media (max-width: 1001px) {
-    .list_btn_box {
-      width: 80px;
-      height: auto;
-    }
-
-    .profil_img span {
-      display: none;
-    }
-
-    #listBtn {
-      position: absolute;
-      z-index: 100;
-      border-radius: 10px;
-      padding: 10px;
-      flex-direction: column;
-      gap: 8px;
-      min-width: 180px;
-      top: 60px;
-      right: -10px;
-    }
-
-
-
-    .language-switcher {
-      margin-right: 8px;
-    }
-
-    .current-language {
-      padding: 6px 10px;
-      font-size: 13px;
-    }
-
-    .language-code {
-      display: none;
-    }
-  }
-
-  @media (max-width: 830px) {
-    .logo svg {
-      width: 40px;
-      height: 40px;
-    }
-
-    .hed_main {
-      padding: 15px;
-    }
-
-    .language-switcher {
-      margin-right: 5px;
-    }
-  }
-
-  @media (max-width: 710px) {
-    .logo svg {
-      border-radius: 4px;
-    }
-
-    .profil_img img {
-      width: 40px;
-      height: 40px;
-    }
-
-    .hed_main {
-      padding: 10px;
-    }
-
-    .menu article {
-      padding: 0 10px;
-    }
-
-    .menu article a button {
-      font-size: 14px;
-      padding: 8px 10px;
-      gap: 10px;
-    }
-
-    #listBtn {
-      top: 45px;
-      right: 5px;
-      min-width: 160px;
-    }
-
-    .language-switcher {
-      position: static;
-    }
-
-  }
-
-  @media (max-width: 620px) {
-    .logo svg {
-      padding: 4px;
     }
 
     .profil_img img {
       width: 35px;
       height: 35px;
     }
-
-    .hed_main {
-      padding: 8px;
-    }
-
-    #listBtn {
-      top: 40px;
-      min-width: 140px;
-    }
-
-    #listBtn button {
-      height: 35px;
-      font-size: 12px;
-      padding: 0 10px;
-    }
-
-    .language-code-small {
-      display: none;
-    }
-
-    .language-name {
-      font-size: 13px;
-    }
   }
 
   @media (max-width: 480px) {
-    .logo svg {
-      padding: 3px;
+    .icon-container {
+      gap: 8px;
+      padding: 8px;
     }
 
-    .profil_img img {
-      width: 30px;
-      height: 30px;
-      border-width: 2px;
+    .icon-item {
+      min-width: 50px;
     }
 
-    .menu {
-      width: 200px;
+    .icon-item img {
+      max-width: 50px;
+      border-radius: 8px;
+    }
+
+    .icon-name {
+      font-size: 9px;
+    }
+
+    .list_btn_box {
+      max-width: 250px;
+    }
+
+    .list_btn_box a button,
+    .list_btn_box form button {
+      min-height: 60px;
+      padding: 8px;
+    }
+
+    .list_btn_box a button p,
+    .list_btn_box form button p {
+      font-size: 11px;
+    }
+
+    .profile-img {
+      max-width: 120px;
     }
 
     .hed_main {
       padding: 5px;
+      padding-top: 60px;
     }
 
-    #listBtn {
-      top: 35px;
-      min-width: 120px;
+    .menu {
+      width: 200px;
     }
 
     .language-switcher {
@@ -940,25 +945,157 @@
     }
   }
 
-  .glavniy_logo svg{
-      position: absolute;
-      right: 0px;
+  /* Juda kichik ekranlar uchun */
+  @media (max-width: 360px) {
+    .icon-item {
+      min-width: 45px;
+    }
+
+    .icon-item img {
+      max-width: 45px;
+    }
+
+    .icon-name {
+      font-size: 8px;
+    }
+
+    .list_btn_box {
+      max-width: 220px;
+    }
+
+    .list_btn_box a button,
+    .list_btn_box form button {
+      min-height: 55px;
+      padding: 6px;
+    }
+
+    .list_btn_box a button p,
+    .list_btn_box form button p {
+      font-size: 10px;
+    }
+
+    .profile-img {
+      max-width: 100px;
+    }
+
+    .section_header {
+      padding: 6px 10px;
+    }
+
+    .logo img {
+      width: 60px;
+    }
+
+    .logo svg {
       width: 35px;
       height: 35px;
-      top:40px;
-      border: none;
-      cursor: pointer;
-      border-radius: 7px;
-      padding: 2px;
-      transition: 0.3s ease;
-      background: #0dcaf0;
-      color: white;
+      padding: 6px;
+    }
   }
 
-  .glavniy_logo svg:hover{
+  .glavniy_logo svg {
+    position: absolute;
+    right: 0px;
+    width: 35px;
+    height: 35px;
+    top: 26px;
+      right: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 7px;
+    padding: 2px;
+    transition: 0.3s ease;
+    background: #0dcaf0;
+    color: white;
+  }
+
+  .glavniy_logo svg:hover {
     transform: scale(0.9);
     opacity: 0.6;
     color: #2c3e50;
+  }
+
+  /* Menu ichidagi buttonlar */
+  @media (max-width: 1225px) {
+    .menu article a button {
+      font-size: 15px;
+      padding: 10px 12px;
+    }
+  }
+
+  @media (max-width: 1115px) {
+    .logo svg {
+      width: 38px;
+      height: 38px;
+      padding: 8px;
+    }
+
+    .menu article {
+      margin-bottom: 48px;
+      padding: 0 15px;
+    }
+
+    .menu article a button {
+      font-size: 14px;
+      padding: 8px 10px;
+    }
+  }
+
+  @media (max-width: 830px) {
+    .logo svg {
+      width: 40px;
+      height: 40px;
+    }
+
+    .hed_main {
+      padding: 15px;
+      padding-top: 70px;
+    }
+  }
+
+  @media (max-width: 710px) {
+    .profil_img img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .hed_main {
+      padding: 10px;
+      padding-top: 60px;
+    }
+
+    .menu article {
+      padding: 0 10px;
+    }
+
+    .menu article a button {
+      font-size: 13px;
+      padding: 6px 8px;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .logo svg {
+      padding: 4px;
+    }
+
+    .profil_img img {
+      width: 35px;
+      height: 35px;
+    }
+
+    .hed_main {
+      padding: 8px;
+      padding-top: 60px;
+    }
+
+    .language-code-small {
+      display: none;
+    }
+
+    .language-name {
+      font-size: 13px;
+    }
   }
 
   /* Kichik ekranlar uchun til tanlovi optimizatsiyasi */
@@ -1124,17 +1261,63 @@
         <header id="heaDer">
             <section class="section_header">
                 <div class="logo">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" id="menu">
-                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-                    </svg>
                     <a href="{% url 'home' %}">
                         <img src="../media/images/Copilot_20251219_102515.png" alt="no photo" />
                     </a>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" id="menu">
+                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+                    </svg>
                 </div>
 
                 <div class="plot">
+                 <!-- Til almashtirish tugmasi -->
+                <div class="language-switcher">
+                    <form action="{% url 'set_language' %}" method="post" class="language-form">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ request.path }}">
+                        <div class="language-selector">
+                            <button type="button" class="current-language" id="languageToggleBtn" onclick="toggleLanguageDropdown(event)">
+                                {% get_current_language as CURRENT_LANGUAGE %}
+                                {% if CURRENT_LANGUAGE == 'uz' %}
+                                <span class="language-flag">🇺🇿</span>
+                                <span class="language-code">O'Z</span>
+                                {% elif CURRENT_LANGUAGE == 'ru' %}
+                                <span class="language-flag">🇷🇺</span>
+                                <span class="language-code">РУ</span>
+                                {% elif CURRENT_LANGUAGE == 'en' %}
+                                <span class="language-flag">🇺🇸</span>
+                                <span class="language-code">EN</span>
+                                {% else %}
+                                <span class="language-flag">🌐</span>
+                                <span class="language-code">{% trans "Til" %}</span>
+                                {% endif %}
+                                <i class="fas fa-chevron-down" id="languageChevron"></i>
+                            </button>
+                            <div class="language-dropdown" id="languageDropdown">
+                                <button type="submit" name="language" value="uz" class="language-option">
+                                    <span class="language-flag">🇺🇿</span>
+                                    <span class="language-name">O'zbekcha</span>
+                                    <span class="language-code-small">O'Z</span>
+                                </button>
+                                <button type="submit" name="language" value="ru" class="language-option">
+                                    <span class="language-flag">🇷🇺</span>
+                                    <span class="language-name">Русский</span>
+                                    <span class="language-code-small">РУ</span>
+                                </button>
+                                <button type="submit" name="language" value="en" class="language-option">
+                                    <span class="language-flag">🇺🇸</span>
+                                    <span class="language-name">English</span>
+                                    <span class="language-code-small">EN</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <div class="profil_img" id="contanerList">
+                    <span><i class="fas fa-user"></i> {{ user.username|default:"Mehmon" }} </span>
+                    <img src="https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg?semt=ais_hybrid&w=740&q=80" alt="no photo" id="loginBtn"/>
 
+                    <!-- Profil dropdown menyu -->
                     <div class="list_btn_box" id="listBtn">
                         {% if user.is_authenticated %}
                         <!-- Profil -->
@@ -1180,52 +1363,6 @@
                         </a>
                         {% endif %}
                     </div>
-                    <span><i class="fas fa-user"></i> {{ user.username|default:"Mehmon" }} </span>
-                    <img src="https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg?semt=ais_hybrid&w=740&q=80" alt="no photo" id="loginBtn"/>
-                </div>
-
-                    <!-- Til almashtirish tugmasi -->
-                <div class="language-switcher">
-                    <form action="{% url 'set_language' %}" method="post" class="language-form">
-                        {% csrf_token %}
-                        <input name="next" type="hidden" value="{{ request.path }}">
-                        <div class="language-selector">
-                            <button type="button" class="current-language" id="languageToggleBtn" onclick="toggleLanguageDropdown(event)">
-                                {% get_current_language as CURRENT_LANGUAGE %}
-                                {% if CURRENT_LANGUAGE == 'uz' %}
-                                <span class="language-flag">🇺🇿</span>
-                                <span class="language-code">O'Z</span>
-                                {% elif CURRENT_LANGUAGE == 'ru' %}
-                                <span class="language-flag">🇷🇺</span>
-                                <span class="language-code">РУ</span>
-                                {% elif CURRENT_LANGUAGE == 'en' %}
-                                <span class="language-flag">🇺🇸</span>
-                                <span class="language-code">EN</span>
-                                {% else %}
-                                <span class="language-flag">🌐</span>
-                                <span class="language-code">{% trans "Til" %}</span>
-                                {% endif %}
-                                <i class="fas fa-chevron-down" id="languageChevron"></i>
-                            </button>
-                            <div class="language-dropdown" id="languageDropdown">
-                                <button type="submit" name="language" value="uz" class="language-option">
-                                    <span class="language-flag">🇺🇿</span>
-                                    <span class="language-name">O'zbekcha</span>
-                                    <span class="language-code-small">O'Z</span>
-                                </button>
-                                <button type="submit" name="language" value="ru" class="language-option">
-                                    <span class="language-flag">🇷🇺</span>
-                                    <span class="language-name">Русский</span>
-                                    <span class="language-code-small">РУ</span>
-                                </button>
-                                <button type="submit" name="language" value="en" class="language-option">
-                                    <span class="language-flag">🇺🇸</span>
-                                    <span class="language-name">English</span>
-                                    <span class="language-code-small">EN</span>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
                 </div>
                 </div>
             </section>
@@ -1280,7 +1417,7 @@
 
                 // Agar listBtn ochiq bo'lsa yopish
                 if (isOpening && isListBtnOpen) {
-                    closeListBtnHorizontally();
+                    closeListBtn();
                     isListBtnOpen = false;
                 }
             }
@@ -1311,6 +1448,7 @@
             const menu = document.getElementById("menu_box");
             const menuIcon = document.getElementById("menu");
             const profileImg = document.querySelector(".profil_img");
+            const listBtn = document.getElementById("listBtn");
 
             // Agar bosilgan joy language tugmasi yoki dropdown bo'lmasa
             if (languageBtn && dropdown &&
@@ -1325,6 +1463,17 @@
                 }
             }
 
+            // Agar bosilgan joy listBtn yoki loginBtn bo'lmasa
+            if (listBtn && profileImg &&
+                !listBtn.contains(event.target) &&
+                !profileImg.contains(event.target)) {
+
+                if (isListBtnOpen) {
+                    closeListBtn();
+                    isListBtnOpen = false;
+                }
+            }
+
             // Agar bosilgan joy menyu yoki menyu tugmasi yoki profil rasmi bo'lmasa
             if (!menu.contains(event.target) &&
                 !menuIcon.contains(event.target) &&
@@ -1335,12 +1484,6 @@
                     isMenuOpen = false;
                     updateMenuState();
                     localStorage.setItem("menuOpen", "false");
-                }
-
-                // ListBtn ochiq bo'lsa yopish
-                if (isListBtnOpen) {
-                    closeListBtnHorizontally();
-                    isListBtnOpen = false;
                 }
             }
         });
@@ -1362,7 +1505,7 @@
                 }
 
                 if (isListBtnOpen) {
-                    closeListBtnHorizontally();
+                    closeListBtn();
                     isListBtnOpen = false;
                 }
 
@@ -1455,7 +1598,6 @@
     const loginBtn = document.getElementById("loginBtn");
     const listBtn = document.getElementById("listBtn");
     const userSpan = document.querySelector(".profil_img span");
-    const listBtnBox = document.querySelector(".list_btn_box");
     const backBtn = document.getElementById("back_btn");
 
     // Menuni ochish/yopish holati
@@ -1477,6 +1619,12 @@
 
         // Agar language dropdown ochiq bo'lsa yopish
         closeLanguageDropdown();
+
+        // Agar listBtn ochiq bo'lsa yopish
+        if (isListBtnOpen) {
+            closeListBtn();
+            isListBtnOpen = false;
+        }
     });
 
     // Back tugmasi bosilganda (menyu yopish)
@@ -1521,104 +1669,68 @@
         e.stopPropagation();
 
         if (!isListBtnOpen) {
-            openListBtnHorizontally();
+            openListBtn();
             // Agar language dropdown ochiq bo'lsa yopish
             closeLanguageDropdown();
         } else {
-            closeListBtnHorizontally();
+            closeListBtn();
         }
 
         isListBtnOpen = !isListBtnOpen;
     });
 
-    // Gorizontal yo'nalishda ListBtn ni ochish
-    function openListBtnHorizontally() {
+    // ListBtn ni ochish
+    function openListBtn() {
         listBtn.style.display = "flex";
-        listBtn.classList.add("active");
-
-        listBtn.style.width = "0";
-        listBtn.style.overflow = "hidden";
-        listBtn.style.transition = "width 0.3s ease, opacity 0.3s ease";
+        listBtn.style.flexDirection = "column";
+        listBtn.style.alignItems = "center";
         listBtn.style.opacity = "0";
+        listBtn.style.transform = "translateY(-10px)";
+        listBtn.style.transition = "opacity 0.3s ease, transform 0.3s ease";
 
         setTimeout(() => {
-            const targetWidth = getListBtnWidth();
-            listBtn.style.width = targetWidth + "px";
             listBtn.style.opacity = "1";
-
-            setTimeout(() => {
-                listBtn.style.overflow = "visible";
-            }, 300);
+            listBtn.style.transform = "translateY(0)";
         }, 10);
     }
 
-    // Gorizontal yo'nalishda ListBtn ni yopish
-    function closeListBtnHorizontally() {
-        listBtn.style.width = "0";
+    // ListBtn ni yopish
+    function closeListBtn() {
         listBtn.style.opacity = "0";
-        listBtn.style.overflow = "hidden";
+        listBtn.style.transform = "translateY(-10px)";
 
         setTimeout(() => {
             listBtn.style.display = "none";
-            listBtn.classList.remove("active");
         }, 300);
-    }
-
-    // Ekran o'lchamiga qarab ListBtn kengligini hisoblash
-    function getListBtnWidth() {
-        const width = window.innerWidth;
-
-        if (width < 480) {
-            return 140;
-        } else if (width < 620) {
-            return 160;
-        } else if (width < 699) {
-            return 180;
-        } else if (width < 1001) {
-            return 200;
-        } else if (width < 1115) {
-            return 320;
-        } else {
-            return 340;
-        }
-    }
-
-    // ListBtn joylashuvini sozlash
-    function adjustListBtnPosition() {
-        const width = window.innerWidth;
-
-        listBtn.style.flexDirection = "row";
-        listBtn.style.alignItems = "center";
-        listBtn.style.justifyContent = "center";
-
-        if (width < 620) {
-            listBtn.style.top = "50px";
-            listBtn.style.right = "10px";
-            listBtn.style.flexWrap = "nowrap";
-        } else if (width < 699) {
-            listBtn.style.top = "55px";
-            listBtn.style.right = "15px";
-            listBtn.style.flexWrap = "nowrap";
-        } else if (width < 1001) {
-            listBtn.style.top = "60px";
-            listBtn.style.right = "20px";
-            listBtn.style.flexWrap = "wrap";
-        } else {
-            listBtn.style.top = "65px";
-            listBtn.style.right = "0";
-            listBtn.style.flexWrap = "nowrap";
-        }
     }
 
     // Ekran o'lchamiga mos elementlarni sozlash
     function updateElementsForScreenSize() {
         const width = window.innerWidth;
 
-        if (listBtnBox) {
+        if (listBtn) {
             if (width < 1001) {
-                listBtnBox.style.display = "none";
+                listBtn.style.display = "none";
+                listBtn.style.position = "absolute";
+                listBtn.style.top = "50px";
+                listBtn.style.right = "10px";
+                listBtn.style.zIndex = "1000";
+                listBtn.style.backgroundColor = "rgba(5, 130, 171, 0.95)";
+                listBtn.style.borderRadius = "12px";
+                listBtn.style.padding = "10px";
+                listBtn.style.boxShadow = "0 4px 15px rgba(0, 0, 0, 0.2)";
+                listBtn.style.minWidth = "180px";
             } else {
-                listBtnBox.style.display = "flex";
+                listBtn.style.display = "none";
+                listBtn.style.position = "absolute";
+                listBtn.style.top = "65px";
+                listBtn.style.right = "0";
+                listBtn.style.zIndex = "1000";
+                listBtn.style.backgroundColor = "rgba(5, 130, 171, 0.95)";
+                listBtn.style.borderRadius = "12px";
+                listBtn.style.padding = "15px";
+                listBtn.style.boxShadow = "0 4px 15px rgba(0, 0, 0, 0.2)";
+                listBtn.style.minWidth = "200px";
             }
         }
 
@@ -1670,16 +1782,6 @@
                 localStorage.setItem("menuOpen", "false");
             }
         }
-
-        if (isListBtnOpen) {
-            adjustListBtnPosition();
-            const currentWidth = parseInt(listBtn.style.width) || 0;
-            const targetWidth = getListBtnWidth();
-
-            if (currentWidth !== targetWidth) {
-                listBtn.style.width = targetWidth + "px";
-            }
-        }
     }
 
     // Ekran o'lchami o'zgarganda
@@ -1687,9 +1789,8 @@
         updateElementsForScreenSize();
 
         if (isListBtnOpen) {
-            adjustListBtnPosition();
-            const targetWidth = getListBtnWidth();
-            listBtn.style.width = targetWidth + "px";
+            closeListBtn();
+            isListBtnOpen = false;
         }
     }
 
@@ -1697,11 +1798,10 @@
     window.addEventListener("load", function () {
         handleResize();
 
-        listBtn.style.display = "none";
-        listBtn.classList.remove("active");
+        if (listBtn) {
+            listBtn.style.display = "none";
+        }
         isListBtnOpen = false;
-
-        listBtn.style.transition = "width 0.3s ease, opacity 0.3s ease";
     });
 
     window.addEventListener("resize", handleResize);
