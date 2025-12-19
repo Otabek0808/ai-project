@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.utils import timezone
+from openai import api_key
+
 from .models import *
 from .forms import DocumentForm, VideoLessonForm, TestFileUploadForm, TestForm, SubjectForm, TestCreateForm
 import matplotlib.pyplot as plt
@@ -348,8 +350,7 @@ def ai_chat(request):
             print(f"📩 Foydalanuvchi xabari: {user_message}")
 
             # API kalit
-            api_key = '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'
-
+            api_key = settings.OPENAI_API_KEY
             # OpenAI API ga so'rov
             url = "https://api.openai.com/v1/chat/completions"
             headers = {
@@ -358,7 +359,7 @@ def ai_chat(request):
             }
 
             payload = {
-                "model": "gpt-3.5-turbo",
+                "model": "gpt-4o-mini",  # GPT-4o-mini modeli
                 "messages": [
                     {
                         "role": "system",
@@ -422,51 +423,57 @@ def ai_chat(request):
     return render(request, 'app1/ai_chat.html')
 
 
-def get_offline_response(message):
-    """Offline rejimda javob berish"""
-    message_lower = message.lower().strip()
-
-    responses = {
-        'salom': 'Salom! Dasturlash haqida qanday savolingiz bor? Men sizga yordam berishdan xursandman! 🚀',
-        'python': 'Python - kuchli va oson dasturlash tili. Web, AI, data analysis uchun ajoyib.',
-        'django': 'Django - Python uchun mukammal web framework. Tez va xavfsiz ilovalar yaratish uchun.',
-        'html': 'HTML - web sahifalar strukturasi. <h1> sarlavha, <p> paragraf kabi teglar.',
-        'css': 'CSS - web dizayn. Ranglar, shriftlar, joylashuvni boshqarish.',
-        'javascript': 'JavaScript - web interaktivligi. Brauzerda ishlaydigan dasturlash tili.',
-        'java': 'Java - kuchli va platformadan mustaqil til. Mobil va korporativ dasturlar.',
-        'sql': 'SQL - ma\'lumotlar bazasi so\'rovlari. SELECT, INSERT, UPDATE, DELETE.',
-        'yordam': 'Python, Django, Web, SQL haqida yordam bera olaman. Qaysi mavzu?',
-        'rahmat': 'Rahmat! Yana savollaringiz bo\'lsa, so\'rang. 😊',
-        'salom': 'Salom! Qanday yordam bera olishim mumkin? 🚀',
-        'dasturlash': 'Dasturlash - bu kompyuterga topshiriqlarni bajarishni o\'rgatish. Python bilan boshlash tavsiya etiladi!',
-    }
-
-    # To'g'ridan-to'g'ri mos kelish
-    if message_lower in responses:
-        return responses[message_lower]
-
-    # Kalit so'zlarni qidirish
-    for key in responses:
-        if key in message_lower:
-            return responses[key]
-
-    # Standart javob
-    return '''💡 **Men sizga quyidagi mavzularda yordam bera olaman:**
-
-• **Python** - dasturlash asoslari
-• **Django** - web ilovalar
-• **Web** - HTML, CSS, JavaScript
-• **SQL** - ma\'lumotlar bazasi
-
-Savolingizni batafsilroq yozing! 🚀'''
+# def get_offline_response(message):
+#     """Offline rejimda javob berish"""
+#     message_lower = message.lower().strip()
+#
+#     responses = {
+#         'salom': 'Salom! Dasturlash haqida qanday savolingiz bor? Men sizga yordam berishdan xursandman! 🚀',
+#         'python': 'Python - kuchli va oson dasturlash tili. Web, AI, data analysis uchun ajoyib.',
+#         'django': 'Django - Python uchun mukammal web framework. Tez va xavfsiz ilovalar yaratish uchun.',
+#         'html': 'HTML - web sahifalar strukturasi. <h1> sarlavha, <p> paragraf kabi teglar.',
+#         'css': 'CSS - web dizayn. Ranglar, shriftlar, joylashuvni boshqarish.',
+#         'javascript': 'JavaScript - web interaktivligi. Brauzerda ishlaydigan dasturlash tili.',
+#         'java': 'Java - kuchli va platformadan mustaqil til. Mobil va korporativ dasturlar.',
+#         'sql': 'SQL - ma\'lumotlar bazasi so\'rovlari. SELECT, INSERT, UPDATE, DELETE.',
+#         'yordam': 'Python, Django, Web, SQL haqida yordam bera olaman. Qaysi mavzu?',
+#         'rahmat': 'Rahmat! Yana savollaringiz bo\'lsa, so\'rang. 😊',
+#         'salom': 'Salom! Qanday yordam bera olishim mumkin? 🚀',
+#         'dasturlash': 'Dasturlash - bu kompyuterga topshiriqlarni bajarishni o\'rgatish. Python bilan boshlash tavsiya etiladi!',
+#     }
+#
+#     # To'g'ridan-to'g'ri mos kelish
+#     if message_lower in responses:
+#         return responses[message_lower]
+#
+#     # Kalit so'zlarni qidirish
+#     for key in responses:
+#         if key in message_lower:
+#             return responses[key]
+#
+#     # Standart javob
+#     return '''💡 **Men sizga quyidagi mavzularda yordam bera olaman:**
+#
+# • **Python** - dasturlash asoslari
+# • **Django** - web ilovalar
+# • **Web** - HTML, CSS, JavaScript
+# • **SQL** - ma\'lumotlar bazasi
+#
+# Savolingizni batafsilroq yozing! 🚀'''
 # -------------------- TEST TIZIMI --------------------
 
 def tests(request):
-    """Testlar ro'yxati"""
     subjects = Subject.objects.prefetch_related('test_set').all()
-    return render(request, 'app1/tests.html', {'subjects': subjects})
 
+    themed_tests = Test.objects.filter(
+        subject__isnull=True,
+        is_active=True
+    )
 
+    return render(request, 'app1/tests.html', {
+        'subjects': subjects,
+        'themed_tests': themed_tests
+    })
 # views.py dagi take_test funksiyasida
 @login_required
 def take_test(request, test_id):
@@ -816,4 +823,4 @@ def user_profile_detail(request, user_id):
         'user_profile': user_profile,
         'test_results': test_results
     })
-#------------------- Test compilator ------------------
+

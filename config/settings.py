@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-fallback-key-for-development')
 # settings.py faylida:
-OPENAI_API_KEY = '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'
+OPENAI_API_KEY = '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'
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=lambda v: [s.strip() for s in v.split(',')])
@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'app1',
     'app2',
     'users',
-    'ai_tests',
+    'app3',
 ]
 
 MIDDLEWARE = [
