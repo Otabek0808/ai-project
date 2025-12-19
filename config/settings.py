@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-fallback-key-for-development')
 # settings.py faylida:
-OPENAI_API_KEY = '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'
+OPENAI_API_KEY = config('OPENAI_API_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=lambda v: [s.strip() for s in v.split(',')])
