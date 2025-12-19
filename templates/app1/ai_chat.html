@@ -1,792 +1,722 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+{% endblock %}
+
 {% block content %}
 <style>
+  :root {
+    --primary-color: #6366f1;
+    --primary-dark: #4f46e5;
+    --secondary-color: #8b5cf6;
+    --accent-color: #06b6d4;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --light-bg: rgba(255, 255, 255, 0.9);
+    --dark-bg: rgba(15, 23, 42, 0.9);
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
 
+  /* Animatsiyalar */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
 
-  /* AI Chat uchun maxsus stillar */
-  .ai-chat-card {
-    height: 80vh;
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.511);
-    border-radius: 15px;
-    border: 2px solid #ffffff;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  @keyframes slideIn {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes typing {
+    0% { width: 0; }
+    50% { width: 100%; }
+    100% { width: 0; }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+  }
+
+  /* AI Chat container */
+  .ai-chat-wrapper {
+    min-height: 100vh;
+    background: var(--gradient);
+    padding: 20px;
     position: relative;
-    display: flex;
-    flex-direction: column;
     overflow: hidden;
   }
 
-  .ai-chat-header {
-    backdrop-filter: blur(10px);
-    background-color: rgba(5, 130, 171, 0.8) !important;
-    border-radius: 15px 15px 0 0 !important;
-    border-bottom: 2px solid #ffffff;
-    padding: 15px 20px !important;
-    flex-shrink: 0;
+  .ai-chat-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    animation: float 20s infinite linear;
   }
 
-  .ai-chat-header h4 {
-    font-size: 24px;
-    font-weight: bold;
-    margin: 0;
+  .ai-chat-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 90vh;
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  /* Header */
+  .chat-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .chat-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 70%
+    );
+    animation: shimmer 3s infinite linear;
+  }
+
+  .header-left {
     display: flex;
     align-items: center;
+    gap: 15px;
+  }
+
+  .ai-avatar {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+    animation: float 3s ease-in-out infinite;
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
+  }
+
+  .header-info h1 {
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .header-info p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    margin: 5px 0 0 0;
+  }
+
+  .header-actions {
+    display: flex;
     gap: 10px;
   }
 
-  .ai-chat-header .fa-robot {
-    font-size: 28px;
+  .header-btn {
+    padding: 8px 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(10px);
   }
 
-  .ai-chat-body {
-    flex: 1;
-    padding: 25px !important;
-    width: 70%;
-    margin: 0 auto;
+  .header-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .header-btn.danger {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.3);
+  }
+
+  .header-btn.danger:hover {
+    background: rgba(239, 68, 68, 0.3);
+  }
+
+  /* Chat body */
+  .chat-body {
+    height: calc(100% - 140px);
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    padding: 20px;
+    background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
   }
 
-  .chat-messages-container {
+  .messages-container {
     flex: 1;
     overflow-y: auto;
-    border: 2px solid #ffffff;
     padding: 20px;
     margin-bottom: 20px;
-    border-radius: 10px;
-    min-height: 0;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
   }
 
-  .chat-message {
-    margin-bottom: 15px;
-    max-width: 100%;
+  /* Messages */
+  .message {
+    margin-bottom: 20px;
     display: flex;
+    animation: slideIn 0.5s ease-out;
   }
 
-  .user-message {
+  .message.user {
     justify-content: flex-end;
   }
 
-  .bot-message {
+  .message.bot {
     justify-content: flex-start;
   }
 
-  .message-bubble {
-    display: inline-block;
-    padding: 12px 18px;
-    border-radius: 15px;
-    font-size: 15px;
-    line-height: 1.5;
-    max-width: 100%;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    word-break: break-word;
-    hyphens: auto;
-  }
-
-  /* Uzoq so'zlar uchun qo'shimcha */
-  .message-bubble {
-    -webkit-hyphens: auto;
-    -ms-hyphens: auto;
-    hyphens: auto;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-  }
-
-  .user-bubble {
-    background: linear-gradient(135deg, #87ceeb, #5aa9e6);
-    color: white;
-    border: 1px solid #5aa9e6;
-    border-radius: 15px 15px 0 15px;
+  .message-content {
     max-width: 70%;
+    position: relative;
+    padding: 16px 20px;
+    border-radius: 20px;
+    font-size: 15px;
+    line-height: 1.6;
+    word-wrap: break-word;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    animation: slideIn 0.3s ease-out;
   }
 
-  .bot-bubble {
-    color: #333;
-    border: 1px solid #ffffff;
-    border-radius: 15px 15px 15px 0;
-    max-width: 85%; }
+  .message.user .message-content {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border-bottom-right-radius: 5px;
+    position: relative;
+  }
 
-  /* FIXED INPUT CONTAINER - BOTTOM ALWAYS */
-  .fixed-input-container {
-    position: fixed;
-    bottom: 0;
+  .message.user .message-content::after {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: 0;
+    border-left: 10px solid var(--primary-color);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+  }
+
+  .message.bot .message-content {
+    background: white;
+    color: #334155;
+    border-bottom-left-radius: 5px;
+    border: 1px solid #e2e8f0;
+    position: relative;
+  }
+
+  .message.bot .message-content::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 0;
+    border-right: 10px solid white;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+  }
+
+  .message-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .message-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .message.user .message-avatar {
+    background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+    color: white;
+  }
+
+  .message.bot .message-avatar {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+  }
+
+  .message-sender {
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .message-time {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-left: auto;
+  }
+
+  .message-text {
+    margin: 10px 0;
+  }
+
+  /* Message types */
+  .message-code {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 10px 0;
+    overflow-x: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .message-code .code-language {
+    color: #94a3b8;
+    font-size: 12px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .message-tips {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border: 1px solid #f59e0b;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-size: 14px;
+  }
+
+  .message-warning {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border: 1px solid #f59e0b;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 10px 0;
+    color: #92400e;
+  }
+
+  .message-success {
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+    border: 1px solid #10b981;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 10px 0;
+    color: #065f46;
+  }
+
+  /* Typing indicator */
+  .typing-indicator {
+    display: flex;
+    gap: 6px;
+    padding: 20px;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .typing-indicator.active {
+    opacity: 1;
+  }
+
+  .typing-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    animation: typing 1.5s infinite ease-in-out;
+  }
+
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  /* Input area */
+  .input-container {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    border: 2px solid #e2e8f0;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .input-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
     left: 0;
     right: 0;
-    background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(25px);
-    padding: 15px;
-    border-top: 2px solid rgba(5, 130, 171, 0.3);
-    box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    transition: all 0.3s ease;
-    border-radius: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+    animation: shimmer 2s infinite linear;
   }
 
-  .chat-input-group {
+  .chat-form {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+  }
+
+  .input-wrapper {
+    flex: 1;
+    position: relative;
+  }
+
+  .chat-input {
+    width: 100%;
+    min-height: 60px;
+    max-height: 200px;
+    padding: 18px 60px 18px 25px;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    font-size: 16px;
+    line-height: 1.5;
+    resize: none;
+    outline: none;
+    transition: all 0.3s ease;
+    background: white;
+    font-family: inherit;
+  }
+
+  .chat-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  }
+
+  .input-icons {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
     display: flex;
     gap: 10px;
-    align-items: flex-end; /* Input va tugmani pastga tekislash */
-    max-width: 1200px;
-    margin: 0 auto;
   }
 
-  /* Textarea uchun yangi input - ko'p qatorli yozish uchun */
-  .chat-input-group textarea {
-    flex: 1;
-    padding: 12px 15px;
-    border: 2px solid #ffffff;
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.8);
-    font-size: 15px;
-    transition: all 0.3s ease;
-    min-height: 50px;
-    max-height: 150px; /* Maksimal balandlik */
-    resize: none; /* User o'lchamini o'zgartira olmasligi uchun */
-    line-height: 1.4;
-    font-family: inherit;
-    overflow-y: auto; /* Matn ko'p bo'lsa scroll */
-  }
-
-  .chat-input-group textarea:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(5, 130, 171, 0.3);
-    border-color: rgba(5, 130, 171, 0.8);
-  }
-
-  /* Textarea scrollbar styling */
-  .chat-input-group textarea::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  .chat-input-group textarea::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 3px;
-  }
-
-  .chat-input-group textarea::-webkit-scrollbar-thumb {
-    background: rgba(5, 130, 171, 0.5);
-    border-radius: 3px;
-  }
-
-  .chat-submit-btn {
-    padding: 12px 25px;
-    min-width: 100px;
+  .input-icon {
+    background: none;
     border: none;
-    border-radius: 10px;
-    backdrop-filter: blur(100px);
-    background-color: rgba(5, 130, 171, 0.8);
+    color: #94a3b8;
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.3s;
+    padding: 5px;
+  }
+
+  .input-icon:hover {
+    color: var(--primary-color);
+  }
+
+  .send-button {
+    min-width: 120px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
+    border: none;
+    border-radius: 16px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    height: 50px;
-    flex-shrink: 0; /* Tugma kichraymasligi uchun */
+    gap: 10px;
+    padding: 0 30px;
   }
 
-  .chat-submit-btn:hover {
-    transform: scale(0.97);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    background-color: rgba(5, 130, 171, 1);
+  .send-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
   }
 
-  .chat-tips {
+  .send-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .send-button .spinner {
+    display: none;
+  }
+
+  .send-button.loading .spinner {
+    display: block;
+    animation: spin 1s linear infinite;
+  }
+
+  .send-button.loading .text {
+    display: none;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Quick actions */
+  .quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
     margin-top: 15px;
-    padding: 12px;
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 10px;
-    border: 1px solid #ffffff;
+  }
+
+  .quick-action-btn {
+    padding: 10px 20px;
+    background: rgba(99, 102, 241, 0.1);
+    border: 2px solid rgba(99, 102, 241, 0.2);
+    border-radius: 50px;
+    color: var(--primary-color);
     font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
   }
 
-  .chat-tips .fa-lightbulb {
-    color: #ffc107;
-    margin-right: 8px;
+  .quick-action-btn:hover {
+    background: rgba(99, 102, 241, 0.2);
+    transform: translateY(-2px);
   }
 
-  /* Scrollbar styling */
-  .chat-messages-container::-webkit-scrollbar {
+  /* Status indicator */
+  .status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 10px;
+  }
+
+  .status-dot {
     width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--success-color);
+    animation: pulse 2s infinite;
   }
 
-  .chat-messages-container::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 4px;
-  }
-
-  .chat-messages-container::-webkit-scrollbar-thumb {
-    background: rgba(5, 130, 171, 0.5);
-    border-radius: 4px;
-  }
-
-  .chat-messages-container::-webkit-scrollbar-thumb:hover {
-    background: rgba(5, 130, 171, 0.8);
+  .status-dot.offline {
+    background: var(--danger-color);
   }
 
   /* Welcome message */
   .welcome-message {
     text-align: center;
-    padding: 15px;
-    backdrop-filter: blur(10px);
-    background-color: rgba(5, 130, 171, 0.1);
-    border-radius: 10px;
-<!--    border: 1px solid rgba(5, 130, 171, 0.3);-->
+    padding: 40px 20px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+    border-radius: 20px;
+    border: 2px dashed rgba(99, 102, 241, 0.2);
+    margin: 20px 0;
+  }
+
+  .welcome-icon {
+    font-size: 60px;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .welcome-message h3 {
+    color: var(--primary-dark);
     margin-bottom: 15px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    font-size: 24px;
   }
 
-  /* Code formatting for bot messages */
-  .bot-bubble pre {
+  .welcome-message p {
+    color: #64748b;
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Scrollbar styling */
+  .messages-container::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .messages-container::-webkit-scrollbar-track {
     background: rgba(0, 0, 0, 0.05);
-    padding: 10px;
-    border-radius: 5px;
-    overflow-x: auto;
-    margin: 10px 0;
-    font-family: "Courier New", monospace;
-    font-size: 14px;
-    white-space: pre-wrap;
+    border-radius: 4px;
   }
 
-  .bot-bubble code {
-    background: rgba(0, 0, 0, 0.05);
-    padding: 2px 5px;
-    border-radius: 3px;
-    font-family: "Courier New", monospace;
-    font-size: 14px;
-  }
-.clear-history-btn {
-    padding: 8px 15px;
-    background-color: rgba(255, 107, 107, 0.8);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 13px;
-    margin-left: 10px;
-    transition: all 0.3s ease;
+  .messages-container::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.3);
+    border-radius: 4px;
   }
 
-  .clear-history-btn:hover {
-    background-color: rgba(255, 107, 107, 1);
-  }
-  /* MEDIA QUERIES */
-
-  /* 1200px - Large tablets */
-  @media (max-width: 1200px) {
-    #container_ai {
-      height: 100vh;
-    }
-
-    .ai-chat-body {
-      width: 85%;
-    }
-
-    .fixed-input-container {
-      padding: 12px 15px;
-    }
-
-    .chat-input-group {
-      max-width: 1000px;
-    }
+  .messages-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(99, 102, 241, 0.5);
   }
 
-  /* 992px - Tablets */
-  @media (max-width: 992px) {
-    #container_ai {
-      padding: 12px;
-      height: 100vh;
-    }
-
-    .ai-chat-body {
-      width: 90%;
-      padding: 20px !important;
-    }
-
-    .fixed-input-container {
-      padding: 12px;
-    }
-
-    .chat-messages-container {
-      padding: 18px;
-    }
-
-    .ai-chat-header h4 {
-      font-size: 22px;
-    }
-
-    .ai-chat-header .fa-robot {
-      font-size: 26px;
-    }
-
-    .message-bubble {
-      padding: 11px 16px;
-      font-size: 14.5px;
-    }
-
-    .user-bubble {
-      max-width: 75%;
-    }
-
-    .bot-bubble {
-      max-width: 90%;
-    }
-
-    .chat-input-group textarea {
-      padding: 11px 14px;
-      font-size: 14px;
-      min-height: 45px;
-    }
-
-    .chat-submit-btn {
-      padding: 11px 22px;
-      font-size: 14px;
-      min-width: 90px;
-      height: 45px;
-    }
-
-    .chat-tips {
-      font-size: 13.5px;
-    }
-
-  .form-group {
-    position: re;
-    left: 0;
-    top: 0;
-    z-index: 90;
-  }
-
-  /* 768px - Small tablets */
+  /* Responsive design */
   @media (max-width: 768px) {
-    #container_ai {
-      padding: 10px;
-      height: 100vh;
-    }
-
-    .ai-chat-card {
-      border-radius: 12px;
-    }
-
-    .ai-chat-body {
-      width: 95%;
-      padding: 18px !important;
-    }
-
-    .fixed-input-container {
+    .ai-chat-wrapper {
       padding: 10px;
     }
 
-    .ai-chat-header {
-      padding: 12px 18px !important;
-      border-radius: 12px 12px 0 0 !important;
+    .chat-header {
+      padding: 15px 20px;
+      flex-direction: column;
+      gap: 15px;
     }
 
-    .ai-chat-header h4 {
-      font-size: 20px;
+    .header-left {
+      flex-direction: column;
+      text-align: center;
     }
 
-    .ai-chat-header .fa-robot {
-      font-size: 24px;
-    }
-
-    .chat-messages-container {
-      padding: 16px;
-      margin-bottom: 18px;
-    }
-
-    .message-bubble {
-      padding: 10px 15px;
-      font-size: 14px;
-    }
-
-    .user-bubble {
-      max-width: 80%;
-    }
-
-    .bot-bubble {
-      max-width: 92%;
-    }
-
-    .chat-input-group textarea {
-      padding: 10px 12px;
-      font-size: 14px;
-      min-height: 42px;
-      max-height: 120px;
-    }
-
-    .chat-submit-btn {
-      padding: 10px 20px;
-      font-size: 14px;
-      min-width: 85px;
-      height: 42px;
-    }
-
-    .chat-tips {
-      font-size: 13px;
-      padding: 11px;
-      margin-top: 12px;
-    }
-
-    .welcome-message {
-      padding: 13px;
-      font-size: 14px;
-    }
-
-    .bot-bubble pre,
-    .bot-bubble code {
-      font-size: 13px;
-    }
-  }
-
-  /* 576px - Mobile landscape */
-  @media (max-width: 576px) {
-
-    .ai-chat-card {
-      border-radius: 10px;
-    }
-
-    .ai-chat-body {
+    .header-actions {
       width: 100%;
-      padding: 15px !important;
+      justify-content: center;
     }
 
-    .fixed-input-container {
-      padding: 8px;
-    }
-
-    .ai-chat-header {
-      padding: 10px 15px !important;
-      border-radius: 10px 10px 0 0 !important;
-    }
-
-    .ai-chat-header h4 {
-      font-size: 18px;
-    }
-
-    .ai-chat-header .fa-robot {
-      font-size: 22px;
-    }
-
-    .chat-messages-container {
-      padding: 14px;
-      margin-bottom: 15px;
-    }
-
-    .message-bubble {
-      padding: 8px 12px;
-      font-size: 13px;
-      line-height: 1.4;
-    }
-
-    .user-bubble {
+    .message-content {
       max-width: 85%;
     }
 
-    .bot-bubble {
-      max-width: 95%;
+    .chat-form {
+      flex-direction: column;
     }
 
-    .chat-input-group {
-      gap: 8px;
-      align-items: flex-end;
+    .send-button {
+      width: 100%;
     }
 
-    .chat-input-group textarea {
-      padding: 10px 12px;
-      font-size: 13px;
-      min-height: 40px;
-      max-height: 100px;
-    }
-
-    .chat-submit-btn {
-      padding: 10px 15px;
-      font-size: 13px;
-      min-width: 70px;
-      height: 40px;
-    }
-
-    .chat-tips {
-      font-size: 12px;
-      padding: 10px;
-    }
-
-    .welcome-message {
-      padding: 10px;
-      font-size: 13px;
-    }
-
-    .bot-bubble pre,
-    .bot-bubble code {
-      font-size: 12px;
+    .quick-actions {
+      justify-content: center;
     }
   }
 
-  /* 480px - Mobile portrait */
   @media (max-width: 480px) {
-    #container_ai {
-      height: 100vh;
+    .ai-chat-container {
+      height: 95vh;
     }
 
-
-
-    .ai-chat-body {
-      padding: 12px !important;
-    }
-
-    .fixed-input-container {
-      padding: 6px 8px;
-    }
-
-    .ai-chat-header h4 {
-      font-size: 16px;
-      gap: 8px;
-    }
-
-    .ai-chat-header .fa-robot {
-      font-size: 20px;
-    }
-
-    .chat-messages-container {
-      padding: 12px;
-      margin-bottom: 15px;
-    }
-
-    .message-bubble {
-      padding: 7px 10px;
-      font-size: 12.5px;
-      line-height: 1.3;
-    }
-
-    .chat-input-group textarea {
-      padding: 8px 10px;
-      font-size: 12.5px;
-      min-height: 38px;
-      max-height: 90px;
-    }
-
-    .chat-submit-btn {
-      padding: 8px 12px;
-      font-size: 12.5px;
-      min-width: 65px;
-      height: 38px;
-    }
-
-    .chat-tips {
-      font-size: 11.5px;
-      padding: 9px;
-    }
-
-    .welcome-message {
-      padding: 9px;
-      font-size: 12px;
-    }
-
-    .bot-bubble pre {
-      padding: 8px;
-    }
-  }
-
-  /* 400px dan pastda - FIXED INPUT */
-  @media (max-width: 400px) {
-
-    .ai-chat-card {
-      border-radius: 8px;
-    }
-
-    .fixed-input-container {
-      padding: 6px;
-    }
-
-    .ai-chat-header {
-      padding: 8px 12px !important;
-      border-radius: 8px 8px 0 0 !important;
-    }
-
-    .ai-chat-header h4 {
-      font-size: 15px;
-    }
-
-    .ai-chat-header .fa-robot {
-      font-size: 18px;
-    }
-
-    .ai-chat-body {
-      padding: 10px !important;
-    }
-
-    .chat-messages-container {
-      padding: 10px;
-      margin-bottom: 10px;
-    }
-
-    .message-bubble {
-      padding: 6px 9px;
-      font-size: 12px;
-    }
-
-    .user-bubble,
-    .bot-bubble {
-      max-width: 96%;
-    }
-
-    .chat-input-group {
-      gap: 5px;
-    }
-
-    .chat-input-group textarea {
-      padding: 7px 9px;
-      font-size: 12px;
-      min-height: 36px;
-      max-height: 80px;
-    }
-
-    .chat-submit-btn {
-      padding: 7px 9px;
-      font-size: 12px;
-      min-width: 55px;
-      height: 36px;
-    }
-
-    .chat-submit-btn i {
-      font-size: 14px;
-      margin-right: 0;
-    }
-
-    .chat-submit-btn span {
-      display: none; /* "Junatish" yozuvini yashirish */
-    }
-
-    .chat-tips {
-      font-size: 11px;
-      padding: 7px;
-      margin-top: 8px;
-    }
-
-    .bot-bubble pre,
-    .bot-bubble code {
-      font-size: 11px;
-    }
-  }
-
-  /* 360px - Small mobile */
-  @media (max-width: 360px) {
-    #container_ai {
-      height: 100vh;
-      padding: 4px;
-    }
-
-    .ai-chat-card {
-      border-radius: 6px;
-    }
-
-    .fixed-input-container {
-      padding: 5px;
-    }
-
-    .ai-chat-header {
-      padding: 7px 10px !important;
-      border-radius: 6px 6px 0 0 !important;
-    }
-
-    .ai-chat-header h4 {
+    .message-content {
+      max-width: 90%;
+      padding: 12px 16px;
       font-size: 14px;
     }
 
-    .ai-chat-header .fa-robot {
-      font-size: 17px;
+    .input-container {
+      padding: 15px;
     }
 
-    .chat-input-group textarea {
-      padding: 6px 8px;
-      font-size: 11.5px;
-      min-height: 34px;
-      max-height: 70px;
+    .chat-input {
+      min-height: 50px;
+      padding: 12px 50px 12px 20px;
     }
 
-    .chat-submit-btn {
-      padding: 6px 8px;
-      font-size: 11.5px;
-      min-width: 50px;
-      height: 34px;
-    }
-
-    .chat-submit-btn i {
-      font-size: 13px;
-    }
-
-    .chat-messages-container {
-      padding: 8px;
+    .send-button {
+      height: 50px;
     }
   }
 
-  /* 320px - Extra small mobile */
-  @media (max-width: 320px) {
-    #container_ai {
-      height: 100vh;
-      padding: 3px;
+  /* Dark mode support */
+  @media (prefers-color-scheme: dark) {
+    .ai-chat-container {
+      background: rgba(15, 23, 42, 0.95);
+      color: #e2e8f0;
     }
 
-    .fixed-input-container {
-      padding: 4px;
+    .chat-body {
+      background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
     }
 
-    .ai-chat-header {
-      padding: 6px 8px !important;
+    .messages-container {
+      background: rgba(30, 41, 59, 0.8);
+      border-color: rgba(255, 255, 255, 0.1);
     }
 
-    .ai-chat-header h4 {
-      font-size: 13px;
+    .message.bot .message-content {
+      background: #1e293b;
+      color: #e2e8f0;
+      border-color: #334155;
     }
 
-    .ai-chat-header .fa-robot {
-      font-size: 16px;
+    .input-container {
+      background: #1e293b;
+      border-color: #334155;
     }
 
-    .chat-input-group {
-      gap: 4px;
+    .chat-input {
+      background: #0f172a;
+      color: #e2e8f0;
+      border-color: #334155;
     }
 
-    .chat-input-group textarea {
-      padding: 5px 7px;
-      font-size: 11px;
-      min-height: 32px;
-      max-height: 60px;
-    }
-
-    .chat-submit-btn {
-      padding: 5px 7px;
-      font-size: 11px;
-      min-width: 45px;
-      height: 32px;
-    }
-
-    .chat-submit-btn i {
-      font-size: 12px;
-    }
-  }
-
-  /* Android/iOS klaviatura ochilganda moslashuv */
-  @media (max-height: 500px) {
-    .chat-input-group textarea {
-      max-height: 70px;
-    }
-
-    .chat-messages-container {
-      margin-bottom: 10px;
+    .quick-action-btn {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: #c7d2fe;
     }
   }
 </style>
 
+<<<<<<< HEAD
 
 <main>
   <div class="ai-chat-card">
@@ -829,283 +759,519 @@
           <button type="submit" class="chat-submit-btn">
             <i class="fas fa-paper-plane"></i> {% trans "Yuborish" %}
           </button>
+=======
+<main class="ai-chat-wrapper">
+  <div class="ai-chat-container">
+    <!-- Header -->
+    <div class="chat-header">
+      <div class="header-left">
+        <div class="ai-avatar">
+          <i class="fas fa-robot"></i>
+>>>>>>> a7c825b2777f4ab901828edbc43926e4c10f16ae
         </div>
-      </form>
+        <div class="header-info">
+          <h1>🤖 AI Dasturlash Yordamchisi</h1>
+          <p>Python, Django, Web va boshqa IT texnologiyalar bo'yicha maslahatchi</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="header-btn" id="theme-toggle">
+          <i class="fas fa-moon"></i> Mavzu
+        </button>
+        <button class="header-btn danger" id="clear-history">
+          <i class="fas fa-trash-alt"></i> Tozalash
+        </button>
+      </div>
+    </div>
+
+    <!-- Chat Body -->
+    <div class="chat-body">
+      <!-- Messages Container -->
+      <div class="messages-container" id="chat-messages">
+        <!-- Welcome Message -->
+        <div class="welcome-message animate__animated animate__fadeIn">
+          <div class="welcome-icon">
+            <i class="fas fa-robot"></i>
+          </div>
+          <h3>👋 Salom! Men AI yordamchisiman</h3>
+          <p>
+            {% if user.is_staff %}
+            Sizning mutaxasisligingiz bo'yicha talabalarga yana qanday bilimlarni berishni istaysiz?
+            Menga tushunarli tarzda savolingizni kiriting! Men sizga qiziqarli materiallarni taqdim etaman.
+            {% else %}
+            Siz yana o'z mutaxasislik faningizdan nimalarni bilishni istaysiz? Tushunarli tarzda yozing,
+            men sizga yordam beraman! Siz bergan mavzuga har xil o'yinlar yoki metodlarni qo'llab tayyorlayman.
+            {% endif %}
+          </p>
+          <div class="quick-actions" style="justify-content: center; margin-top: 20px;">
+            <button class="quick-action-btn" data-question="Python nima?">Python nima?</button>
+            <button class="quick-action-btn" data-question="Django qanday ishlaydi?">Django qanday ishlaydi?</button>
+            <button class="quick-action-btn" data-question="HTML va CSS farqi">HTML va CSS farqi</button>
+            <button class="quick-action-btn" data-question="JavaScript nimaga kerak?">JavaScript nimaga kerak?</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typing Indicator -->
+      <div class="typing-indicator" id="typing-indicator">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+      </div>
+
+      <!-- Input Area -->
+      <div class="input-container animate__animated animate__fadeInUp">
+        <form class="chat-form" id="chat-form">
+          {% csrf_token %}
+          <div class="input-wrapper">
+            <textarea
+              class="chat-input"
+              id="user-input"
+              placeholder="{% trans "Savolingizni yozing... (Shift+Enter yangi qator)" %}"
+              rows="1"
+              required
+            ></textarea>
+            <div class="input-icons">
+              <button type="button" class="input-icon" id="attach-file" title="Fayl biriktirish">
+                <i class="fas fa-paperclip"></i>
+              </button>
+              <button type="button" class="input-icon" id="voice-input" title="Ovozli kirish">
+                <i class="fas fa-microphone"></i>
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="send-button" id="send-button">
+            <span class="spinner"><i class="fas fa-spinner"></i></span>
+            <span class="text"><i class="fas fa-paper-plane"></i> Yuborish</span>
+          </button>
+        </form>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+          <button class="quick-action-btn" data-question="Kod yozishga yordam kerak">Kod yozish</button>
+          <button class="quick-action-btn" data-question="Xatoni tuzatish">Xatoni tuzatish</button>
+          <button class="quick-action-btn" data-question="Algoritm tushuntirish">Algoritm</button>
+          <button class="quick-action-btn" data-question="SQL so'rovi">SQL so'rovi</button>
+          <button class="quick-action-btn" data-question="Web dasturlash">Web dasturlash</button>
+        </div>
+
+        <!-- Status -->
+        <div class="status-indicator">
+          <div class="status-dot" id="status-dot"></div>
+          <span id="status-text">AI yordamchi faol</span>
+        </div>
+      </div>
     </div>
   </div>
-</main>{% endblock %}
+</main>
+{% endblock %}
 
 {% block scripts %}
 <script>
-  // LocalStorage da chat tarixi uchun kalit
-  const CHAT_STORAGE_KEY = 'ai_chat_history';
+  // Konfiguratsiya
+  const CONFIG = {
+    STORAGE_KEY: 'ai_chat_history_v2',
+    MAX_HISTORY: 50,
+    API_URL: window.location.pathname,
+    TYPING_DELAY: 1000,
+    THEME_KEY: 'ai_chat_theme'
+  };
 
-  // Sahifa yuklanganda chat tarixini yuklash
-  document.addEventListener('DOMContentLoaded', function() {
-    loadChatHistory();
+  // Elementlar
+  const elements = {
+    form: document.getElementById('chat-form'),
+    input: document.getElementById('user-input'),
+    messages: document.getElementById('chat-messages'),
+    sendBtn: document.getElementById('send-button'),
+    typingIndicator: document.getElementById('typing-indicator'),
+    clearBtn: document.getElementById('clear-history'),
+    themeToggle: document.getElementById('theme-toggle'),
+    statusDot: document.getElementById('status-dot'),
+    statusText: document.getElementById('status-text'),
+    quickActions: document.querySelectorAll('.quick-action-btn')
+  };
 
-    // Clear history tugmasi uchun event listener
-    document.getElementById('clear-history').addEventListener('click', function() {
-      if (confirm('Barcha chat tarixini tozalashni istaysizmi?')) {
-        clearChatHistory();
-      }
+  // Dastur holati
+  const state = {
+    isTyping: false,
+    isOnline: true,
+    theme: localStorage.getItem(CONFIG.THEME_KEY) || 'light',
+    history: []
+  };
+
+  // Dasturni ishga tushirish
+  function init() {
+    loadTheme();
+    loadHistory();
+    setupEventListeners();
+    autoResizeTextarea();
+    updateStatus();
+    elements.input.focus();
+  }
+
+  // Matn maydonini avtomatik o'lchamlash
+  function autoResizeTextarea() {
+    elements.input.addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = (this.scrollHeight) + 'px';
     });
+  }
 
-    // Inputga fokus qilish
-    const userInput = document.getElementById('user-input');
-    if (userInput) {
-      setTimeout(() => {
-        userInput.focus();
-      }, 300);
-    }
-  });
+  // Tema sozlamalari
+  function loadTheme() {
+    document.documentElement.setAttribute('data-theme', state.theme);
+    elements.themeToggle.innerHTML = state.theme === 'dark'
+      ? '<i class="fas fa-sun"></i> Kun'
+      : '<i class="fas fa-moon"></i> Tun';
+  }
 
-  // Chat tarixini localStorage dan yuklash
-  function loadChatHistory() {
+  function toggleTheme() {
+    state.theme = state.theme === 'light' ? 'dark' : 'light';
+    localStorage.setItem(CONFIG.THEME_KEY, state.theme);
+    loadTheme();
+  }
+
+  // Chat tarixi
+  function loadHistory() {
     try {
-      const savedChat = localStorage.getItem(CHAT_STORAGE_KEY);
-      const chatContainer = document.getElementById('chat-container');
-
-      // Welcome xabarini saqlash
-      const welcomeMessage = document.getElementById('welcome-message');
-
-      if (savedChat) {
-        const messages = JSON.parse(savedChat);
-
-        // Agar xabarlar mavjud bo'lsa, welcome xabarini yashirish
-        if (messages.length > 0) {
-          if (welcomeMessage) {
-            welcomeMessage.style.display = 'none';
-          }
-
-          // Har bir xabarni ekranga chiqarish
-          messages.forEach(msg => {
-            addMessageToScreen(msg.text, msg.sender, false); // false - localStorage ga saqlamaslik
-          });
-        }
+      const saved = localStorage.getItem(CONFIG.STORAGE_KEY);
+      if (saved) {
+        state.history = JSON.parse(saved);
+        renderHistory();
       }
     } catch (error) {
-      console.error('Chat tarixini yuklashda xatolik:', error);
+      console.error('Tarixni yuklashda xatolik:', error);
     }
   }
 
-  // Chat tarixini localStorage ga saqlash
-  function saveMessageToStorage(text, sender) {
+  function saveHistory() {
     try {
-      let messages = [];
-      const savedChat = localStorage.getItem(CHAT_STORAGE_KEY);
+      localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(state.history));
+    } catch (error) {
+      console.error('Tarixni saqlashda xatolik:', error);
+    }
+  }
 
-      if (savedChat) {
-        messages = JSON.parse(savedChat);
+  function renderHistory() {
+    if (state.history.length === 0) return;
+
+    // Welcome xabarini yashirish
+    const welcome = document.querySelector('.welcome-message');
+    if (welcome) welcome.style.display = 'none';
+
+    // Tarixni chiqarish
+    state.history.forEach(msg => {
+      addMessageToUI(msg.text, msg.sender, msg.type, false);
+    });
+  }
+
+  function clearHistory() {
+    if (!confirm('Barcha chat tarixini tozalashni istaysizmi?')) return;
+
+    state.history = [];
+    localStorage.removeItem(CONFIG.STORAGE_KEY);
+
+    // UI ni yangilash
+    elements.messages.innerHTML = '';
+    const welcome = document.querySelector('.welcome-message');
+    if (welcome) welcome.style.display = 'block';
+
+    showNotification('Chat tarixi tozalandi', 'success');
+    elements.input.focus();
+  }
+
+  // Xabarlarni boshqarish
+  function addMessage(text, sender, type = 'normal', save = true) {
+    const message = {
+      text,
+      sender,
+      type,
+      timestamp: new Date().toISOString()
+    };
+
+    if (save) {
+      state.history.push(message);
+      if (state.history.length > CONFIG.MAX_HISTORY) {
+        state.history = state.history.slice(-CONFIG.MAX_HISTORY);
       }
+      saveHistory();
+    }
 
-      // Yangi xabarni qo'shish
-      messages.push({
-        text: text,
-        sender: sender,
-        timestamp: new Date().toISOString()
+    addMessageToUI(text, sender, type, true);
+  }
+
+  function addMessageToUI(text, sender, type, animate = true) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${sender} ${animate ? 'animate__animated animate__fadeIn' : ''}`;
+
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'message-content';
+
+    // Xabar sarlavhasi
+    const header = document.createElement('div');
+    header.className = 'message-header';
+
+    const avatar = document.createElement('div');
+    avatar.className = 'message-avatar';
+    avatar.innerHTML = sender === 'user' ? '<i class="fas fa-user"></i>' : '<i class="fas fa-robot"></i>';
+
+    const senderName = document.createElement('span');
+    senderName.className = 'message-sender';
+    senderName.textContent = sender === 'user' ? 'Siz' : 'AI Yordamchi';
+
+    const time = document.createElement('span');
+    time.className = 'message-time';
+    time.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    header.appendChild(avatar);
+    header.appendChild(senderName);
+    header.appendChild(time);
+
+    // Xabar matni
+    const textDiv = document.createElement('div');
+    textDiv.className = 'message-text';
+
+    // Formatlash
+    const formattedText = formatMessage(text, type);
+    textDiv.innerHTML = formattedText;
+
+    // Birlashtirish
+    contentDiv.appendChild(header);
+    contentDiv.appendChild(textDiv);
+    messageDiv.appendChild(contentDiv);
+
+    // Chatga qo'shish
+    elements.messages.appendChild(messageDiv);
+
+    // Scroll pastga
+    scrollToBottom();
+
+    // Welcome xabarini yashirish
+    const welcome = document.querySelector('.welcome-message');
+    if (welcome && sender === 'user') {
+      welcome.style.display = 'none';
+    }
+  }
+
+  function formatMessage(text, type) {
+    if (type === 'code') {
+      return `<div class="message-code">
+                <span class="code-language">python</span>
+                ${text.replace(/</g, '&lt;').replace(/>/g, '&gt;')}
+              </div>`;
+    }
+
+    if (type === 'tip') {
+      return `<div class="message-tips">
+                <i class="fas fa-lightbulb"></i> ${text}
+              </div>`;
+    }
+
+    if (type === 'warning') {
+      return `<div class="message-warning">
+                <i class="fas fa-exclamation-triangle"></i> ${text}
+              </div>`;
+    }
+
+    if (type === 'success') {
+      return `<div class="message-success">
+                <i class="fas fa-check-circle"></i> ${text}
+              </div>`;
+    }
+
+    // Oddiy matn formatlash
+    let formatted = text
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/\n/g, '<br>')
+      .replace(/```([\s\S]*?)```/g, '<div class="message-code"><span class="code-language">code</span>$1</div>')
+      .replace(/`([^`]+)`/g, '<code>$1</code>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+    return formatted;
+  }
+
+  // Serverga so'rov yuborish
+  async function sendMessage(message = null) {
+    const userMessage = message || elements.input.value.trim();
+
+    if (!userMessage) {
+      showNotification('Iltimos, xabar kiriting', 'warning');
+      return;
+    }
+
+    // Foydalanuvchi xabarini ko'rsatish
+    addMessage(userMessage, 'user');
+
+    // Inputni tozalash va to'xtatish
+    if (!message) {
+      elements.input.value = '';
+      elements.input.style.height = 'auto';
+    }
+
+    // Yuklanish holatini ko'rsatish
+    setLoading(true);
+    showTypingIndicator(true);
+
+    try {
+      const response = await fetch(CONFIG.API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCSRFToken(),
+        },
+        body: JSON.stringify({ message: userMessage }),
       });
 
-      // Faqat oxirgi 50 ta xabarni saqlash (optima)
-      if (messages.length > 50) {
-        messages = messages.slice(-50);
+      const data = await response.json();
+
+      if (data.success) {
+        addMessage(data.response, 'bot', data.type);
+        updateStatus(true);
+      } else {
+        addMessage(`Xatolik: ${data.response}`, 'bot', 'warning');
+        updateStatus(false);
       }
 
-      localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(messages));
     } catch (error) {
-      console.error('Xabarni saqlashda xatolik:', error);
+      console.error('Xatolik:', error);
+      addMessage('Server bilan bog\'lanishda xatolik. Iltimos, keyinroq urinib ko\'ring.', 'bot', 'warning');
+      updateStatus(false);
+    } finally {
+      setLoading(false);
+      showTypingIndicator(false);
+      elements.input.focus();
     }
   }
 
-  // Chat tarixini tozalash
-  function clearChatHistory() {
-    localStorage.removeItem(CHAT_STORAGE_KEY);
+  // UI holatini boshqarish
+  function setLoading(isLoading) {
+    elements.sendBtn.disabled = isLoading;
+    elements.input.disabled = isLoading;
 
-    // Ekrandan xabarlarni olib tashlash
-    const chatContainer = document.getElementById('chat-container');
-    const welcomeMessage = document.getElementById('welcome-message');
-
-    // Faqat xabarlarni tozalash, welcome message qolsin
-    const messages = chatContainer.querySelectorAll('.chat-message');
-    messages.forEach(msg => msg.remove());
-
-    // Welcome message ni ko'rsatish
-    if (welcomeMessage) {
-      welcomeMessage.style.display = 'block';
+    if (isLoading) {
+      elements.sendBtn.classList.add('loading');
+    } else {
+      elements.sendBtn.classList.remove('loading');
     }
-
-    // Fokusni inputga qaytarish
-    document.getElementById('user-input').focus();
-
-    // Toast yoki xabar ko'rsatish
-    showToast('Chat tarixi tozalandi');
   }
 
-  // Toast xabar ko'rsatish
-  function showToast(message) {
-    // Simple toast yaratish
-    const toast = document.createElement('div');
-    toast.textContent = message;
-    toast.style.cssText = `
+  function showTypingIndicator(show) {
+    if (show) {
+      elements.typingIndicator.classList.add('active');
+      elements.typingIndicator.style.display = 'flex';
+    } else {
+      elements.typingIndicator.classList.remove('active');
+      setTimeout(() => {
+        elements.typingIndicator.style.display = 'none';
+      }, 300);
+    }
+  }
+
+  function updateStatus(isOnline = true) {
+    state.isOnline = isOnline;
+
+    if (isOnline) {
+      elements.statusDot.className = 'status-dot';
+      elements.statusText.textContent = 'AI yordamchi faol';
+      elements.statusText.style.color = '';
+    } else {
+      elements.statusDot.className = 'status-dot offline';
+      elements.statusText.textContent = 'Offline rejim';
+      elements.statusText.style.color = 'var(--danger-color)';
+    }
+  }
+
+  function scrollToBottom() {
+    elements.messages.scrollTop = elements.messages.scrollHeight;
+  }
+
+  // Foydali funktsiyalar
+  function getCSRFToken() {
+    return document.querySelector('[name=csrfmiddlewaretoken]').value;
+  }
+
+  function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    notification.style.cssText = `
       position: fixed;
       top: 20px;
       right: 20px;
-      background: rgba(5, 130, 171, 0.9);
+      padding: 15px 25px;
+      background: ${type === 'success' ? 'var(--success-color)' : type === 'warning' ? 'var(--warning-color)' : 'var(--primary-color)'};
       color: white;
-      padding: 12px 20px;
-      border-radius: 8px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
       z-index: 9999;
-      animation: fadeInOut 3s ease-in-out;
+      animation: slideIn 0.3s ease-out;
     `;
 
-    document.body.appendChild(toast);
+    document.body.appendChild(notification);
 
-    // 3 soniyadan so'ng olib tashlash
     setTimeout(() => {
-      toast.remove();
+      notification.style.animation = 'slideIn 0.3s ease-out reverse';
+      setTimeout(() => notification.remove(), 300);
     }, 3000);
   }
 
-  // Form submit handler
-  document.getElementById('chat-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const userInput = document.getElementById('user-input');
-    const message = userInput.value.trim();
-
-    if (!message) return;
-
-    // Foydalanuvchi xabarini ko'rsatish
-    addMessageToScreen(message, 'user', true); // true - localStorage ga saqlash
-    userInput.value = '';
-
-    // Welcome message ni yashirish
-    const welcomeMessage = document.getElementById('welcome-message');
-    if (welcomeMessage) {
-      welcomeMessage.style.display = 'none';
-    }
-
-    // Inputni vaqtincha disabled qilish
-    userInput.disabled = true;
-    const submitBtn = document.querySelector('.chat-submit-btn');
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Kutish...';
-
-    // AI javobini so'rash
-    fetch('/ai-chat/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
-      },
-      body: JSON.stringify({ message: message }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data.response) {
-          // Matnni formatlash
-          const formattedResponse = formatMessage(data.response);
-          addMessageToScreen(formattedResponse, 'bot', true); // true - localStorage ga saqlash
-        } else {
-          throw new Error('No response from server');
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        addMessageToScreen('Xatolik yuz berdi. Iltimos, qayta urinib ko\'ring.', 'bot', true);
-      })
-      .finally(() => {
-        // Inputni qayta aktivlashtirish
-        userInput.disabled = false;
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Yuborish';
-        userInput.focus();
-      });
-  });
-
-  // Xabarni ekranga qo'shish
-  function addMessageToScreen(text, sender, saveToStorage = true) {
-    const chatContainer = document.getElementById('chat-container');
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `chat-message ${
-      sender === 'user' ? 'user-message' : 'bot-message'
-    }`;
-
-    const bubble = document.createElement('div');
-    bubble.className = `message-bubble ${
-      sender === 'user' ? 'user-bubble' : 'bot-bubble'
-    }`;
-
-    // Agar bot javobi bo'lsa va formatlash kerak bo'lsa
-    if (sender === 'bot') {
-      bubble.innerHTML = formatMessage(text);
-    } else {
-      bubble.textContent = text;
-    }
-
-    messageDiv.appendChild(bubble);
-    chatContainer.appendChild(messageDiv);
-
-    // Scrollni pastga olib borish
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-
-    // Agar localStorage ga saqlash kerak bo'lsa
-    if (saveToStorage) {
-      saveMessageToStorage(text, sender);
-    }
-  }
-
-  // Matnni formatlash funksiyasi
-  function formatMessage(text) {
-    // Agar text string bo'lmasa, string ga o'tkazish
-    if (typeof text !== 'string') {
-      text = String(text);
-    }
-
-    return text
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;')
-      .replace(/\n/g, '<br>')
-      .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
-      .replace(/`([^`]+)`/g, '<code>$1</code>');
-  }
-
-  // Enter tugmasi bilan yuborish
-  document.getElementById('user-input').addEventListener('keypress', function (e) {
-    if (e.key === 'Enter' && !e.shiftKey) {
+  // Event listenerlar
+  function setupEventListeners() {
+    // Form yuborish
+    elements.form.addEventListener('submit', (e) => {
       e.preventDefault();
-      document.getElementById('chat-form').dispatchEvent(new Event('submit'));
-    }
-  });
-
-  // Chat container o'lchami o'zgarganda scrollni pastga olib borish
-  const chatContainer = document.getElementById('chat-container');
-  if (chatContainer) {
-    const observer = new MutationObserver(function () {
-      chatContainer.scrollTop = chatContainer.scrollHeight;
+      sendMessage();
     });
 
-    observer.observe(chatContainer, { childList: true, subtree: true });
+    // Enter/Sift+Enter
+    elements.input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    // Tezkor harakatlar
+    elements.quickActions.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const question = btn.getAttribute('data-question');
+        sendMessage(question);
+      });
+    });
+
+    // Tarixni tozalash
+    elements.clearBtn.addEventListener('click', clearHistory);
+
+    // Temani o'zgartirish
+    elements.themeToggle.addEventListener('click', toggleTheme);
+
+    // Fayl biriktirish
+    document.getElementById('attach-file').addEventListener('click', () => {
+      showNotification('Bu funksiya tez orada qo\'shiladi', 'info');
+    });
+
+    // Ovozli kirish
+    document.getElementById('voice-input').addEventListener('click', () => {
+      showNotification('Ovozli kirish tez orada qo\'shiladi', 'info');
+    });
+
+    // Scrollni kuzatish
+    elements.messages.addEventListener('scroll', () => {
+      const isAtBottom = elements.messages.scrollHeight - elements.messages.clientHeight <= elements.messages.scrollTop + 50;
+
+      if (!isAtBottom) {
+        // Ko'rsatkich qo'shish yoki boshqa harakatlar
+      }
+    });
+
+    // Onlayn holatni tekshirish
+    window.addEventListener('online', () => updateStatus(true));
+    window.addEventListener('offline', () => updateStatus(false));
   }
 
-  // CSS animation qo'shish
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes fadeInOut {
-      0% { opacity: 0; transform: translateY(-10px); }
-      10% { opacity: 1; transform: translateY(0); }
-      90% { opacity: 1; transform: translateY(0); }
-      100% { opacity: 0; transform: translateY(-10px); }
-    }
-  `;
-  document.head.appendChild(style);
+  // Dasturni ishga tushirish
+  document.addEventListener('DOMContentLoaded', init);
 </script>
 {% endblock %}

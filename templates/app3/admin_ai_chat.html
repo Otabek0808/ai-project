@@ -1,0 +1,141 @@
+<!-- templates/app3/admin_ai_chat.html -->
+{% extends 'base.html' %}
+
+{% block title %}AI Test Yaratish - Admin{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Xabarlar -->
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4><i class="fas fa-robot"></i> AI Test Yaratish</h4>
+                </div>
+                <div class="card-body">
+
+                    <!-- API kalit holati -->
+                    <div class="alert alert-info mb-3">
+                        <i class="fas fa-plug"></i>
+                        {% if api_key_configured %}
+                        <span class="text-success">OpenAI API ulangan</span>
+                        {% else %}
+                        <span class="text-danger">OpenAI API kaliti topilmadi. settings.py ga OPENAI_API_KEY qo'shing</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Form -->
+                    <form method="post" id="aiTestForm">
+                        {% csrf_token %}
+
+                        <div class="form-group mb-3">
+                            <label class="form-label"><i class="fas fa-book"></i> Test Mavzusi:</label>
+                            {{ form.topic }}
+                            <div class="form-text">Misol: Python funksiyalari, Django models, SQL queries...</div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="form-label"><i class="fas fa-comment"></i> Qo'shimcha So'rov (ixtiyoriy):</label>
+                            {{ form.prompt }}
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success btn-lg" id="submitBtn">
+                                <i class="fas fa-magic"></i> AI Test Yaratish
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <!-- So'nggi yaratilgan testlar -->
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5><i class="fas fa-history"></i> So'nggi Testlar</h5>
+                </div>
+                <div class="card-body">
+                    {% if ai_tests %}
+                    <div class="list-group">
+                        {% for test in ai_tests %}
+                        <a href="{% url 'app3:take_test' test.id %}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">{{ test.topic|truncatechars:25 }}</h6>
+                                <small>{{ test.created_at|timesince }} oldin</small>
+                            </div>
+                            <p class="mb-1 small">
+                                <span class="badge bg-primary">{{ test.questions_data|length }} savol</span>
+                            </p>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="text-muted text-center">Hozircha testlar yo'q</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Tezkor misollar -->
+            <div class="card mt-3">
+                <div class="card-header bg-warning">
+                    <h5><i class="fas fa-lightbulb"></i> Tezkor Misollar</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        <button type="button" class="list-group-item list-group-item-action example-btn"
+                                data-topic="Python funksiyalari"
+                                data-prompt="Python da funksiyalar haqida 10 ta test savoli tuzing. Har bir savolga 4 ta variant bering.">
+                            <small><i class="fas fa-code"></i> Python funksiyalari</small>
+                        </button>
+                        <button type="button" class="list-group-item list-group-item-action example-btn"
+                                data-topic="Django ORM"
+                                data-prompt="Django ORM haqida 10 ta test savoli tuzing. Savollar aniq va tushunarli bo'lsin.">
+                            <small><i class="fas fa-database"></i> Django ORM</small>
+                        </button>
+                        <button type="button" class="list-group-item list-group-item-action example-btn"
+                                data-topic="HTML5 teglari"
+                                data-prompt="HTML5 yangi teglari haqida 10 ta test savoli tuzing.">
+                            <small><i class="fas fa-code"></i> HTML5 teglari</small>
+                        </button>
+                        <button type="button" class="list-group-item list-group-item-action example-btn"
+                                data-topic="CSS Flexbox"
+                                data-prompt="CSS Flexbox xususiyatlari haqida 10 ta test savoli tuzing.">
+                            <small><i class="fas fa-paint-brush"></i> CSS Flexbox</small>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+$(document).ready(function() {
+    // Misol tugmalari
+    $('.example-btn').click(function() {
+        $('#id_topic').val($(this).data('topic'));
+        $('#id_prompt').val($(this).data('prompt'));
+    });
+
+    // Form yuborishda loading
+    $('#aiTestForm').submit(function() {
+        $('#submitBtn').prop('disabled', true);
+        $('#submitBtn').html('<i class="fas fa-spinner fa-spin"></i> Test yaratilmoqda...');
+    });
+});
+</script>
+{% endblock %}
