@@ -4,92 +4,733 @@
 {% block title %}Test Statistikasi - {{ ai_test.topic }}{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
+<style>
+    /* Asosiy konteyner */
+    .stats-container {
+        margin: 0 auto;
+        padding: 10px 5px;
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Asosiy karta */
+    .stats-container .card {
+        background: rgba(255, 255, 255, 0.215);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(5, 130, 171, 0.1);
+        margin-bottom: 30px;
+    }
+
+    /* Card header */
+    .stats-container .card-header {
+        background: linear-gradient(
+            45deg,
+            rgba(5, 130, 171, 0.9),
+            rgba(23, 162, 184, 0.9)
+        ) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 25px 30px;
+        backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .stats-container .card-header h4 {
+        color: white;
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .stats-container .card-header .fas {
+        font-size: 1.8rem;
+        background: linear-gradient(45deg, #ffffff, rgba(255, 255, 255, 0.8));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    /* Back button */
+    .back-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 12px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateX(-3px);
+        color: white;
+    }
+
+    /* Card body */
+    .stats-container .card-body {
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Asosiy statistikalar */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+
+    .stat-card {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 15px;
+        padding: 25px 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        animation: slideInUp 0.6s ease-out;
+        animation-fill-mode: both;
+    }
+
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .stat-card:nth-child(1) { animation-delay: 0.1s; }
+    .stat-card:nth-child(2) { animation-delay: 0.2s; }
+    .stat-card:nth-child(3) { animation-delay: 0.3s; }
+    .stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(5, 130, 171, 0.2);
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: 0.5s;
+    }
+
+    .stat-card:hover::before {
+        left: 100%;
+    }
+
+    .stat-card h2 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+        line-height: 1;
+    }
+
+    .stat-card .text-primary { color: rgba(5, 130, 171, 1) !important; }
+    .stat-card .text-success { color: rgba(25, 135, 84, 1) !important; }
+    .stat-card .text-info { color: rgba(23, 162, 184, 1) !important; }
+    .stat-card .text-warning { color: rgba(255, 193, 7, 1) !important; }
+
+    .stat-card p {
+        color: rgba(44, 62, 80, 0.8);
+        font-size: 1.1rem;
+        font-weight: 500;
+        margin: 0;
+    }
+
+    /* Ballar taqsimoti */
+    .distribution-card {
+        background: rgba(255, 255, 255, 0.215);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(13, 202, 240, 0.1);
+        margin-bottom: 30px;
+    }
+
+    .distribution-card .card-header {
+        background: linear-gradient(
+            45deg,
+            rgba(23, 162, 184, 0.9),
+            rgba(13, 202, 240, 0.9)
+        ) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 20px 30px;
+        backdrop-filter: blur(10px);
+    }
+
+    .distribution-card .card-header h5 {
+        color: white;
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .distribution-card .card-body {
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Distribution grid */
+    .distribution-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 20px;
+    }
+
+    .range-card {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        padding: 20px 15px;
+        text-align: center;
+        transition: all 0.3s ease;
+        animation: fadeInScale 0.6s ease-out;
+        animation-fill-mode: both;
+    }
+
+    @keyframes fadeInScale {
+        from {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .range-card:nth-child(1) { animation-delay: 0.1s; }
+    .range-card:nth-child(2) { animation-delay: 0.2s; }
+    .range-card:nth-child(3) { animation-delay: 0.3s; }
+    .range-card:nth-child(4) { animation-delay: 0.4s; }
+    .range-card:nth-child(5) { animation-delay: 0.5s; }
+    .range-card:nth-child(6) { animation-delay: 0.6s; }
+
+    .range-card:hover {
+        transform: translateY(-3px);
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .range-card h3 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+        color: #2c3e50;
+    }
+
+    .range-card p {
+        color: rgba(44, 62, 80, 0.9);
+        font-weight: 600;
+        margin-bottom: 5px;
+        font-size: 1.1rem;
+    }
+
+    .range-card small {
+        color: rgba(44, 62, 80, 0.7);
+        font-size: 0.9rem;
+    }
+
+    /* Range colors based on percentage */
+    .range-0-20 { border-left: 4px solid #dc3545; }
+    .range-21-40 { border-left: 4px solid #fd7e14; }
+    .range-41-60 { border-left: 4px solid #ffc107; }
+    .range-61-80 { border-left: 4px solid #20c997; }
+    .range-81-100 { border-left: 4px solid #198754; }
+
+    /* Foydalanuvchilar natijalari */
+    .users-card {
+        background: rgba(255, 255, 255, 0.215);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(25, 135, 84, 0.1);
+        margin-bottom: 30px;
+    }
+
+    .users-card .card-header {
+        background: linear-gradient(
+            45deg,
+            rgba(25, 135, 84, 0.9),
+            rgba(40, 167, 69, 0.9)
+        ) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 20px 30px;
+        backdrop-filter: blur(10px);
+    }
+
+    .users-card .card-header h5 {
+        color: white;
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .users-card .card-body {
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Table */
+    .custom-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 12px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .custom-table thead {
+        background: rgba(5, 130, 171, 0.2);
+        backdrop-filter: blur(10px);
+    }
+
+    .custom-table th {
+        color: #2c3e50;
+        font-weight: 600;
+        padding: 18px 15px;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        text-align: left;
+        font-size: 1.1rem;
+    }
+
+    .custom-table tbody tr {
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .custom-table tbody tr:nth-child(even) {
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .custom-table tbody tr:hover {
+        background: rgba(5, 130, 171, 0.1);
+        transform: translateX(5px);
+    }
+
+    .custom-table td {
+        padding: 16px 15px;
+        color: #2c3e50;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 1rem;
+    }
+
+    /* Badges */
+    .badge {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .bg-success { background: linear-gradient(45deg, rgba(25, 135, 84, 0.9), rgba(40, 167, 69, 0.9)) !important; }
+    .bg-warning { background: linear-gradient(45deg, rgba(255, 193, 7, 0.9), rgba(255, 205, 58, 0.9)) !important; }
+    .bg-danger { background: linear-gradient(45deg, rgba(220, 53, 69, 0.9), rgba(248, 108, 122, 0.9)) !important; }
+    .bg-info { background: linear-gradient(45deg, rgba(23, 162, 184, 0.9), rgba(13, 202, 240, 0.9)) !important; }
+
+    .admin-badge {
+        background: linear-gradient(45deg, rgba(220, 53, 69, 0.9), rgba(248, 108, 122, 0.9));
+        color: white;
+        font-size: 0.75rem;
+        padding: 3px 8px;
+        margin-left: 8px;
+    }
+
+    /* No data message */
+    .no-data {
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .no-data .fas {
+        font-size: 3.5rem;
+        color: rgba(44, 62, 80, 0.3);
+        margin-bottom: 20px;
+    }
+
+    .no-data h5 {
+        color: rgba(44, 62, 80, 0.6);
+        font-weight: 600;
+    }
+
+    /* Test ma'lumotlari */
+    .info-card {
+        background: rgba(255, 255, 255, 0.215);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(108, 117, 125, 0.1);
+        margin-bottom: 30px;
+    }
+
+    .info-card .card-header {
+        background: linear-gradient(
+            45deg,
+            rgba(108, 117, 125, 0.9),
+            rgba(134, 142, 150, 0.9)
+        ) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 20px 30px;
+        backdrop-filter: blur(10px);
+    }
+
+    .info-card .card-header h5 {
+        color: white;
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .info-card .card-body {
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Info grid */
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+    }
+
+    .info-list {
+        border-radius: 15px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .info-item {
+        background: rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 18px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+
+    .info-item:last-child {
+        border-bottom: none;
+    }
+
+    .info-item:hover {
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .info-item strong {
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    .info-item span {
+        color: rgba(44, 62, 80, 0.8);
+        font-weight: 500;
+    }
+
+    /* Card footer */
+    .card-footer {
+        padding: 25px 30px;
+        background: rgba(255, 255, 255, 0.1);
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        text-align: center;
+    }
+
+    .footer-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .footer-btn {
+        padding: 14px 30px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+        border: none;
+        text-decoration: none;
+        min-width: 160px;
+    }
+
+    .btn-secondary {
+        background: linear-gradient(
+            45deg,
+            rgba(108, 117, 125, 0.9),
+            rgba(134, 142, 150, 0.9)
+        );
+        color: white;
+        box-shadow: 0 4px 15px rgba(108, 117, 125, 0.2);
+    }
+
+    .btn-secondary:hover {
+        background: linear-gradient(
+            45deg,
+            rgba(108, 117, 125, 1),
+            rgba(134, 142, 150, 1)
+        );
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(108, 117, 125, 0.3);
+    }
+
+    .btn-primary {
+        background: linear-gradient(
+            45deg,
+            rgba(5, 130, 171, 0.9),
+            rgba(23, 162, 184, 0.9)
+        );
+        color: white;
+        box-shadow: 0 4px 15px rgba(5, 130, 171, 0.2);
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(
+            45deg,
+            rgba(5, 130, 171, 1),
+            rgba(23, 162, 184, 1)
+        );
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(5, 130, 171, 0.3);
+    }
+
+    /* Responsive dizayn */
+    @media (max-width: 992px) {
+        .stats-container {
+            padding: 20px 15px;
+        }
+
+        .stats-container .card-header h4 {
+            font-size: 1.5rem;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .distribution-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .footer-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-btn {
+            width: 100%;
+            max-width: 300px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .stats-container .card-header {
+            flex-direction: column;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .distribution-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .custom-table {
+            display: block;
+            overflow-x: auto;
+        }
+
+        .stat-card h2 {
+            font-size: 2.5rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .stats-container {
+            padding: 15px 10px;
+        }
+
+        .stats-container .card-header h4 {
+            font-size: 1.3rem;
+        }
+
+        .distribution-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .stats-container .card-body,
+        .distribution-card .card-body,
+        .users-card .card-body,
+        .info-card .card-body {
+            padding: 20px;
+        }
+
+        .stat-card {
+            padding: 20px 15px;
+        }
+
+        .range-card {
+            padding: 15px 10px;
+        }
+
+        .range-card h3 {
+            font-size: 1.8rem;
+        }
+
+        .footer-btn {
+            padding: 12px 20px;
+            font-size: 1rem;
+        }
+    }
+
+    /* Animatsiyalar */
+    .animate-fade-in {
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    .animate-slide-up {
+        animation: slideInUp 0.8s ease-out;
+    }
+
+    /* Progress bar animation */
+    @keyframes growWidth {
+        from { width: 0%; }
+        to { width: var(--percentage); }
+    }
+
+    .progress-animation {
+        animation: growWidth 1.5s ease-out;
+    }
+
+    /* Loading animation */
+    .fa-spinner {
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+
+<div class="stats-container">
     <div class="card">
-        <div class="card-header bg-primary text-white">
+        <div class="card-header">
             <h4>
                 <i class="fas fa-chart-bar"></i> Test Statistikasi: {{ ai_test.topic }}
-                <span class="float-end">
-                    <a href="{% url 'app3:home' %}" class="btn btn-sm btn-light">
-                        <i class="fas fa-arrow-left"></i> Orqaga
-                    </a>
-                </span>
             </h4>
+            <a href="{% url 'app3:home' %}" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Orqaga
+            </a>
         </div>
 
         <div class="card-body">
             <!-- Asosiy statistikalar -->
-            <div class="row mb-4">
-                <div class="col-md-3">
-                    <div class="card text-center bg-light">
-                        <div class="card-body">
-                            <h2 class="text-primary">{{ total_attempts }}</h2>
-                            <p class="text-muted">Jami urinishlar</p>
-                        </div>
-                    </div>
+            <div class="stats-grid mb-4">
+                <div class="stat-card">
+                    <h2 class="text-primary">{{ total_attempts }}</h2>
+                    <p>Jami urinishlar</p>
                 </div>
-                <div class="col-md-3">
-                    <div class="card text-center bg-light">
-                        <div class="card-body">
-                            <h2 class="text-success">{{ average_score }}%</h2>
-                            <p class="text-muted">O'rtacha ball</p>
-                        </div>
-                    </div>
+                <div class="stat-card">
+                    <h2 class="text-success">{{ average_score }}%</h2>
+                    <p>O'rtacha ball</p>
                 </div>
-                <div class="col-md-3">
-                    <div class="card text-center bg-light">
-                        <div class="card-body">
-                            <h2 class="text-info">{{ best_score }}%</h2>
-                            <p class="text-muted">Eng yaxshi ball</p>
-                        </div>
-                    </div>
+                <div class="stat-card">
+                    <h2 class="text-info">{{ best_score }}%</h2>
+                    <p>Eng yaxshi ball</p>
                 </div>
-                <div class="col-md-3">
-                    <div class="card text-center bg-light">
-                        <div class="card-body">
-                            <h2 class="text-warning">{{ worst_score }}%</h2>
-                            <p class="text-muted">Eng past ball</p>
-                        </div>
-                    </div>
+                <div class="stat-card">
+                    <h2 class="text-warning">{{ worst_score }}%</h2>
+                    <p>Eng past ball</p>
                 </div>
             </div>
 
             <!-- Ballar taqsimoti -->
-            <div class="card mb-4">
-                <div class="card-header bg-info text-white">
+            <div class="distribution-card mb-4">
+                <div class="card-header">
                     <h5><i class="fas fa-chart-pie"></i> Ballar taqsimoti</h5>
                 </div>
-                <!-- templates/app3/test_statistics.html - 64-80 qatorlarni o'zgartiramiz -->
-                
                 <div class="card-body">
-                    <div class="row">
+                    <div class="distribution-grid">
                         {% for range, data in score_distribution.items %}
-                        <div class="col-md-2 col-sm-4 mb-3">
-                            <div class="card text-center">
-                                <div class="card-body">
-                                    <h3 class="mb-0">{{ data.count }}</h3>
-                                    <p class="text-muted mb-0">{{ range }}%</p>
-                                    <small class="text-muted">
-                                        {{ data.percentage }}%
-                                    </small>
-                                </div>
-                            </div>
+                        {% with range_num=range|cut:"%"|cut:"-"|cut:" " %}
+                        <div class="range-card range-{{ range_num }}">
+                            <h3>{{ data.count }}</h3>
+                            <p>{{ range }}</p>
+                            <small>{{ data.percentage }}%</small>
                         </div>
+                        {% endwith %}
                         {% endfor %}
                     </div>
                 </div>
-                            </div>
+            </div>
 
             <!-- Foydalanuvchilar natijalari -->
-            <div class="card">
-                <div class="card-header bg-success text-white">
+            <div class="users-card mb-4">
+                <div class="card-header">
                     <h5><i class="fas fa-users"></i> Foydalanuvchilar natijalari</h5>
                 </div>
                 <div class="card-body">
                     {% if attempts %}
                     <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead class="table-light">
+                        <table class="custom-table">
+                            <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Foydalanuvchi</th>
@@ -101,12 +742,12 @@
                             </thead>
                             <tbody>
                                 {% for attempt in attempts %}
-                                <tr>
+                                <tr class="animate-fade-in">
                                     <td>{{ forloop.counter }}</td>
                                     <td>
                                         <strong>{{ attempt.user.username }}</strong>
                                         {% if attempt.user.is_staff %}
-                                        <span class="badge bg-danger">Admin</span>
+                                        <span class="badge admin-badge">Admin</span>
                                         {% endif %}
                                     </td>
                                     <td>{{ attempt.score }}/{{ attempt.total_questions }}</td>
@@ -137,65 +778,163 @@
                         </table>
                     </div>
                     {% else %}
-                    <div class="text-center py-4">
-                        <i class="fas fa-users-slash fa-3x text-muted mb-3"></i>
-                        <h5 class="text-muted">Hozircha testni yechgan foydalanuvchilar yo'q</h5>
+                    <div class="no-data">
+                        <i class="fas fa-users-slash"></i>
+                        <h5>Hozircha testni yechgan foydalanuvchilar yo'q</h5>
                     </div>
                     {% endif %}
                 </div>
             </div>
 
             <!-- Qo'shimcha ma'lumotlar -->
-            <div class="card mt-4">
-                <div class="card-header bg-secondary text-white">
+            <div class="info-card">
+                <div class="card-header">
                     <h5><i class="fas fa-info-circle"></i> Test ma'lumotlari</h5>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <ul class="list-group">
-                                <li class="list-group-item">
-                                    <strong>Test mavzusi:</strong> {{ ai_test.topic }}
-                                </li>
-                                <li class="list-group-item">
-                                    <strong>Savollar soni:</strong> {{ questions_count }}
-                                </li>
-                                <li class="list-group-item">
-                                    <strong>Yaratilgan sana:</strong> {{ ai_test.created_at|date:"d.m.Y H:i" }}
-                                </li>
-                            </ul>
+                    <div class="info-grid">
+                        <div>
+                            <div class="info-list">
+                                <div class="info-item">
+                                    <strong>Test mavzusi:</strong>
+                                    <span>{{ ai_test.topic }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <strong>Savollar soni:</strong>
+                                    <span>{{ questions_count }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <strong>Yaratilgan sana:</strong>
+                                    <span>{{ ai_test.created_at|date:"d.m.Y H:i" }}</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <ul class="list-group">
-                                <li class="list-group-item">
-                                    <strong>Yaratuvchi:</strong> {{ ai_test.created_by.username|default:"Admin" }}
-                                </li>
-                                <li class="list-group-item">
+                        <div>
+                            <div class="info-list">
+                                <div class="info-item">
+                                    <strong>Yaratuvchi:</strong>
+                                    <span>{{ ai_test.created_by.username|default:"Admin" }}</span>
+                                </div>
+                                <div class="info-item">
                                     <strong>Test holati:</strong>
-                                    {% if ai_test.is_active %}
-                                    <span class="badge bg-success">Faol</span>
-                                    {% else %}
-                                    <span class="badge bg-danger">Nofaol</span>
-                                    {% endif %}
-                                </li>
-                                <li class="list-group-item">
-                                    <strong>Test ID:</strong> {{ ai_test.id }}
-                                </li>
-                            </ul>
+                                    <span>
+                                        {% if ai_test.is_active %}
+                                        <span class="badge bg-success">Faol</span>
+                                        {% else %}
+                                        <span class="badge bg-danger">Nofaol</span>
+                                        {% endif %}
+                                    </span>
+                                </div>
+                                <div class="info-item">
+                                    <strong>Test ID:</strong>
+                                    <span>{{ ai_test.id }}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="card-footer text-center">
-            <a href="{% url 'app3:home' %}" class="btn btn-secondary">
-                <i class="fas fa-home"></i> Bosh sahifaga
-            </a>
-            <a href="{% url 'app3:take_test' ai_test.id %}" class="btn btn-primary">
-                <i class="fas fa-play"></i> Testni ishlash
-            </a>
+        <div class="card-footer">
+            <div class="footer-buttons">
+                <a href="{% url 'app3:home' %}" class="footer-btn btn-secondary">
+                    <i class="fas fa-home"></i> Bosh sahifaga
+                </a>
+                <a href="{% url 'app3:take_test' ai_test.id %}" class="footer-btn btn-primary">
+                    <i class="fas fa-play"></i> Testni ishlash
+                </a>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animate stat cards on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        // Observe stat cards
+        document.querySelectorAll('.stat-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Observe range cards
+        document.querySelectorAll('.range-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Observe table rows
+        document.querySelectorAll('.custom-table tbody tr').forEach((row, index) => {
+            row.style.animationDelay = `${index * 0.05}s`;
+            observer.observe(row);
+        });
+
+        // Add hover effect to info items
+        document.querySelectorAll('.info-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateX(5px)';
+            });
+
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(0)';
+            });
+        });
+
+        // Add click effect to buttons
+        document.querySelectorAll('.footer-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+
+        // Dynamic color coding for range cards based on percentage
+        document.querySelectorAll('.range-card').forEach(card => {
+            const percentageText = card.querySelector('small').textContent;
+            const percentage = parseInt(percentageText);
+
+            if (!isNaN(percentage)) {
+                if (percentage >= 20) {
+                    card.style.borderLeftColor = '#198754';
+                } else if (percentage >= 10) {
+                    card.style.borderLeftColor = '#20c997';
+                } else if (percentage >= 5) {
+                    card.style.borderLeftColor = '#ffc107';
+                } else if (percentage >= 2) {
+                    card.style.borderLeftColor = '#fd7e14';
+                } else {
+                    card.style.borderLeftColor = '#dc3545';
+                }
+            }
+        });
+
+        // Add loading state to buttons
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href') && !this.getAttribute('href').startsWith('#')) {
+                    const originalHtml = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Yuklanmoqda...';
+                    this.style.pointerEvents = 'none';
+
+                    // Reset after 3 seconds (in case of error)
+                    setTimeout(() => {
+                        this.innerHTML = originalHtml;
+                        this.style.pointerEvents = 'auto';
+                    }, 3000);
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}

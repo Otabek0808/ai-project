@@ -4,7 +4,482 @@
 {% block title %}AI Test Yaratish - Admin{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
+<style>
+    /* Asosiy konteyner */
+    .admin-chat-container {
+        margin: 0 auto;
+        padding: 10px 5px;
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    /* Xabarlar */
+    .messages .alert {
+        border-radius: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(20px);
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        padding: 20px;
+        border-left: 5px solid;
+    }
+
+    .alert-success {
+        border-left-color: #198754;
+        background: rgba(25, 135, 84, 0.15) !important;
+    }
+
+    .alert-danger {
+        border-left-color: #dc3545;
+        background: rgba(220, 53, 69, 0.15) !important;
+    }
+
+    .alert-info {
+        border-left-color: rgba(5, 130, 171, 0.9);
+        background: rgba(13, 202, 240, 0.15) !important;
+    }
+
+    .btn-close {
+        filter: invert(1);
+        opacity: 0.8;
+    }
+
+    /* API kalit holati */
+    .alert-info.mb-3 {
+        background: rgba(13, 202, 240, 0.2) !important;
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(13, 202, 240, 0.3);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+
+    .alert-info.mb-3 .fas {
+        color: rgba(5, 130, 171, 0.9);
+        font-size: 1.2rem;
+        margin-right: 12px;
+    }
+
+    .alert-info.mb-3 .text-success {
+        color: rgba(5, 130, 171, 1) !important;
+        font-weight: 600;
+    }
+
+    .alert-info.mb-3 .text-danger {
+        color: #dc3545 !important;
+        font-weight: 600;
+    }
+
+    /* Kartalar */
+    .card {
+        background: rgba(255, 255, 255, 0.215);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(5, 130, 171, 0.1);
+        margin-bottom: 30px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(5, 130, 171, 0.2);
+    }
+
+    .card-header {
+        background: linear-gradient(
+            45deg,
+            rgba(5, 130, 171, 0.9),
+            rgba(23, 162, 184, 0.9)
+        ) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 25px 30px;
+        backdrop-filter: blur(10px);
+    }
+
+    .card-header h4,
+    .card-header h5 {
+        color: white;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 600;
+    }
+
+    .card-header.bg-info {
+        background: linear-gradient(
+            45deg,
+            rgba(23, 162, 184, 0.9),
+            rgba(13, 202, 240, 0.9)
+        ) !important;
+    }
+
+    .card-header.bg-warning {
+        background: linear-gradient(
+            45deg,
+            rgba(255, 193, 7, 0.9),
+            rgba(255, 205, 58, 0.9)
+        ) !important;
+    }
+
+    .card-body {
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Form elementlari */
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        color: #2c3e50;
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .form-label .fas {
+        color: rgba(5, 130, 171, 0.9);
+        font-size: 1.1rem;
+    }
+
+    input[type="text"],
+    textarea {
+        width: 100%;
+        padding: 16px 20px;
+        border: 2px solid rgba(5, 130, 171, 0.2);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.9);
+        font-size: 1rem;
+        color: #2c3e50;
+        transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus {
+        outline: none;
+        border-color: rgba(5, 130, 171, 0.8);
+        box-shadow: 0 0 0 3px rgba(5, 130, 171, 0.1);
+        background: white;
+    }
+
+    textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .form-text {
+        color: rgba(44, 62, 80, 0.7);
+        font-size: 0.9rem;
+        margin-top: 8px;
+        padding-left: 2rem;
+    }
+
+    /* Submit tugmasi */
+    #submitBtn {
+        background: linear-gradient(
+            45deg,
+            rgba(5, 130, 171, 0.9),
+            rgba(23, 162, 184, 0.9)
+        );
+        color: white;
+        padding: 18px 40px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1.2rem;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        box-shadow: 0 4px 15px rgba(5, 130, 171, 0.2);
+    }
+
+    #submitBtn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(5, 130, 171, 0.3);
+        background: linear-gradient(
+            45deg,
+            rgba(5, 130, 171, 1),
+            rgba(23, 162, 184, 1)
+        );
+    }
+
+    #submitBtn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+    /* So'nggi testlar ro'yxati */
+    .list-group {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .list-group-item {
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        transition: all 0.3s ease;
+        color: #2c3e50;
+    }
+
+    .list-group-item:hover {
+        background: rgba(5, 130, 171, 0.1);
+        transform: translateX(5px);
+    }
+
+    .list-group-item:last-child {
+        border-bottom: none;
+    }
+
+    .list-group-item h6 {
+        color: #2c3e50;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .list-group-item small {
+        color: rgba(44, 62, 80, 0.7);
+        font-size: 0.85rem;
+    }
+
+    .list-group-item .badge {
+        background: rgba(5, 130, 171, 0.15) !important;
+        color: rgba(5, 130, 171, 0.9);
+        font-weight: 600;
+        padding: 6px 12px;
+        border-radius: 20px;
+        border: 1px solid rgba(5, 130, 171, 0.3);
+    }
+
+    .text-muted.text-center {
+        color: rgba(44, 62, 80, 0.6) !important;
+        font-style: italic;
+        padding: 30px;
+    }
+
+    /* Tezkor misollar */
+    .example-btn {
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 18px 20px;
+        color: #2c3e50;
+        text-align: left;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: block;
+        width: 100%;
+    }
+
+    .example-btn:hover {
+        background: rgba(255, 193, 7, 0.1);
+        transform: translateX(5px);
+        color: rgba(44, 62, 80, 1);
+    }
+
+    .example-btn .fas {
+        color: rgba(255, 193, 7, 0.9);
+        margin-right: 12px;
+        font-size: 1rem;
+    }
+
+    .example-btn small {
+        font-size: 0.95rem;
+        font-weight: 500;
+    }
+
+    /* Animatsiyalar */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.05);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.2s; }
+    .card:nth-child(3) { animation-delay: 0.3s; }
+
+    /* Loading effekt */
+    .fa-spinner {
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive dizayn */
+    @media (max-width: 992px) {
+        .admin-chat-container {
+            padding: 20px 15px;
+        }
+
+        .card-header {
+            padding: 20px 25px;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        input[type="text"],
+        textarea {
+            padding: 14px 18px;
+        }
+
+        #submitBtn {
+            padding: 16px 30px;
+            font-size: 1.1rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .row {
+            flex-direction: column;
+        }
+
+        .col-md-8,
+        .col-md-4 {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .card {
+            margin-bottom: 25px;
+        }
+
+        .card-header h4,
+        .card-header h5 {
+            font-size: 1.2rem;
+        }
+
+        .form-label {
+            font-size: 1rem;
+        }
+
+        .list-group-item,
+        .example-btn {
+            padding: 16px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .admin-chat-container {
+            padding: 15px 10px;
+        }
+
+        .card-header {
+            padding: 18px 20px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        input[type="text"],
+        textarea {
+            padding: 12px 16px;
+            font-size: 0.95rem;
+        }
+
+        #submitBtn {
+            padding: 14px 20px;
+            font-size: 1rem;
+        }
+
+        .messages .alert {
+            padding: 16px;
+        }
+    }
+
+    /* Glow effekt */
+    .card-header::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    }
+
+    /* Hover effekt */
+    .example-btn,
+    .list-group-item {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .example-btn::before,
+    .list-group-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: 0.5s;
+    }
+
+    .example-btn:hover::before,
+    .list-group-item:hover::before {
+        left: 100%;
+    }
+
+    /* Gradient border effekt */
+    .card {
+        position: relative;
+    }
+
+    .card::before {
+        content: '';
+        position: absolute;
+        inset: -2px;
+        background: linear-gradient(45deg, rgba(5, 130, 171, 0.3), rgba(23, 162, 184, 0.3), rgba(5, 130, 171, 0.3));
+        border-radius: 22px;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .card:hover::before {
+        opacity: 1;
+    }
+</style>
+
+<div class="admin-chat-container">
     <!-- Xabarlar -->
     {% if messages %}
     <div class="messages">
@@ -95,22 +570,22 @@
                 </div>
                 <div class="card-body">
                     <div class="list-group">
-                        <button type="button" class="list-group-item list-group-item-action example-btn"
+                        <button type="button" class="example-btn"
                                 data-topic="Python funksiyalari"
                                 data-prompt="Python da funksiyalar haqida 10 ta test savoli tuzing. Har bir savolga 4 ta variant bering.">
                             <small><i class="fas fa-code"></i> Python funksiyalari</small>
                         </button>
-                        <button type="button" class="list-group-item list-group-item-action example-btn"
+                        <button type="button" class="example-btn"
                                 data-topic="Django ORM"
                                 data-prompt="Django ORM haqida 10 ta test savoli tuzing. Savollar aniq va tushunarli bo'lsin.">
                             <small><i class="fas fa-database"></i> Django ORM</small>
                         </button>
-                        <button type="button" class="list-group-item list-group-item-action example-btn"
+                        <button type="button" class="example-btn"
                                 data-topic="HTML5 teglari"
                                 data-prompt="HTML5 yangi teglari haqida 10 ta test savoli tuzing.">
                             <small><i class="fas fa-code"></i> HTML5 teglari</small>
                         </button>
-                        <button type="button" class="list-group-item list-group-item-action example-btn"
+                        <button type="button" class="example-btn"
                                 data-topic="CSS Flexbox"
                                 data-prompt="CSS Flexbox xususiyatlari haqida 10 ta test savoli tuzing.">
                             <small><i class="fas fa-paint-brush"></i> CSS Flexbox</small>
@@ -129,13 +604,47 @@ $(document).ready(function() {
     $('.example-btn').click(function() {
         $('#id_topic').val($(this).data('topic'));
         $('#id_prompt').val($(this).data('prompt'));
+
+        // Animatsiya
+        $(this).css({
+            'animation': 'pulse 0.5s ease'
+        });
+        setTimeout(() => {
+            $(this).css('animation', '');
+        }, 500);
     });
 
     // Form yuborishda loading
     $('#aiTestForm').submit(function() {
         $('#submitBtn').prop('disabled', true);
         $('#submitBtn').html('<i class="fas fa-spinner fa-spin"></i> Test yaratilmoqda...');
+
+        // Loading effekt
+        $('#submitBtn').css({
+            'animation': 'pulse 1s ease infinite'
+        });
     });
+
+    // Form elementlariga hover effekt
+    $('input, textarea').focus(function() {
+        $(this).parent().css({
+            'transform': 'translateY(-2px)'
+        });
+    }).blur(function() {
+        $(this).parent().css({
+            'transform': 'translateY(0)'
+        });
+    });
+
+    // Tezkor misollar uchun tooltip
+    $('.example-btn').hover(
+        function() {
+            $(this).attr('title', "Misolni tanlash uchun bosing");
+        },
+        function() {
+            $(this).removeAttr('title');
+        }
+    );
 });
 </script>
 {% endblock %}

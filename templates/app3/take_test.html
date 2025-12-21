@@ -1,23 +1,602 @@
+<!-- templates/app3/take_test.html -->
 {% extends 'base.html' %}
 
 {% block title %}{{ ai_test.topic }} - Test{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
+<style>
+    /* Asosiy konteyner */
+    .test-container {
+        margin: 0 auto;
+        padding: 10px 5px;
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Asosiy karta */
+    .test-container .card {
+        background: rgba(255, 255, 255, 0.215);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(5, 130, 171, 0.1);
+    }
+
+    .test-container .card:hover {
+        box-shadow: 0 15px 35px rgba(5, 130, 171, 0.2);
+    }
+
+    /* Card header */
+    .test-container .card-header {
+        background: linear-gradient(
+            45deg,
+            rgba(5, 130, 171, 0.9),
+            rgba(23, 162, 184, 0.9)
+        ) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 25px 30px;
+        backdrop-filter: blur(10px);
+    }
+
+    .test-container .card-header h4 {
+        color: white;
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .test-container .card-header h4 .fas {
+        font-size: 1.8rem;
+        background: linear-gradient(45deg, #ffffff, rgba(255, 255, 255, 0.8));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .test-container .card-header p {
+        color: rgba(255, 255, 255, 0.9);
+        margin: 0;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .test-container .card-header .fas {
+        margin-right: 8px;
+        font-size: 1.1rem;
+    }
+
+    .test-container .card-header .mx-2 {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Card body */
+    .test-container .card-body {
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Savol kartalari */
+    .test-container .card.mb-4 {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 15px;
+        overflow: hidden;
+        margin-bottom: 25px !important;
+        transition: all 0.3s ease;
+        animation: slideInUp 0.5s ease-out;
+        animation-fill-mode: both;
+    }
+
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Har bir savol uchun kechiktirish */
+    .test-container .card.mb-4:nth-child(1) { animation-delay: 0.1s; }
+    .test-container .card.mb-4:nth-child(2) { animation-delay: 0.2s; }
+    .test-container .card.mb-4:nth-child(3) { animation-delay: 0.3s; }
+    .test-container .card.mb-4:nth-child(4) { animation-delay: 0.4s; }
+    .test-container .card.mb-4:nth-child(5) { animation-delay: 0.5s; }
+
+    .test-container .card.mb-4:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(5, 130, 171, 0.2);
+        border-color: rgba(5, 130, 171, 0.3);
+    }
+
+    /* Savol header */
+    .test-container .card.mb-4 .card-header {
+        background: linear-gradient(
+            45deg,
+            rgba(5, 130, 171, 0.8),
+            rgba(23, 162, 184, 0.8)
+        ) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 20px 25px;
+        backdrop-filter: blur(10px);
+    }
+
+    .test-container .card.mb-4 .card-header h5 {
+        color: white;
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    /* Savol body */
+    .test-container .card.mb-4 .card-body {
+        padding: 25px;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .test-container .card.mb-4 .lead {
+        color: #2c3e50;
+        font-size: 1.25rem;
+        font-weight: 500;
+        line-height: 1.6;
+        margin-bottom: 25px;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        border-left: 4px solid rgba(5, 130, 171, 0.7);
+    }
+
+    /* Variantlar (radio buttons) */
+    .test-container .form-group {
+        margin: 0;
+    }
+
+    .test-container .form-check {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        padding: 18px 20px;
+        margin-bottom: 12px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .test-container .form-check:hover {
+        background: rgba(5, 130, 171, 0.1);
+        border-color: rgba(5, 130, 171, 0.4);
+        transform: translateX(5px);
+    }
+
+    .test-container .form-check:last-child {
+        margin-bottom: 0;
+    }
+
+    .test-container .form-check-input {
+        width: 22px;
+        height: 22px;
+        margin-right: 15px;
+        margin-top: 0.2rem;
+        border: 2px solid rgba(5, 130, 171, 0.5);
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .test-container .form-check-input:checked {
+        background-color: rgba(5, 130, 171, 0.9);
+        border-color: rgba(5, 130, 171, 1);
+        box-shadow: 0 0 0 3px rgba(5, 130, 171, 0.2);
+    }
+
+    .test-container .form-check-input:focus {
+        box-shadow: 0 0 0 3px rgba(5, 130, 171, 0.3);
+        border-color: rgba(5, 130, 171, 1);
+    }
+
+    .test-container .form-check-label {
+        color: #2c3e50;
+        font-size: 1.1rem;
+        font-weight: 500;
+        line-height: 1.5;
+        cursor: pointer;
+        width: 100%;
+        display: block;
+        padding-left: 5px;
+    }
+
+    /* Tugmalar */
+    .test-container .text-center {
+        margin-top: 40px;
+        padding-top: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .test-container .btn {
+        padding: 16px 40px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1.2rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        transition: all 0.3s ease;
+        border: none;
+        min-width: 200px;
+        margin: 0 10px;
+    }
+
+    .test-container .btn-success {
+        background: linear-gradient(
+            45deg,
+            rgba(25, 135, 84, 0.9),
+            rgba(40, 167, 69, 0.9)
+        );
+        color: white;
+        box-shadow: 0 4px 15px rgba(25, 135, 84, 0.2);
+    }
+
+    .test-container .btn-success:hover {
+        background: linear-gradient(
+            45deg,
+            rgba(25, 135, 84, 1),
+            rgba(40, 167, 69, 1)
+        );
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(25, 135, 84, 0.3);
+    }
+
+    .test-container .btn-secondary {
+        background: linear-gradient(
+            45deg,
+            rgba(108, 117, 125, 0.9),
+            rgba(134, 142, 150, 0.9)
+        );
+        color: white;
+        box-shadow: 0 4px 15px rgba(108, 117, 125, 0.2);
+    }
+
+    .test-container .btn-secondary:hover {
+        background: linear-gradient(
+            45deg,
+            rgba(108, 117, 125, 1),
+            rgba(134, 142, 150, 1)
+        );
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(108, 117, 125, 0.3);
+    }
+
+    .test-container .btn .fas {
+        font-size: 1.2rem;
+    }
+
+    /* Progress indicator (agar kerak bo'lsa) */
+    .progress-indicator {
+        position: sticky;
+        top: 20px;
+        z-index: 100;
+        margin-bottom: 30px;
+    }
+
+    .progress-indicator .progress {
+        height: 12px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .progress-indicator .progress-bar {
+        background: linear-gradient(45deg, rgba(5, 130, 171, 0.9), rgba(23, 162, 184, 0.9));
+        transition: width 0.6s ease;
+    }
+
+    /* Savol counter */
+    .question-counter {
+        color: rgba(5, 130, 171, 0.9);
+        font-weight: 600;
+        font-size: 1.1rem;
+        display: inline-block;
+        background: rgba(5, 130, 171, 0.1);
+        padding: 8px 16px;
+        border-radius: 20px;
+        margin-left: 15px;
+    }
+
+    /* Form animatsiyasi */
+    #testForm {
+        animation: formFadeIn 0.8s ease-out;
+    }
+
+    @keyframes formFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Responsive dizayn */
+    @media (max-width: 992px) {
+        .test-container {
+            padding: 20px 15px;
+        }
+
+        .test-container .card-header {
+            padding: 20px 25px;
+        }
+
+        .test-container .card-header h4 {
+            font-size: 1.6rem;
+        }
+
+        .test-container .card-header p {
+            font-size: 1rem;
+            gap: 10px;
+        }
+
+        .test-container .btn {
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            min-width: 180px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .test-container .card-header h4 {
+            font-size: 1.4rem;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .test-container .card-header p {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .test-container .card-body {
+            padding: 20px;
+        }
+
+        .test-container .card.mb-4 .card-body {
+            padding: 20px;
+        }
+
+        .test-container .card.mb-4 .lead {
+            font-size: 1.1rem;
+            padding: 12px;
+        }
+
+        .test-container .form-check-label {
+            font-size: 1rem;
+        }
+
+        .test-container .text-center {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .test-container .btn {
+            width: 100%;
+            margin: 0;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .test-container {
+            padding: 15px 10px;
+        }
+
+        .test-container .card-header {
+            padding: 18px 20px;
+        }
+
+        .test-container .card-header h4 {
+            font-size: 1.3rem;
+        }
+
+        .test-container .card.mb-4 .card-header {
+            padding: 16px 18px;
+        }
+
+        .test-container .card.mb-4 .lead {
+            font-size: 1rem;
+            padding: 10px;
+        }
+
+        .test-container .form-check {
+            padding: 14px 16px;
+        }
+
+        .test-container .form-check-input {
+            width: 20px;
+            height: 20px;
+        }
+
+        .test-container .btn {
+            padding: 14px 20px;
+            font-size: 1rem;
+        }
+
+        .question-counter {
+            font-size: 1rem;
+            padding: 6px 12px;
+            margin-left: 10px;
+        }
+    }
+
+    /* Scroll animatsiyasi */
+    .test-container .card.mb-4 {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .test-container .card.mb-4.in-view {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Radio button custom styling */
+    .form-check-input[type="radio"] {
+        position: relative;
+    }
+
+    .form-check-input[type="radio"]:checked::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 12px;
+        height: 12px;
+        background: white;
+        border-radius: 50%;
+    }
+
+    /* Savol raqami uchun gradient */
+    .test-container .card.mb-4 .card-header {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .test-container .card.mb-4 .card-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: 0.5s;
+    }
+
+    .test-container .card.mb-4:hover .card-header::before {
+        left: 100%;
+    }
+
+    /* Hover effekt variantlar uchun */
+    .test-container .form-check {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .test-container .form-check::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: 0.5s;
+    }
+
+    .test-container .form-check:hover::after {
+        left: 100%;
+    }
+</style>
+
+<script>
+    // Scroll animatsiyasi
+    document.addEventListener('DOMContentLoaded', function() {
+        const questionCards = document.querySelectorAll('.test-container .card.mb-4');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        questionCards.forEach(card => {
+            observer.observe(card);
+        });
+
+        // Progress bar (agar kerak bo'lsa)
+        const updateProgress = () => {
+            const totalQuestions = {{ questions|length }};
+            const answered = document.querySelectorAll('.form-check-input:checked').length;
+            const progress = (answered / totalQuestions) * 100;
+
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) {
+                progressBar.style.width = `${progress}%`;
+                progressBar.setAttribute('aria-valuenow', progress);
+            }
+        };
+
+        // Har bir variant tanlanganda progressni yangilash
+        document.querySelectorAll('.form-check-input').forEach(input => {
+            input.addEventListener('change', updateProgress);
+        });
+
+        // Dastlabki progress
+        setTimeout(updateProgress, 100);
+    });
+
+    // Form yuborishda loading effekt
+    document.getElementById('testForm')?.addEventListener('submit', function(e) {
+        const submitBtn = this.querySelector('.btn-success');
+        if (submitBtn) {
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Jo\'natilmoqda...';
+            submitBtn.disabled = true;
+        }
+    });
+</script>
+
+<div class="test-container">
+    <!-- Progress indicator (ixtiyoriy) -->
+    <div class="progress-indicator">
+        <div class="progress">
+            <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-header bg-primary text-white">
-            <h4><i class="fas fa-brain"></i> {{ ai_test.topic }}</h4>
+            <h4><i class="fas fa-brain"></i> {{ ai_test.topic }}
+                <span class="question-counter">{{ questions|length }} savol</span>
+            </h4>
             <p class="mb-0">
-                <i class="fas fa-question-circle"></i> {{ questions|length }} savol
-                <span class="mx-2">|</span>
                 <i class="fas fa-user"></i> {{ ai_test.created_by.username|default:"Admin" }}
+                <span class="mx-2">|</span>
+                <i class="fas fa-clock"></i> {{ ai_test.created_at|date:"d.m.Y H:i" }}
             </p>
         </div>
-        
+
         <div class="card-body">
             <form method="post" id="testForm">
                 {% csrf_token %}
-                
+
                 {% for question in questions %}
                 <div class="card mb-4">
                     <div class="card-header bg-light">
@@ -25,12 +604,12 @@
                     </div>
                     <div class="card-body">
                         <p class="lead">{{ question.question }}</p>
-                        
+
                         <div class="form-group">
                             {% for option in question.options %}
                             <div class="form-check mb-2">
-                                <input class="form-check-input" type="radio" 
-                                       name="question_{{ forloop.parentloop.counter0 }}" 
+                                <input class="form-check-input" type="radio"
+                                       name="question_{{ forloop.parentloop.counter0 }}"
                                        id="q{{ forloop.parentloop.counter0 }}_opt{{ forloop.counter0 }}"
                                        value="{{ forloop.counter0 }}" required>
                                 <label class="form-check-label" for="q{{ forloop.parentloop.counter0 }}_opt{{ forloop.counter0 }}">
@@ -42,7 +621,7 @@
                     </div>
                 </div>
                 {% endfor %}
-                
+
                 <div class="text-center mt-4">
                     <button type="submit" class="btn btn-success btn-lg">
                         <i class="fas fa-paper-plane"></i> Testni Yakunlash

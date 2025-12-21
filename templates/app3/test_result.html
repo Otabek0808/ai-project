@@ -4,7 +4,667 @@
 {% block title %}Test Natijasi - {{ ai_test.topic }}{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
+<style>
+    /* Asosiy konteyner */
+    .result-container {
+        margin: 0 auto;
+        padding: 10px 5px;
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Asosiy karta */
+    .result-container .card {
+        background: rgba(255, 255, 255, 0.215);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(25, 135, 84, 0.1);
+        margin-bottom: 30px;
+    }
+
+    /* Success header */
+    .result-container .card-header.bg-success {
+        background: linear-gradient(
+            45deg,
+            rgba(25, 135, 84, 0.9),
+            rgba(40, 167, 69, 0.9)
+        ) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 25px 30px;
+        backdrop-filter: blur(10px);
+    }
+
+    .result-container .card-header.bg-success h4 {
+        color: white;
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .result-container .card-header.bg-success .fas {
+        font-size: 1.8rem;
+        background: linear-gradient(45deg, #ffffff, rgba(255, 255, 255, 0.8));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    /* Card body */
+    .result-container .card-body {
+        padding: 40px 30px;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .result-container .card-body.text-center {
+        text-align: center;
+    }
+
+    /* Test nomi */
+    .result-container h2 {
+        color: #2c3e50;
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        animation: slideInDown 0.6s ease-out;
+    }
+
+    @keyframes slideInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .result-container .text-muted {
+        color: rgba(44, 62, 80, 0.7) !important;
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+        animation: slideInDown 0.8s ease-out;
+    }
+
+    /* Natija kartasi */
+    .result-card {
+        background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.2),
+            rgba(255, 255, 255, 0.1)
+        );
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 20px;
+        padding: 40px 30px;
+        margin: 0 auto 40px;
+        max-width: 400px;
+        box-shadow: 0 15px 35px rgba(25, 135, 84, 0.15);
+        animation: scaleIn 0.8s ease-out;
+        position: relative;
+        overflow: hidden;
+    }
+
+    @keyframes scaleIn {
+        from {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .result-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.1) 0%,
+            transparent 70%
+        );
+        z-index: 0;
+    }
+
+    .result-card .display-1 {
+        font-size: 5rem;
+        font-weight: 800;
+        color: #2c3e50;
+        margin-bottom: 0;
+        line-height: 1;
+        position: relative;
+        z-index: 1;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .result-card h3 {
+        color: rgba(44, 62, 80, 0.9);
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin: 10px 0 30px;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Baholash badge */
+    .rating-badge {
+        font-size: 1.3rem !important;
+        padding: 12px 30px !important;
+        border-radius: 50px;
+        font-weight: 600;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 1;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.05);
+        }
+    }
+
+    .badge.bg-success {
+        background: linear-gradient(45deg, rgba(25, 135, 84, 0.9), rgba(40, 167, 69, 0.9)) !important;
+    }
+
+    .badge.bg-warning {
+        background: linear-gradient(45deg, rgba(255, 193, 7, 0.9), rgba(255, 205, 58, 0.9)) !important;
+    }
+
+    .badge.bg-danger {
+        background: linear-gradient(45deg, rgba(220, 53, 69, 0.9), rgba(248, 108, 122, 0.9)) !important;
+    }
+
+    /* Tugmalar */
+    .result-buttons {
+        margin-top: 40px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .result-btn {
+        padding: 16px 35px;
+        border-radius: 15px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        transition: all 0.3s ease;
+        border: none;
+        min-width: 180px;
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .result-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: 0.5s;
+    }
+
+    .result-btn:hover::before {
+        left: 100%;
+    }
+
+    .btn-primary {
+        background: linear-gradient(
+            45deg,
+            rgba(5, 130, 171, 0.9),
+            rgba(23, 162, 184, 0.9)
+        );
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(
+            45deg,
+            rgba(5, 130, 171, 1),
+            rgba(23, 162, 184, 1)
+        );
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(5, 130, 171, 0.3);
+    }
+
+    .btn-secondary {
+        background: linear-gradient(
+            45deg,
+            rgba(108, 117, 125, 0.9),
+            rgba(134, 142, 150, 0.9)
+        );
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background: linear-gradient(
+            45deg,
+            rgba(108, 117, 125, 1),
+            rgba(134, 142, 150, 1)
+        );
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(108, 117, 125, 0.3);
+    }
+
+    .btn-info {
+        background: linear-gradient(
+            45deg,
+            rgba(23, 162, 184, 0.9),
+            rgba(13, 202, 240, 0.9)
+        );
+        color: white;
+    }
+
+    .btn-info:hover {
+        background: linear-gradient(
+            45deg,
+            rgba(23, 162, 184, 1),
+            rgba(13, 202, 240, 1)
+        );
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(23, 162, 184, 0.3);
+    }
+
+    .result-btn .fas {
+        font-size: 1.2rem;
+    }
+
+    /* Test tafsilotlari */
+    .details-card {
+        background: rgba(255, 255, 255, 0.215);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(13, 202, 240, 0.1);
+        animation: slideInUp 0.8s ease-out;
+    }
+
+    .details-card .card-header.bg-info {
+        background: linear-gradient(
+            45deg,
+            rgba(23, 162, 184, 0.9),
+            rgba(13, 202, 240, 0.9)
+        ) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 20px 30px;
+        backdrop-filter: blur(10px);
+    }
+
+    .details-card .card-header.bg-info h5 {
+        color: white;
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .details-card .card-body {
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .details-card .row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+    }
+
+    /* List group */
+    .custom-list {
+        border-radius: 15px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .list-item {
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        color: #2c3e50;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .list-item:last-child {
+        border-bottom: none;
+    }
+
+    .list-item:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateX(5px);
+    }
+
+    .list-item .fas {
+        width: 25px;
+        font-size: 1.2rem;
+    }
+
+    .text-success {
+        color: rgba(25, 135, 84, 0.9) !important;
+    }
+
+    .text-danger {
+        color: rgba(220, 53, 69, 0.9) !important;
+    }
+
+    .text-primary {
+        color: rgba(5, 130, 171, 0.9) !important;
+    }
+
+    h6 {
+        color: #2c3e50;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid rgba(5, 130, 171, 0.2);
+    }
+
+    /* Animatsiyalar */
+    .animate-item {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: slideIn 0.6s ease-out forwards;
+    }
+
+    .animate-item:nth-child(1) { animation-delay: 0.1s; }
+    .animate-item:nth-child(2) { animation-delay: 0.2s; }
+    .animate-item:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes slideIn {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Responsive dizayn */
+    @media (max-width: 992px) {
+        .result-container {
+            padding: 20px 15px;
+        }
+
+        .result-container h2 {
+            font-size: 1.8rem;
+        }
+
+        .result-card .display-1 {
+            font-size: 4rem;
+        }
+
+        .result-card h3 {
+            font-size: 1.5rem;
+        }
+
+        .rating-badge {
+            font-size: 1.1rem !important;
+            padding: 10px 25px !important;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .result-buttons {
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .result-btn {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .result-container .card-header h4 {
+            font-size: 1.5rem;
+        }
+
+        .details-card .row {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .result-container {
+            padding: 15px 10px;
+        }
+
+        .result-container h2 {
+            font-size: 1.5rem;
+        }
+
+        .result-card .display-1 {
+            font-size: 3rem;
+        }
+
+        .result-card {
+            padding: 30px 20px;
+        }
+
+        .result-container .card-body {
+            padding: 30px 20px;
+        }
+
+        .result-btn {
+            padding: 14px 20px;
+            font-size: 1rem;
+        }
+
+        .list-item {
+            padding: 16px;
+            font-size: 1rem;
+        }
+
+        .details-card .card-body {
+            padding: 20px;
+        }
+    }
+
+    /* Confetti effect (visual) */
+    .confetti {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+        border-radius: 50%;
+        opacity: 0;
+        z-index: 9999;
+        pointer-events: none;
+    }
+
+    /* Loading animation */
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .fa-spin {
+        animation: spin 1s linear infinite;
+    }
+
+    /* Progress bar animation for percentage */
+    .percentage-animation {
+        position: relative;
+        display: inline-block;
+    }
+
+    .percentage-animation::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        animation: percentageGlow 2s ease-out;
+    }
+
+    @keyframes percentageGlow {
+        0% {
+            left: -100%;
+            width: 100%;
+        }
+        100% {
+            left: 100%;
+            width: 0%;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Percentage animation
+        const percentageElement = document.querySelector('.display-1');
+        if (percentageElement) {
+            percentageElement.classList.add('percentage-animation');
+        }
+
+        // Confetti effect
+        const createConfetti = () => {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+
+                    // Random position
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = '-10px';
+
+                    // Random color
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+                    // Random size
+                    const size = Math.random() * 10 + 5;
+                    confetti.style.width = size + 'px';
+                    confetti.style.height = size + 'px';
+
+                    document.body.appendChild(confetti);
+
+                    // Animate
+                    const animation = confetti.animate([
+                        {
+                            transform: 'translateY(0) rotate(0deg)',
+                            opacity: 1
+                        },
+                        {
+                            transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg)`,
+                            opacity: 0
+                        }
+                    ], {
+                        duration: Math.random() * 3000 + 2000,
+                        easing: 'cubic-bezier(0.215, 0.610, 0.355, 1)'
+                    });
+
+                    animation.onfinish = () => confetti.remove();
+                }, i * 100);
+            }
+        };
+
+        // Trigger confetti for high scores
+        const percentage = parseInt('{{ user_result.percentage }}' || '0');
+        if (percentage >= 80) {
+            setTimeout(createConfetti, 500);
+        }
+
+        // Animate list items
+        const listItems = document.querySelectorAll('.animate-item');
+        listItems.forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.1}s`;
+        });
+
+        // Button hover effects
+        const buttons = document.querySelectorAll('.result-btn');
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+            });
+
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Add celebration message for high scores
+        if (percentage >= 90) {
+            const celebration = document.createElement('div');
+            celebration.innerHTML = `
+                <div style="position: fixed; top: 20px; right: 20px; z-index: 10000;
+                           background: linear-gradient(45deg, rgba(255, 215, 0, 0.9), rgba(255, 193, 7, 0.9));
+                           color: white; padding: 15px 25px; border-radius: 15px;
+                           box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
+                           animation: slideInRight 0.5s ease-out;">
+                    <i class="fas fa-crown"></i> Ajoyib natija! Tabriklaymiz!
+                </div>
+            `;
+            document.body.appendChild(celebration);
+
+            // Add animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideInRight {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Remove after 5 seconds
+            setTimeout(() => {
+                celebration.style.animation = 'slideOutRight 0.5s ease-out forwards';
+                setTimeout(() => celebration.remove(), 500);
+            }, 5000);
+        }
+    });
+</script>
+
+<div class="result-container">
     <div class="card">
         <div class="card-header bg-success text-white">
             <h4><i class="fas fa-trophy"></i> Test Yakunlandi</h4>
@@ -17,33 +677,31 @@
             </div>
 
             <!-- Natija kartasi -->
-            <div class="card bg-light mx-auto" style="max-width: 400px;">
-                <div class="card-body">
-                    <h1 class="display-1 mb-0">{{ user_result.percentage }}%</h1>
-                    <h3>{{ user_result.score }}/{{ user_result.total_questions }}</h3>
+            <div class="result-card">
+                <h1 class="display-1 mb-0">{{ user_result.percentage }}%</h1>
+                <h3>{{ user_result.score }}/{{ user_result.total_questions }}</h3>
 
-                    <!-- Baholash -->
-                    <div class="mt-3">
-                        {% if user_result.percentage >= 80 %}
-                        <span class="badge bg-success fs-5 p-2">A'lo</span>
-                        {% elif user_result.percentage >= 60 %}
-                        <span class="badge bg-warning fs-5 p-2">Yaxshi</span>
-                        {% else %}
-                        <span class="badge bg-danger fs-5 p-2">Yaxshilash kerak</span>
-                        {% endif %}
-                    </div>
+                <!-- Baholash -->
+                <div class="mt-3">
+                    {% if user_result.percentage >= 80 %}
+                    <span class="badge bg-success rating-badge">A'lo</span>
+                    {% elif user_result.percentage >= 60 %}
+                    <span class="badge bg-warning rating-badge">Yaxshi</span>
+                    {% else %}
+                    <span class="badge bg-danger rating-badge">Yaxshilash kerak</span>
+                    {% endif %}
                 </div>
             </div>
 
             <!-- Tugmalar -->
-            <div class="mt-4">
-                <a href="{% url 'app3:take_test' ai_test.id %}" class="btn btn-primary btn-lg">
+            <div class="result-buttons">
+                <a href="{% url 'app3:take_test' ai_test.id %}" class="result-btn btn-primary">
                     <i class="fas fa-redo"></i> Qayta Ishlash
                 </a>
-                <a href="{% url 'app3:home' %}" class="btn btn-secondary btn-lg">
+                <a href="{% url 'app3:home' %}" class="result-btn btn-secondary">
                     <i class="fas fa-home"></i> Bosh Sahifa
                 </a>
-                <a href="{% url 'app3:my_results' %}" class="btn btn-info btn-lg">
+                <a href="{% url 'app3:my_results' %}" class="result-btn btn-info">
                     <i class="fas fa-chart-line"></i> Barcha Natijalarim
                 </a>
             </div>
@@ -51,7 +709,7 @@
     </div>
 
     <!-- Test tafsilotlari -->
-    <div class="card mt-4">
+    <div class="details-card">
         <div class="card-header bg-info text-white">
             <h5><i class="fas fa-check-circle"></i> Test tafsilotlari</h5>
         </div>
@@ -59,31 +717,37 @@
             <div class="row">
                 <div class="col-md-6">
                     <h6>Test ma'lumotlari:</h6>
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <i class="fas fa-calendar"></i> Yaratilgan: {{ ai_test.created_at|date:"d.m.Y H:i" }}
-                        </li>
-                        <li class="list-group-item">
-                            <i class="fas fa-question-circle"></i> Savollar soni: {{ user_result.total_questions }}
-                        </li>
-                        <li class="list-group-item">
-                            <i class="fas fa-user"></i> Yaratuvchi: {{ ai_test.created_by.username|default:"Admin" }}
-                        </li>
-                    </ul>
+                    <div class="custom-list">
+                        <div class="list-item animate-item">
+                            <i class="fas fa-calendar text-primary"></i>
+                            Yaratilgan: {{ ai_test.created_at|date:"d.m.Y H:i" }}
+                        </div>
+                        <div class="list-item animate-item">
+                            <i class="fas fa-question-circle text-primary"></i>
+                            Savollar soni: {{ user_result.total_questions }}
+                        </div>
+                        <div class="list-item animate-item">
+                            <i class="fas fa-user text-primary"></i>
+                            Yaratuvchi: {{ ai_test.created_by.username|default:"Admin" }}
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <h6>Sizning natijangiz:</h6>
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <i class="fas fa-check text-success"></i> To'g'ri javoblar: {{ user_result.score }}
-                        </li>
-                        <li class="list-group-item">
-                            <i class="fas fa-times text-danger"></i> Noto'g'ri javoblar: {{ user_result.total_questions|add:"-"|add:user_result.score }}
-                        </li>
-                        <li class="list-group-item">
-                            <i class="fas fa-percentage text-primary"></i> Foiz: {{ user_result.percentage }}%
-                        </li>
-                    </ul>
+                    <div class="custom-list">
+                        <div class="list-item animate-item">
+                            <i class="fas fa-check text-success"></i>
+                            To'g'ri javoblar: {{ user_result.score }}
+                        </div>
+                        <div class="list-item animate-item">
+                            <i class="fas fa-times text-danger"></i>
+                            Noto'g'ri javoblar: {{ user_result.total_questions|add:"-"|add:user_result.score }}
+                        </div>
+                        <div class="list-item animate-item">
+                            <i class="fas fa-percentage text-primary"></i>
+                            Foiz: {{ user_result.percentage }}%
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
