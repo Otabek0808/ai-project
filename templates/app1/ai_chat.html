@@ -8,6 +8,10 @@
 {% endblock %}
 
 {% block content %}
+    <form id="csrf-form">
+      {% csrf_token %}
+    </form>
+
     <style>
       * {
         padding: 0;
@@ -950,6 +954,7 @@ body{
 <main class="ai-chat-wrapper">
 
     <section class="ai_chat_container">
+        {% csrf_token %}
       <div class="conatner_ai_head">
         <div class="header_chat">
           <div class="head_box">
@@ -1073,6 +1078,15 @@ body{
       let selectedFile = null;
       let typingSpeed = 8; // Tezlik (ms) - qancha kichik, shuncha tez
 
+      // CSRF token olish
+      function getCSRFToken() {
+          return document.cookie
+            .split('; ')
+            .find(row => row.startsWith('csrftoken='))
+            ?.split('=')[1];
+      }
+
+
       // Tarixni yuklash - YAXSHILANGAN
       function loadHistory() {
         historyList.innerHTML = "";
@@ -1175,7 +1189,6 @@ body{
             typingElement.appendChild(wordSpan);
             index++;
 
-            // Tezroq yozish uchun vaqtni qisqartirdim
             setTimeout(typeNextWord, typingSpeed);
             scrollToLatestMessage();
           } else {
@@ -1351,37 +1364,64 @@ body{
         sendBtn.disabled = !(hasText || hasFile);
       }
 
-      // AI javobini simulyatsiya qilish
-      function simulateAIResponse(userMessage) {
-        showTypingIndicator();
+      // AI javobini API orqali olish
+      // AI javobini API orqali olish
+async function getAIResponse(userMessage) {
+    console.log("🔄 API ga so'rov yuborilmoqda...");
 
-        // AI javoblari bazasi
-        const responses = {
-          "Python nima?":
-            "Python - bu yuqori darajali, interpretatsiya qilinadigan dasturlash tili bo'lib, oddiy sintaksis va kuchli kutubxonalarga ega. U dasturlashni o'rganish uchun ajoyib tanlovdir.",
-          "Django qanday ishlaydi?":
-            "Django - bu Python dasturlash tilida yozilgan yuqori darajali web framework. U MVC (Model-View-Controller) arxitekturasidan foydalanadi va tez ishlab chiqishni qo'llab-quvvatlaydi.",
-          "HTML va CSS farqi":
-            "HTML (HyperText Markup Language) - bu web sahifalar tarkibini yaratish uchun, CSS (Cascading Style Sheets) - esa ushbu tarkibni bezash va joylashtirish uchun ishlatiladi.",
-          "JavaScript nimaga kerak?":
-            "JavaScript - bu web sahifalarga interaktivlik qo'shish uchun ishlatiladigan dasturlash tili. U brauzerda ishlaydi va dinamik web ilovalar yaratishga imkon beradi.",
-          default:
-            "Qiziqarli savol! Python - bu dasturlashning keng qo'llaniladigan tili bo'lib, u soddaligi va kuchli imkoniyatlari bilan ajralib turadi. U sun'iy intellekt, ma'lumotlar tahlili, veb-ilovalar va ko'plab boshqa sohalarda qo'llaniladi. Sizni qaysi soha qiziqtiradi?",
-        };
+    // URL ni localization bilan moslashtirish
+    const currentPath = window.location.pathname;
+    let apiUrl;
 
-        setTimeout(() => {
-          hideTypingIndicator();
-          const response = responses[userMessage] || responses["default"];
-          addMessage(response, "ai");
+    // Agar /uz/ prefiksi bo'lsa
+    if (currentPath.includes('/uz/')) {
+        apiUrl = '/uz/ai-chat/';
+    } else {
+        apiUrl = '/ai-chat/';
+    }
 
-          // Audio effekt (ixtiyoriy)
-          const audio = new Audio(
-            "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAZGF0YQQ="
-          );
-          audio.play().catch(() => {});
-        }, 600 + Math.random() * 400); // Qisqartirilgan kutish vaqti
-      }
+    console.log("🌐 API URL:", apiUrl);
+    console.log("📝 Xabar:", userMessage);
 
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken()
+            },
+            body: JSON.stringify({
+                message: userMessage
+            })
+        });
+
+        console.log("📡 API Status:", response.status);
+        console.log("📡 API Redirect:", response.redirected);
+
+        // Agar redirect bo'lsa
+        if (response.redirected) {
+            console.warn("⚠️ Redirect edildi:", response.url);
+            throw new Error('Authentication kerak yoki CSRF xatosi');
+        }
+
+        if (!response.ok) {
+            throw new Error(`Server xatosi: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("✅ API javobi:", data);
+
+        if (data.success) {
+            return data.response;
+        } else {
+            throw new Error(data.response || 'Server xatosi');
+        }
+
+    } catch (error) {
+        console.error('❌ Fetch xatosi:', error);
+        throw error;
+    }
+}
       // Textarea balandligini sozlash
       function adjustTextareaHeight() {
         const textarea = messageInput;
@@ -1419,7 +1459,7 @@ body{
       }
 
       // Xabar yuborish
-      function sendMessage() {
+      async function sendMessage() {
         const message = messageInput.value.trim();
 
         if (selectedFile && !message) {
@@ -1449,7 +1489,27 @@ body{
         updateSendButton();
         adjustTextareaHeight();
 
-        simulateAIResponse(message);
+        try {
+          // API orqali javob olish
+          const aiResponse = await getAIResponse(message);
+          addMessage(aiResponse, "ai");
+
+        } catch (error) {
+          console.error('AI javob olishda xatolik:', error);
+
+          // Agar API ishlamasa, offline javob berish
+          const responses = {
+            "Python nima?":
+              "Python - bu yuqori darajali, interpretatsiya qilinadigan dasturlash tili bo'lib, oddiy sintaksis va kuchli kutubxonalarga ega.",
+            "Django qanday ishlaydi?":
+              "Django - bu Python dasturlash tilida yozilgan yuqori darajali web framework.",
+            "default":
+              "Kechirasiz, server bilan aloqa xatosi. Keyinroq urinib ko'ring. Qiziqarli savol! Python - bu dasturlashning keng qo'llaniladigan tili bo'lib, u soddaligi va kuchli imkoniyatlari bilan ajralib turadi."
+          };
+
+          const response = responses[message] || responses["default"];
+          addMessage(response, "ai");
+        }
       }
 
       // Event listenerlar

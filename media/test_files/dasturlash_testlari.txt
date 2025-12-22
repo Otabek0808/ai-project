@@ -1,0 +1,19 @@
+1. Algoritm nima va dasturlashdagi asosiy vazifasi nimadan iborat?
+
+2. Kompilyator va interpretator o‘rtasidagi farqni tushuntiring.
+
+3. O‘zgaruvchi (variable) nima va u nima uchun ishlatiladi? Misol keltiring.
+
+4. Ma’lumot turlari (data types) deganda nimani tushunasiz? Eng kamida 3 ta turini yozing.
+
+5. Shart operatori (if-else) nima va qachon qo‘llaniladi?
+
+6. Sikl (loop) nima? for va while sikllari o‘rtasidagi farqni tushuntiring.
+
+7. Funksiya (function) nima va undan foydalanishning afzalliklari nimalardan iborat?
+
+8. Xatolik (error) va istisno (exception) tushunchalarini izohlang.
+
+9. Massiv (array) yoki ro‘yxat (list) nima? Ular qayerlarda ishlatiladi?
+
+10. Dasturiy ta’minotni testlash nima va nima uchun muhim?

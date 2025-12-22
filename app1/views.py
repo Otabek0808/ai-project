@@ -469,11 +469,29 @@ def tests(request):
         subject__isnull=True,
         is_active=True
     )
-
+    son = themed_tests.count()
     return render(request, 'app1/tests.html', {
         'subjects': subjects,
-        'themed_tests': themed_tests
+        'themed_tests': themed_tests,
     })
+
+
+@login_required
+def delete_test(request, test_id):
+    """Testni o'chirish"""
+    if not request.user.is_staff:
+        messages.error(request, "Ruxsat yo'q!")
+        return redirect('test_list')
+
+    test = get_object_or_404(Test, id=test_id)
+    test_title = test.title
+
+    if request.method == 'POST':
+        test.delete()
+        messages.success(request, f'"{test_title}" testi o\'chirildi!')
+
+    return redirect('tests')
+
 # views.py dagi take_test funksiyasida
 @login_required
 def take_test(request, test_id):

@@ -1,0 +1,209 @@
+Savol: Python dasturlash tili qachon yaratilgan? | Daraja: 1
+A) 1989
+B) 1995
+C) 2000
+D) 2005
+Javob: A
+
+Savol: Python qaysi dasturlash tiliga tegishli? | Daraja: 1
+A) Kompilyatsiya qilinadigan tillar
+B) Interpretatsiya qilinadigan tillar
+C) Assembler tillar
+D) Mashina tillari
+Javob: B
+
+Savol: Python ning asosiy yaratuvchisi kim? | Daraja: 1
+A) Guido van Rossum
+B) James Gosling
+C) Bjarne Stroustrup
+D) Brendan Eich
+Javob: A
+
+Savol: Quyidagilardan qaysi biri Python ning ma'lumot turlariga kirmaydi? | Daraja: 2
+A) List
+B) Tuple
+C) Array
+D) Dictionary
+Javob: C
+
+Savol: Python da ro'yxat (list) qanday yaratiladi? | Daraja: 1
+A) {}
+B) []
+C) ()
+D) <>
+Javob: B
+
+Savol: "print(2 ** 3)" kodining natijasi qanday bo'ladi? | Daraja: 1
+A) 6
+B) 8
+C) 9
+D) 5
+Javob: B
+
+Savol: Python da funksiya qanday aniqlanadi? | Daraja: 1
+A) function
+B) def
+C) func
+D) define
+Javob: B
+
+Savol: Quyidagi kod qanday natija qaytaradi? print(10 // 3) | Daraja: 2
+A) 3.333
+B) 3
+C) 4
+D) 3.0
+Javob: B
+
+Savol: Python da lug'at (dictionary) qanday yaratiladi? | Daraja: 1
+A) []
+B) {}
+C) ()
+D) <>
+Javob: B
+
+Savol: "len('Python')" funksiyasining qaytardiqi qiymat qanday? | Daraja: 1
+A) 5
+B) 6
+C) 7
+D) 8
+Javob: B
+
+Savol: Quyidagilardan qaysi biri Python ning kalit so'zi emas? | Daraja: 2
+A) while
+B) for
+C) loop
+D) if
+Javob: C
+
+Savol: Python da satr (string) metodlaridan qaysi biri satrni katta harflarga o'zgartiradi? | Daraja: 1
+A) lower()
+B) upper()
+C) capitalize()
+D) title()
+Javob: B
+
+Savol: "range(5)" funksiyasi qanday qiymatlar qaytaradi? | Daraja: 2
+A) 0,1,2,3,4
+B) 1,2,3,4,5
+C) 0,1,2,3,4,5
+D) 1,2,3,4
+Javob: A
+
+Savol: Python da xatolarni ushlash uchun qaysi blok ishlatiladi? | Daraja: 2
+A) try-catch
+B) try-except
+C) catch-error
+D) handle-error
+Javob: B
+
+Savol: Quyidagi kod qanday natija qaytaradi? print(3 * 'a') | Daraja: 1
+A) aaa
+B) 3a
+C) a a a
+D) xato
+Javob: A
+
+Savol: Python da fayl ochish uchun qaysi funksiya ishlatiladi? | Daraja: 2
+A) open()
+B) read()
+C) file()
+D) load()
+Javob: A
+
+Savol: List comprehension qanday ishlatiladi? | Daraja: 3
+A) [x for x in range(5)]
+B) {x for x in range(5)}
+C) (x for x in range(5))
+D) x for x in range(5)
+Javob: A
+
+Savol: Python da klass qanday aniqlanadi? | Daraja: 2
+A) class MyClass:
+B) class MyClass()
+C) class MyClass{}
+D) class MyClass:
+Javob: A
+
+Savol: Quyidagi kod qanday natija qaytaradi? print(2 ** 3 ** 2) | Daraja: 3
+A) 64
+B) 512
+C) 16
+D) 256
+Javob: B
+
+Savol: Python da generator funksiya qanday yaratiladi? | Daraja: 3
+A) yield kalit so'zi bilan
+B) generate kalit so'zi bilan
+C) return kalit so'zi bilan
+D) iterator kalit so'zi bilan
+Javob: A
+
+Savol: "is" operatori nima uchun ishlatiladi? | Daraja: 2
+A) Qiymat solishtirish
+B) Identifikator solishtirish
+C) Tur solishtirish
+D) Hajm solishtirish
+Javob: B
+
+Savol: Python da modul qanday import qilinadi? | Daraja: 1
+A) import module_name
+B) include module_name
+C) require module_name
+D) load module_name
+Javob: A
+
+Savol: Quyidagi kod qanday natija qaytaradi? print([1, 2, 3] + [4, 5]) | Daraja: 2
+A) [1, 2, 3, 4, 5]
+B) [1, 2, 3][4, 5]
+C) [5, 7, 3]
+D) xato
+Javob: A
+
+Savol: Python da dekorator nima? | Daraja: 3
+A) Funksiyani o'zgartiruvchi funksiya
+B) O'zgaruvchi turi
+C) Ma'lumotlar bazasi obyekti
+D) Tarmoq protokoli
+Javob: A
+
+Savol: "lambda x: x*2" funksiyasi nima qiladi? | Daraja: 2
+A) Argumentni 2 ga ko'paytiradi
+B) Argumentni 2 ga bo'ladi
+C) Argumentning kvadratini hisoblaydi
+D) Argumentga 2 qo'shadi
+Javob: A
+
+Savol: Python da tuple va list o'rtasidagi asosiy farq nima? | Daraja: 2
+A) Tuple o'zgarmas, list o'zgaruvchan
+B) Tuple tezroq, list sekinroq
+C) Tuple faqat raqamlar, list har qanday tur
+D) Tuple katta, list kichik
+Javob: A
+
+Savol: Quyidagi kod qanday natija qaytaradi? print('Hello'.replace('l', 'x')) | Daraja: 2
+A) Hexxo
+B) Hexo
+C) Hexx
+D) Hello
+Javob: A
+
+Savol: Python da virtual muhit (virtual environment) nima uchun kerak? | Daraja: 3
+A) Loyiha uchun izolyatsiya qilingan kutubxonalar
+B) Dasturni tezlashtirish
+C) Xotirani boshqarish
+D) Kodni shifrlash
+Javob: A
+
+Savol: "with" kontekst boshqaruvi nima uchun ishlatiladi? | Daraja: 2
+A) Resurslarni avtomatik boshqarish
+B) Kodni qisqartirish
+C) Tezlikni oshirish
+D) Xotirani tejash
+Javob: A
+
+Savol: Python da @staticmethod dekoratori nima uchun ishlatiladi? | Daraja: 3
+A) Statik metodlar yaratish
+B) Dinamik metodlar yaratish
+C) Shaxsiy metodlar yaratish
+D) Ochiq metodlar yaratish
+Javob: A

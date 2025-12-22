@@ -42,6 +42,7 @@ urlpatterns = [
     path('my-results/', views.test_results, name='test_results'),
     path('test/<int:test_id>/detail/', views.test_detail, name='test_detail'),
     path('api/test/<int:test_id>/status/', views.test_status_api, name='test_status_api'),
+    path('tests/delete/<int:test_id>/', views.delete_test, name='delete_test'),
 
     # Admin funksiyalari
     path('add-subject/', views.add_subject, name='add_subject'),
