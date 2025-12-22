@@ -187,13 +187,38 @@ def test_result(request, test_id):
     })
 
 
+# app3/views.py - my_results funksiyasini yangilaymiz
+
 @login_required
 def my_results(request):
     """Foydalanuvchi natijalari"""
     results = TestAttempt.objects.filter(user=request.user).select_related('ai_test').order_by('-created_at')
 
+    # Umumiy statistikalarni hisoblash
+    total_tests = results.count()
+    total_score = 0
+    total_questions = 0
+    total_percentage = 0
+
+    for result in results:
+        total_score += result.score
+        total_questions += result.total_questions
+        total_percentage += result.percentage()
+
+    # O'rtacha foiz
+    average_percentage = 0
+    if total_tests > 0:
+        average_percentage = round(total_percentage / total_tests, 1)
+
+    # Umumiy natija
+    overall_result = f"{total_score}/{total_questions}"
+
     return render(request, 'app3/my_results.html', {
         'results': results,
+        'total_tests': total_tests,
+        'overall_result': overall_result,
+        'average_percentage': average_percentage,
+        'attempts_count': total_tests,  # Urinishlar soni = testlar soni
     })
 
 

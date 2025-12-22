@@ -1,0 +1,138 @@
+<!-- templates/app3/my_results.html -->
+{% extends 'base.html' %}
+
+{% block title %}Mening Natijalarim{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4><i class="fas fa-chart-line"></i> Mening Test Natijalarim</h4>
+        </div>
+        <div class="card-body">
+            {% if results %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Test Mavzusi</th>
+                            <th>Natija</th>
+                            <th>Foiz</th>
+                            <th>Vaqt</th>
+                            <th>Holat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in results %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>
+                                <a href="{% url 'app3:take_test' result.ai_test.id %}">
+                                    {{ result.ai_test.topic|truncatechars:40 }}
+                                </a>
+                            </td>
+                            <td>{{ result.score }}/{{ result.total_questions }}</td>
+                            <td>
+                                {% if result.percentage >= 80 %}
+                                <span class="badge bg-success">{{ result.percentage }}%</span>
+                                {% elif result.percentage >= 60 %}
+                                <span class="badge bg-warning">{{ result.percentage }}%</span>
+                                {% else %}
+                                <span class="badge bg-danger">{{ result.percentage }}%</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ result.created_at|date:"d.m.Y H:i" }}</td>
+                            <td>
+                                {% if result.percentage >= 80 %}
+                                <span class="badge bg-success">A'lo</span>
+                                {% elif result.percentage >= 60 %}
+                                <span class="badge bg-warning">Yaxshi</span>
+                                {% else %}
+                                <span class="badge bg-danger">Qoniqarsiz</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Umumiy statistika - BU QISMDA XATO -->
+            <div class="card mt-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-chart-bar"></i> Umumiy statistika</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3">
+                            <h3 class="text-primary">{{ results.count }}</h3>
+                            <p class="text-muted">Jami testlar</p>
+                        </div>
+                        <div class="col-md-3">
+                            <h3 class="text-success">
+                                {% with total_score=0 total_questions=0 %}
+                                {% for r in results %}
+                                {% widthratio r.score 1 1 as score_int %}
+                                {% widthratio r.total_questions 1 1 as total_int %}
+                                {% with total_score=total_score|add:score_int total_questions=total_questions|add:total_int %}
+                                {% endwith %}
+                                {% endfor %}
+                                {% if total_questions > 0 %}
+                                {{ total_score|add:"0" }}/{{ total_questions }}
+                                {% else %}
+                                0/0
+                                {% endif %}
+                                {% endwith %}
+                            </h3>
+                            <p class="text-muted">Umumiy natija</p>
+                        </div>
+                        <div class="col-md-3">
+                            <h3 class="text-warning">
+                                {% if results %}
+                                {% with total_percentage=0 %}
+                                {% for r in results %}
+                                {% with total_percentage=total_percentage|add:r.percentage %}
+                                {% endwith %}
+                                {% endfor %}
+                                {{ total_percentage|divisibleby:results.count|default:0 }}
+                                {% endwith %}
+                                {% else %}
+                                0
+                                {% endif %}%
+                            </h3>
+                            <p class="text-muted">O'rtacha foiz</p>
+                        </div>
+                        <div class="col-md-3">
+                            <h3 class="text-danger">
+                                {% if results %}
+                                {% widthratio results.count 1 1 as attempts %}
+                                {% if attempts > 0 %}
+                                {{ attempts }}
+                                {% else %}
+                                0
+                                {% endif %}
+                                {% else %}
+                                0
+                                {% endif %}
+                            </h3>
+                            <p class="text-muted">Urinishlar</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% else %}
+            <div class="text-center py-5">
+                <i class="fas fa-chart-line fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted">Hozircha test natijalaringiz yo'q</h4>
+                <p>Testlarni ishlashni boshlang va natijalaringizni bu yerda ko'ring!</p>
+                <a href="{% url 'app3:home' %}" class="btn btn-primary mt-2">
+                    <i class="fas fa-play"></i> Testlarni boshlash
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
