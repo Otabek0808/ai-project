@@ -785,61 +785,12 @@
                     {% endif %}
                 </div>
             </div>
-
-            <!-- Qo'shimcha ma'lumotlar -->
-            <div class="info-card">
-                <div class="card-header">
-                    <h5><i class="fas fa-info-circle"></i> Test ma'lumotlari</h5>
-                </div>
-                <div class="card-body">
-                    <div class="info-grid">
-                        <div>
-                            <div class="info-list">
-                                <div class="info-item">
-                                    <strong>Test mavzusi:</strong>
-                                    <span>{{ ai_test.topic }}</span>
-                                </div>
-                                <div class="info-item">
-                                    <strong>Savollar soni:</strong>
-                                    <span>{{ questions_count }}</span>
-                                </div>
-                                <div class="info-item">
-                                    <strong>Yaratilgan sana:</strong>
-                                    <span>{{ ai_test.created_at|date:"d.m.Y H:i" }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="info-list">
-                                <div class="info-item">
-                                    <strong>Yaratuvchi:</strong>
-                                    <span>{{ ai_test.created_by.username|default:"Admin" }}</span>
-                                </div>
-                                <div class="info-item">
-                                    <strong>Test holati:</strong>
-                                    <span>
-                                        {% if ai_test.is_active %}
-                                        <span class="badge bg-success">Faol</span>
-                                        {% else %}
-                                        <span class="badge bg-danger">Nofaol</span>
-                                        {% endif %}
-                                    </span>
-                                </div>
-                                <div class="info-item">
-                                    <strong>Test ID:</strong>
-                                    <span>{{ ai_test.id }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="card-footer">
             <div class="footer-buttons">
                 <a href="{% url 'app3:home' %}" class="footer-btn btn-secondary">
-                    <i class="fas fa-home"></i> Bosh sahifaga
+                    <i class="fas fa-home"></i> Boshqa testlar
                 </a>
                 <a href="{% url 'app3:take_test' ai_test.id %}" class="footer-btn btn-primary">
                     <i class="fas fa-play"></i> Testni ishlash
