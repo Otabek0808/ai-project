@@ -1376,9 +1376,14 @@ async function getAIResponse(userMessage) {
     // Agar /uz/ prefiksi bo'lsa
     if (currentPath.includes('/uz/')) {
         apiUrl = '/uz/ai-chat/';
+    } else if (currentPath.includes('/en/')) {
+        apiUrl = '/en/ai-chat/';
+    } else if (currentPath.includes('/ru/')) {
+        apiUrl = '/ru/ai-chat/';
     } else {
         apiUrl = '/ai-chat/';
     }
+
 
     console.log("🌐 API URL:", apiUrl);
     console.log("📝 Xabar:", userMessage);

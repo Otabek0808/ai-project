@@ -1,11 +1,13 @@
 {% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8" />
     <meta property="og:title" content="AI Project" />
     <meta property="og:description" content="Sun'iy intellekt sohasiga qiziquvchilar uchun kuchli platforma" />
-    <meta property="og:image" content="https://ai-project-1fhu.onrender.com/static/img/preview.png" />
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ MEDIA_URL }}images/Copilot_20251219_102515.png" />   
     <meta property="og:url" content="https://ai-teach.uz/" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>IT Ta'lim Portali</title>
@@ -1178,7 +1180,8 @@ body a{
     <div class="menu" id="menu_box">
         <div class="glavniy_logo">
             <a href="{% url 'home' %}">
-                <img src="{{ MEDIA_URL }}images/Copilot_20251219_102515.png" alt="no photo">
+                <img src="{{ request.scheme }}://{{ request.get_host }}{{ MEDIA_URL }}images/Copilot_20251219_102515.png" alt="no photo">
+
             </a>
             <svg id="back_btn" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"/>
@@ -1321,7 +1324,7 @@ body a{
             <section class="section_header">
                 <div class="logo">
                     <a href="{% url 'home' %}">
-                        <img src="{{ MEDIA_URL }}images/Copilot_20251219_102515.png" alt="no photo">
+                        <img src="{{ request.scheme }}://{{ request.get_host }}{{ MEDIA_URL }}images/Copilot_20251219_102515.png" alt="no photo">
                     </a>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" id="menu">
                         <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
